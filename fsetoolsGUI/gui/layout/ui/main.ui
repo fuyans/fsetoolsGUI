@@ -443,8 +443,8 @@ Model</string>
              </property>
              <property name="text">
               <string>Therm. Rad.
-Analysis
-3D</string>
+Analysis 3D
+Single Point</string>
              </property>
             </widget>
            </item>
@@ -577,8 +577,8 @@ Parallel 2</string>
              </property>
              <property name="text">
               <string>Therm. Rad.
-Analysis
-2D</string>
+Analysis 2D
+Contour</string>
              </property>
             </widget>
            </item>
