@@ -20,20 +20,20 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(411, 356)
+        MainWindow.resize(466, 456)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.verticalLayoutWidget = QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(15, 15, 380, 291))
-        self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
+        self.gridLayout = QGridLayout(self.centralwidget)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setSizeConstraint(QLayout.SetMinimumSize)
+        self.verticalLayout.setContentsMargins(35, 35, 35, 35)
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
-        self.label_16 = QLabel(self.verticalLayoutWidget)
+        self.label_16 = QLabel(self.centralwidget)
         self.label_16.setObjectName(u"label_16")
-        self.label_16.setMinimumSize(QSize(121, 21))
+        self.label_16.setMinimumSize(QSize(121, 26))
         font = QFont()
         font.setBold(False)
         font.setWeight(50)
@@ -42,22 +42,22 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_16)
 
-        self.lineEdit_1_date = QLineEdit(self.verticalLayoutWidget)
+        self.lineEdit_1_date = QLineEdit(self.centralwidget)
         self.lineEdit_1_date.setObjectName(u"lineEdit_1_date")
-        self.lineEdit_1_date.setMinimumSize(QSize(0, 21))
+        self.lineEdit_1_date.setMinimumSize(QSize(0, 26))
         self.lineEdit_1_date.setMaximumSize(QSize(70, 16777215))
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.lineEdit_1_date)
 
-        self.label_15 = QLabel(self.verticalLayoutWidget)
+        self.label_15 = QLabel(self.centralwidget)
         self.label_15.setObjectName(u"label_15")
-        self.label_15.setMinimumSize(QSize(121, 21))
+        self.label_15.setMinimumSize(QSize(121, 26))
         self.label_15.setFont(font)
         self.label_15.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_15)
 
-        self.comboBox_2_revision = QComboBox(self.verticalLayoutWidget)
+        self.comboBox_2_revision = QComboBox(self.centralwidget)
         self.comboBox_2_revision.addItem("")
         self.comboBox_2_revision.addItem("")
         self.comboBox_2_revision.addItem("")
@@ -66,59 +66,59 @@ class Ui_MainWindow(object):
         self.comboBox_2_revision.addItem("")
         self.comboBox_2_revision.addItem("")
         self.comboBox_2_revision.setObjectName(u"comboBox_2_revision")
-        self.comboBox_2_revision.setMinimumSize(QSize(0, 21))
+        self.comboBox_2_revision.setMinimumSize(QSize(0, 26))
         self.comboBox_2_revision.setMaximumSize(QSize(16777215, 16777215))
 
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.comboBox_2_revision)
 
-        self.label_14 = QLabel(self.verticalLayoutWidget)
+        self.label_14 = QLabel(self.centralwidget)
         self.label_14.setObjectName(u"label_14")
-        self.label_14.setMinimumSize(QSize(121, 21))
+        self.label_14.setMinimumSize(QSize(121, 26))
         self.label_14.setMaximumSize(QSize(90, 16777215))
         self.label_14.setFont(font)
         self.label_14.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_14)
 
-        self.lineEdit_3_project_no = QLineEdit(self.verticalLayoutWidget)
+        self.lineEdit_3_project_no = QLineEdit(self.centralwidget)
         self.lineEdit_3_project_no.setObjectName(u"lineEdit_3_project_no")
-        self.lineEdit_3_project_no.setMinimumSize(QSize(0, 21))
+        self.lineEdit_3_project_no.setMinimumSize(QSize(0, 26))
         self.lineEdit_3_project_no.setMaximumSize(QSize(90, 16777215))
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.lineEdit_3_project_no)
 
-        self.label_17 = QLabel(self.verticalLayoutWidget)
+        self.label_17 = QLabel(self.centralwidget)
         self.label_17.setObjectName(u"label_17")
-        self.label_17.setMinimumSize(QSize(121, 21))
+        self.label_17.setMinimumSize(QSize(121, 26))
         self.label_17.setFont(font)
         self.label_17.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_17)
 
-        self.lineEdit_4_project_stage = QLineEdit(self.verticalLayoutWidget)
+        self.lineEdit_4_project_stage = QLineEdit(self.centralwidget)
         self.lineEdit_4_project_stage.setObjectName(u"lineEdit_4_project_stage")
-        self.lineEdit_4_project_stage.setMinimumSize(QSize(0, 21))
+        self.lineEdit_4_project_stage.setMinimumSize(QSize(0, 26))
         self.lineEdit_4_project_stage.setMaximumSize(QSize(90, 16777215))
 
         self.formLayout.setWidget(3, QFormLayout.FieldRole, self.lineEdit_4_project_stage)
 
-        self.label_18 = QLabel(self.verticalLayoutWidget)
+        self.label_18 = QLabel(self.centralwidget)
         self.label_18.setObjectName(u"label_18")
-        self.label_18.setMinimumSize(QSize(121, 21))
+        self.label_18.setMinimumSize(QSize(121, 26))
         self.label_18.setFont(font)
         self.label_18.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.formLayout.setWidget(4, QFormLayout.LabelRole, self.label_18)
 
-        self.label_19 = QLabel(self.verticalLayoutWidget)
+        self.label_19 = QLabel(self.centralwidget)
         self.label_19.setObjectName(u"label_19")
-        self.label_19.setMinimumSize(QSize(121, 21))
+        self.label_19.setMinimumSize(QSize(121, 26))
         self.label_19.setFont(font)
         self.label_19.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.formLayout.setWidget(5, QFormLayout.LabelRole, self.label_19)
 
-        self.comboBox_6_type = QComboBox(self.verticalLayoutWidget)
+        self.comboBox_6_type = QComboBox(self.centralwidget)
         self.comboBox_6_type.addItem("")
         self.comboBox_6_type.addItem("")
         self.comboBox_6_type.addItem("")
@@ -136,31 +136,31 @@ class Ui_MainWindow(object):
         self.comboBox_6_type.addItem("")
         self.comboBox_6_type.addItem("")
         self.comboBox_6_type.setObjectName(u"comboBox_6_type")
-        self.comboBox_6_type.setMinimumSize(QSize(0, 21))
+        self.comboBox_6_type.setMinimumSize(QSize(0, 26))
 
         self.formLayout.setWidget(5, QFormLayout.FieldRole, self.comboBox_6_type)
 
-        self.label_20 = QLabel(self.verticalLayoutWidget)
+        self.label_20 = QLabel(self.centralwidget)
         self.label_20.setObjectName(u"label_20")
-        self.label_20.setMinimumSize(QSize(121, 21))
+        self.label_20.setMinimumSize(QSize(121, 26))
         self.label_20.setFont(font)
         self.label_20.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.formLayout.setWidget(6, QFormLayout.LabelRole, self.label_20)
 
-        self.comboBox_7_security_status = QComboBox(self.verticalLayoutWidget)
+        self.comboBox_7_security_status = QComboBox(self.centralwidget)
         self.comboBox_7_security_status.addItem("")
         self.comboBox_7_security_status.addItem("")
         self.comboBox_7_security_status.addItem("")
         self.comboBox_7_security_status.addItem("")
         self.comboBox_7_security_status.setObjectName(u"comboBox_7_security_status")
-        self.comboBox_7_security_status.setMinimumSize(QSize(0, 21))
+        self.comboBox_7_security_status.setMinimumSize(QSize(0, 26))
 
         self.formLayout.setWidget(6, QFormLayout.FieldRole, self.comboBox_7_security_status)
 
-        self.lineEdit_5_title = QLineEdit(self.verticalLayoutWidget)
+        self.lineEdit_5_title = QLineEdit(self.centralwidget)
         self.lineEdit_5_title.setObjectName(u"lineEdit_5_title")
-        self.lineEdit_5_title.setMinimumSize(QSize(200, 21))
+        self.lineEdit_5_title.setMinimumSize(QSize(200, 26))
 
         self.formLayout.setWidget(4, QFormLayout.FieldRole, self.lineEdit_5_title)
 
@@ -171,17 +171,18 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addItem(self.verticalSpacer)
 
-        self.checkBox_replace_spaces = QCheckBox(self.verticalLayoutWidget)
+        self.checkBox_replace_spaces = QCheckBox(self.centralwidget)
         self.checkBox_replace_spaces.setObjectName(u"checkBox_replace_spaces")
 
         self.verticalLayout.addWidget(self.checkBox_replace_spaces)
 
-        self.lineEdit_out_result = QLineEdit(self.verticalLayoutWidget)
+        self.lineEdit_out_result = QLineEdit(self.centralwidget)
         self.lineEdit_out_result.setObjectName(u"lineEdit_out_result")
+        self.lineEdit_out_result.setMinimumSize(QSize(0, 26))
 
         self.verticalLayout.addWidget(self.lineEdit_out_result)
 
-        self.line_2 = QFrame(self.verticalLayoutWidget)
+        self.line_2 = QFrame(self.centralwidget)
         self.line_2.setObjectName(u"line_2")
         self.line_2.setFrameShape(QFrame.HLine)
         self.line_2.setFrameShadow(QFrame.Sunken)
@@ -194,7 +195,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer)
 
-        self.pushButton_copy = QPushButton(self.verticalLayoutWidget)
+        self.pushButton_copy = QPushButton(self.centralwidget)
         self.pushButton_copy.setObjectName(u"pushButton_copy")
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -209,10 +210,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_2)
 
+
+        self.gridLayout.addLayout(self.verticalLayout, 0, 0, 1, 1)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 411, 22))
+        self.menubar.setGeometry(QRect(0, 0, 466, 22))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")

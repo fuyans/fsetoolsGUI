@@ -1,25 +1,31 @@
 import numpy as np
 from PySide2 import QtWidgets, QtGui, QtCore
+from fsetools.lib.fse_activation_hd import heat_detector_temperature_pd7974
+from fsetools.libstd.pd_7974_1_2019 import eq_22_t_squared_fire_growth
 
 from fsetoolsGUI.gui.images_base64 import dialog_0111_context_1 as image_context_1
 from fsetoolsGUI.gui.images_base64 import dialog_0111_context_2 as image_context_2
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_1 as image_figure_1
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_2 as image_figure_2
 from fsetoolsGUI.gui.layout.dialog_0111_heat_detector_activation import Ui_MainWindow as Ui_Dialog
-from fsetools.lib.fse_activation_hd import heat_detector_temperature_pd7974
-from fsetools.libstd.pd_7974_1_2019 import eq_22_t_squared_fire_growth
+from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
 from fsetoolsGUI.gui.logic.dialog_0002_tableview import TableWindow
 
 
-class Dialog0111(QtWidgets.QMainWindow):
+class Dialog0111(QMainWindow):
 
     _numerical_results: dict = None
 
     def __init__(self, parent=None):
         # instantiate ui
-        super().__init__(parent)
+        super().__init__(
+            parent=parent,
+            title='PD 7974-1:2019 Heat Detecting Element Activation Time',
+            shortcut_Return=self.calculate
+        )
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
+        self.init()
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(
@@ -42,7 +48,6 @@ class Dialog0111(QtWidgets.QMainWindow):
                 i.setEnabled(False)
 
         # window properties
-        self.setWindowTitle('PD 7974-1:2019 Heat Detecting Element Activation Time')
         self.ui.pushButton_show_results_in_table.setEnabled(False)
         self.statusBar().setSizeGripEnabled(False)
         self.setFixedSize(self.width(), self.height())
@@ -56,12 +61,6 @@ class Dialog0111(QtWidgets.QMainWindow):
         self.ui.pushButton_test.clicked.connect(self.test)
         self.ui.radioButton_fire_plume.toggled.connect(self.set_temperature_correlation)
         self.ui.pushButton_show_results_in_table.clicked.connect(self.show_results_in_table)
-
-    def keyPressEvent(self, event):
-        if event.key() == 16777221 or event.key() == 16777220 or event.key() == QtCore.Qt.Key_Enter:
-            self.calculate()
-        elif event.key() == QtCore.Qt.Key_Escape:
-            self.close()
 
     def error(self, msg: str, stop: bool = False):
         self.statusBar().showMessage(msg)

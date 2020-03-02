@@ -1,17 +1,22 @@
 from datetime import datetime
 
-from PySide2 import QtWidgets, QtCore, QtGui
+from PySide2 import QtCore, QtGui
 
 from fsetoolsGUI.gui.layout.dialog_0601_naming_convention import Ui_MainWindow
+from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
 
 
-class Dialog0601(QtWidgets.QMainWindow):
+class Dialog0601(QMainWindow):
     def __init__(self, parent=None):
         # init
-        super(Dialog0601, self).__init__(parent)
+        super().__init__(
+            parent=parent,
+            title='OFR File Name Generator',
+            shortcut_Return=self.copy_file_name
+        )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.setWindowTitle('OFR File Name Generator')
+        self.init()
 
         # default values
         self.ui.lineEdit_1_date.setText(datetime.today().strftime('%Y%m%d')[2:])
@@ -38,12 +43,6 @@ class Dialog0601(QtWidgets.QMainWindow):
         # clean up
         self.make_file_name()  # make file name, do not leave the output slot empty
         self.repaint()
-
-    def keyPressEvent(self, event):
-        if event.key() == 16777221 or event.key() == 16777220 or event.key() == QtCore.Qt.Key_Enter:
-            self.copy_file_name()
-        elif event.key() == QtCore.Qt.Key_Escape:
-            self.close()
 
     def make_file_name(self):
         aa = self.ui.lineEdit_1_date.text()

@@ -1,15 +1,15 @@
 from PySide2 import QtWidgets, QtGui, QtCore
+from fsetools.libstd.bs_9999_2017 import (
+    clause_15_6_6_e_merging_flow_1, clause_15_6_6_e_merging_flow_2, clause_15_6_6_e_merging_flow_3
+)
 
 from fsetoolsGUI.gui.images_base64 import dialog_0103_bs9999_mergine_flow_figure_1 as image_figure_1
 from fsetoolsGUI.gui.images_base64 import dialog_0103_bs9999_mergine_flow_figure_2 as image_figure_2
 from fsetoolsGUI.gui.images_base64 import dialog_0103_bs9999_mergine_flow_figure_3 as image_figure_3
 from fsetoolsGUI.gui.images_base64 import dialog_0103_bs9999_merging_flow_context as image_context
 from fsetoolsGUI.gui.layout.dialog_0103_merging_flow import Ui_MainWindow
-from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
-from fsetools.libstd.bs_9999_2017 import (
-    clause_15_6_6_e_merging_flow_1, clause_15_6_6_e_merging_flow_2, clause_15_6_6_e_merging_flow_3
-)
+from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 
 
 class Dialog0103(QMainWindow):
@@ -18,10 +18,14 @@ class Dialog0103(QMainWindow):
 
     def __init__(self, parent=None):
         # instantiation
-        super().__init__(parent=parent, title='Means of Escape Merging Flow')
+        super().__init__(
+            parent=parent,
+            title='Means of Escape Merging Flow',
+            shortcut_Return=self.calculate
+        )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        # self.setWindowTitle('Means of Escape Merging Flow')
+        self.init()
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(
@@ -59,12 +63,6 @@ class Dialog0103(QMainWindow):
         self.ui.radioButton_opt_scenario_1.toggled.connect(self.change_option_scenarios)
         self.ui.radioButton_opt_scenario_2.toggled.connect(self.change_option_scenarios)
         self.ui.radioButton_opt_scenario_3.toggled.connect(self.change_option_scenarios)
-
-    def keyPressEvent(self, event):
-        if event.key() == 16777221 or event.key() == 16777220 or event.key() == QtCore.Qt.Key_Enter:
-            self.calculate()
-        elif event.key() == QtCore.Qt.Key_Escape:
-            self.close()
 
     def change_option_scenarios(self):
         """When mode changes, turn off (grey them out) not required inputs and clear their value."""

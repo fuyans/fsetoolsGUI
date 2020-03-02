@@ -1,12 +1,12 @@
 from PySide2 import QtWidgets, QtCore, QtGui
-
-from fsetoolsGUI.gui.images_base64 import dialog_0602_context as image_context
-from fsetoolsGUI.gui.images_base64 import dialog_0602_figure as image_figure
-from fsetoolsGUI.gui.layout.dialog_0602_pd_7974_flame_height import Ui_MainWindow
 from fsetools.lib.fse_flame_height import mean_flame_height_pd_7974
 from fsetools.libstd.pd_7974_1_2019 import eq_11_dimensionless_hrr_rectangular
 from fsetools.libstd.pd_7974_1_2019 import eq_12_dimensionless_hrr_line
 from fsetools.libstd.pd_7974_1_2019 import eq_5_dimensionless_hrr
+
+from fsetoolsGUI.gui.images_base64 import dialog_0602_context as image_context
+from fsetoolsGUI.gui.images_base64 import dialog_0602_figure as image_figure
+from fsetoolsGUI.gui.layout.dialog_0602_pd_7974_flame_height import Ui_MainWindow
 from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
 
 
@@ -16,7 +16,11 @@ class Dialog0602(QMainWindow):
     def __init__(self, parent=None):
 
         # instantiate ui
-        super().__init__(parent=parent, title='PD 7974-1:2019 Mean Flame Height')
+        super().__init__(
+            parent=parent,
+            title='PD 7974-1:2019 Mean Flame Height',
+            shortcut_Return=self.calculate
+        )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.setFixedSize(self.width(), self.height())
@@ -49,12 +53,6 @@ class Dialog0602(QMainWindow):
         self.ui.comboBox_fire_shape.currentIndexChanged.connect(self.change_fire_shape)
         self.ui.pushButton_test.clicked.connect(self.test)
         self.ui.pushButton_calculate.clicked.connect(self.calculate)
-
-    def keyPressEvent(self, event):
-        if event.key() == 16777221 or event.key() == 16777220 or event.key() == QtCore.Qt.Key_Enter:
-            self.copy_file_name()
-        elif event.key() == QtCore.Qt.Key_Escape:
-            self.close()
 
     def change_fire_shape(self):
         if self.ui.comboBox_fire_shape.currentIndex() == 0:  # circular fire source

@@ -1,10 +1,8 @@
-import operator
-
-from PySide2 import QtCore
-from PySide2 import QtGui
-from PySide2 import QtWidgets
 import csv
 import io
+import operator
+
+from PySide2 import QtGui, QtCore, QtWidgets
 
 
 class TableWindow(QtWidgets.QDialog):
@@ -67,7 +65,7 @@ class TableWindow(QtWidgets.QDialog):
 
 
 class TableModel(QtCore.QAbstractTableModel):
-    def __init__(self, parent: list, content: list, row_header: list, *args):
+    def __init__(self, parent: QtWidgets.QTableView, content: list, row_header: list, *args):
         super().__init__(parent=parent, *args)
         self.row_header = row_header
         self.content = content

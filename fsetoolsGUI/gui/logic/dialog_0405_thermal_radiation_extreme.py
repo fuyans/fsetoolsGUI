@@ -1,18 +1,24 @@
-from PySide2 import QtWidgets, QtGui, QtCore
 import numpy as np
+from PySide2 import QtWidgets, QtGui, QtCore
 from fsetools.lib.fse_thermal_radiation_3d import single_receiver, heat_flux_to_temperature
+
 from fsetoolsGUI.gui.images_base64 import dialog_0404_br187_perpendicular_figure_1
 from fsetoolsGUI.gui.layout.dialog_0405_thermal_radiation_extreme import Ui_MainWindow
+from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
 
 
-class Dialog0405(QtWidgets.QMainWindow):
+class Dialog0405(QMainWindow):
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
 
     def __init__(self, parent=None):
-        super(Dialog0405, self).__init__(parent)
+        super().__init__(
+            parent=parent,
+            title='TRA 3D Any Point',
+            shortcut_Return=self.calculate
+        )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.setWindowTitle('Thermal Radiation Analysis Extreme')
+        self.init()
 
         from fsetoolsGUI.gui.logic.common import filter_objects_by_name
         for i in filter_objects_by_name(self.ui.groupBox_out, object_types=[QtWidgets.QLineEdit]):
@@ -34,12 +40,6 @@ class Dialog0405(QtWidgets.QMainWindow):
         # set signals
         self.ui.pushButton_test.clicked.connect(self.test)
         self.ui.pushButton_calculate.clicked.connect(self.calculate)
-
-    def keyPressEvent(self, event):
-        if event.key() == 16777221 or event.key() == 16777220 or event.key() == QtCore.Qt.Key_Enter:
-            self.copy_file_name()
-        elif event.key() == QtCore.Qt.Key_Escape:
-            self.close()
 
     def test(self):
 

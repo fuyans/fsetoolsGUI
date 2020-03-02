@@ -1,7 +1,7 @@
 import sys
 
 import matplotlib.pyplot as plt
-from PySide2 import QtWidgets, QtGui
+from PySide2 import QtWidgets, QtGui, QtCore
 
 from fsetoolsGUI.gui.layout.dialog_0406_thermal_radiation_contour_2d import Ui_MainWindow
 from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
@@ -24,7 +24,11 @@ except ModuleNotFoundError:
 class Dialog0406(QMainWindow):
 
     def __init__(self, parent=None):
-        super().__init__(title='Thermal Radiation Analysis 2D', parent=parent)
+        super().__init__(
+            title='TRA 2D Parallel',
+            parent=parent,
+            shortcut_Return=self.submit
+        )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.init()
@@ -34,11 +38,10 @@ class Dialog0406(QMainWindow):
         self.figure.patch.set_facecolor('None')
 
         self.ax = self.figure.subplots()
-        # self.figure, self.ax = plt.subplots()
         self.figure_canvas = FigureCanvas(self.figure)
-        self.figure_canvas.setStyleSheet("background-color:transparent;")
+        self.figure_canvas.setStyleSheet("background-color:transparent;")  # set the plt widget background from white to transparent.
         self.ui.verticalLayout_plot.addWidget(self.figure_canvas)
-        # self.addToolBar(NavigationToolbar(self.figure_canvas, self))
+        # self.addToolBar(NavigationToolbar(self.figure_canvas, self))  # add plt default toolbar.
 
         # instantiate variables
         self.param_dict = None  # input and output parameters
@@ -51,37 +54,43 @@ class Dialog0406(QMainWindow):
         self.ui.pushButton_refresh.clicked.connect(self.update_plot)
         self.ui.pushButton_save_figure.clicked.connect(self.save_figure)
         self.ui.pushButton_example.clicked.connect(self.example)
-        self.ui.pushButton_emitter_list_append.clicked.connect(self.table_emitters_insert)
-        self.ui.pushButton_emitter_list_remove.clicked.connect(self.table_emitters_remove)
+        self.ui.pushButton_emitter_list_append.clicked.connect(lambda x=self.TableModel_emitters, y=self.ui.tableView_emitters: self.table_insert(x, y))
+        self.ui.pushButton_emitter_list_remove.clicked.connect(lambda x=self.TableModel_emitters, y=self.ui.tableView_emitters: self.table_remove(x, y))
+        self.ui.pushButton_receiver_list_append.clicked.connect(lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_insert(x, y))
+        self.ui.pushButton_receiver_list_remove.clicked.connect(lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_remove(x, y))
 
         # containers
         self.__is_first_submit: bool = True
         self.__solver_parameters: dict = dict()
 
-    def table_emitters_insert(self):
+    def table_insert(self, TableModel:TableModel, TableView:QtWidgets.QTableView):
         # get selected row index
 
-        selected_indexes = self.ui.tableView_emitters.selectionModel().selectedIndexes()
+        selected_indexes = TableView.selectionModel().selectedIndexes()
         selected_row_index = selected_indexes[-1].row()
         # insert
-        self.TableModel_emitters.insertRow(selected_row_index)
-        self.ui.tableView_emitters.layoutChanged().emit()
-        self.ui.tableView_emitters.resizeRowsToContents()
+        TableModel.insertRow(selected_row_index)
+        # self.ui.tableView_emitters.layoutChanged().emit()
+        TableView.resizeRowsToContents()
         self.repaint()
 
-    def table_emitters_remove(self):
-        if self.TableModel_emitters.rowCount(self.ui.tableView_emitters) <= 1:
+    def table_remove(self, TableModel:TableModel, TableView:QtWidgets.QTableView):
+        if TableModel.rowCount(TableView) <= 1:
             raise ValueError('Not enough rows to delete.')
 
         # get selected row index
-        selected_indexes = self.ui.tableView_emitters.selectionModel().selectedIndexes()
-        selected_row_index = selected_indexes[-1].row()
+        selected_indexes = TableView.selectionModel().selectedIndexes()
+        if len(selected_indexes) > 1:
+            selected_row_index = selected_indexes[-1].row()
+        else:
+            selected_row_index = selected_indexes[0].row()
+        print(selected_indexes)
+        print(selected_row_index)
         # remove
-        self.TableModel_emitters.removeRow(selected_row_index)
-        self.ui.tableView_emitters.layoutChanged().emit()
-        self.ui.tableView_emitters.resizeRowsToContents()
+        TableModel.removeRow(selected_row_index)
+        # self.ui.tableView_emitters.layoutChanged().emit()
+        TableView.resizeRowsToContents()
         self.repaint()
-
 
     def init_table(self):
 
@@ -98,10 +107,12 @@ class Dialog0406(QMainWindow):
         self.ui.tableView_emitters.resizeColumnsToContents()
 
         self.ui.tableView_emitters.setColumnWidth(0, (self.ui.tableView_emitters.geometry().width() - 5) * .2)
-        self.ui.tableView_emitters.setColumnWidth(1, (self.ui.tableView_emitters.geometry().width() - 5) * .217)
-        self.ui.tableView_emitters.setColumnWidth(2, (self.ui.tableView_emitters.geometry().width() - 5) * .217)
-        self.ui.tableView_emitters.setColumnWidth(3, (self.ui.tableView_emitters.geometry().width() - 5) * .217)
-        self.ui.tableView_emitters.setColumnWidth(4, (self.ui.tableView_emitters.geometry().width() - 5) * .15)
+        self.ui.tableView_emitters.setColumnWidth(1, (self.ui.tableView_emitters.geometry().width() - 5) * .2)
+        self.ui.tableView_emitters.setColumnWidth(2, (self.ui.tableView_emitters.geometry().width() - 5) * .2)
+        self.ui.tableView_emitters.setColumnWidth(3, (self.ui.tableView_emitters.geometry().width() - 5) * .2)
+        self.ui.tableView_emitters.setColumnWidth(4, (self.ui.tableView_emitters.geometry().width() - 5) * .2)
+        self.ui.tableView_emitters.horizontalScrollBar().setEnabled(False)
+        self.ui.tableView_emitters.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.ui.tableView_emitters.resizeRowsToContents()
 
         receiver_list_default = [
@@ -119,6 +130,8 @@ class Dialog0406(QMainWindow):
         self.ui.tableView_receivers.setColumnWidth(0, (self.ui.tableView_emitters.geometry().width() - 5) * .2)
         self.ui.tableView_receivers.setColumnWidth(1, (self.ui.tableView_emitters.geometry().width() - 5) * .217)
         self.ui.tableView_receivers.setColumnWidth(2, (self.ui.tableView_emitters.geometry().width() - 5) * .217)
+        self.ui.tableView_receivers.horizontalScrollBar().setEnabled(False)
+        self.ui.tableView_receivers.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.ui.tableView_receivers.resizeRowsToContents()
 
     def submit(self):
@@ -214,7 +227,7 @@ class Dialog0406(QMainWindow):
         self.solver_parameters = param_dict
         self.repaint()
 
-        self.submit()
+        # self.submit()
 
     @property
     def solver_parameters(self) -> dict:
@@ -237,20 +250,6 @@ class Dialog0406(QMainWindow):
 
         # emitters, parse emitter parameters
         solver_parameter_dict['emitter_list'] = self.solver_parameter_emitters
-        # solver_parameter_dict['emitter_list'] = [
-        #     dict(
-        #         name='facade 1',
-        #         x=[-10, 0],
-        #         y=[-10, 0],
-        #         z=[-1, 1],
-        #         heat_flux=168, ),
-        #     dict(
-        #         name='facade 2',
-        #         x=[0, 10],
-        #         y=[0, -10],
-        #         z=[-1, 1],
-        #         heat_flux=168, ),
-        # ]
 
         # receivers, parse receiver parameters
         solver_parameter_dict['receiver_list'] = self.solver_parameter_receivers

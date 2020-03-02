@@ -80,11 +80,8 @@ class QMainWindow(QtWidgets.QMainWindow):
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
             self.close()
-        elif event.key() == QtCore.Qt.Key_Return:
-            try:
-                self.__shortcut_Return()
-            except TypeError:
-                pass
+        elif event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
+            self.__shortcut_Return()
 
     @staticmethod
     def make_pixmap_from_base64(image_base64: bytes):

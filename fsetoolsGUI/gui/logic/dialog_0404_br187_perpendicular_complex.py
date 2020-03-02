@@ -1,18 +1,23 @@
 from PySide2 import QtWidgets, QtGui, QtCore
+from fsetools.lib.fse_thermal_radiation import phi_perpendicular_any_br187, linear_solver
 
 from fsetoolsGUI.gui.images_base64 import dialog_0404_br187_perpendicular_figure_1 as figure_1
 from fsetoolsGUI.gui.layout.dialog_0403_br187_parallel_complex import Ui_MainWindow
-from fsetools.lib.fse_thermal_radiation import phi_perpendicular_any_br187, linear_solver
+from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
 
 
-class Dialog0404(QtWidgets.QMainWindow):
+class Dialog0404(QMainWindow):
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
 
     def __init__(self, parent=None):
-        super(Dialog0404, self).__init__(parent)
+        super().__init__(
+            parent=parent,
+            title='BR 187 Thermal Radiation Calculator (Perpendicular Complex)',
+            shortcut_Return=self.calculate
+        )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.setWindowTitle('BR 187 Thermal Radiation Calculator (Perpendicular Complex)')
+        self.init()
 
         from fsetoolsGUI.gui.logic.common import filter_objects_by_name
         for i in filter_objects_by_name(self.ui.groupBox_out, object_types=[QtWidgets.QLineEdit]):
@@ -30,12 +35,6 @@ class Dialog0404(QtWidgets.QMainWindow):
         self.ui.comboBox_S_or_UA.currentTextChanged.connect(self.change_mode_S_and_UA)
         self.ui.pushButton_calculate.clicked.connect(self.calculate)
         self.ui.pushButton_test.clicked.connect(self.test)
-
-    def keyPressEvent(self, event):
-        if event.key() == 16777221 or event.key() == 16777220 or event.key() == QtCore.Qt.Key_Enter:
-            self.calculate()
-        elif event.key() == QtCore.Qt.Key_Escape:
-            self.close()
 
     def test(self):
 
