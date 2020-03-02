@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'dialog_0405_thermal_radiation_extreme.ui'
+## Form generated from reading UI file 'dialog_0405_tra_3d_point.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.1
 ##

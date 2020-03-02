@@ -12,8 +12,8 @@ from fsetoolsGUI.gui.logic.dialog_0401_br187_parallel_simple import Dialog0401 a
 from fsetoolsGUI.gui.logic.dialog_0402_br187_perpendicular_simple import Dialog0402 as Dialog0402
 from fsetoolsGUI.gui.logic.dialog_0403_br187_parallel_complex import Dialog0403 as Dialog0403
 from fsetoolsGUI.gui.logic.dialog_0404_br187_perpendicular_complex import Dialog0404 as Dialog0404
-from fsetoolsGUI.gui.logic.dialog_0405_thermal_radiation_extreme import Dialog0405 as Dialog0405
-from fsetoolsGUI.gui.logic.dialog_0406_thermal_radiation_contour_2d import Dialog0406 as Dialog0406
+from fsetoolsGUI.gui.logic.dialog_0405_tra_3d_point import Dialog0405 as Dialog0405
+from fsetoolsGUI.gui.logic.dialog_0406_tra_2d_xy_contour import Dialog0406 as Dialog0406
 from fsetoolsGUI.gui.logic.dialog_0601_naming_convention import Dialog0601 as Dialog0601
 from fsetoolsGUI.gui.logic.dialog_0602_pd7974_flame_height import Dialog0602 as Dialog0602
 from fsetoolsGUI.etc.util import check_online_version
@@ -110,7 +110,7 @@ class MainWindow(QMainWindow):
             self.ui.label_version.setStyleSheet('color: black;')
         elif version.parse(online_version) > version.parse(fsetoolsGUI.__version__):
             version_label_text = f'New version {version_label_text} available.' + ' Click to download.'
-            self.ui.label_version.setStyleSheet('color: red;')
+            self.ui.label_version.setStyleSheet('color: black;')
         else:
             version_label_text = 'Version ' + online_version
             self.ui.label_version.setStyleSheet('color: grey;')

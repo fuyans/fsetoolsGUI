@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'dialog_0406_thermal_radiation_contour_2d.ui'
+## Form generated from reading UI file 'dialog_0406_tra_2d_xy_contour.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.1
 ##

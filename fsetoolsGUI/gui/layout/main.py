@@ -20,7 +20,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(495, 634)
+        MainWindow.resize(495, 699)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -53,7 +53,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(35, 35, 35, 35)
+        self.verticalLayout_2.setContentsMargins(35, 35, 35, 100)
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.verticalLayout = QVBoxLayout()
@@ -254,6 +254,7 @@ class Ui_MainWindow(object):
         self.label_version = QLabel(self.centralwidget)
         self.label_version.setObjectName(u"label_version")
         self.label_version.setMinimumSize(QSize(0, 14))
+        self.label_version.setMaximumSize(QSize(16777215, 14))
         font1 = QFont()
         font1.setPointSize(6)
         self.label_version.setFont(font1)

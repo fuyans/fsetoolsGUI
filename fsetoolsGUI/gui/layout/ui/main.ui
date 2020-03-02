@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>495</width>
-    <height>634</height>
+    <height>699</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -36,7 +36,7 @@
        <number>35</number>
       </property>
       <property name="bottomMargin">
-       <number>35</number>
+       <number>100</number>
       </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">

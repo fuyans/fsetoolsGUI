@@ -3,7 +3,7 @@ from PySide2 import QtWidgets, QtGui, QtCore
 from fsetools.lib.fse_thermal_radiation_3d import single_receiver, heat_flux_to_temperature
 
 from fsetoolsGUI.gui.images_base64 import dialog_0404_br187_perpendicular_figure_1
-from fsetoolsGUI.gui.layout.dialog_0405_thermal_radiation_extreme import Ui_MainWindow
+from fsetoolsGUI.gui.layout.dialog_0405_tra_3d_point import Ui_MainWindow
 from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
 
 
