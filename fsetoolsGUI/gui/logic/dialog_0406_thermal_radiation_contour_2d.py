@@ -3,7 +3,7 @@ import sys
 import matplotlib.pyplot as plt
 from PySide2 import QtWidgets, QtGui, QtCore
 
-from fsetoolsGUI.gui.layout.dialog_0406_tra_2d_xy_contour import Ui_MainWindow
+from fsetoolsGUI.gui.layout.dialog_0406_thermal_radiation_contour_2d import Ui_MainWindow
 from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
 from fsetools.lib.fse_thermal_radiation_2d_v2 import main, main_plot
 
