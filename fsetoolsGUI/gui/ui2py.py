@@ -15,7 +15,7 @@ def ui2py():
         'dialog_0601_naming_convention.ui',
         'dialog_0602_pd_7974_flame_height.ui',
     ]
-
+    
     cwd = join(dirname(realpath(__file__)), 'layout', 'ui')
     destination_dir = join(dirname(realpath(__file__)), 'layout')
 

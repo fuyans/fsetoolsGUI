@@ -197,14 +197,10 @@ class Dialog0111(QMainWindow):
             parent=self,
             data_list=list_content,
             header=list_title,
-            window_title='Numerical Results'
+            window_title='Numerical Results',
+            window_geometry=(300, 200, 570, 450)
         )
 
         app_.TableModel.sort(0, QtCore.Qt.AscendingOrder)
 
         app_.show()
-        try:
-            app_.exec_()
-        except AttributeError:
-            pass
-        return app_

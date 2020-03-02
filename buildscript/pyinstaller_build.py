@@ -21,7 +21,8 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
     cmd_option_list = [
         f'-n={app_name}',
         "--icon=" + realpath(join("etc", "ofr_logo_1_80_80.ico")),
-        '--exclude-module=' + 'docopt'
+        '--exclude-module=' + 'docopt',
+        '--exclude-module=' + 'setuptools',
     ]
     if 'dev' in fsetoolsGUI.__version__:
         print('Dev. build is enabled.')

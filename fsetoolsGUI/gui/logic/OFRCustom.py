@@ -10,31 +10,35 @@ CSS = \
             {
                 'background-color': 'white',
             },
-        'QLabel#label':
+        'QGroupBox':
             {
-                'color': '#888888',
                 'background-color': 'white',
-                # 'font-weight': 'bold',
+
             },
-        'QLabel#label:active':
+        # 'QLabel#QLabel':
+        #     {
+        #         'color': '#888888',
+        #         'background-color': 'white',
+        #         # 'font-weight': 'bold',
+        #     },
+        # 'QLabel#QLabel:active':
+        #     {
+        #         'color': '#1d90cd',
+        #     },
+        'QPushButton':
             {
-                'color': '#1d90cd',
+                'background-color': '#f5f5f5',
+                'border-style': 'outset',
+                'border-width': '1px',
+                'border-color': 'grey',
             },
-        'QPushButton#button':
+        # 'QPushButton:active':
+        #     {
+        #         'background-color': '#f5f5f5',
+        #     },
+        'QPushButton:hover':
             {
-                'color': 'grey',
                 'background-color': 'grey',
-                # 'font-weight': 'bold',
-                'border': '1px',
-                # 'padding': '5px',
-            },
-        'QPushButton#button:active':
-            {
-                'color': '#ffffff',
-            },
-        'QPushButton#button:hover':
-            {
-                'color': 'red',
             }
     }
 
@@ -82,6 +86,9 @@ class QMainWindow(QtWidgets.QMainWindow):
             self.close()
         elif event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
             self.__shortcut_Return()
+
+    def update_label_text(self, QLabel:QtWidgets.QLabel, val: str):
+        QLabel.setText(val)
 
     @staticmethod
     def make_pixmap_from_base64(image_base64: bytes):

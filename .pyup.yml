@@ -27,7 +27,7 @@ search: True
 # allowed: list
 requirements: empty
 
-# add a label to pull requests, default is not set
+# add a QLabel to pull requests, default is not set
 # requires private repo permissions, even on public repos
 # default: empty
 label_prs: update

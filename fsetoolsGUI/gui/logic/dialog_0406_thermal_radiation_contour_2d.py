@@ -58,10 +58,24 @@ class Dialog0406(QMainWindow):
         self.ui.pushButton_emitter_list_remove.clicked.connect(lambda x=self.TableModel_emitters, y=self.ui.tableView_emitters: self.table_remove(x, y))
         self.ui.pushButton_receiver_list_append.clicked.connect(lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_insert(x, y))
         self.ui.pushButton_receiver_list_remove.clicked.connect(lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_remove(x, y))
+        self.ui.horizontalSlider_graphic_line_thickness.valueChanged.connect(self._update_label_line_thickness)
+        self.ui.horizontalSlider_graphic_contour_font_size.valueChanged.connect(self._update_label_contour_font_size)
 
         # containers
         self.__is_first_submit: bool = True
         self.__solver_parameters: dict = dict()
+
+    def _update_label_line_thickness(self):
+        self.update_label_text(
+            self.ui.label_graphic_line_thickness,
+            f'{self.ui.horizontalSlider_graphic_line_thickness.value()}'
+        )
+
+    def _update_label_contour_font_size(self):
+        self.update_label_text(
+            self.ui.label_graphic_contour_label_font_size,
+            f'{self.ui.horizontalSlider_graphic_contour_font_size.value()} pt'
+        )
 
     def table_insert(self, TableModel:TableModel, TableView:QtWidgets.QTableView):
         # get selected row index
@@ -137,11 +151,11 @@ class Dialog0406(QMainWindow):
     def submit(self):
 
         if self.__is_first_submit:
-            main_plot(main(self.solver_parameters), ax=self.ax, fig=self.figure)
+            main_plot(main(self.solver_parameters), ax=self.ax, fig=self.figure, **self.graphic_parameters)
             self.__is_first_submit = False
         else:
             self.ax.clear()
-            main_plot(main(self.solver_parameters), ax=self.ax)
+            main_plot(main(self.solver_parameters), ax=self.ax, **self.graphic_parameters)
 
         self.update_plot()
 
@@ -228,6 +242,9 @@ class Dialog0406(QMainWindow):
         self.repaint()
 
         # self.submit()
+    #
+    # def update_slider_value(self):
+    #     self.
 
     @property
     def solver_parameters(self) -> dict:
@@ -365,6 +382,19 @@ class Dialog0406(QMainWindow):
         self.TableModel_receivers.content = receiver_list_prepared
         self.ui.tableView_receivers.model().layoutChanged.emit()
         self.repaint()
+
+    @property
+    def graphic_parameters(self):
+        param_dict = dict(
+            critical_heat_flux=float(self.ui.lineEdit_graphic_critical_heat_flux.text()),
+            contour_line_font_size=float(self.ui.horizontalSlider_graphic_contour_font_size.value()),
+            emitter_receiver_line_thickness=float(self.ui.horizontalSlider_graphic_line_thickness.value())
+        )
+        return param_dict
+
+    @graphic_parameters.setter
+    def graphic_parameters(self, param_dict: dict):
+        pass  # todo
 
     def update_plot(self):
 

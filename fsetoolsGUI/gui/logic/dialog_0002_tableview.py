@@ -6,18 +6,23 @@ from PySide2 import QtGui, QtCore, QtWidgets
 
 
 class TableWindow(QtWidgets.QDialog):
-
-    def __init__(self, data_list, header, window_title: str = None, parent=None, *args):
+    def __init__(
+            self,
+            data_list: list,
+            header: list,
+            window_title: str = None,
+            window_geometry: tuple = (),
+            parent=None,
+            *args,
+    ):
 
         super().__init__(parent, *args)
         self.setWindowFlag(QtCore.Qt.WindowCloseButtonHint, True)
         self.setWindowFlag(QtCore.Qt.WindowMinimizeButtonHint, True)
         self.setWindowFlag(QtCore.Qt.WindowMaximizeButtonHint, True)
 
-        # QtWidgets.QWidget.__init__(self, *args)
-        # setGeometry(x_pos, y_pos, width, height)
-
-        self.setGeometry(300, 200, 570, 450)
+        if window_geometry:
+            self.setGeometry(*window_geometry)
 
         if window_title:
             self.setWindowTitle(window_title)
@@ -40,6 +45,7 @@ class TableWindow(QtWidgets.QDialog):
         layout.addWidget(self.TableView)
         self.setLayout(layout)
 
+
     def CopySelection(self):
         selection = self.TableView.selectedIndexes()
         if selection:
@@ -54,13 +60,11 @@ class TableWindow(QtWidgets.QDialog):
                 table[row][column] = index.data()
             stream = io.StringIO()
             csv.writer(stream, delimiter='\t').writerows(table)
-            # QtWidgets.qApp.clipboard().setText(stream.getvalue())
             QtGui.QClipboard().setText(stream.getvalue())
         return
 
     def keyPressEvent(self, event):
-        if QtGui.QKeySequence(event.key()+int(event.modifiers())) == QtGui.QKeySequence('Ctrl+C'):
-            print('hello world.')
+        if QtGui.QKeySequence(event.key() + int(event.modifiers())) == QtGui.QKeySequence('Ctrl+C'):
             self.CopySelection()
 
 
@@ -76,7 +80,7 @@ class TableModel(QtCore.QAbstractTableModel):
         else:
             return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
 
-    def setData(self, index, value, role:QtCore.Qt.EditRole):
+    def setData(self, index, value, role: QtCore.Qt.EditRole):
         """
         Edit data in table cells
         :param index:
@@ -122,7 +126,7 @@ class TableModel(QtCore.QAbstractTableModel):
             self.content.reverse()
         self.emit(QtCore.SIGNAL("layoutChanged()"))
 
-    def removeRow(self, position:int, index=QtCore.QModelIndex()):
+    def removeRow(self, position: int, index=QtCore.QModelIndex()):
         self.beginRemoveRows(QtCore.QModelIndex(), position, position - 1)
         del self.content[position]
         self.endRemoveRows()
@@ -130,7 +134,7 @@ class TableModel(QtCore.QAbstractTableModel):
 
     def insertRow(self, position, index=QtCore.QModelIndex()):
         self.beginInsertRows(QtCore.QModelIndex(), position, position - 1)
-        self.content.insert(position, ['']*len(self.content[0]))
+        self.content.insert(position, [''] * len(self.content[0]))
         self.endInsertRows()
         return True
 
