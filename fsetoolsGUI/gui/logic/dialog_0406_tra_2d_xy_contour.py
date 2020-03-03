@@ -1,13 +1,13 @@
 import sys
+import time
 
 import matplotlib.pyplot as plt
-from PySide2 import QtWidgets, QtGui, QtCore
+from PySide2 import QtWidgets, QtCore
+from fsetools.lib.fse_thermal_radiation_2d_v2 import main, main_plot
 
 from fsetoolsGUI.gui.layout.dialog_0406_tra_2d_xy_contour import Ui_MainWindow
 from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
-from fsetools.lib.fse_thermal_radiation_2d_v2 import main, main_plot
-
-from fsetoolsGUI.gui.logic.dialog_0002_tableview import TableModel, TableWindow
+from fsetoolsGUI.gui.logic.dialog_0002_tableview import TableModel
 
 try:
     from matplotlib.backends.backend_qt5agg import (
@@ -33,7 +33,7 @@ class Dialog0406(QMainWindow):
         self.ui.setupUi(self)
         self.init()
 
-        # instantiate plot objects
+        # instantiate objects
         self.figure = plt.figure()
         self.figure.patch.set_facecolor('None')
 
@@ -64,6 +64,17 @@ class Dialog0406(QMainWindow):
         # containers
         self.__is_first_submit: bool = True
         self.__solver_parameters: dict = dict()
+
+        self.WorkerCalculator = Worker(MasterWidget=self)
+        self.WorkerCalculator.updateProgress.connect(self.submit_set_progress)
+
+    @property
+    def is_first_plot(self):
+        return self.__is_first_submit
+
+    @is_first_plot.setter
+    def is_first_plot(self, v: bool):
+        self.__is_first_submit = v
 
     def _update_label_line_thickness(self):
         self.update_label_text(
@@ -150,14 +161,23 @@ class Dialog0406(QMainWindow):
 
     def submit(self):
 
-        if self.__is_first_submit:
-            main_plot(main(self.solver_parameters), ax=self.ax, fig=self.figure, **self.graphic_parameters)
-            self.__is_first_submit = False
-        else:
-            self.ax.clear()
-            main_plot(main(self.solver_parameters), ax=self.ax, **self.graphic_parameters)
+        self.WorkerCalculator._solver_parameters = self.solver_parameters
+        self.WorkerCalculator._fig = self.figure
+        self.WorkerCalculator._ax = self.ax
+        self.WorkerCalculator._graphic_parameters = self.graphic_parameters
+        self.WorkerCalculator._is_first_submit = self.__solver_parameters
 
-        self.update_plot()
+        self.WorkerCalculator.start()
+        # solver_parameters_out = self.__solver_parameters
+        #
+        # if self.__is_first_submit:
+        #     main_plot(solver_parameters_out, ax=self.ax, fig=self.figure, **self.graphic_parameters)
+        #     self.__is_first_submit = False
+        # else:
+        #     self.ax.clear()
+        #     main_plot(solver_parameters_out, ax=self.ax, **self.graphic_parameters)
+        #
+        # self.update_plot()
 
     def example(self):
 
@@ -264,6 +284,7 @@ class Dialog0406(QMainWindow):
         solver_parameter_dict['solver_domain']['x'] = solver_domain_x
         solver_parameter_dict['solver_domain']['y'] = solver_domain_y
         solver_parameter_dict['solver_domain']['z'] = solver_domain_z
+        solver_parameter_dict['solver_domain']['z'] = None
 
         # emitters, parse emitter parameters
         solver_parameter_dict['emitter_list'] = self.solver_parameter_emitters
@@ -411,6 +432,50 @@ class Dialog0406(QMainWindow):
 
         self.figure.savefig(path_to_file, dpi=96, transparent=True)
 
+    def submit_set_progress(self, progress):
+        self.ui.progressBar.setValue(progress)
+
+
+
+#Inherit from QThread
+class Worker(QtCore.QThread):
+
+    #This is the signal that will be emitted during the processing.
+    #By including int as an argument, it lets the signal know to expect
+    #an integer argument when emitting.
+    updateProgress = QtCore.Signal(int)
+
+    #You can do any extra things in this init you need, but for this example
+    #nothing else needs to be done expect call the super's init
+    def __init__(
+            self,
+            MasterWidget: Dialog0406,
+            parent=None,
+    ):
+        QtCore.QThread.__init__(self, parent)
+
+        self.MasterWidget = MasterWidget
+
+    #A QThread is run by calling it's start() function, which calls this run()
+    #function in it's own "thread".
+    def run(self):
+        #Notice this is the same thing you were doing in your progress() function
+
+        if self.MasterWidget.solver_parameters:
+            solver_parameters = main(self.MasterWidget.solver_parameters, QtCore_ProgressSignal=self.updateProgress)
+            self.updateProgress.emit(100)
+
+            if self.MasterWidget.is_first_plot:
+                main_plot(solver_parameters, ax=self.MasterWidget.ax, fig=self.MasterWidget.figure, **self.MasterWidget.graphic_parameters)
+                self.MasterWidget.is_first_plot = False
+            else:
+                self.MasterWidget.ax.clear()
+                main_plot(solver_parameters, ax=self._ax, **self._graphic_parameters)
+
+        self.MasterWidget.update_plot()
+#
+# def setProgress(self, progress):
+#     self.progressBar.setValue(progress)
 
 if __name__ == "__main__":
     qapp = QtWidgets.QApplication(sys.argv)
