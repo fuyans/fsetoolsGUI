@@ -30,7 +30,7 @@ class Dialog0402(QMainWindow):
 
         self.ui.comboBox_S_or_UA.currentTextChanged.connect(self.change_mode_S_and_UA)
         self.ui.pushButton_calculate.clicked.connect(self.calculate)
-        self.ui.pushButton_test.clicked.connect(self.test)
+        self.ui.pushButton_test.clicked.connect(self.example)
 
     def keyPressEvent(self, event):
         if event.key() == 16777221 or event.key() == 16777220 or event.key() == QtCore.Qt.Key_Enter:
@@ -38,7 +38,7 @@ class Dialog0402(QMainWindow):
         else:
             super().keyPressEvent(event)
 
-    def test(self):
+    def example(self):
 
         self.ui.lineEdit_W.setText('50')
         self.ui.lineEdit_H.setText('50')
@@ -46,8 +46,6 @@ class Dialog0402(QMainWindow):
         self.ui.comboBox_S_or_UA.setCurrentIndex(0)
         self.change_mode_S_and_UA()
         self.ui.lineEdit_S_or_UA.setText('2')
-
-        self.calculate()
 
         self.repaint()
 

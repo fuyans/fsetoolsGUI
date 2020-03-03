@@ -58,7 +58,7 @@ class Dialog0111(QMainWindow):
 
         # signals
         self.ui.pushButton_calculate.clicked.connect(self.calculate)
-        self.ui.pushButton_test.clicked.connect(self.test)
+        self.ui.pushButton_test.clicked.connect(self.example)
         self.ui.radioButton_fire_plume.toggled.connect(self.set_temperature_correlation)
         self.ui.pushButton_show_results_in_table.clicked.connect(self.show_results_in_table)
 
@@ -83,7 +83,7 @@ class Dialog0111(QMainWindow):
             self.ui.label_image_context.setPixmap(self.dict_images_pixmap['image_context_1'])
             self.ui.label_image_figure.setPixmap(self.dict_images_pixmap['image_figure_1'])
 
-    def test(self):
+    def example(self):
         self.ui.lineEdit_in_t.setText('600')
         self.ui.lineEdit_in_alpha.setText('0.0117')
         self.ui.lineEdit_in_H.setText('2.4')
@@ -93,10 +93,6 @@ class Dialog0111(QMainWindow):
         self.ui.lineEdit_in_HRRPUA.setText('510')
         self.ui.lineEdit_in_C_conv.setText('66.7')
         self.ui.lineEdit_in_T_act.setText('58')
-
-        self.calculate()
-
-        # assert abs(float(self.ui.lineEdit_out_t_act.text()) - 237.5) <= 0.5
 
         self.repaint()
 

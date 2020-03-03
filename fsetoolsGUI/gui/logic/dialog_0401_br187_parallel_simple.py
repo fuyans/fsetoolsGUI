@@ -51,7 +51,7 @@ class Dialog0401(QMainWindow):
         # signals
         self.ui.comboBox_S_or_UA.currentTextChanged.connect(self.change_mode_S_and_UA)
         self.ui.pushButton_calculate.clicked.connect(self.calculate)
-        self.ui.pushButton_test.clicked.connect(self.test)
+        self.ui.pushButton_test.clicked.connect(self.example)
 
     def change_mode_S_and_UA(self):
         """update ui to align with whether to calculate boundary distance or unprotected area %"""
@@ -80,7 +80,7 @@ class Dialog0401(QMainWindow):
 
         self.repaint()
 
-    def test(self):
+    def example(self):
 
         self.ui.lineEdit_W.setText('10')
         self.ui.lineEdit_H.setText('10')
@@ -88,8 +88,6 @@ class Dialog0401(QMainWindow):
         self.ui.comboBox_S_or_UA.setCurrentIndex(0)
         self.change_mode_S_and_UA()
         self.ui.lineEdit_S_or_UA.setText('2')
-
-        self.calculate()
 
         self.repaint()
 

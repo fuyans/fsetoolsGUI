@@ -47,8 +47,6 @@ class Dialog0404(QMainWindow):
         self.change_mode_S_and_UA()
         self.ui.lineEdit_S_or_UA.setText('2')
 
-        self.calculate()
-
         self.repaint()
 
     def change_mode_S_and_UA(self):

@@ -59,7 +59,7 @@ class Dialog0103(QMainWindow):
 
         # signals
         self.ui.pushButton_calculate.clicked.connect(self.calculate)
-        self.ui.pushButton_test.clicked.connect(self.test)
+        self.ui.pushButton_test.clicked.connect(self.example)
         self.ui.radioButton_opt_scenario_1.toggled.connect(self.change_option_scenarios)
         self.ui.radioButton_opt_scenario_2.toggled.connect(self.change_option_scenarios)
         self.ui.radioButton_opt_scenario_3.toggled.connect(self.change_option_scenarios)
@@ -104,7 +104,7 @@ class Dialog0103(QMainWindow):
             # set figure to scenario 3
             self.ui.label_image_figure.setPixmap(self.dict_images_pixmap['image_figure_3'])
 
-    def test(self):
+    def example(self):
         self.ui.lineEdit_in_X.setText('3.06')
         self.ui.lineEdit_in_D.setText('2.1')
         self.ui.lineEdit_in_S_up.setText('1400')

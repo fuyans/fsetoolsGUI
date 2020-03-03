@@ -251,20 +251,13 @@ class Dialog0406(QMainWindow):
             solver_domain=dict(
                 x=(-10, 20),
                 y=(-10, 20),
-                z=(0,)
+                z=''
             ),
             solver_delta=.2
         )
 
-        # set emitter data
-
         self.solver_parameters = param_dict
         self.repaint()
-
-        # self.submit()
-    #
-    # def update_slider_value(self):
-    #     self.
 
     @property
     def solver_parameters(self) -> dict:
@@ -436,7 +429,6 @@ class Dialog0406(QMainWindow):
         self.ui.progressBar.setValue(progress)
 
 
-
 #Inherit from QThread
 class Worker(QtCore.QThread):
 
@@ -473,9 +465,7 @@ class Worker(QtCore.QThread):
                 main_plot(solver_parameters, ax=self._ax, **self._graphic_parameters)
 
         self.MasterWidget.update_plot()
-#
-# def setProgress(self, progress):
-#     self.progressBar.setValue(progress)
+
 
 if __name__ == "__main__":
     qapp = QtWidgets.QApplication(sys.argv)

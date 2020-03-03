@@ -51,7 +51,7 @@ class Dialog0602(QMainWindow):
 
         # signal and slots
         self.ui.comboBox_fire_shape.currentIndexChanged.connect(self.change_fire_shape)
-        self.ui.pushButton_test.clicked.connect(self.test)
+        self.ui.pushButton_test.clicked.connect(self.example)
         self.ui.pushButton_calculate.clicked.connect(self.calculate)
 
     def change_fire_shape(self):
@@ -82,7 +82,7 @@ class Dialog0602(QMainWindow):
     def change_fuel_type(self):
         pass
 
-    def test(self):
+    def example(self):
         self.ui.comboBox_fire_shape.setCurrentIndex(0)
         self.ui.comboBox_fuel_type.setCurrentIndex(0)
         self.ui.lineEdit_Q_dot_or_Q_dot_l.setText('1500')
@@ -93,8 +93,6 @@ class Dialog0602(QMainWindow):
         self.ui.lineEdit_g.setText('9.81')
 
         self.repaint()
-
-        self.calculate()
 
     def calculate(self):
 
