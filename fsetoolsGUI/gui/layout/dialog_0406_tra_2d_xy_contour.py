@@ -20,7 +20,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1076, 744)
+        MainWindow.resize(814, 737)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
@@ -34,6 +34,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_control = QVBoxLayout()
         self.verticalLayout_control.setObjectName(u"verticalLayout_control")
         self.verticalLayout_control.setSizeConstraint(QLayout.SetMinimumSize)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_control.addItem(self.verticalSpacer)
+
         self.groupBox = QGroupBox(self.centralwidget)
         self.groupBox.setObjectName(u"groupBox")
         self.groupBox.setMinimumSize(QSize(396, 160))
@@ -145,64 +149,43 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_control.addWidget(self.groupBox_2)
 
-        self.horizontalLayout_2 = QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalLayout_2.setSizeConstraint(QLayout.SetMinimumSize)
-        self.horizontalLayout_2.setContentsMargins(-1, -1, -1, 1)
-        self.pushButton_example = QPushButton(self.centralwidget)
+        self.widget = QWidget(self.centralwidget)
+        self.widget.setObjectName(u"widget")
+        self.widget.setMinimumSize(QSize(396, 61))
+        self.widget.setMaximumSize(QSize(396, 16777215))
+        self.pushButton_example = QPushButton(self.widget)
         self.pushButton_example.setObjectName(u"pushButton_example")
-        self.pushButton_example.setMinimumSize(QSize(96, 26))
+        self.pushButton_example.setGeometry(QRect(10, 35, 71, 26))
+        self.pushButton_example.setMinimumSize(QSize(56, 26))
         self.pushButton_example.setMaximumSize(QSize(96, 26))
-
-        self.horizontalLayout_2.addWidget(self.pushButton_example)
-
-        self.pushButton_refresh = QPushButton(self.centralwidget)
-        self.pushButton_refresh.setObjectName(u"pushButton_refresh")
-        self.pushButton_refresh.setMinimumSize(QSize(96, 26))
-        self.pushButton_refresh.setMaximumSize(QSize(96, 26))
-
-        self.horizontalLayout_2.addWidget(self.pushButton_refresh)
-
-        self.pushButton_save_figure = QPushButton(self.centralwidget)
+        self.pushButton_save_figure = QPushButton(self.widget)
         self.pushButton_save_figure.setObjectName(u"pushButton_save_figure")
-        self.pushButton_save_figure.setMinimumSize(QSize(96, 26))
+        self.pushButton_save_figure.setGeometry(QRect(175, 35, 71, 26))
+        self.pushButton_save_figure.setMinimumSize(QSize(56, 26))
         self.pushButton_save_figure.setMaximumSize(QSize(96, 26))
-
-        self.horizontalLayout_2.addWidget(self.pushButton_save_figure)
-
-        self.pushButton_submit = QPushButton(self.centralwidget)
+        self.pushButton_refresh = QPushButton(self.widget)
+        self.pushButton_refresh.setObjectName(u"pushButton_refresh")
+        self.pushButton_refresh.setGeometry(QRect(100, 35, 71, 26))
+        self.pushButton_refresh.setMinimumSize(QSize(56, 26))
+        self.pushButton_refresh.setMaximumSize(QSize(96, 26))
+        self.pushButton_submit = QPushButton(self.widget)
         self.pushButton_submit.setObjectName(u"pushButton_submit")
+        self.pushButton_submit.setGeometry(QRect(300, 5, 96, 26))
         self.pushButton_submit.setMinimumSize(QSize(96, 26))
         self.pushButton_submit.setMaximumSize(QSize(96, 26))
-
-        self.horizontalLayout_2.addWidget(self.pushButton_submit)
-
-
-        self.verticalLayout_control.addLayout(self.horizontalLayout_2)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_control.addItem(self.verticalSpacer)
-
-        self.horizontalLayout = QHBoxLayout()
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setSizeConstraint(QLayout.SetMinimumSize)
-        self.horizontalLayout.setContentsMargins(-1, 0, -1, -1)
-        self.progressBar = QProgressBar(self.centralwidget)
+        self.progressBar = QProgressBar(self.widget)
         self.progressBar.setObjectName(u"progressBar")
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.progressBar.setGeometry(QRect(10, 5, 271, 26))
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.progressBar.sizePolicy().hasHeightForWidth())
         self.progressBar.setSizePolicy(sizePolicy)
-        self.progressBar.setMinimumSize(QSize(296, 26))
-        self.progressBar.setMaximumSize(QSize(99999, 26))
+        self.progressBar.setMinimumSize(QSize(0, 26))
+        self.progressBar.setMaximumSize(QSize(396, 26))
         self.progressBar.setValue(0)
 
-        self.horizontalLayout.addWidget(self.progressBar)
-
-
-        self.verticalLayout_control.addLayout(self.horizontalLayout)
+        self.verticalLayout_control.addWidget(self.widget)
 
 
         self.gridLayout.addLayout(self.verticalLayout_control, 0, 1, 1, 1)
@@ -210,7 +193,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1076, 22))
+        self.menubar.setGeometry(QRect(0, 0, 814, 22))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -247,8 +230,8 @@ class Ui_MainWindow(object):
         self.label_14.setText(QCoreApplication.translate("MainWindow", u"Receivers", None))
         self.pushButton_receiver_list_append.setText(QCoreApplication.translate("MainWindow", u"+", None))
         self.pushButton_example.setText(QCoreApplication.translate("MainWindow", u"Example", None))
-        self.pushButton_refresh.setText(QCoreApplication.translate("MainWindow", u"Refresh", None))
         self.pushButton_save_figure.setText(QCoreApplication.translate("MainWindow", u"Save Figure", None))
+        self.pushButton_refresh.setText(QCoreApplication.translate("MainWindow", u"Refresh", None))
         self.pushButton_submit.setText(QCoreApplication.translate("MainWindow", u"Submit", None))
     # retranslateUi
 
