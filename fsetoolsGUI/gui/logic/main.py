@@ -115,7 +115,7 @@ class MainWindow(QMainWindow):
             version_label_text = 'Version ' + fsetoolsGUI.__version__
             self.ui.label_version.setStyleSheet('color: black;')
         elif version.parse(version_dict['current_version']) > version.parse(fsetoolsGUI.__version__):
-            version_label_text = f'A new version {version_dict["current_version"]} available.' + ' Click to download.'
+            version_label_text = f'A new version {version_dict["current_version"]} available.' + ' Click here to download.'
             self.ui.label_version.setStyleSheet('color: black;')
             self.__update_url = version_dict['executable_download_url']
         else:

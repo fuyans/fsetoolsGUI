@@ -20,7 +20,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(495, 699)
+        MainWindow.resize(495, 644)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -53,7 +53,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(35, 35, 35, 100)
+        self.verticalLayout_2.setContentsMargins(35, 35, 35, 45)
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.verticalLayout = QVBoxLayout()
@@ -99,12 +99,13 @@ class Ui_MainWindow(object):
         self.gridLayout_6.setObjectName(u"gridLayout_6")
         self.gridLayout_3 = QGridLayout()
         self.gridLayout_3.setObjectName(u"gridLayout_3")
-        self.pushButton_0602_pd7974_flame_height = QPushButton(self.groupBox_misc)
-        self.pushButton_0602_pd7974_flame_height.setObjectName(u"pushButton_0602_pd7974_flame_height")
-        self.pushButton_0602_pd7974_flame_height.setMinimumSize(QSize(66, 66))
-        self.pushButton_0602_pd7974_flame_height.setMaximumSize(QSize(66, 66))
+        self.b4_01_br187_parallel_12 = QPushButton(self.groupBox_misc)
+        self.b4_01_br187_parallel_12.setObjectName(u"b4_01_br187_parallel_12")
+        self.b4_01_br187_parallel_12.setEnabled(False)
+        self.b4_01_br187_parallel_12.setMinimumSize(QSize(66, 66))
+        self.b4_01_br187_parallel_12.setMaximumSize(QSize(66, 66))
 
-        self.gridLayout_3.addWidget(self.pushButton_0602_pd7974_flame_height, 0, 3, 1, 1)
+        self.gridLayout_3.addWidget(self.b4_01_br187_parallel_12, 0, 3, 1, 1)
 
         self.pushButton_0601_naming_convention = QPushButton(self.groupBox_misc)
         self.pushButton_0601_naming_convention.setObjectName(u"pushButton_0601_naming_convention")
@@ -113,29 +114,28 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addWidget(self.pushButton_0601_naming_convention, 0, 0, 1, 1)
 
-        self.b4_01_br187_parallel_11 = QPushButton(self.groupBox_misc)
-        self.b4_01_br187_parallel_11.setObjectName(u"b4_01_br187_parallel_11")
-        self.b4_01_br187_parallel_11.setEnabled(False)
-        self.b4_01_br187_parallel_11.setMinimumSize(QSize(66, 66))
-        self.b4_01_br187_parallel_11.setMaximumSize(QSize(66, 66))
-
-        self.gridLayout_3.addWidget(self.b4_01_br187_parallel_11, 0, 1, 1, 1)
-
-        self.b4_01_br187_parallel_12 = QPushButton(self.groupBox_misc)
-        self.b4_01_br187_parallel_12.setObjectName(u"b4_01_br187_parallel_12")
-        self.b4_01_br187_parallel_12.setEnabled(False)
-        self.b4_01_br187_parallel_12.setMinimumSize(QSize(66, 66))
-        self.b4_01_br187_parallel_12.setMaximumSize(QSize(66, 66))
-
-        self.gridLayout_3.addWidget(self.b4_01_br187_parallel_12, 0, 2, 1, 1)
-
         self.pushButton = QPushButton(self.groupBox_misc)
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setEnabled(False)
         self.pushButton.setMinimumSize(QSize(66, 66))
         self.pushButton.setMaximumSize(QSize(66, 66))
 
-        self.gridLayout_3.addWidget(self.pushButton, 0, 4, 1, 1)
+        self.gridLayout_3.addWidget(self.pushButton, 0, 5, 1, 1)
+
+        self.b4_01_br187_parallel_11 = QPushButton(self.groupBox_misc)
+        self.b4_01_br187_parallel_11.setObjectName(u"b4_01_br187_parallel_11")
+        self.b4_01_br187_parallel_11.setEnabled(False)
+        self.b4_01_br187_parallel_11.setMinimumSize(QSize(66, 66))
+        self.b4_01_br187_parallel_11.setMaximumSize(QSize(66, 66))
+
+        self.gridLayout_3.addWidget(self.b4_01_br187_parallel_11, 0, 2, 1, 1)
+
+        self.pushButton_0602_pd7974_flame_height = QPushButton(self.groupBox_misc)
+        self.pushButton_0602_pd7974_flame_height.setObjectName(u"pushButton_0602_pd7974_flame_height")
+        self.pushButton_0602_pd7974_flame_height.setMinimumSize(QSize(66, 66))
+        self.pushButton_0602_pd7974_flame_height.setMaximumSize(QSize(66, 66))
+
+        self.gridLayout_3.addWidget(self.pushButton_0602_pd7974_flame_height, 0, 1, 1, 1)
 
 
         self.gridLayout_6.addLayout(self.gridLayout_3, 0, 0, 1, 1)
@@ -198,27 +198,13 @@ class Ui_MainWindow(object):
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.gridLayout_2 = QGridLayout()
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.pushButton_0405_thermal_radiation_extreme = QPushButton(self.groupBox_b3)
-        self.pushButton_0405_thermal_radiation_extreme.setObjectName(u"pushButton_0405_thermal_radiation_extreme")
-        self.pushButton_0405_thermal_radiation_extreme.setEnabled(True)
-        self.pushButton_0405_thermal_radiation_extreme.setMinimumSize(QSize(66, 66))
-        self.pushButton_0405_thermal_radiation_extreme.setMaximumSize(QSize(66, 66))
+        self.pushButton_0406_thermal_radiation_analysis_2d = QPushButton(self.groupBox_b3)
+        self.pushButton_0406_thermal_radiation_analysis_2d.setObjectName(u"pushButton_0406_thermal_radiation_analysis_2d")
+        self.pushButton_0406_thermal_radiation_analysis_2d.setEnabled(True)
+        self.pushButton_0406_thermal_radiation_analysis_2d.setMinimumSize(QSize(66, 66))
+        self.pushButton_0406_thermal_radiation_analysis_2d.setMaximumSize(QSize(66, 66))
 
-        self.gridLayout_2.addWidget(self.pushButton_0405_thermal_radiation_extreme, 0, 4, 1, 1)
-
-        self.pushButton_0404_br187_perpendicular_complex = QPushButton(self.groupBox_b3)
-        self.pushButton_0404_br187_perpendicular_complex.setObjectName(u"pushButton_0404_br187_perpendicular_complex")
-        self.pushButton_0404_br187_perpendicular_complex.setMinimumSize(QSize(66, 66))
-        self.pushButton_0404_br187_perpendicular_complex.setMaximumSize(QSize(66, 66))
-
-        self.gridLayout_2.addWidget(self.pushButton_0404_br187_perpendicular_complex, 0, 3, 1, 1)
-
-        self.pushButton_0401_br187_parallel_simple = QPushButton(self.groupBox_b3)
-        self.pushButton_0401_br187_parallel_simple.setObjectName(u"pushButton_0401_br187_parallel_simple")
-        self.pushButton_0401_br187_parallel_simple.setMinimumSize(QSize(66, 66))
-        self.pushButton_0401_br187_parallel_simple.setMaximumSize(QSize(66, 66))
-
-        self.gridLayout_2.addWidget(self.pushButton_0401_br187_parallel_simple, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_0406_thermal_radiation_analysis_2d, 0, 4, 1, 1)
 
         self.pushButton_0402_br187_perpendicular_simple = QPushButton(self.groupBox_b3)
         self.pushButton_0402_br187_perpendicular_simple.setObjectName(u"pushButton_0402_br187_perpendicular_simple")
@@ -234,13 +220,27 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.pushButton_0403_br187_parallel_complex, 0, 2, 1, 1)
 
-        self.pushButton_0406_thermal_radiation_analysis_2d = QPushButton(self.groupBox_b3)
-        self.pushButton_0406_thermal_radiation_analysis_2d.setObjectName(u"pushButton_0406_thermal_radiation_analysis_2d")
-        self.pushButton_0406_thermal_radiation_analysis_2d.setEnabled(True)
-        self.pushButton_0406_thermal_radiation_analysis_2d.setMinimumSize(QSize(66, 66))
-        self.pushButton_0406_thermal_radiation_analysis_2d.setMaximumSize(QSize(66, 66))
+        self.pushButton_0401_br187_parallel_simple = QPushButton(self.groupBox_b3)
+        self.pushButton_0401_br187_parallel_simple.setObjectName(u"pushButton_0401_br187_parallel_simple")
+        self.pushButton_0401_br187_parallel_simple.setMinimumSize(QSize(66, 66))
+        self.pushButton_0401_br187_parallel_simple.setMaximumSize(QSize(66, 66))
 
-        self.gridLayout_2.addWidget(self.pushButton_0406_thermal_radiation_analysis_2d, 1, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_0401_br187_parallel_simple, 0, 0, 1, 1)
+
+        self.pushButton_0404_br187_perpendicular_complex = QPushButton(self.groupBox_b3)
+        self.pushButton_0404_br187_perpendicular_complex.setObjectName(u"pushButton_0404_br187_perpendicular_complex")
+        self.pushButton_0404_br187_perpendicular_complex.setMinimumSize(QSize(66, 66))
+        self.pushButton_0404_br187_perpendicular_complex.setMaximumSize(QSize(66, 66))
+
+        self.gridLayout_2.addWidget(self.pushButton_0404_br187_perpendicular_complex, 0, 3, 1, 1)
+
+        self.pushButton_0405_thermal_radiation_extreme = QPushButton(self.groupBox_b3)
+        self.pushButton_0405_thermal_radiation_extreme.setObjectName(u"pushButton_0405_thermal_radiation_extreme")
+        self.pushButton_0405_thermal_radiation_extreme.setEnabled(False)
+        self.pushButton_0405_thermal_radiation_extreme.setMinimumSize(QSize(66, 66))
+        self.pushButton_0405_thermal_radiation_extreme.setMaximumSize(QSize(66, 66))
+
+        self.gridLayout_2.addWidget(self.pushButton_0405_thermal_radiation_extreme, 1, 0, 1, 1)
 
 
         self.gridLayout_4.addLayout(self.gridLayout_2, 0, 0, 1, 1)
@@ -314,14 +314,13 @@ class Ui_MainWindow(object):
         self.label_logo.setText("")
         self.groupBox_misc.setTitle(QCoreApplication.translate("MainWindow", u"Miscellaneous", None))
 #if QT_CONFIG(tooltip)
-        self.pushButton_0602_pd7974_flame_height.setToolTip(QCoreApplication.translate("MainWindow", u"Flame height in accordance with PD 7974-1:2019.", None))
+        self.b4_01_br187_parallel_12.setToolTip(QCoreApplication.translate("MainWindow", u"To estimate optimal mesh resolution.", None))
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(statustip)
-        self.pushButton_0602_pd7974_flame_height.setStatusTip(QCoreApplication.translate("MainWindow", u"Flame height in accordance with PD 7974-1:2019.", None))
+        self.b4_01_br187_parallel_12.setStatusTip(QCoreApplication.translate("MainWindow", u"To estimate optimal mesh resolution.", None))
 #endif // QT_CONFIG(statustip)
-        self.pushButton_0602_pd7974_flame_height.setText(QCoreApplication.translate("MainWindow", u"PD 7974\n"
-"Flame\n"
-"Height", None))
+        self.b4_01_br187_parallel_12.setText(QCoreApplication.translate("MainWindow", u"CFD\n"
+"Mesh Size", None))
 #if QT_CONFIG(tooltip)
         self.pushButton_0601_naming_convention.setToolTip(QCoreApplication.translate("MainWindow", u"File name generator in accordance with OFR file naming protocal.", None))
 #endif // QT_CONFIG(tooltip)
@@ -331,18 +330,19 @@ class Ui_MainWindow(object):
         self.pushButton_0601_naming_convention.setText(QCoreApplication.translate("MainWindow", u"File\n"
 "Naming\n"
 "Protocol", None))
+        self.pushButton.setText("")
         self.b4_01_br187_parallel_11.setText(QCoreApplication.translate("MainWindow", u"CFD\n"
 "Required\n"
 "Vent. Size", None))
 #if QT_CONFIG(tooltip)
-        self.b4_01_br187_parallel_12.setToolTip(QCoreApplication.translate("MainWindow", u"To estimate optimal mesh resolution.", None))
+        self.pushButton_0602_pd7974_flame_height.setToolTip(QCoreApplication.translate("MainWindow", u"Flame height in accordance with PD 7974-1:2019.", None))
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(statustip)
-        self.b4_01_br187_parallel_12.setStatusTip(QCoreApplication.translate("MainWindow", u"To estimate optimal mesh resolution.", None))
+        self.pushButton_0602_pd7974_flame_height.setStatusTip(QCoreApplication.translate("MainWindow", u"Flame height in accordance with PD 7974-1:2019.", None))
 #endif // QT_CONFIG(statustip)
-        self.b4_01_br187_parallel_12.setText(QCoreApplication.translate("MainWindow", u"CFD\n"
-"Mesh Size", None))
-        self.pushButton.setText("")
+        self.pushButton_0602_pd7974_flame_height.setText(QCoreApplication.translate("MainWindow", u"PD 7974\n"
+"Flame\n"
+"Height", None))
         self.groupBox_b1.setTitle(QCoreApplication.translate("MainWindow", u"B1 Means of escape", None))
 #if QT_CONFIG(tooltip)
         self.pushButton_0111_heat_detector_activation.setToolTip(QCoreApplication.translate("MainWindow", u"Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.", None))
@@ -390,30 +390,13 @@ class Ui_MainWindow(object):
 "Model", None))
         self.groupBox_b3.setTitle(QCoreApplication.translate("MainWindow", u"B4 External flame spread", None))
 #if QT_CONFIG(tooltip)
-        self.pushButton_0405_thermal_radiation_extreme.setToolTip(QCoreApplication.translate("MainWindow", u"General purpose thermal radiation calculator.", None))
+        self.pushButton_0406_thermal_radiation_analysis_2d.setToolTip(QCoreApplication.translate("MainWindow", u"General purpose thermal radiation calculator.", None))
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(statustip)
-        self.pushButton_0405_thermal_radiation_extreme.setStatusTip(QCoreApplication.translate("MainWindow", u"General purpose thermal radiation calculator.", None))
+        self.pushButton_0406_thermal_radiation_analysis_2d.setStatusTip(QCoreApplication.translate("MainWindow", u"General purpose thermal radiation calculator.", None))
 #endif // QT_CONFIG(statustip)
-        self.pushButton_0405_thermal_radiation_extreme.setText(QCoreApplication.translate("MainWindow", u"Therm. Rad.\n"
-"Analysis\n"
-"3D", None))
-#if QT_CONFIG(tooltip)
-        self.pushButton_0404_br187_perpendicular_complex.setToolTip(QCoreApplication.translate("MainWindow", u"Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).", None))
-#endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(statustip)
-        self.pushButton_0404_br187_perpendicular_complex.setStatusTip(QCoreApplication.translate("MainWindow", u"Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).", None))
-#endif // QT_CONFIG(statustip)
-        self.pushButton_0404_br187_perpendicular_complex.setText(QCoreApplication.translate("MainWindow", u"BR 187\n"
-"Perp. 2", None))
-#if QT_CONFIG(tooltip)
-        self.pushButton_0401_br187_parallel_simple.setToolTip(QCoreApplication.translate("MainWindow", u"Thermal radiation calculation following BR 187 (Parallel rectangular orientation).", None))
-#endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(statustip)
-        self.pushButton_0401_br187_parallel_simple.setStatusTip(QCoreApplication.translate("MainWindow", u"Thermal radiation calculation following BR 187 (Parallel rectangular orientation).", None))
-#endif // QT_CONFIG(statustip)
-        self.pushButton_0401_br187_parallel_simple.setText(QCoreApplication.translate("MainWindow", u"BR 187\n"
-"Parallel", None))
+        self.pushButton_0406_thermal_radiation_analysis_2d.setText(QCoreApplication.translate("MainWindow", u"TRA 2D\n"
+"Contour", None))
 #if QT_CONFIG(tooltip)
         self.pushButton_0402_br187_perpendicular_simple.setToolTip(QCoreApplication.translate("MainWindow", u"Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).", None))
 #endif // QT_CONFIG(tooltip)
@@ -429,16 +412,33 @@ class Ui_MainWindow(object):
         self.pushButton_0403_br187_parallel_complex.setStatusTip(QCoreApplication.translate("MainWindow", u"Thermal radiation calculation following BR 187 (Parallel rectangular orientation).", None))
 #endif // QT_CONFIG(statustip)
         self.pushButton_0403_br187_parallel_complex.setText(QCoreApplication.translate("MainWindow", u"BR 187\n"
-"Parallel 2", None))
+"Parallel Non\n"
+"Centered", None))
 #if QT_CONFIG(tooltip)
-        self.pushButton_0406_thermal_radiation_analysis_2d.setToolTip(QCoreApplication.translate("MainWindow", u"General purpose thermal radiation calculator.", None))
+        self.pushButton_0401_br187_parallel_simple.setToolTip(QCoreApplication.translate("MainWindow", u"Thermal radiation calculation following BR 187 (Parallel rectangular orientation).", None))
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(statustip)
-        self.pushButton_0406_thermal_radiation_analysis_2d.setStatusTip(QCoreApplication.translate("MainWindow", u"General purpose thermal radiation calculator.", None))
+        self.pushButton_0401_br187_parallel_simple.setStatusTip(QCoreApplication.translate("MainWindow", u"Thermal radiation calculation following BR 187 (Parallel rectangular orientation).", None))
 #endif // QT_CONFIG(statustip)
-        self.pushButton_0406_thermal_radiation_analysis_2d.setText(QCoreApplication.translate("MainWindow", u"Therm. Rad.\n"
-"Analysis\n"
-"2D", None))
+        self.pushButton_0401_br187_parallel_simple.setText(QCoreApplication.translate("MainWindow", u"BR 187\n"
+"Parallel", None))
+#if QT_CONFIG(tooltip)
+        self.pushButton_0404_br187_perpendicular_complex.setToolTip(QCoreApplication.translate("MainWindow", u"Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(statustip)
+        self.pushButton_0404_br187_perpendicular_complex.setStatusTip(QCoreApplication.translate("MainWindow", u"Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).", None))
+#endif // QT_CONFIG(statustip)
+        self.pushButton_0404_br187_perpendicular_complex.setText(QCoreApplication.translate("MainWindow", u"BR 187\n"
+"Perp. Non\n"
+"Centered", None))
+#if QT_CONFIG(tooltip)
+        self.pushButton_0405_thermal_radiation_extreme.setToolTip(QCoreApplication.translate("MainWindow", u"General purpose thermal radiation calculator.", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(statustip)
+        self.pushButton_0405_thermal_radiation_extreme.setStatusTip(QCoreApplication.translate("MainWindow", u"General purpose thermal radiation calculator.", None))
+#endif // QT_CONFIG(statustip)
+        self.pushButton_0405_thermal_radiation_extreme.setText(QCoreApplication.translate("MainWindow", u"TRA 3D\n"
+"Single Point", None))
         self.label_version.setText(QCoreApplication.translate("MainWindow", u"Version #.#.#", None))
     # retranslateUi
 

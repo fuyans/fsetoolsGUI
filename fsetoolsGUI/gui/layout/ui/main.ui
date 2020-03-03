@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>495</width>
-    <height>699</height>
+    <height>644</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -36,7 +36,7 @@
        <number>35</number>
       </property>
       <property name="bottomMargin">
-       <number>100</number>
+       <number>45</number>
       </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
@@ -124,7 +124,10 @@
          <item row="0" column="0">
           <layout class="QGridLayout" name="gridLayout_3">
            <item row="0" column="3">
-            <widget class="QPushButton" name="pushButton_0602_pd7974_flame_height">
+            <widget class="QPushButton" name="b4_01_br187_parallel_12">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="minimumSize">
               <size>
                <width>66</width>
@@ -138,15 +141,14 @@
               </size>
              </property>
              <property name="toolTip">
-              <string>Flame height in accordance with PD 7974-1:2019.</string>
+              <string>To estimate optimal mesh resolution.</string>
              </property>
              <property name="statusTip">
-              <string>Flame height in accordance with PD 7974-1:2019.</string>
+              <string>To estimate optimal mesh resolution.</string>
              </property>
              <property name="text">
-              <string>PD 7974
-Flame
-Height</string>
+              <string>CFD
+Mesh Size</string>
              </property>
             </widget>
            </item>
@@ -177,7 +179,29 @@ Protocol</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
+           <item row="0" column="5">
+            <widget class="QPushButton" name="pushButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>66</width>
+               <height>66</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>66</width>
+               <height>66</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
             <widget class="QPushButton" name="b4_01_br187_parallel_11">
              <property name="enabled">
               <bool>false</bool>
@@ -201,11 +225,8 @@ Vent. Size</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="2">
-            <widget class="QPushButton" name="b4_01_br187_parallel_12">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="pushButton_0602_pd7974_flame_height">
              <property name="minimumSize">
               <size>
                <width>66</width>
@@ -219,36 +240,15 @@ Vent. Size</string>
               </size>
              </property>
              <property name="toolTip">
-              <string>To estimate optimal mesh resolution.</string>
+              <string>Flame height in accordance with PD 7974-1:2019.</string>
              </property>
              <property name="statusTip">
-              <string>To estimate optimal mesh resolution.</string>
+              <string>Flame height in accordance with PD 7974-1:2019.</string>
              </property>
              <property name="text">
-              <string>CFD
-Mesh Size</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="4">
-            <widget class="QPushButton" name="pushButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>66</width>
-               <height>66</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>66</width>
-               <height>66</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
+              <string>PD 7974
+Flame
+Height</string>
              </property>
             </widget>
            </item>
@@ -419,7 +419,7 @@ Model</string>
          <item row="0" column="0">
           <layout class="QGridLayout" name="gridLayout_2">
            <item row="0" column="4">
-            <widget class="QPushButton" name="pushButton_0405_thermal_radiation_extreme">
+            <widget class="QPushButton" name="pushButton_0406_thermal_radiation_analysis_2d">
              <property name="enabled">
               <bool>true</bool>
              </property>
@@ -442,61 +442,8 @@ Model</string>
               <string>General purpose thermal radiation calculator.</string>
              </property>
              <property name="text">
-              <string>Therm. Rad.
-Analysis
-3D</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="QPushButton" name="pushButton_0404_br187_perpendicular_complex">
-             <property name="minimumSize">
-              <size>
-               <width>66</width>
-               <height>66</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>66</width>
-               <height>66</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
-             </property>
-             <property name="statusTip">
-              <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
-             </property>
-             <property name="text">
-              <string>BR 187
-Perp. 2</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QPushButton" name="pushButton_0401_br187_parallel_simple">
-             <property name="minimumSize">
-              <size>
-               <width>66</width>
-               <height>66</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>66</width>
-               <height>66</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
-             </property>
-             <property name="statusTip">
-              <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
-             </property>
-             <property name="text">
-              <string>BR 187
-Parallel</string>
+              <string>TRA 2D
+Contour</string>
              </property>
             </widget>
            </item>
@@ -548,14 +495,68 @@ Perp.</string>
              </property>
              <property name="text">
               <string>BR 187
-Parallel 2</string>
+Parallel Non
+Centered</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="pushButton_0401_br187_parallel_simple">
+             <property name="minimumSize">
+              <size>
+               <width>66</width>
+               <height>66</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>66</width>
+               <height>66</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
+             </property>
+             <property name="statusTip">
+              <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
+             </property>
+             <property name="text">
+              <string>BR 187
+Parallel</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QPushButton" name="pushButton_0404_br187_perpendicular_complex">
+             <property name="minimumSize">
+              <size>
+               <width>66</width>
+               <height>66</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>66</width>
+               <height>66</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
+             </property>
+             <property name="statusTip">
+              <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
+             </property>
+             <property name="text">
+              <string>BR 187
+Perp. Non
+Centered</string>
              </property>
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QPushButton" name="pushButton_0406_thermal_radiation_analysis_2d">
+            <widget class="QPushButton" name="pushButton_0405_thermal_radiation_extreme">
              <property name="enabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="minimumSize">
               <size>
@@ -576,9 +577,8 @@ Parallel 2</string>
               <string>General purpose thermal radiation calculator.</string>
              </property>
              <property name="text">
-              <string>Therm. Rad.
-Analysis
-2D</string>
+              <string>TRA 3D
+Single Point</string>
              </property>
             </widget>
            </item>

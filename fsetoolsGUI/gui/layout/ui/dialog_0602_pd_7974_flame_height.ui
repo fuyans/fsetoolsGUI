@@ -29,6 +29,12 @@
       <height>16777215</height>
      </size>
     </property>
+    <property name="toolTip">
+     <string>Click (or press Enter) to calculate.</string>
+    </property>
+    <property name="statusTip">
+     <string>Click (or press Enter) to calculate.</string>
+    </property>
     <property name="text">
      <string>Calculate</string>
     </property>
@@ -49,10 +55,10 @@
      </size>
     </property>
     <property name="toolTip">
-     <string>Generate example input parameters.</string>
+     <string>Click to generate example input parameters.</string>
     </property>
     <property name="statusTip">
-     <string>Generate example input parameters.</string>
+     <string>Click to generate example input parameters.</string>
     </property>
     <property name="text">
      <string>Example</string>
@@ -852,6 +858,12 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Solved dimensionless heat release rate. Double click to select value.</string>
+     </property>
+     <property name="statusTip">
+      <string>Solved dimensionless heat release rate. Double click to select value.</string>
+     </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_out_Z_f">
      <property name="geometry">
@@ -879,6 +891,12 @@
        <width>16777215</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Solved flame height. (Double click to select the value)</string>
+     </property>
+     <property name="statusTip">
+      <string>Solved flame height. (Double click to select the value)</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_out_Q_dot_star">

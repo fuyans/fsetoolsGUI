@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>814</width>
-    <height>737</height>
+    <height>740</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -61,7 +61,7 @@
          <property name="geometry">
           <rect>
            <x>25</x>
-           <y>40</y>
+           <y>35</y>
            <width>181</width>
            <height>26</height>
           </rect>
@@ -78,6 +78,12 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="toolTip">
+          <string>Critical heat flux countour line will be highlighted in red colour in the figure.</string>
+         </property>
+         <property name="statusTip">
+          <string>Critical heat flux countour line will be highlighted in red colour in the figure.</string>
+         </property>
          <property name="text">
           <string>Critical heat flux</string>
          </property>
@@ -86,10 +92,16 @@
          <property name="geometry">
           <rect>
            <x>215</x>
-           <y>40</y>
+           <y>35</y>
            <width>91</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>Critical heat flux countour line will be highlighted in red colour in the figure.</string>
+         </property>
+         <property name="statusTip">
+          <string>Critical heat flux countour line will be highlighted in red colour in the figure.</string>
          </property>
          <property name="text">
           <string>12.6</string>
@@ -99,7 +111,7 @@
          <property name="geometry">
           <rect>
            <x>25</x>
-           <y>75</y>
+           <y>70</y>
            <width>181</width>
            <height>26</height>
           </rect>
@@ -116,6 +128,12 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="toolTip">
+          <string>Font size of the contour line text in the figure.</string>
+         </property>
+         <property name="statusTip">
+          <string>Font size of the contour line text in the figure.</string>
+         </property>
          <property name="text">
           <string>Contour Label Font Size</string>
          </property>
@@ -124,10 +142,16 @@
          <property name="geometry">
           <rect>
            <x>25</x>
-           <y>110</y>
+           <y>105</y>
            <width>181</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>Line thickness of the defined emitter and receivers in the figure.</string>
+         </property>
+         <property name="statusTip">
+          <string>Line thickness of the defined emitter and receivers in the figure.</string>
          </property>
          <property name="text">
           <string>E. / R. Element Thickness</string>
@@ -137,10 +161,16 @@
          <property name="geometry">
           <rect>
            <x>215</x>
-           <y>110</y>
+           <y>105</y>
            <width>91</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>Line thickness of the defined emitter and receivers in the figure.</string>
+         </property>
+         <property name="statusTip">
+          <string>Line thickness of the defined emitter and receivers in the figure.</string>
          </property>
          <property name="minimum">
           <number>0</number>
@@ -162,7 +192,7 @@
          <property name="geometry">
           <rect>
            <x>315</x>
-           <y>40</y>
+           <y>35</y>
            <width>51</width>
            <height>26</height>
           </rect>
@@ -187,7 +217,7 @@
          <property name="geometry">
           <rect>
            <x>315</x>
-           <y>75</y>
+           <y>70</y>
            <width>51</width>
            <height>26</height>
           </rect>
@@ -212,7 +242,7 @@
          <property name="geometry">
           <rect>
            <x>315</x>
-           <y>110</y>
+           <y>105</y>
            <width>51</width>
            <height>26</height>
           </rect>
@@ -237,10 +267,16 @@
          <property name="geometry">
           <rect>
            <x>215</x>
-           <y>75</y>
+           <y>70</y>
            <width>91</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>Font size of the contour line text in the figure.</string>
+         </property>
+         <property name="statusTip">
+          <string>Font size of the contour line text in the figure.</string>
          </property>
          <property name="minimum">
           <number>0</number>
@@ -265,7 +301,7 @@
         <property name="minimumSize">
          <size>
           <width>396</width>
-          <height>441</height>
+          <height>431</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -281,10 +317,16 @@
          <property name="geometry">
           <rect>
            <x>25</x>
-           <y>40</y>
+           <y>35</y>
            <width>86</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>(x_min, x_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
+         </property>
+         <property name="statusTip">
+          <string>(x_min, x_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
          </property>
          <property name="text">
           <string>Domain X</string>
@@ -294,10 +336,16 @@
          <property name="geometry">
           <rect>
            <x>25</x>
-           <y>75</y>
+           <y>70</y>
            <width>86</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>This defines the grid resolution (i.e. dx and dy) that received heat flux will be solved.</string>
+         </property>
+         <property name="statusTip">
+          <string>This defines the grid resolution (i.e. dx and dy) that received heat flux will be solved.</string>
          </property>
          <property name="text">
           <string>Resolution</string>
@@ -307,10 +355,16 @@
          <property name="geometry">
           <rect>
            <x>110</x>
-           <y>40</y>
+           <y>35</y>
            <width>61</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>(x_min, x_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
+         </property>
+         <property name="statusTip">
+          <string>(x_min, x_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
          </property>
          <property name="text">
           <string/>
@@ -320,10 +374,16 @@
          <property name="geometry">
           <rect>
            <x>310</x>
-           <y>75</y>
+           <y>70</y>
            <width>61</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>This defines the location of the z-plane which heat flux will be solved. Leave this empty to let the tool to work out the worst situation/height.</string>
+         </property>
+         <property name="statusTip">
+          <string>This defines the location of the z-plane which heat flux will be solved. Leave this empty to let the tool to work out the worst situation/height.</string>
          </property>
          <property name="text">
           <string/>
@@ -333,10 +393,16 @@
          <property name="geometry">
           <rect>
            <x>310</x>
-           <y>40</y>
+           <y>35</y>
            <width>61</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>(y_min, y_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
+         </property>
+         <property name="statusTip">
+          <string>(y_min, y_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
          </property>
          <property name="text">
           <string/>
@@ -346,23 +412,35 @@
          <property name="geometry">
           <rect>
            <x>110</x>
-           <y>75</y>
+           <y>70</y>
            <width>61</width>
            <height>26</height>
           </rect>
          </property>
+         <property name="toolTip">
+          <string>This defines the grid resolution (i.e. dx and dy) that received heat flux will be solved.</string>
+         </property>
+         <property name="statusTip">
+          <string>This defines the grid resolution (i.e. dx and dy) that received heat flux will be solved.</string>
+         </property>
          <property name="text">
-          <string/>
+          <string>0.2</string>
          </property>
         </widget>
         <widget class="QLabel" name="label_15">
          <property name="geometry">
           <rect>
            <x>225</x>
-           <y>75</y>
+           <y>70</y>
            <width>86</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>This defines the location of the z-plane which heat flux will be solved. Leave this empty to let the tool to work out the worst situation/height.</string>
+         </property>
+         <property name="statusTip">
+          <string>This defines the location of the z-plane which heat flux will be solved. Leave this empty to let the tool to work out the worst situation/height.</string>
          </property>
          <property name="text">
           <string>Domain Z</string>
@@ -372,10 +450,16 @@
          <property name="geometry">
           <rect>
            <x>225</x>
-           <y>40</y>
+           <y>35</y>
            <width>86</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>(y_min, y_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
+         </property>
+         <property name="statusTip">
+          <string>(y_min, y_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
          </property>
          <property name="text">
           <string>Domain Y</string>
@@ -385,7 +469,7 @@
          <property name="geometry">
           <rect>
            <x>25</x>
-           <y>140</y>
+           <y>135</y>
            <width>346</width>
            <height>116</height>
           </rect>
@@ -396,12 +480,18 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="toolTip">
+          <string>This table shows all defined emitters. Point 1 (x1, y1) and 2 (x2, y2) define the start and end of the emiter on a z-plane, accordingly.</string>
+         </property>
+         <property name="statusTip">
+          <string>This table shows all defined emitters. Point 1 (x1, y1) and 2 (x2, y2) define the start and end of the emiter on a z-plane, accordingly.</string>
+         </property>
         </widget>
         <widget class="QLabel" name="label_13">
          <property name="geometry">
           <rect>
            <x>25</x>
-           <y>110</y>
+           <y>105</y>
            <width>86</width>
            <height>26</height>
           </rect>
@@ -413,11 +503,17 @@
         <widget class="QPushButton" name="pushButton_emitter_list_append">
          <property name="geometry">
           <rect>
-           <x>105</x>
-           <y>110</y>
-           <width>36</width>
+           <x>110</x>
+           <y>105</y>
+           <width>26</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>Click to insert an emitter in the table below.</string>
+         </property>
+         <property name="statusTip">
+          <string>Click to insert an emitter in the table below.</string>
          </property>
          <property name="text">
           <string>+</string>
@@ -426,11 +522,17 @@
         <widget class="QPushButton" name="pushButton_emitter_list_remove">
          <property name="geometry">
           <rect>
-           <x>140</x>
-           <y>110</y>
-           <width>36</width>
+           <x>145</x>
+           <y>105</y>
+           <width>26</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>Click to remove an emitter in the table below.</string>
+         </property>
+         <property name="statusTip">
+          <string>Click to remove an emitter in the table below.</string>
          </property>
          <property name="text">
           <string>-</string>
@@ -440,7 +542,7 @@
          <property name="geometry">
           <rect>
            <x>25</x>
-           <y>295</y>
+           <y>290</y>
            <width>221</width>
            <height>116</height>
           </rect>
@@ -451,15 +553,27 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="toolTip">
+          <string>This table shows all defined receivers.</string>
+         </property>
+         <property name="statusTip">
+          <string>This table shows all defined receivers.</string>
+         </property>
         </widget>
         <widget class="QPushButton" name="pushButton_receiver_list_remove">
          <property name="geometry">
           <rect>
-           <x>140</x>
-           <y>265</y>
-           <width>36</width>
+           <x>145</x>
+           <y>260</y>
+           <width>26</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>Click to remove an receiver in the table below.</string>
+         </property>
+         <property name="statusTip">
+          <string>Click to remove an receiver in the table below.</string>
          </property>
          <property name="text">
           <string>-</string>
@@ -469,7 +583,7 @@
          <property name="geometry">
           <rect>
            <x>25</x>
-           <y>265</y>
+           <y>260</y>
            <width>86</width>
            <height>26</height>
           </rect>
@@ -481,14 +595,144 @@
         <widget class="QPushButton" name="pushButton_receiver_list_append">
          <property name="geometry">
           <rect>
-           <x>105</x>
-           <y>265</y>
-           <width>36</width>
+           <x>110</x>
+           <y>260</y>
+           <width>26</width>
            <height>26</height>
           </rect>
          </property>
+         <property name="toolTip">
+          <string>Click to insert an receiver in the table below.</string>
+         </property>
+         <property name="statusTip">
+          <string>Click to insert an receiver in the table below.</string>
+         </property>
          <property name="text">
           <string>+</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_example">
+         <property name="geometry">
+          <rect>
+           <x>275</x>
+           <y>290</y>
+           <width>96</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>56</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>96</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Click to generate example input parameters.</string>
+         </property>
+         <property name="statusTip">
+          <string>Click to generate example input parameters.</string>
+         </property>
+         <property name="text">
+          <string>Example</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_refresh">
+         <property name="geometry">
+          <rect>
+           <x>275</x>
+           <y>320</y>
+           <width>96</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>56</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>96</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Click to refresh the figure. (This resets the figure layout)</string>
+         </property>
+         <property name="statusTip">
+          <string>Click to refresh the figure. (This resets the figure layout)</string>
+         </property>
+         <property name="text">
+          <string>Refresh</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_save_figure">
+         <property name="geometry">
+          <rect>
+           <x>275</x>
+           <y>350</y>
+           <width>96</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>96</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>96</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Click to save figure in image format.</string>
+         </property>
+         <property name="statusTip">
+          <string>Click to save figure in image format.</string>
+         </property>
+         <property name="text">
+          <string>Save Figure</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_submit">
+         <property name="geometry">
+          <rect>
+           <x>275</x>
+           <y>380</y>
+           <width>96</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>96</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>96</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Click (or press Enter) to calculate.</string>
+         </property>
+         <property name="statusTip">
+          <string>Click (or press Enter) to calculate.</string>
+         </property>
+         <property name="text">
+          <string>Calculate</string>
          </property>
         </widget>
        </widget>
@@ -498,7 +742,7 @@
         <property name="minimumSize">
          <size>
           <width>396</width>
-          <height>61</height>
+          <height>36</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -507,112 +751,12 @@
           <height>16777215</height>
          </size>
         </property>
-        <widget class="QPushButton" name="pushButton_example">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>35</y>
-           <width>71</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>56</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>96</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Example</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_save_figure">
-         <property name="geometry">
-          <rect>
-           <x>175</x>
-           <y>35</y>
-           <width>71</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>56</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>96</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Save Figure</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_refresh">
-         <property name="geometry">
-          <rect>
-           <x>100</x>
-           <y>35</y>
-           <width>71</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>56</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>96</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Refresh</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_submit">
-         <property name="geometry">
-          <rect>
-           <x>300</x>
-           <y>5</y>
-           <width>96</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>96</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>96</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Submit</string>
-         </property>
-        </widget>
         <widget class="QProgressBar" name="progressBar">
          <property name="geometry">
           <rect>
            <x>10</x>
            <y>5</y>
-           <width>271</width>
+           <width>381</width>
            <height>26</height>
           </rect>
          </property>
@@ -633,6 +777,12 @@
            <width>396</width>
            <height>26</height>
           </size>
+         </property>
+         <property name="toolTip">
+          <string>Calculation progress.</string>
+         </property>
+         <property name="statusTip">
+          <string>Calculation progress.</string>
          </property>
          <property name="value">
           <number>0</number>

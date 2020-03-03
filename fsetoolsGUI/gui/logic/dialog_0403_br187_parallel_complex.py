@@ -10,7 +10,7 @@ class Dialog0403(QMainWindow):
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
 
     def __init__(self, parent=None):
-        super().__init__(parent=parent, title='BR 187 Thermal Radiation Calculation (Rectangle and Parallel)')
+        super().__init__(parent=parent, title='BR 187 Thermal Radiation Calculation (Rectangular and Parallel)')
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.init()
@@ -50,13 +50,13 @@ class Dialog0403(QMainWindow):
         """update ui to align with whether to calculate boundary distance or unprotected area %"""
 
         # change input and output labels and units
-        if self.ui.comboBox_S_or_UA.currentText() == '½S, emitter to boundary':  # to calculate separation to boundary
+        if self.ui.comboBox_S_or_UA.currentIndex() == 0:  # to calculate separation to boundary
             self.ui.label_unit_S_or_UA.setText('m')
-            self.ui.label_out_S_or_UA.setText('Allowed unprotected area')
+            self.ui.label_out_S_or_UA.setText('Unprotected area')
             self.ui.label_out_S_or_UA_unit.setText('%')
-            self.ui.label_out_S_or_UA.setToolTip('Maximum permissible unprotected area')
+            self.ui.label_out_S_or_UA.setToolTip('Unprotected area.')
 
-        elif self.ui.comboBox_S_or_UA.currentText() == 'Allowed unprotected area':  # to calculate unprotected area percentage
+        elif self.ui.comboBox_S_or_UA.currentIndex() == 1:  # to calculate unprotected area percentage
             self.ui.label_unit_S_or_UA.setText('%')
             self.ui.label_out_S_or_UA.setText('½S, emitter to boundary')
             self.ui.label_out_S_or_UA_unit.setText('m')
@@ -81,8 +81,6 @@ class Dialog0403(QMainWindow):
         self.ui.comboBox_S_or_UA.setCurrentIndex(0)
         self.change_mode_S_and_UA()
         self.ui.lineEdit_S_or_UA.setText('2')
-
-        self.calculate()
 
         self.repaint()
 
@@ -112,7 +110,7 @@ class Dialog0403(QMainWindow):
 
         q_target = self.maximum_acceptable_thermal_radiation_heat_flux
 
-        if self.ui.comboBox_S_or_UA.currentText() == '½S, emitter to boundary':  # to calculate maximum unprotected area
+        if self.ui.comboBox_S_or_UA.currentIndex() == 0:  # to calculate maximum unprotected area
             S = float(self.ui.lineEdit_S_or_UA.text()) * 2
             if S <= 2.:
                 self.statusBar().showMessage(
@@ -146,7 +144,7 @@ class Dialog0403(QMainWindow):
             self.statusBar().showMessage('Calculation complete.')
 
         # to calculate minimum separation distance to boundary
-        elif self.ui.comboBox_S_or_UA.currentText() == 'Allowed unprotected area':
+        elif self.ui.comboBox_S_or_UA.currentIndex() == 1:
             UA = float(self.ui.lineEdit_S_or_UA.text()) / 100.
             if not 0 < UA <= 1:
                 self.statusBar().showMessage(

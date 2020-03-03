@@ -13,6 +13,12 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="toolTip">
+   <string/>
+  </property>
+  <property name="statusTip">
+   <string/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
@@ -562,6 +568,12 @@
             <width>16777215</width>
             <height>26</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Click (or press Enter) to copy the generated file name.</string>
+          </property>
+          <property name="statusTip">
+           <string>Click (or press Enter) to copy the generated file name.</string>
           </property>
           <property name="text">
            <string>Copy File Name (Press Enter)</string>
