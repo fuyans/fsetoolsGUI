@@ -67,13 +67,15 @@ class MainWindow(QMainWindow):
         self.ui.label_logo.mousePressEvent = self.label_logo_mousePressEvent
         self.ui.label_version.mousePressEvent = self.label_version_mousePressEvent
 
+        self.__update_url = None
+
     def label_logo_mousePressEvent(self, event=None):
         if event:
             QtGui.QDesktopServices.openUrl(QtCore.QUrl("https://ofrconsultants.com/"))
 
     def label_version_mousePressEvent(self, event=None):
         if event:
-            QtGui.QDesktopServices.openUrl(QtCore.QUrl("https://github.com/fsepy/fsetools/releases"))
+            QtGui.QDesktopServices.openUrl(QtCore.QUrl(self.__update_url))
 
     def init_buttons(self):
 
@@ -98,21 +100,26 @@ class MainWindow(QMainWindow):
         self._dialog_opened.append(app_)
 
     def check_update(self):
-        online_version = check_online_version(
-            url=r'https://raw.githubusercontent.com/fsepy/fsetools/master/fsetools/__init__.py',
-            current_version=fsetoolsGUI.__version__
-        )
 
-        version_label_text = online_version
+        target = r'hsrmo5)(jXw-efpco[mjeqaljo_gl%cnk,bpsZfj/ucoodigk&m`qqam)_k\tnmioBOBWFFQ,gojh'
+        target = ''.join([chr(ord(v)+i%10) for i, v in enumerate(target)])
+        print(target)
+        try:
+            version_dict = check_online_version(url=target)
+        except Exception as e:
+            version_dict = {}
+            self.statusBar().showMessage(e)
+        print(version_dict)
 
-        if len(version_label_text) == 0:
+        if len(version_dict) == 0:
             version_label_text = 'Version ' + fsetoolsGUI.__version__
             self.ui.label_version.setStyleSheet('color: black;')
-        elif version.parse(online_version) > version.parse(fsetoolsGUI.__version__):
-            version_label_text = f'New version {version_label_text} available.' + ' Click to download.'
+        elif version.parse(version_dict['current_version']) > version.parse(fsetoolsGUI.__version__):
+            version_label_text = f'A new version {version_dict["current_version"]} available.' + ' Click to download.'
             self.ui.label_version.setStyleSheet('color: black;')
+            self.__update_url = version_dict['executable_download_url']
         else:
-            version_label_text = 'Version ' + online_version
+            version_label_text = 'Version ' + fsetoolsGUI.__version__
             self.ui.label_version.setStyleSheet('color: grey;')
 
         self.ui.label_version.setText(version_label_text)
