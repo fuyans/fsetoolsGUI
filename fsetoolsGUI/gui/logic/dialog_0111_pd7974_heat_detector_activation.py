@@ -27,6 +27,10 @@ class Dialog0111(QMainWindow):
         self.ui.setupUi(self)
         self.init()
 
+        # containers, variables etc
+        self.__table_header:list = None
+        self.__table_content:list = None
+
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(
             image_context_1=image_context_1,
@@ -69,6 +73,12 @@ class Dialog0111(QMainWindow):
             raise ValueError
 
     def set_temperature_correlation(self):
+
+        # clear output
+        self.ui.lineEdit_out_t_act.setText('')
+        self.ui.pushButton_show_results_in_table.setEnabled(False)
+        self._numerical_results = []
+
         """Set figures, disable and enable UI items accordingly."""
         if self.ui.radioButton_fire_plume.isChecked():  # plume temperature and velocity
             self.ui.lineEdit_in_R.setEnabled(False)
@@ -76,14 +86,21 @@ class Dialog0111(QMainWindow):
             self.ui.label_in_R_unit.setEnabled(False)
             self.ui.label_image_context.setPixmap(self.dict_images_pixmap['image_context_2'])
             self.ui.label_image_figure.setPixmap(self.dict_images_pixmap['image_figure_2'])
+            self.__table_header = [
+                'Time [s]', 'HRR [kW]', 'V. Origin [m]', 'Plume T. [°C]', 'Plume Vel. [m/s]', 'Detector T. [°C]'
+            ]
         else:  # ceiling jet temperature and velocity
             self.ui.lineEdit_in_R.setEnabled(True)
             self.ui.label_in_R_label.setEnabled(True)
             self.ui.label_in_R_unit.setEnabled(True)
             self.ui.label_image_context.setPixmap(self.dict_images_pixmap['image_context_1'])
             self.ui.label_image_figure.setPixmap(self.dict_images_pixmap['image_figure_1'])
+            self.__table_header = [
+                'Time [s]', 'HRR [kW]', 'V. Origin [m]', 'Jet T. [°C]', 'Jet Vel. [m/s]', 'Detector T. [°C]'
+            ]
 
     def example(self):
+
         self.ui.lineEdit_in_t.setText('600')
         self.ui.lineEdit_in_alpha.setText('0.0117')
         self.ui.lineEdit_in_H.setText('2.4')
@@ -144,10 +161,9 @@ class Dialog0111(QMainWindow):
         # work out activation time
         activation_time = time[
             np.argmin(np.abs((res['detector_temperature'] - 273.15) - detector_activation_temperature))]
-        self.ui.lineEdit_out_t_act.setText(f'{activation_time:.1f}')
 
         # print results (for console enabled version only)
-        list_title = ['Time', 'HRR', 'V. Origin', 'Jet/Plume T.', 'Jet/Plume Vel.', 'Detector T.']
+        list_title = self.__table_header
         list_param = ['time', 'gas_hrr_kW', 'virtual_origin', 'jet_temperature', 'jet_velocity', 'detector_temperature']
         list_units = ['s', 'kW', 'm', '°C', 'm/s', '°C']
         for i, time_ in enumerate(time):
@@ -162,14 +178,15 @@ class Dialog0111(QMainWindow):
                 print('\n'+''.join(f'{i_:<15.15}' for i_ in list_title))
             print(''.join(fs1_))
 
+        # write results to ui
+        self.ui.lineEdit_out_t_act.setText(f'{activation_time:.1f}')
         # store calculated results
         self._numerical_results = res
-
         # status feedback
         self.statusBar().showMessage('Calculation complete.')
-
+        # enable button to view numerical results
         self.ui.pushButton_show_results_in_table.setEnabled(True)
-
+        # refresh ui
         self.repaint()
 
     def show_results_in_table(self):
@@ -179,7 +196,7 @@ class Dialog0111(QMainWindow):
         res['detector_temperature'] -= 273.15
 
         # print results (for console enabled version only)
-        list_title = ['Time [s]', 'HRR [kW]', 'V. Origin [m]', 'Jet T. [°C]', 'Jet Vel. [m/s]', 'Detector T. [°C]']
+        list_title = self.__table_header
         list_param = ['time', 'gas_hrr_kW', 'virtual_origin', 'jet_temperature', 'jet_velocity', 'detector_temperature']
         list_content = list()
         for i, time_ in enumerate(self._numerical_results['time']):

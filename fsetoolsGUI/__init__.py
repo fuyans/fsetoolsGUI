@@ -36,9 +36,9 @@ Public version identifiers are separated into up to five segments:
 
 import datetime
 
-__version__ = "0.0.0.post20200228"
-__date_released__ = datetime.datetime(2020, 2, 28)
-__expiry_period_days__ = 180
+__version__ = "0.0.0.post20200303"
+__date_released__ = datetime.datetime(2020, 3, 3)
+__expiry_period_days__ = 360
 
 if __name__ == "__main__":
     import re
@@ -51,6 +51,5 @@ if __name__ == "__main__":
                 )
                 is not None
         )
-
 
     assert is_canonical(__version__)
