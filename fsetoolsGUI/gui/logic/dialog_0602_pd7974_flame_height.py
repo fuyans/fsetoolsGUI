@@ -23,7 +23,6 @@ class Dialog0602(QMainWindow):
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.setFixedSize(self.width(), self.height())
         self.init()
 
         # construct pixmaps that are used in this app
