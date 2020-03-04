@@ -27,7 +27,7 @@ class Dialog0406(QMainWindow):
         super().__init__(
             title='TRA 2D Parallel',
             parent=parent,
-            shortcut_Return=self.submit
+            shortcut_Return=self.calculate
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -50,7 +50,7 @@ class Dialog0406(QMainWindow):
         self.init_table()
 
         # signals
-        self.ui.pushButton_submit.clicked.connect(self.submit)
+        self.ui.pushButton_submit.clicked.connect(self.calculate)
         self.ui.pushButton_refresh.clicked.connect(self.update_plot)
         self.ui.pushButton_save_figure.clicked.connect(self.save_figure)
         self.ui.pushButton_example.clicked.connect(self.example)
@@ -67,6 +67,8 @@ class Dialog0406(QMainWindow):
 
         self.WorkerCalculator = Worker(MasterWidget=self)
         self.WorkerCalculator.updateProgress.connect(self.submit_set_progress)
+
+        self.ui.progressBar.valueChanged.connect(self.update_plot)
 
     @property
     def is_first_plot(self):
@@ -159,7 +161,7 @@ class Dialog0406(QMainWindow):
         self.ui.tableView_receivers.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.ui.tableView_receivers.resizeRowsToContents()
 
-    def submit(self):
+    def calculate(self):
 
         self.WorkerCalculator._solver_parameters = self.solver_parameters
         self.WorkerCalculator._fig = self.figure
@@ -268,7 +270,6 @@ class Dialog0406(QMainWindow):
         # domain, parse domain parameters
         solver_domain_x = [float(i) for i in self.ui.lineEdit_solver_x.text().split(',')]
         solver_domain_y = [float(i) for i in self.ui.lineEdit_solver_y.text().split(',')]
-        solver_domain_z = [float(i) for i in self.ui.lineEdit_solver_z.text().split(',')]
         solver_delta = float(self.ui.lineEdit_solver_delta.text())
         if 'solver_domain' not in self.__solver_parameters:
             solver_parameter_dict['solver_domain'] = dict()
@@ -276,8 +277,12 @@ class Dialog0406(QMainWindow):
         solver_parameter_dict['solver_delta'] = solver_delta
         solver_parameter_dict['solver_domain']['x'] = solver_domain_x
         solver_parameter_dict['solver_domain']['y'] = solver_domain_y
-        solver_parameter_dict['solver_domain']['z'] = solver_domain_z
-        solver_parameter_dict['solver_domain']['z'] = None
+
+        if len(self.ui.lineEdit_solver_z.text().strip()) == 0:
+            solver_parameter_dict['solver_domain']['z'] = None
+        else:
+            solver_domain_z = [float(i) for i in self.ui.lineEdit_solver_z.text().split(',')]
+            solver_parameter_dict['solver_domain']['z'] = solver_domain_z
 
         # emitters, parse emitter parameters
         solver_parameter_dict['emitter_list'] = self.solver_parameter_emitters
@@ -296,7 +301,10 @@ class Dialog0406(QMainWindow):
             f'{i:.3f}'.rstrip('0').rstrip('.') for i in solver_parameter_dict['solver_domain']['x'])
         solver_domain_y = ','.join(
             f'{i:.3f}'.rstrip('0').rstrip('.') for i in solver_parameter_dict['solver_domain']['y'])
-        solver_domain_z = f'{solver_parameter_dict["solver_domain"]["z"][0]:.3f}'.rstrip('0').rstrip('.')
+        if len(solver_parameter_dict["solver_domain"]["z"]) == 0:
+            solver_domain_z = None
+        else:
+            solver_domain_z = f'{solver_parameter_dict["solver_domain"]["z"][0]:.3f}'.rstrip('0').rstrip('.')
         solver_delta = f'{solver_parameter_dict["solver_delta"]:.3f}'.rstrip('0').rstrip('.')
 
         self.ui.lineEdit_solver_x.setText(solver_domain_x)
@@ -412,9 +420,10 @@ class Dialog0406(QMainWindow):
 
     def update_plot(self):
 
-        self.figure.tight_layout()
-        self.figure_canvas.draw()
-        self.repaint()
+        if self.ui.progressBar.value() == 100:
+            self.figure.tight_layout()
+            self.figure_canvas.draw()
+            self.repaint()
 
     def save_figure(self):
         path_to_file, _ = QtWidgets.QFileDialog.getSaveFileName(
@@ -463,8 +472,6 @@ class Worker(QtCore.QThread):
             else:
                 self.MasterWidget.ax.clear()
                 main_plot(solver_parameters, ax=self._ax, **self._graphic_parameters)
-
-        self.MasterWidget.update_plot()
 
 
 if __name__ == "__main__":
