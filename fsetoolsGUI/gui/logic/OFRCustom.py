@@ -59,7 +59,8 @@ class QMainWindow(QtWidgets.QMainWindow):
             title: str,
             icon: typing.Union[bytes, QtCore.QByteArray] = OFR_LOGO_1_PNG,
             shortcut_Return: typing.Callable = None,
-            parent=None
+            parent=None,
+            freeze_window_size=False
     ):
 
         super().__init__(parent=parent)
@@ -68,6 +69,9 @@ class QMainWindow(QtWidgets.QMainWindow):
         self.__shortcut_Return = shortcut_Return
 
         self._Validator_float_unsigned = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]*\.{0,1}[0-9]*!'))
+
+        if freeze_window_size:
+            self.setFixedSize(self.width(), self.height())
 
     def init(self):
 
