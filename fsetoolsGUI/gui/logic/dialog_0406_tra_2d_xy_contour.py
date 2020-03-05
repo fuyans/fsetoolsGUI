@@ -1,7 +1,7 @@
 import sys
-import time
 
 import matplotlib.pyplot as plt
+import numpy as np
 from PySide2 import QtWidgets, QtCore
 from fsetools.lib.fse_thermal_radiation_2d_v2 import main as tra_main, main_plot as tra_main_plot
 
@@ -60,21 +60,45 @@ class Dialog0406(QMainWindow):
         self.ui.pushButton_receiver_list_remove.clicked.connect(lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_remove(x, y))
         self.ui.horizontalSlider_graphic_line_thickness.valueChanged.connect(lambda: self.update_label(self.ui.label_graphic_line_thickness, f'{self.ui.horizontalSlider_graphic_line_thickness.value():d} pt'))
         self.ui.horizontalSlider_graphic_contour_font_size.valueChanged.connect(lambda: self.update_label(self.ui.label_graphic_contour_label_font_size, f'{self.ui.horizontalSlider_graphic_contour_font_size.value():d} pt'))
-        self.ui.horizontalSlider_graphic_z.valueChanged.connect(self.update_z_plane_slider)
+        self.ui.doubleSpinBox_graphic_z.valueChanged.connect(self.update_graphic_z_plane)
         self.ui.progressBar.valueChanged.connect(self.update_plot)
         self.Solver.updateProgress.connect(self.ui.progressBar.setValue)
+        self.ui.checkBox_max_heat_flux.stateChanged.connect(self.graphics_max_heat_flux_check)
 
         # containers
         self.__is_first_submit: bool = True
         self.__solver_parameters: dict = dict()
         self.__solver_results: dict = dict()
 
+    def graphics_max_heat_flux_check(self):
+        if self.ui.checkBox_max_heat_flux.isChecked():
+            self.ui.doubleSpinBox_graphic_z.setEnabled(False)
+            if len(self.Solver.results) == 0:
+                return 0  # skip if calculation not yet carried out.
+            heat_flux = np.max(np.array([i for i in self.Solver.results['heat_flux_dict'].values()]), axis=0)
+            heat_flux[heat_flux == 0] = -1
+            self.Solver.results['heat_flux'] = heat_flux
+            self.update_plot()
+        else:
+            self.ui.doubleSpinBox_graphic_z.setEnabled(True)
+            self.update_graphic_z_plane()
+
     @staticmethod
     def update_label(QLabel: QtWidgets.QLabel, v: str):
         QLabel.setText(v)
 
-    def update_z_plane_slider(self):
-        self.hori # todo
+    def update_graphic_z_plane(self):
+        """when z-plane value changes, set heat_flux accordingly and perform plot"""
+        if len(self.Solver.results) == 0:
+            return 0  # skip if calculation not yet carried out.
+
+        z = self.ui.doubleSpinBox_graphic_z.value()
+
+        for i, v in self.Solver.results['heat_flux_dict'].items():
+            if abs(float(i) - z) < 1e-5:
+                self.Solver.results['heat_flux'] = v
+                self.update_plot()
+                break
 
     def table_insert(self, TableModel:TableModel, TableView:QtWidgets.QTableView):
         # get selected row index
@@ -147,6 +171,8 @@ class Dialog0406(QMainWindow):
         self.ui.tableView_receivers.resizeRowsToContents()
 
     def calculate(self):
+        self.ui.checkBox_max_heat_flux.setChecked(True)
+        self.ui.doubleSpinBox_graphic_z.setEnabled(False)
 
         self.Solver.inputs = self.solver_parameters
         self.Solver.start()
@@ -395,9 +421,8 @@ class Dialog0406(QMainWindow):
 
             z_values = [float(i) for i in self.Solver.results['heat_flux_dict'].keys()]
             z_max, z_min = max(z_values), min(z_values)
-            self.ui.horizontalSlider_graphic_z.setMaximum(z_max)
-            self.ui.horizontalSlider_graphic_z.setMinimum(z_min)
-            self.ui.horizontalSlider_graphic_z.setSingleStep((z_max-z_min)/len(z_values))
+            self.ui.doubleSpinBox_graphic_z.setRange(z_min, z_max)
+            self.ui.doubleSpinBox_graphic_z.setSingleStep((z_max-z_min)/(len(z_values)-1))
 
             if self.is_first_plot:
                 tra_main_plot(self.Solver.results, ax=self.ax, fig=self.figure, **self.graphic_parameters)
