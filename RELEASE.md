@@ -32,16 +32,24 @@ This file documents the release history of `fseutil`.
 - [x] 0402 BR 187 perpendicular simple.
 - [x] 0403 BR 187 parallel complex.
 - [x] 0404 BR 187 perpendicular complex.
-- [ ] 0405 general thermal radiation analysis.
-    - [ ] Calculation checked.
-- [ ] 0601 OFR naming.
-- [ ] 0602 PD 7974 flame height.
-    - [ ] Calculation checked.
+- [x] 0405 general thermal radiation analysis.
+    - [x] Calculation checked.
+- [x] 0601 OFR naming.
+- [x] 0602 PD 7974 flame height.
+    - [x] Calculation checked.
 - [x] 0111 implemented display numerical results in table.
-- [ ] 0111 implemented graphical output.
+- [x] 0111 implemented graphical output.
 - [x] Converted all independent modules into QMainWindow objects, i.e. to have a status bar.
-- [ ] Installer for MS Windows.
+- [x] Installer for MS Windows.
 - [x] All output files set to readonly.
 - [x] Shortcut for all module GUI windows press ESC to close.
 - [x] Implemented error handling.
 - [x] Implemented check GUI tip texts.
+
+## Checklist before release
+
+- [ ] Update version number in `fsetoolsGUI`.
+- [ ] Build `fsetoolsGUI` executable.
+- [ ] Install and test the program.
+- [ ] Get a public accessible url of the new executable and update version info in `.json` file.
+- [ ] GitHub commit Changes and pull to master.
