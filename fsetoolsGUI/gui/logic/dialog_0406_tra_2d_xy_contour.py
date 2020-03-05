@@ -70,6 +70,7 @@ class Dialog0406(QMainWindow):
         self.Solver.updateProgress.connect(self.ui.progressBar.setValue)
 
         self.ui.progressBar.valueChanged.connect(self.update_plot)
+
     def _update_label_line_thickness(self):
         self.update_label_text(
             self.ui.label_graphic_line_thickness,
@@ -125,13 +126,13 @@ class Dialog0406(QMainWindow):
         # self.ui.tableView_emitters.setFont(QtGui.QFont("Helvetica", 10))
         self.ui.tableView_emitters.resizeColumnsToContents()
 
-        self.ui.tableView_emitters.setColumnWidth(0, (self.ui.tableView_emitters.geometry().width() - 5) * .2)
-        self.ui.tableView_emitters.setColumnWidth(1, (self.ui.tableView_emitters.geometry().width() - 5) * .2)
-        self.ui.tableView_emitters.setColumnWidth(2, (self.ui.tableView_emitters.geometry().width() - 5) * .2)
-        self.ui.tableView_emitters.setColumnWidth(3, (self.ui.tableView_emitters.geometry().width() - 5) * .2)
-        self.ui.tableView_emitters.setColumnWidth(4, (self.ui.tableView_emitters.geometry().width() - 5) * .2)
+        # width of each column in the table is set to a percentage of total width
+        # self.ui.tableView_emitters.geometry().width() = 346
+        for i_column, width_in_px in enumerate([i * 326 for i in [0.2, 0.2, 0.2, 0.2, 0.2]]):
+            self.ui.tableView_emitters.setColumnWidth(i_column, width_in_px)
         self.ui.tableView_emitters.horizontalScrollBar().setEnabled(False)
         self.ui.tableView_emitters.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.ui.tableView_emitters.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.ui.tableView_emitters.resizeRowsToContents()
 
         receiver_list_default = [
@@ -146,11 +147,11 @@ class Dialog0406(QMainWindow):
         # self.ui.tableView_receivers.setFont(QtGui.QFont("Helvetica", 10))
         self.ui.tableView_receivers.resizeColumnsToContents()
 
-        self.ui.tableView_receivers.setColumnWidth(0, (self.ui.tableView_emitters.geometry().width() - 5) * .2)
-        self.ui.tableView_receivers.setColumnWidth(1, (self.ui.tableView_emitters.geometry().width() - 5) * .217)
-        self.ui.tableView_receivers.setColumnWidth(2, (self.ui.tableView_emitters.geometry().width() - 5) * .217)
+        for i_column, width_in_px in enumerate([i * 331 for i in [0.2, 0.2, 0.2]]):
+            self.ui.tableView_receivers.setColumnWidth(i_column, width_in_px)
         self.ui.tableView_receivers.horizontalScrollBar().setEnabled(False)
         self.ui.tableView_receivers.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.ui.tableView_receivers.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.ui.tableView_receivers.resizeRowsToContents()
 
     def calculate(self):
@@ -407,7 +408,7 @@ class Dialog0406(QMainWindow):
                 self.is_first_plot = False
             else:
                 self.ax.clear()
-                tra_main_plot(self.Solver.results, ax=self._ax, **self._graphic_parameters)
+                tra_main_plot(self.Solver.results, ax=self.ax, **self.graphic_parameters)
 
             self._update_label_contour_font_size()
             self.figure.tight_layout()
