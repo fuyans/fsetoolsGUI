@@ -44,7 +44,7 @@ class Dialog0406(QMainWindow):
         # self.addToolBar(NavigationToolbar(self.figure_canvas, self))  # add plt default toolbar.
 
         # instantiate variables
-        self.param_dict = None  # input and output parameters
+        self.Solver = ThreadTRA(self)
 
         # instantiate tables
         self.init_table()
@@ -58,30 +58,23 @@ class Dialog0406(QMainWindow):
         self.ui.pushButton_emitter_list_remove.clicked.connect(lambda x=self.TableModel_emitters, y=self.ui.tableView_emitters: self.table_remove(x, y))
         self.ui.pushButton_receiver_list_append.clicked.connect(lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_insert(x, y))
         self.ui.pushButton_receiver_list_remove.clicked.connect(lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_remove(x, y))
-        self.ui.horizontalSlider_graphic_line_thickness.valueChanged.connect(self._update_label_line_thickness)
-        self.ui.horizontalSlider_graphic_contour_font_size.valueChanged.connect(self._update_label_contour_font_size)
+        self.ui.horizontalSlider_graphic_line_thickness.valueChanged.connect(lambda: self.update_label(self.ui.label_graphic_line_thickness, f'{self.ui.horizontalSlider_graphic_line_thickness.value():d} pt'))
+        self.ui.horizontalSlider_graphic_contour_font_size.valueChanged.connect(lambda: self.update_label(self.ui.label_graphic_contour_label_font_size, f'{self.ui.horizontalSlider_graphic_contour_font_size.value():d} pt'))
+        self.ui.horizontalSlider_graphic_z.valueChanged.connect(self.update_z_plane_slider)
+        self.ui.progressBar.valueChanged.connect(self.update_plot)
+        self.Solver.updateProgress.connect(self.ui.progressBar.setValue)
 
         # containers
         self.__is_first_submit: bool = True
         self.__solver_parameters: dict = dict()
         self.__solver_results: dict = dict()
 
-        self.Solver = ThreadTRA(self)
-        self.Solver.updateProgress.connect(self.ui.progressBar.setValue)
+    @staticmethod
+    def update_label(QLabel: QtWidgets.QLabel, v: str):
+        QLabel.setText(v)
 
-        self.ui.progressBar.valueChanged.connect(self.update_plot)
-
-    def _update_label_line_thickness(self):
-        self.update_label_text(
-            self.ui.label_graphic_line_thickness,
-            f'{self.ui.horizontalSlider_graphic_line_thickness.value()}'
-        )
-
-    def _update_label_contour_font_size(self):
-        self.update_label_text(
-            self.ui.label_graphic_contour_label_font_size,
-            f'{self.ui.horizontalSlider_graphic_contour_font_size.value()} pt'
-        )
+    def update_z_plane_slider(self):
+        self.hori # todo
 
     def table_insert(self, TableModel:TableModel, TableView:QtWidgets.QTableView):
         # get selected row index
@@ -144,7 +137,6 @@ class Dialog0406(QMainWindow):
 
         self.TableModel_receivers = TableModel(self, content=receiver_list_default, row_header=receiver_list_header)
         self.ui.tableView_receivers.setModel(self.TableModel_receivers)
-        # self.ui.tableView_receivers.setFont(QtGui.QFont("Helvetica", 10))
         self.ui.tableView_receivers.resizeColumnsToContents()
 
         for i_column, width_in_px in enumerate([i * 331 for i in [0.2, 0.2, 0.2]]):
@@ -156,11 +148,6 @@ class Dialog0406(QMainWindow):
 
     def calculate(self):
 
-        # self.Solver._solver_parameters = self.inputs
-        # self.Solver._fig = self.figure
-        # self.Solver._ax = self.ax
-        # self.Solver._graphic_parameters = self.graphic_parameters
-        # self.Solver._is_first_submit = self.__solver_parameters
         self.Solver.inputs = self.solver_parameters
         self.Solver.start()
 
@@ -281,7 +268,8 @@ class Dialog0406(QMainWindow):
 
         # domain, parse domain parameters
         solver_domain_x = ','.join(
-            f'{i:.3f}'.rstrip('0').rstrip('.') for i in solver_parameter_dict['solver_domain']['x'])
+            f'{i:.3f}'.rstrip('0').rstrip('.') for i in solver_parameter_dict['solver_domain']['x']
+        )
         solver_domain_y = ','.join(
             f'{i:.3f}'.rstrip('0').rstrip('.') for i in solver_parameter_dict['solver_domain']['y'])
         if len(solver_parameter_dict["solver_domain"]["z"]) == 0:
@@ -354,6 +342,7 @@ class Dialog0406(QMainWindow):
         """parse `receiver_list` from ui."""
 
         receiver_list = list()
+
         for receiver in self.TableModel_receivers.content:
             name, xy1, xy2 = receiver
             x1, y1 = xy1.split(',')
@@ -403,6 +392,13 @@ class Dialog0406(QMainWindow):
 
     def update_plot(self):
         if self.ui.progressBar.value() == 100:
+
+            z_values = [float(i) for i in self.Solver.results['heat_flux_dict'].keys()]
+            z_max, z_min = max(z_values), min(z_values)
+            self.ui.horizontalSlider_graphic_z.setMaximum(z_max)
+            self.ui.horizontalSlider_graphic_z.setMinimum(z_min)
+            self.ui.horizontalSlider_graphic_z.setSingleStep((z_max-z_min)/len(z_values))
+
             if self.is_first_plot:
                 tra_main_plot(self.Solver.results, ax=self.ax, fig=self.figure, **self.graphic_parameters)
                 self.is_first_plot = False
@@ -410,7 +406,7 @@ class Dialog0406(QMainWindow):
                 self.ax.clear()
                 tra_main_plot(self.Solver.results, ax=self.ax, **self.graphic_parameters)
 
-            self._update_label_contour_font_size()
+            # self._update_label_contour_font_size()
             self.figure.tight_layout()
             self.figure_canvas.draw()
             self.repaint()
