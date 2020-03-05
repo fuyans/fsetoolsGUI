@@ -4,12 +4,10 @@ import os
 import sys
 import time
 import warnings
-from os.path import join, realpath, dirname
 
 warnings.filterwarnings("ignore")
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.logic.dialog_0001_pass_code import Dialog0001
 from fsetoolsGUI.gui.__main__ import main
 from PySide2 import QtWidgets
 try:
@@ -38,6 +36,7 @@ if __name__ == "__main__":
     if datetime.datetime.now() > (fsetoolsGUI.__date_released__ + datetime.timedelta(days=fsetoolsGUI.__expiry_period_days__)):
         app = QtWidgets.QApplication(sys.argv)
         if KEY is not None:
+            from fsetoolsGUI.gui.logic.dialog_0001_pass_code import Dialog0001
             app_ = Dialog0001()
             app_.show()
             app_.exec_()
