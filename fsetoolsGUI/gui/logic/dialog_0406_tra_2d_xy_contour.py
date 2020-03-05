@@ -3,7 +3,7 @@ import time
 
 import matplotlib.pyplot as plt
 from PySide2 import QtWidgets, QtCore
-from fsetools.lib.fse_thermal_radiation_2d_v2 import main, main_plot
+from fsetools.lib.fse_thermal_radiation_2d_v2 import main as tra_main, main_plot as tra_main_plot
 
 from fsetoolsGUI.gui.layout.dialog_0406_tra_2d_xy_contour import Ui_MainWindow
 from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
@@ -64,20 +64,12 @@ class Dialog0406(QMainWindow):
         # containers
         self.__is_first_submit: bool = True
         self.__solver_parameters: dict = dict()
+        self.__solver_results: dict = dict()
 
-        self.WorkerCalculator = Worker(MasterWidget=self)
-        self.WorkerCalculator.updateProgress.connect(self.submit_set_progress)
+        self.Solver = ThreadTRA(self)
+        self.Solver.updateProgress.connect(self.ui.progressBar.setValue)
 
         self.ui.progressBar.valueChanged.connect(self.update_plot)
-
-    @property
-    def is_first_plot(self):
-        return self.__is_first_submit
-
-    @is_first_plot.setter
-    def is_first_plot(self, v: bool):
-        self.__is_first_submit = v
-
     def _update_label_line_thickness(self):
         self.update_label_text(
             self.ui.label_graphic_line_thickness,
@@ -163,23 +155,13 @@ class Dialog0406(QMainWindow):
 
     def calculate(self):
 
-        self.WorkerCalculator._solver_parameters = self.solver_parameters
-        self.WorkerCalculator._fig = self.figure
-        self.WorkerCalculator._ax = self.ax
-        self.WorkerCalculator._graphic_parameters = self.graphic_parameters
-        self.WorkerCalculator._is_first_submit = self.__solver_parameters
-
-        self.WorkerCalculator.start()
-        # solver_parameters_out = self.__solver_parameters
-        #
-        # if self.__is_first_submit:
-        #     main_plot(solver_parameters_out, ax=self.ax, fig=self.figure, **self.graphic_parameters)
-        #     self.__is_first_submit = False
-        # else:
-        #     self.ax.clear()
-        #     main_plot(solver_parameters_out, ax=self.ax, **self.graphic_parameters)
-        #
-        # self.update_plot()
+        # self.Solver._solver_parameters = self.inputs
+        # self.Solver._fig = self.figure
+        # self.Solver._ax = self.ax
+        # self.Solver._graphic_parameters = self.graphic_parameters
+        # self.Solver._is_first_submit = self.__solver_parameters
+        self.Solver.inputs = self.solver_parameters
+        self.Solver.start()
 
     def example(self):
 
@@ -255,7 +237,7 @@ class Dialog0406(QMainWindow):
                 y=(-10, 20),
                 z=''
             ),
-            solver_delta=.2
+            solver_delta=.5
         )
 
         self.solver_parameters = param_dict
@@ -263,7 +245,7 @@ class Dialog0406(QMainWindow):
 
     @property
     def solver_parameters(self) -> dict:
-        """parse solver_parameters:dict from ui"""
+        """parse inputs:dict from ui"""
 
         solver_parameter_dict = dict()
 
@@ -419,11 +401,26 @@ class Dialog0406(QMainWindow):
         pass  # todo
 
     def update_plot(self):
-
         if self.ui.progressBar.value() == 100:
+            if self.is_first_plot:
+                tra_main_plot(self.Solver.results, ax=self.ax, fig=self.figure, **self.graphic_parameters)
+                self.is_first_plot = False
+            else:
+                self.ax.clear()
+                tra_main_plot(self.Solver.results, ax=self._ax, **self._graphic_parameters)
+
+            self._update_label_contour_font_size()
             self.figure.tight_layout()
             self.figure_canvas.draw()
             self.repaint()
+
+    @property
+    def is_first_plot(self):
+        return self.__is_first_submit
+
+    @is_first_plot.setter
+    def is_first_plot(self, v: bool):
+        self.__is_first_submit = v
 
     def save_figure(self):
         path_to_file, _ = QtWidgets.QFileDialog.getSaveFileName(
@@ -434,12 +431,9 @@ class Dialog0406(QMainWindow):
 
         self.figure.savefig(path_to_file, dpi=96, transparent=True)
 
-    def submit_set_progress(self, progress):
-        self.ui.progressBar.setValue(progress)
-
 
 #Inherit from QThread
-class Worker(QtCore.QThread):
+class ThreadTRA(QtCore.QThread):
 
     #This is the signal that will be emitted during the processing.
     #By including int as an argument, it lets the signal know to expect
@@ -450,28 +444,37 @@ class Worker(QtCore.QThread):
     #nothing else needs to be done expect call the super's init
     def __init__(
             self,
-            MasterWidget: Dialog0406,
+            # MasterWidget: Dialog0406,
             parent=None,
     ):
-        QtCore.QThread.__init__(self, parent)
+        super().__init__(parent=parent)
+        self.__solver_results: dict = dict()
+        self.__solver_parameters: dict = dict()
 
-        self.MasterWidget = MasterWidget
+    @property
+    def inputs(self):
+        return self.__solver_parameters
+
+    @inputs.setter
+    def inputs(self, v):
+        self.__solver_parameters = v
+
+    @property
+    def results(self):
+        return self.__solver_results
+
+    @results.setter
+    def results(self, v):
+        self.__solver_results = v
 
     #A QThread is run by calling it's start() function, which calls this run()
     #function in it's own "thread".
     def run(self):
         #Notice this is the same thing you were doing in your progress() function
 
-        if self.MasterWidget.solver_parameters:
-            solver_parameters = main(self.MasterWidget.solver_parameters, QtCore_ProgressSignal=self.updateProgress)
+        if len(self.__solver_parameters) > 0:
+            self.__solver_results = tra_main(self.__solver_parameters, QtCore_ProgressSignal=self.updateProgress)
             self.updateProgress.emit(100)
-
-            if self.MasterWidget.is_first_plot:
-                main_plot(solver_parameters, ax=self.MasterWidget.ax, fig=self.MasterWidget.figure, **self.MasterWidget.graphic_parameters)
-                self.MasterWidget.is_first_plot = False
-            else:
-                self.MasterWidget.ax.clear()
-                main_plot(solver_parameters, ax=self._ax, **self._graphic_parameters)
 
 
 if __name__ == "__main__":
