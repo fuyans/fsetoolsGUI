@@ -138,17 +138,17 @@ dmypy.json
 # build files
 buildscript/build
 buildscript/dist
-fsetools/build
-fsetools/dist
+fsetoolsGUI/build
+fsetoolsGUI/dist
 buildscript/*.exe
 buildscript/*.nsh
 buildscript/*.nsi
 
 # Temporary UI files
-fsetools/gui/layout/*.py
+fsetoolsGUI/gui/layout/*.py
 
 # Include project files
-!fsetools/lib/
+!fsetoolsGUI/lib/
 *key.txt
 *__key__.py
 *.png
