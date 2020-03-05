@@ -10,7 +10,11 @@ class Dialog0403(QMainWindow):
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
 
     def __init__(self, parent=None):
-        super().__init__(parent=parent, title='BR 187 Thermal Radiation Calculation (Rectangular and Parallel)')
+        super().__init__(
+            parent=parent,
+            title='BR 187 Thermal Radiation Calculation (Rectangular and Parallel)',
+            shortcut_Return=self.calculate
+        )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.init()
@@ -39,12 +43,6 @@ class Dialog0403(QMainWindow):
         self.ui.comboBox_S_or_UA.currentTextChanged.connect(self.change_mode_S_and_UA)
         self.ui.pushButton_calculate.clicked.connect(self.calculate)
         self.ui.pushButton_test.clicked.connect(self.test)
-
-    def keyPressEvent(self, event):
-        if event.key() == 16777221 or event.key() == 16777220 or event.key() == QtCore.Qt.Key_Enter:
-            self.calculate()
-        elif event.key() == QtCore.Qt.Key_Escape:
-            self.close()
 
     def change_mode_S_and_UA(self):
         """update ui to align with whether to calculate boundary distance or unprotected area %"""

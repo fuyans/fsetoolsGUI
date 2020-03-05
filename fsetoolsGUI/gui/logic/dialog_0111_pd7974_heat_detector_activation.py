@@ -53,8 +53,6 @@ class Dialog0111(QMainWindow):
 
         # window properties
         self.ui.pushButton_show_results_in_table.setEnabled(False)
-        self.statusBar().setSizeGripEnabled(False)
-        self.setFixedSize(self.width(), self.height())
 
         # default values
         self.ui.radioButton_ceiling_jet.setChecked(True)

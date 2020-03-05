@@ -71,6 +71,7 @@ class QMainWindow(QtWidgets.QMainWindow):
         self._Validator_float_unsigned = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]*\.{0,1}[0-9]*!'))
 
         if freeze_window_size:
+            self.statusBar().setSizeGripEnabled(False)
             self.setFixedSize(self.width(), self.height())
 
     def init(self):
