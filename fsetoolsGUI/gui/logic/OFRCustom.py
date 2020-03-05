@@ -41,7 +41,7 @@ CSS = \
                 'background-color': 'grey',
             }
     }
-
+from os.path import join, dirname
 
 def dictToCSS(dictionary):
     stylesheet = ""
@@ -84,6 +84,10 @@ class QMainWindow(QtWidgets.QMainWindow):
         self.setWindowTitle(self.__title)
 
         # self.setStyleSheet(dictToCSS(CSS))
+
+        # qstr = open(join(dirname(__file__), 'style.css'), "r").read()
+        # self.setStyleSheet(qstr)
+
         self.statusBar().setSizeGripEnabled(False)
 
     def keyPressEvent(self, event):
