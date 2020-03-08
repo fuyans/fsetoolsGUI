@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>884</width>
-    <height>697</height>
+    <width>890</width>
+    <height>709</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -733,7 +733,7 @@
           </property>
          </widget>
         </widget>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="label_image_page">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -758,7 +758,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../images/0401_parallel_simple_794_560.png</pixmap>
+          <pixmap>../../../../../../../Library/Mobile Documents/6LVTQB9699~com~seriflabs~affinitydesigner/Documents/FSEUTIL/png/0402_page_794_560.png</pixmap>
          </property>
         </widget>
         <widget class="QPushButton" name="pushButton_test">
@@ -780,11 +780,28 @@
           <string>Example</string>
          </property>
         </widget>
-        <zorder>label</zorder>
+        <widget class="QLabel" name="label_image_figure">
+         <property name="geometry">
+          <rect>
+           <x>15</x>
+           <y>0</y>
+           <width>342</width>
+           <height>284</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap>../../../../../../../Library/Mobile Documents/6LVTQB9699~com~seriflabs~affinitydesigner/Documents/FSEUTIL/png/0402_figure_342_284.png</pixmap>
+         </property>
+        </widget>
+        <zorder>label_image_page</zorder>
         <zorder>pushButton_calculate</zorder>
         <zorder>groupBox_in</zorder>
         <zorder>groupBox_out</zorder>
         <zorder>pushButton_test</zorder>
+        <zorder>label_image_figure</zorder>
        </widget>
       </item>
      </layout>
@@ -796,7 +813,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>884</width>
+     <width>890</width>
      <height>22</height>
     </rect>
    </property>
