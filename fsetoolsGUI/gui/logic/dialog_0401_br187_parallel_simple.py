@@ -40,7 +40,7 @@ class Dialog0401(QMainWindow):
                 i.setEnabled(False)
 
         # set up radiation figure
-        self.ui.label.setPixmap(self.make_pixmap_from_base64(figure_1))
+        self.ui.label_image_page.setPixmap(self.make_pixmap_from_base64(figure_1))
 
         # set up validators
         self.ui.lineEdit_W.setValidator(self._Validator_float_unsigned)
