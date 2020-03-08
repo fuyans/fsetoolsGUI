@@ -31,7 +31,6 @@ class Dialog0406(QMainWindow):
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init()
 
         # instantiate objects
         self.figure = plt.figure()
@@ -70,6 +69,8 @@ class Dialog0406(QMainWindow):
         self.__solver_parameters: dict = dict()
         self.__solver_results: dict = dict()
 
+        self.init()
+
     def graphics_max_heat_flux_check(self):
         if self.ui.checkBox_max_heat_flux.isChecked():
             self.ui.doubleSpinBox_graphic_z.setEnabled(False)
@@ -102,12 +103,10 @@ class Dialog0406(QMainWindow):
 
     def table_insert(self, TableModel:TableModel, TableView:QtWidgets.QTableView):
         # get selected row index
-
         selected_indexes = TableView.selectionModel().selectedIndexes()
         selected_row_index = selected_indexes[-1].row()
         # insert
         TableModel.insertRow(selected_row_index)
-        # self.ui.tableView_emitters.layoutChanged().emit()
         TableView.resizeRowsToContents()
         self.repaint()
 
@@ -127,6 +126,8 @@ class Dialog0406(QMainWindow):
         TableModel.removeRow(selected_row_index)
         # self.ui.tableView_emitters.layoutChanged().emit()
         TableView.resizeRowsToContents()
+
+        TableView.resizeColumnsToContents()
         self.repaint()
 
     def init_table(self):
@@ -135,7 +136,7 @@ class Dialog0406(QMainWindow):
             [''] * 5,
         ]
         emitter_list_header = [
-            'Name', 'Point 1', 'Point 2', 'Height', u'Q kW/m²'
+            'Name', 'Point 1', 'Point 2', 'Height', u'kW/m²'
         ]
 
         self.TableModel_emitters = TableModel(self, content=emitter_list_default, row_header=emitter_list_header)
@@ -150,6 +151,7 @@ class Dialog0406(QMainWindow):
         self.ui.tableView_emitters.horizontalScrollBar().setEnabled(False)
         self.ui.tableView_emitters.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.ui.tableView_emitters.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.ui.tableView_emitters.verticalHeader().setVisible(False)
         self.ui.tableView_emitters.resizeRowsToContents()
 
         receiver_list_default = [
@@ -168,6 +170,7 @@ class Dialog0406(QMainWindow):
         self.ui.tableView_receivers.horizontalScrollBar().setEnabled(False)
         self.ui.tableView_receivers.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.ui.tableView_receivers.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.ui.tableView_receivers.verticalHeader().setVisible(False)
         self.ui.tableView_receivers.resizeRowsToContents()
 
     def calculate(self):
@@ -361,6 +364,7 @@ class Dialog0406(QMainWindow):
 
         self.TableModel_emitters.content = emitter_list_prepared
         self.ui.tableView_emitters.model().layoutChanged.emit()
+        self.ui.tableView_emitters.resizeRowsToContents()
         self.repaint()
 
     @property
@@ -401,6 +405,7 @@ class Dialog0406(QMainWindow):
 
         self.TableModel_receivers.content = receiver_list_prepared
         self.ui.tableView_receivers.model().layoutChanged.emit()
+        self.ui.tableView_receivers.resizeRowsToContents()
         self.repaint()
 
     @property

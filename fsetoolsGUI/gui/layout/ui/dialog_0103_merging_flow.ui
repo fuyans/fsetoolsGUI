@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>884</width>
-    <height>697</height>
+    <height>739</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,44 +43,6 @@
           <height>566</height>
          </size>
         </property>
-        <widget class="QPushButton" name="pushButton_calculate">
-         <property name="geometry">
-          <rect>
-           <x>700</x>
-           <y>540</y>
-           <width>96</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="toolTip">
-          <string>Click (or press Enter) to calculate.</string>
-         </property>
-         <property name="statusTip">
-          <string>Click (or press Enter) to calculate.</string>
-         </property>
-         <property name="text">
-          <string>Calculate</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_test">
-         <property name="geometry">
-          <rect>
-           <x>585</x>
-           <y>540</y>
-           <width>96</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="toolTip">
-          <string>Click to generate example input parameters.</string>
-         </property>
-         <property name="statusTip">
-          <string>Click to generate example input parameters.</string>
-         </property>
-         <property name="text">
-          <string>Example</string>
-         </property>
-        </widget>
         <widget class="QLabel" name="label_image_context">
          <property name="geometry">
           <rect>
@@ -97,141 +59,25 @@
           <pixmap>../../../../../../../Library/Mobile Documents/6LVTQB9699~com~seriflabs~affinitydesigner/Documents/FSEUTIL/png/0103_back_794_560.png</pixmap>
          </property>
         </widget>
-        <widget class="QGroupBox" name="groupBox_outputs">
+        <widget class="QGroupBox" name="groupBox_control">
          <property name="geometry">
           <rect>
            <x>400</x>
-           <y>435</y>
-           <width>391</width>
-           <height>81</height>
-          </rect>
-         </property>
-         <property name="title">
-          <string>Outputs</string>
-         </property>
-         <widget class="QLineEdit" name="lineEdit_out_W_FE">
-          <property name="geometry">
-           <rect>
-            <x>210</x>
-            <y>50</y>
-            <width>91</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Solved minimum final exit door width. Double click to select the value.</string>
-          </property>
-          <property name="statusTip">
-           <string>Solved minimum final exit door width. Double click to select the value.</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_12">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>50</y>
-            <width>181</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>20</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Solved minimum final exit door width.</string>
-          </property>
-          <property name="statusTip">
-           <string>Solved minimum final exit door width.</string>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;W&lt;span style=&quot; vertical-align:sub;&quot;&gt;FE&lt;/span&gt;, calculated final exit width&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_25">
-          <property name="geometry">
-           <rect>
-            <x>315</x>
-            <y>50</y>
-            <width>51</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>mm</string>
-          </property>
-         </widget>
-         <widget class="QCheckBox" name="checkBox_out_check">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>25</y>
-            <width>371</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="toolTip">
-           <string>This indicates whether the condition True (ticked) or False.</string>
-          </property>
-          <property name="statusTip">
-           <string>This indicates whether the condition True (ticked) or False.</string>
-          </property>
-          <property name="text">
-           <string>Check if &quot;(B+N)&gt;60 and D&lt;2&quot; is True.</string>
-          </property>
-         </widget>
-        </widget>
-        <widget class="QGroupBox" name="groupBox_inputs">
-         <property name="geometry">
-          <rect>
-           <x>400</x>
-           <y>215</y>
+           <y>75</y>
            <width>396</width>
-           <height>206</height>
+           <height>491</height>
           </rect>
          </property>
          <property name="title">
-          <string>Inputs</string>
+          <string/>
          </property>
          <widget class="QLabel" name="label_in_D_unit">
           <property name="geometry">
            <rect>
-            <x>315</x>
-            <y>100</y>
-            <width>66</width>
-            <height>21</height>
+            <x>330</x>
+            <y>260</y>
+            <width>51</width>
+            <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -253,10 +99,10 @@
          <widget class="QLabel" name="label_in_N_unit">
           <property name="geometry">
            <rect>
-            <x>315</x>
-            <y>150</y>
-            <width>66</width>
-            <height>21</height>
+            <x>330</x>
+            <y>320</y>
+            <width>51</width>
+            <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -278,10 +124,10 @@
          <widget class="QLabel" name="label_in_S_dn_unit">
           <property name="geometry">
            <rect>
-            <x>315</x>
-            <y>50</y>
-            <width>66</width>
-            <height>21</height>
+            <x>330</x>
+            <y>200</y>
+            <width>51</width>
+            <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -303,10 +149,10 @@
          <widget class="QLabel" name="label_in_S_up">
           <property name="geometry">
            <rect>
-            <x>315</x>
-            <y>25</y>
-            <width>66</width>
-            <height>21</height>
+            <x>330</x>
+            <y>170</y>
+            <width>51</width>
+            <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -328,10 +174,10 @@
          <widget class="QLineEdit" name="lineEdit_in_S_up">
           <property name="geometry">
            <rect>
-            <x>210</x>
-            <y>25</y>
+            <x>225</x>
+            <y>170</y>
             <width>91</width>
-            <height>21</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -368,10 +214,10 @@
          <widget class="QLineEdit" name="lineEdit_in_S_dn">
           <property name="geometry">
            <rect>
-            <x>210</x>
-            <y>50</y>
+            <x>225</x>
+            <y>200</y>
             <width>91</width>
-            <height>21</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -408,10 +254,10 @@
          <widget class="QLineEdit" name="lineEdit_in_D">
           <property name="geometry">
            <rect>
-            <x>210</x>
-            <y>100</y>
+            <x>225</x>
+            <y>260</y>
             <width>91</width>
-            <height>21</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -451,10 +297,10 @@
          <widget class="QLineEdit" name="lineEdit_in_N">
           <property name="geometry">
            <rect>
-            <x>210</x>
-            <y>150</y>
+            <x>225</x>
+            <y>320</y>
             <width>91</width>
-            <height>21</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -494,10 +340,10 @@
          <widget class="QLabel" name="label_in_N">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>150</y>
+            <x>25</x>
+            <y>320</y>
             <width>181</width>
-            <height>21</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -531,10 +377,10 @@
          <widget class="QLabel" name="label_in_S_dn">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>50</y>
+            <x>25</x>
+            <y>200</y>
             <width>181</width>
-            <height>21</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -568,10 +414,10 @@
          <widget class="QLabel" name="label_in_S_up_label">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>25</y>
+            <x>25</x>
+            <y>170</y>
             <width>181</width>
-            <height>21</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -599,10 +445,10 @@
          <widget class="QLabel" name="label_in_B">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>125</y>
+            <x>25</x>
+            <y>290</y>
             <width>181</width>
-            <height>21</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -630,10 +476,10 @@
          <widget class="QLabel" name="label_in_W_SE">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>75</y>
+            <x>25</x>
+            <y>230</y>
             <width>181</width>
-            <height>21</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -661,10 +507,10 @@
          <widget class="QLineEdit" name="lineEdit_in_B">
           <property name="geometry">
            <rect>
-            <x>210</x>
-            <y>125</y>
+            <x>225</x>
+            <y>290</y>
             <width>91</width>
-            <height>21</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -701,10 +547,10 @@
          <widget class="QLineEdit" name="lineEdit_in_W_SE">
           <property name="geometry">
            <rect>
-            <x>210</x>
-            <y>75</y>
+            <x>225</x>
+            <y>230</y>
             <width>91</width>
-            <height>21</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -744,10 +590,10 @@
          <widget class="QLabel" name="label_in_B_unit">
           <property name="geometry">
            <rect>
-            <x>315</x>
-            <y>125</y>
-            <width>66</width>
-            <height>21</height>
+            <x>330</x>
+            <y>290</y>
+            <width>51</width>
+            <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -769,10 +615,10 @@
          <widget class="QLabel" name="label_in_W_SE_unit">
           <property name="geometry">
            <rect>
-            <x>315</x>
-            <y>75</y>
-            <width>66</width>
-            <height>21</height>
+            <x>330</x>
+            <y>230</y>
+            <width>51</width>
+            <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -794,10 +640,10 @@
          <widget class="QLabel" name="label_27">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>100</y>
+            <x>25</x>
+            <y>260</y>
             <width>181</width>
-            <height>21</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -831,10 +677,10 @@
          <widget class="QLineEdit" name="lineEdit_in_X">
           <property name="geometry">
            <rect>
-            <x>210</x>
-            <y>175</y>
+            <x>225</x>
+            <y>350</y>
             <width>91</width>
-            <height>21</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -874,10 +720,10 @@
          <widget class="QLabel" name="label_in_X_unit">
           <property name="geometry">
            <rect>
-            <x>315</x>
-            <y>175</y>
-            <width>66</width>
-            <height>21</height>
+            <x>330</x>
+            <y>350</y>
+            <width>51</width>
+            <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -899,10 +745,10 @@
          <widget class="QLabel" name="label_28">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>175</y>
+            <x>25</x>
+            <y>350</y>
             <width>181</width>
-            <height>21</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -933,26 +779,32 @@
            <string>X, exit factor</string>
           </property>
          </widget>
-        </widget>
-        <widget class="QGroupBox" name="groupBox_options">
-         <property name="geometry">
-          <rect>
-           <x>400</x>
-           <y>100</y>
-           <width>396</width>
-           <height>101</height>
-          </rect>
-         </property>
-         <property name="title">
-          <string>Options</string>
-         </property>
+         <widget class="QRadioButton" name="radioButton_opt_scenario_3">
+          <property name="geometry">
+           <rect>
+            <x>25</x>
+            <y>105</y>
+            <width>361</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="toolTip">
+           <string>Scenario 3. Building final exit serves flow from upper levels, lower (basement) levels and ground level.</string>
+          </property>
+          <property name="statusTip">
+           <string>Scenario 3. Building final exit serves flow from upper levels, lower (basement) levels and ground level.</string>
+          </property>
+          <property name="text">
+           <string>Scenario 3. Flow from upper, lower and final exit levels.</string>
+          </property>
+         </widget>
          <widget class="QRadioButton" name="radioButton_opt_scenario_1">
           <property name="geometry">
            <rect>
-            <x>15</x>
-            <y>25</y>
-            <width>356</width>
-            <height>18</height>
+            <x>25</x>
+            <y>45</y>
+            <width>361</width>
+            <height>26</height>
            </rect>
           </property>
           <property name="toolTip">
@@ -968,10 +820,10 @@
          <widget class="QRadioButton" name="radioButton_opt_scenario_2">
           <property name="geometry">
            <rect>
-            <x>15</x>
-            <y>50</y>
-            <width>351</width>
-            <height>18</height>
+            <x>25</x>
+            <y>75</y>
+            <width>361</width>
+            <height>26</height>
            </rect>
           </property>
           <property name="toolTip">
@@ -984,23 +836,221 @@
            <string>Scenario 2. Flow from upper and basement levels.</string>
           </property>
          </widget>
-         <widget class="QRadioButton" name="radioButton_opt_scenario_3">
+         <widget class="QLabel" name="label_in_S_up_label_2">
           <property name="geometry">
            <rect>
             <x>15</x>
-            <y>75</y>
-            <width>361</width>
-            <height>18</height>
+            <y>140</y>
+            <width>181</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Width of the stair to upper levels.</string>
+          </property>
+          <property name="statusTip">
+           <string>Width of the stair to upper levels.</string>
+          </property>
+          <property name="text">
+           <string>Input parameters</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_in_S_up_label_3">
+          <property name="geometry">
+           <rect>
+            <x>15</x>
+            <y>15</y>
+            <width>181</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Width of the stair to upper levels.</string>
+          </property>
+          <property name="statusTip">
+           <string>Width of the stair to upper levels.</string>
+          </property>
+          <property name="text">
+           <string>Scenario options</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_25">
+          <property name="geometry">
+           <rect>
+            <x>330</x>
+            <y>445</y>
+            <width>51</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="checkBox_out_check">
+          <property name="geometry">
+           <rect>
+            <x>25</x>
+            <y>415</y>
+            <width>371</width>
+            <height>26</height>
            </rect>
           </property>
           <property name="toolTip">
-           <string>Scenario 3. Building final exit serves flow from upper levels, lower (basement) levels and ground level.</string>
+           <string>This indicates whether the condition True (ticked) or False.</string>
           </property>
           <property name="statusTip">
-           <string>Scenario 3. Building final exit serves flow from upper levels, lower (basement) levels and ground level.</string>
+           <string>This indicates whether the condition True (ticked) or False.</string>
           </property>
           <property name="text">
-           <string>Scenario 3. Flow from upper, lower and final exit levels.</string>
+           <string>Check if &quot;(B+N)&gt;60 and D&lt;2&quot; is True.</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_out_W_FE">
+          <property name="geometry">
+           <rect>
+            <x>225</x>
+            <y>445</y>
+            <width>91</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Solved minimum final exit door width. Double click to select the value.</string>
+          </property>
+          <property name="statusTip">
+           <string>Solved minimum final exit door width. Double click to select the value.</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_12">
+          <property name="geometry">
+           <rect>
+            <x>25</x>
+            <y>445</y>
+            <width>181</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>20</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Solved minimum final exit door width.</string>
+          </property>
+          <property name="statusTip">
+           <string>Solved minimum final exit door width.</string>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;W&lt;span style=&quot; vertical-align:sub;&quot;&gt;FE&lt;/span&gt;, calculated final exit width&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_in_S_up_label_4">
+          <property name="geometry">
+           <rect>
+            <x>15</x>
+            <y>385</y>
+            <width>181</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Width of the stair to upper levels.</string>
+          </property>
+          <property name="statusTip">
+           <string>Width of the stair to upper levels.</string>
+          </property>
+          <property name="text">
+           <string>Output parameters</string>
           </property>
          </widget>
         </widget>
@@ -1020,13 +1070,54 @@
           <pixmap>../../../../../../../Library/Mobile Documents/6LVTQB9699~com~seriflabs~affinitydesigner/Documents/FSEUTIL/png/0103_figure_1_342_284.png</pixmap>
          </property>
         </widget>
-        <zorder>label_image_context</zorder>
-        <zorder>pushButton_calculate</zorder>
-        <zorder>pushButton_test</zorder>
-        <zorder>groupBox_outputs</zorder>
-        <zorder>groupBox_inputs</zorder>
-        <zorder>groupBox_options</zorder>
-        <zorder>label_image_figure</zorder>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget_2" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>36</height>
+         </size>
+        </property>
+        <widget class="QPushButton" name="pushButton_test">
+         <property name="geometry">
+          <rect>
+           <x>570</x>
+           <y>5</y>
+           <width>96</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="toolTip">
+          <string>Click to generate example input parameters.</string>
+         </property>
+         <property name="statusTip">
+          <string>Click to generate example input parameters.</string>
+         </property>
+         <property name="text">
+          <string>Example</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_calculate">
+         <property name="geometry">
+          <rect>
+           <x>695</x>
+           <y>5</y>
+           <width>96</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="toolTip">
+          <string>Click (or press Enter) to calculate.</string>
+         </property>
+         <property name="statusTip">
+          <string>Click (or press Enter) to calculate.</string>
+         </property>
+         <property name="text">
+          <string>Calculate</string>
+         </property>
+        </widget>
        </widget>
       </item>
      </layout>

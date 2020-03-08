@@ -1258,9 +1258,9 @@
   <tabstop>lineEdit_g</tabstop>
   <tabstop>comboBox_fire_shape</tabstop>
   <tabstop>comboBox_fuel_type</tabstop>
-  <tabstop>pushButton_calculate</tabstop>
   <tabstop>lineEdit_out_Q_dot_star</tabstop>
   <tabstop>lineEdit_out_Z_f</tabstop>
+  <tabstop>pushButton_calculate</tabstop>
   <tabstop>pushButton_test</tabstop>
  </tabstops>
  <resources/>

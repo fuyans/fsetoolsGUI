@@ -1,3 +1,4 @@
+style_css = """
 /*https://www.materialui.co/flatuicolors*/
 
 QMainWindow {
@@ -481,3 +482,7 @@ QProgressBar::chunk {
     /*width: 20px;*/
     /*margin: 0.5px;*/
 }
+"""
+
+def style():
+    return style_css

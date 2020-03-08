@@ -3,45 +3,8 @@ import typing
 from PySide2 import QtCore, QtWidgets, QtGui
 
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
-from fsetoolsGUI.gui.logic.common import filter_objects_by_name
-CSS = \
-    {
-        'QWidget':
-            {
-                'background-color': 'white',
-            },
-        'QGroupBox':
-            {
-                'background-color': 'white',
+from fsetoolsGUI.gui.logic.style import style_css
 
-            },
-        # 'QLabel#QLabel':
-        #     {
-        #         'color': '#888888',
-        #         'background-color': 'white',
-        #         # 'font-weight': 'bold',
-        #     },
-        # 'QLabel#QLabel:active':
-        #     {
-        #         'color': '#1d90cd',
-        #     },
-        'QPushButton':
-            {
-                'background-color': '#f5f5f5',
-                'border-style': 'outset',
-                'border-width': '1px',
-                'border-color': 'grey',
-            },
-        # 'QPushButton:active':
-        #     {
-        #         'background-color': '#f5f5f5',
-        #     },
-        'QPushButton:hover':
-            {
-                'background-color': 'grey',
-            }
-    }
-from os.path import join, dirname
 
 def dictToCSS(dictionary):
     stylesheet = ""
@@ -51,6 +14,14 @@ def dictToCSS(dictionary):
             stylesheet += "  " + attribute + ": " + dictionary[item][attribute] + ";\n"
         stylesheet += "}\n"
     return stylesheet
+
+
+def hex2QColor(c):
+    """Convert Hex color to QColor"""
+    r=int(c[0:2],16)
+    g=int(c[2:4],16)
+    b=int(c[4:6],16)
+    return QtGui.QColor(r,g,b)
 
 
 class QMainWindow(QtWidgets.QMainWindow):
@@ -64,9 +35,12 @@ class QMainWindow(QtWidgets.QMainWindow):
     ):
 
         super().__init__(parent=parent)
+
+        # window properties
         self.__title = title
         self.__icon = icon
         self.__shortcut_Return = shortcut_Return
+        self.__frameless:bool = False
 
         self._Validator_float_unsigned = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]*\.{0,1}[0-9]*!'))
 
@@ -85,10 +59,35 @@ class QMainWindow(QtWidgets.QMainWindow):
 
         # self.setStyleSheet(dictToCSS(CSS))
 
+        # from os.path import join, dirname
         # qstr = open(join(dirname(__file__), 'style.css'), "r").read()
         # self.setStyleSheet(qstr)
-
+        self.setStyleSheet(style_css)
         self.statusBar().setSizeGripEnabled(False)
+
+    def _set_frameless(self):
+
+        self.__frameless = True
+
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+
+        self.background_color = hex2QColor("efefef")
+        self.foreground_color = hex2QColor("333333")
+        self.border_radius = 7
+        self.draggable = True
+        self.__mousePressPos = None
+        self.__mouseMovePos = None
+
+        # path = QtGui.QPainterPath()
+        # # self.resize(440, 220)
+        # path.addRoundedRect(QtCore.QRectF(self.rect()), border_radius, border_radius)
+        # mask = QtGui.QRegion(path.toFillPolygon().toPolygon())
+        # self.setMask(mask)
+        # # self.move(QtGui.QCursor.pos())
+
+        sizegrip = QtWidgets.QSizeGrip(self)
+        sizegrip.setVisible(True)
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
@@ -105,3 +104,19 @@ class QMainWindow(QtWidgets.QMainWindow):
         pix_map = QtGui.QPixmap()
         pix_map.loadFromData(ba)
         return pix_map
+
+    #center
+    # def center(self):
+    #     qr = self.frameGeometry()
+    #     cp = QtWidgets.QDesktopWidget().availableGeometry().center()
+    #     qr.moveCenter(cp)
+    #     self.move(qr.topLeft())
+
+    def mousePressEvent(self, event):
+        self.oldPos = event.globalPos()
+
+    def mouseMoveEvent(self, event):
+        delta = QtCore.QPoint(event.globalPos() - self.oldPos)
+        # print(delta)
+        self.move(self.x() + delta.x(), self.y() + delta.y())
+        self.oldPos = event.globalPos()

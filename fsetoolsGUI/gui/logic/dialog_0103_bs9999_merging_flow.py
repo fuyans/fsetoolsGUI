@@ -13,7 +13,6 @@ from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 
 
 class Dialog0103(QMainWindow):
-
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
 
     def __init__(self, parent=None):
@@ -41,8 +40,10 @@ class Dialog0103(QMainWindow):
 
         # set all outputs lineedit to readonly
         for i in filter_objects_by_name(
-                self.ui.groupBox_outputs,
-                object_types=[QtWidgets.QLineEdit, QtWidgets.QCheckBox]):
+                self.ui.groupBox_control,
+                object_types=[QtWidgets.QLineEdit, QtWidgets.QCheckBox],
+                names=['_out_']
+        ):
             try:
                 i.setReadOnly(True)
             except AttributeError:
@@ -70,7 +71,8 @@ class Dialog0103(QMainWindow):
         # enable everything in input group to start with.
         # ui items will be disabled for scenario 1 or 2 (if applicable) below.
         list_obj = filter_objects_by_name(
-            self.ui.groupBox_inputs, [QtWidgets.QLabel, QtWidgets.QLineEdit], ['_in_S_dn', '_in_W_SE', '_in_B', '_in_N']
+            self.ui.groupBox_control, [QtWidgets.QLabel, QtWidgets.QLineEdit],
+            ['_in_S_dn', '_in_W_SE', '_in_B', '_in_N']
         )
         for i in list_obj:
             i.setEnabled(True)
@@ -79,7 +81,7 @@ class Dialog0103(QMainWindow):
         if self.ui.radioButton_opt_scenario_1.isChecked():  # scenario 1, flow from upper levels + ground floor
             # get items that to be processed
             list_obj = filter_objects_by_name(
-                self.ui.groupBox_inputs, [QtWidgets.QLabel, QtWidgets.QLineEdit], ['_in_S_dn', '_in_B']
+                self.ui.groupBox_control, [QtWidgets.QLabel, QtWidgets.QLineEdit], ['_in_S_dn', '_in_B']
             )
             # disable items that are not required in scenario 1
             for i in list_obj:
@@ -91,7 +93,7 @@ class Dialog0103(QMainWindow):
 
         elif self.ui.radioButton_opt_scenario_2.isChecked():  # scenario 2, flow from upper levels + basement
             list_obj = filter_objects_by_name(
-                self.ui.groupBox_inputs, [QtWidgets.QLabel, QtWidgets.QLineEdit], ['_in_W_SE', '_in_N']
+                self.ui.groupBox_control, [QtWidgets.QLabel, QtWidgets.QLineEdit], ['_in_W_SE', '_in_N']
             )
             for i in list_obj:
                 i.setEnabled(False)
@@ -171,7 +173,7 @@ class Dialog0103(QMainWindow):
             raise ValueError
 
         self.ui.checkBox_out_check.setChecked(condition_check)
-        self.ui.lineEdit_out_W_FE.setText(f'{W_FE*1e3:.1f}')
+        self.ui.lineEdit_out_W_FE.setText(f'{W_FE * 1e3:.1f}')
 
         self.statusBar().showMessage('Calculation complete.')
         self.repaint()

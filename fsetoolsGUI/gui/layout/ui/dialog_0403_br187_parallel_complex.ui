@@ -1038,7 +1038,13 @@
   <tabstop>lineEdit_w</tabstop>
   <tabstop>lineEdit_h</tabstop>
   <tabstop>lineEdit_Q</tabstop>
+  <tabstop>comboBox_S_or_UA</tabstop>
   <tabstop>lineEdit_S_or_UA</tabstop>
+  <tabstop>lineEdit_out_Phi</tabstop>
+  <tabstop>lineEdit_out_q</tabstop>
+  <tabstop>lineEdit_out_S_or_UA</tabstop>
+  <tabstop>pushButton_calculate</tabstop>
+  <tabstop>pushButton_test</tabstop>
  </tabstops>
  <resources/>
  <connections/>

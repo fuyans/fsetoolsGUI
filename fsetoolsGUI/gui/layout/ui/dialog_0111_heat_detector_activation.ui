@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>882</width>
+    <width>884</width>
     <height>812</height>
    </rect>
   </property>
@@ -249,7 +249,7 @@
           </rect>
          </property>
          <property name="title">
-          <string>Inputs</string>
+          <string/>
          </property>
          <widget class="QLabel" name="label_51">
           <property name="geometry">
@@ -1176,7 +1176,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>882</width>
+     <width>884</width>
      <height>22</height>
     </rect>
    </property>
@@ -1195,6 +1195,10 @@
   <tabstop>lineEdit_in_T_act</tabstop>
   <tabstop>radioButton_ceiling_jet</tabstop>
   <tabstop>radioButton_fire_plume</tabstop>
+  <tabstop>lineEdit_out_t_act</tabstop>
+  <tabstop>pushButton_calculate</tabstop>
+  <tabstop>pushButton_show_results_in_table</tabstop>
+  <tabstop>pushButton_test</tabstop>
  </tabstops>
  <resources/>
  <connections/>

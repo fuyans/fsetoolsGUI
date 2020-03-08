@@ -45,7 +45,8 @@ class MainWindow(QMainWindow):
         self.init_buttons()
 
         # default values
-        self.ui.label_big_name.setText('FSE Tools')
+        self.ui.label_big_name.setText('')
+        self.ui.label_copy_right.setText('')
         self.init_logos()  # logo
         self.ui.dialog_error = QtWidgets.QErrorMessage(self)
         self.ui.dialog_error.setWindowTitle('Message')
@@ -87,7 +88,7 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_0402_br187_perpendicular_simple.clicked.connect(lambda: self.activate_app(Dialog0402))
         self.ui.pushButton_0403_br187_parallel_complex.clicked.connect(lambda: self.activate_app(Dialog0403))
         self.ui.pushButton_0404_br187_perpendicular_complex.clicked.connect(lambda: self.activate_app(Dialog0404))
-        self.ui.pushButton_0405_thermal_radiation_extreme.clicked.connect(lambda: self.activate_app(Dialog0405))
+        # self.ui.pushButton_0405_thermal_radiation_extreme.clicked.connect(lambda: self.activate_app(Dialog0405))
         self.ui.pushButton_0406_thermal_radiation_analysis_2d.clicked.connect(lambda: self.activate_app(Dialog0406))
 
         self.ui.pushButton_0601_naming_convention.clicked.connect(lambda: self.activate_app(Dialog0601))
@@ -106,7 +107,7 @@ class MainWindow(QMainWindow):
             version_dict = check_online_version(url=target)
         except Exception as e:
             version_dict = {}
-            self.statusBar().showMessage(e)
+            self.statusBar().showMessage(str(e))
         print('REMOTE VERSION INFO:\n', str(version_dict), '.')
 
         if len(version_dict) == 0:
