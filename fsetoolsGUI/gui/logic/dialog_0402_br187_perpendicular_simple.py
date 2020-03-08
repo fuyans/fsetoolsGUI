@@ -25,12 +25,12 @@ class Dialog0402(QMainWindow):
 
         self.change_mode_S_and_UA()
 
-        from fsetoolsGUI.gui.logic.common import filter_objects_by_name
-        for i in filter_objects_by_name(self.ui.groupBox_out, object_types=[QtWidgets.QLineEdit]):
-            try:
-                i.setReadOnly(True)
-            except AttributeError:
-                i.setEnabled(False)
+        # from fsetoolsGUI.gui.logic.common import filter_objects_by_name
+        # for i in filter_objects_by_name(self.ui.groupBox_out, object_types=[QtWidgets.QLineEdit]):
+        #     try:
+        #         i.setReadOnly(True)
+        #     except AttributeError:
+        #         i.setEnabled(False)
 
         # set up radiation figure
         self.ui.label_image_page.setPixmap(self.make_pixmap_from_base64(image_page))
