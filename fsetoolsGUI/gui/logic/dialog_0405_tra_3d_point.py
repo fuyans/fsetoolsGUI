@@ -2,7 +2,7 @@ import numpy as np
 from PySide2 import QtWidgets, QtGui, QtCore
 from fsetools.lib.fse_thermal_radiation_3d import single_receiver, heat_flux_to_temperature
 
-from fsetoolsGUI.gui.images_base64 import dialog_0404_perpendicular_page as iamge_figure
+from fsetoolsGUI.gui.images_base64 import dialog_0404_page as image_figure
 from fsetoolsGUI.gui.layout.dialog_0405_tra_3d_point import Ui_MainWindow
 from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
 
@@ -28,7 +28,7 @@ class Dialog0405(QMainWindow):
                 i.setEnabled(False)
 
         # set up radiation figure
-        ba = QtCore.QByteArray.fromBase64(iamge_figure)
+        ba = QtCore.QByteArray.fromBase64(image_figure)
         pix_map = QtGui.QPixmap()
         pix_map.loadFromData(ba)
         self.ui.label.setPixmap(pix_map)

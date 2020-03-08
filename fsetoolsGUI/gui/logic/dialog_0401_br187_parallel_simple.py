@@ -1,10 +1,8 @@
-from PySide2 import QtWidgets, QtGui, QtCore
+from fsetools.lib.fse_thermal_radiation import phi_parallel_any_br187, linear_solver
 
-from fsetoolsGUI.gui.images_base64 import dialog_0401_br187_parallel_figure_1 as figure_1
+from fsetoolsGUI.gui.images_base64 import dialog_0401_figure as image_figure
 from fsetoolsGUI.gui.layout.dialog_0401_br187_parallel_simple import Ui_MainWindow
 from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
-from fsetoolsGUI.gui.logic.common import filter_objects_by_name
-from fsetools.lib.fse_thermal_radiation import phi_parallel_any_br187, linear_solver
 
 
 class Dialog0401(QMainWindow):
@@ -33,14 +31,8 @@ class Dialog0401(QMainWindow):
 
         self.change_mode_S_and_UA()
 
-        # for i in filter_objects_by_name(self.ui.groupBox_out, object_types=[QtWidgets.QLineEdit]):
-        #     try:
-        #         i.setReadOnly(True)
-        #     except AttributeError:
-        #         i.setEnabled(False)
-
         # set up radiation figure
-        self.ui.label_image_page.setPixmap(self.make_pixmap_from_base64(figure_1))
+        self.ui.label_image_page.setPixmap(self.make_pixmap_from_base64(image_figure))
 
         # set up validators
         self.ui.lineEdit_W.setValidator(self._Validator_float_unsigned)

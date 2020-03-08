@@ -1,11 +1,9 @@
-from PySide2 import QtWidgets, QtGui, QtCore
-
-from fsetoolsGUI.gui.images_base64 import (
-    dialog_0402_br187_perpendicular_figure as image_figure,
-    dialog_0402_br187_perpendicular_page as image_page
-)
-from fsetoolsGUI.gui.layout.dialog_0401_br187_parallel_simple import Ui_MainWindow
+from PySide2 import QtCore
 from fsetools.lib.fse_thermal_radiation import phi_perpendicular_any_br187, linear_solver
+
+from fsetoolsGUI.gui.images_base64 import dialog_0402_figure as image_figure
+from fsetoolsGUI.gui.images_base64 import dialog_0402_page as image_page
+from fsetoolsGUI.gui.layout.dialog_0401_br187_parallel_simple import Ui_MainWindow
 from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
 
 
@@ -24,13 +22,6 @@ class Dialog0402(QMainWindow):
         self.init()
 
         self.change_mode_S_and_UA()
-
-        # from fsetoolsGUI.gui.logic.common import filter_objects_by_name
-        # for i in filter_objects_by_name(self.ui.groupBox_out, object_types=[QtWidgets.QLineEdit]):
-        #     try:
-        #         i.setReadOnly(True)
-        #     except AttributeError:
-        #         i.setEnabled(False)
 
         # set up radiation figure
         self.ui.label_image_page.setPixmap(self.make_pixmap_from_base64(image_page))
