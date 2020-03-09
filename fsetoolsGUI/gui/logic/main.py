@@ -32,7 +32,7 @@ class MainWindow(QMainWindow):
 
         # check update
         check_update = threading.Timer(1, self.check_update)
-        check_update.start()  # after 60 seconds, 'callback' will be called
+        check_update.start()  # after 1 second, 'callback' will be called
 
         # window properties
         self.statusBar().setSizeGripEnabled(False)
