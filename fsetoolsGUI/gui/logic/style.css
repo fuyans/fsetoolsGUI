@@ -108,11 +108,6 @@ QLineEdit:disabled {
     color: rgb(187, 187, 187);
 }
 
-QSlider {
-    background-color: rgba(255, 255, 241, 0);
-    /*font: 11px;*/
-}
-
 QTableView {
     background-color: #ffffff;
 }
@@ -154,8 +149,8 @@ QScrollBar:vertical {
     margin: 0px 0px 0px 0px;
 }
 QScrollBar::handle:vertical {
-    min-height: 10px;
-    max-height: 10px;
+    min-height: 50px;
+    /*max-height: 10px;*/
     border-radius: 5px;
     background-color: #3295fd;
 }
