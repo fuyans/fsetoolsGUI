@@ -53,9 +53,17 @@ class Dialog0103(QMainWindow):
         self.ui.label_image_context.setPixmap(self.dict_images_pixmap['image_context'])
 
         # entry default values
-        self.ui.radioButton_opt_scenario_1.setChecked(True)
+        self.ui.radioButton_opt_scenario_3.setChecked(True)
         self.change_option_scenarios()
 
+        # placeholder texts
+        self.ui.lineEdit_in_S_up.setPlaceholderText('mm')
+        self.ui.lineEdit_in_S_dn.setPlaceholderText('mm')
+        self.ui.lineEdit_in_W_SE.setPlaceholderText('mm')
+        self.ui.lineEdit_in_D.setPlaceholderText('m')
+        self.ui.lineEdit_in_B.setPlaceholderText('person')
+        self.ui.lineEdit_in_N.setPlaceholderText('person')
+        self.ui.lineEdit_in_X.setPlaceholderText('mm/person')
         # set up validators
 
         # signals
@@ -76,6 +84,9 @@ class Dialog0103(QMainWindow):
         )
         for i in list_obj:
             i.setEnabled(True)
+            if isinstance(i, QtWidgets.QLineEdit):
+                if i.text() == ' ':
+                    i.setText('')
 
         # disable items in accordance with the selected mode
         if self.ui.radioButton_opt_scenario_1.isChecked():  # scenario 1, flow from upper levels + ground floor
@@ -85,9 +96,9 @@ class Dialog0103(QMainWindow):
             )
             # disable items that are not required in scenario 1
             for i in list_obj:
-                i.setEnabled(False)
                 if isinstance(i, QtWidgets.QLineEdit):
-                    i.setText('')
+                    i.setText(' ')
+                i.setEnabled(False)
             # set figure to scenario 1
             self.ui.label_image_figure.setPixmap(self.dict_images_pixmap['image_figure_1'])
 
@@ -98,13 +109,15 @@ class Dialog0103(QMainWindow):
             for i in list_obj:
                 i.setEnabled(False)
                 if isinstance(i, QtWidgets.QLineEdit):
-                    i.setText('')
+                    i.setText(' ')
             # set figure to scenario 2
             self.ui.label_image_figure.setPixmap(self.dict_images_pixmap['image_figure_2'])
 
         else:
             # set figure to scenario 3
             self.ui.label_image_figure.setPixmap(self.dict_images_pixmap['image_figure_3'])
+
+        self.repaint()
 
     def example(self):
         self.ui.lineEdit_in_X.setText('3.06')
@@ -127,7 +140,7 @@ class Dialog0103(QMainWindow):
         try:
             S_up = float(self.ui.lineEdit_in_S_up.text()) / 1e3
             S_dn = float(self.ui.lineEdit_in_S_dn.text()) / 1e3 if self.ui.lineEdit_in_S_dn.isEnabled() else None
-            B = float(self.ui.lineEdit_in_B.text()) / 1e3 if self.ui.lineEdit_in_B.isEnabled() else None
+            B = float(self.ui.lineEdit_in_B.text()) if self.ui.lineEdit_in_B.isEnabled() else None
             X = float(self.ui.lineEdit_in_X.text()) / 1e3
             D = float(self.ui.lineEdit_in_D.text())
             N = float(self.ui.lineEdit_in_N.text()) if self.ui.lineEdit_in_N.isEnabled() else None
@@ -148,6 +161,7 @@ class Dialog0103(QMainWindow):
                     W_SE=W_SE,
                 )
             elif self.ui.radioButton_opt_scenario_2.isChecked():
+                print(B, D)
                 W_FE, condition_check = clause_15_6_6_e_merging_flow_2(
                     B=B,
                     X=X,
@@ -155,6 +169,7 @@ class Dialog0103(QMainWindow):
                     S_up=S_up,
                     S_dn=S_dn,
                 )
+                print(W_FE, condition_check)
             elif self.ui.radioButton_opt_scenario_3.isChecked():
                 W_FE, condition_check = clause_15_6_6_e_merging_flow_3(
                     B=B,
@@ -177,3 +192,12 @@ class Dialog0103(QMainWindow):
 
         self.statusBar().showMessage('Calculation complete.')
         self.repaint()
+
+
+if __name__ == "__main__":
+    import sys
+    qapp = QtWidgets.QApplication(sys.argv)
+    app = Dialog0103()
+    app.show()
+    qapp.exec_()
+
