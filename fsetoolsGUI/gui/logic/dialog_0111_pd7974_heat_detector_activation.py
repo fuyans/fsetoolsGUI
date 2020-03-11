@@ -14,7 +14,7 @@ from fsetoolsGUI.gui.logic.dialog_0002_tableview import TableWindow
 
 class Dialog0111(QMainWindow):
 
-    _numerical_results: dict = None
+    _numerical_results: list = None
 
     def __init__(self, parent=None):
         # instantiate ui
@@ -28,8 +28,8 @@ class Dialog0111(QMainWindow):
         self.init()
 
         # containers, variables etc
-        self.__table_header:list = None
-        self.__table_content:list = None
+        self.__table_header: list = None
+        self.__table_content: list = None
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(
@@ -170,7 +170,6 @@ class Dialog0111(QMainWindow):
                 v = res[param][i]
                 unit = list_units[i_]
                 fs1_.append('{:<15.14}'.format(f'{v:<.2f} {unit:<}'))
-
 
             if i % 25 == 0:
                 print('\n'+''.join(f'{i_:<15.15}' for i_ in list_title))
