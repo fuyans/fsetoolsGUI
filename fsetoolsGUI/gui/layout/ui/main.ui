@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>499</width>
-    <height>601</height>
+    <width>505</width>
+    <height>632</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -23,797 +23,797 @@
    <enum>QTabWidget::Rounded</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_3">
-    <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <property name="leftMargin">
-       <number>35</number>
-      </property>
-      <property name="topMargin">
-       <number>35</number>
-      </property>
-      <property name="rightMargin">
-       <number>35</number>
-      </property>
-      <property name="bottomMargin">
-       <number>45</number>
-      </property>
-      <item>
-       <widget class="QWidget" name="widget" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>411</width>
-          <height>106</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>411</width>
-          <height>106</height>
-         </size>
-        </property>
-        <widget class="QLabel" name="label_big_name">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>38</y>
-           <width>157</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>18</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>OFR TOOLBOX</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_copy_right">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>65</y>
-           <width>150</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>OFR Consultants Ltd.</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_logo">
-         <property name="geometry">
-          <rect>
-           <x>190</x>
-           <y>5</y>
-           <width>194</width>
-           <height>105</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>194</width>
-           <height>80</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap>../images/OFR_LOGO_2_194_80.png</pixmap>
-         </property>
-        </widget>
-       </widget>
-      </item>
-      <item>
-       <widget class="QGroupBox" name="groupBox_misc">
-        <property name="minimumSize">
-         <size>
-          <width>411</width>
-          <height>316</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>411</width>
-          <height>316</height>
-         </size>
-        </property>
-        <property name="title">
-         <string/>
-        </property>
-        <widget class="QPushButton" name="pushButton">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="geometry">
-          <rect>
-           <x>330</x>
-           <y>30</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_0602_pd7974_flame_height">
-         <property name="geometry">
-          <rect>
-           <x>90</x>
-           <y>30</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Flame height in accordance with PD 7974-1:2019.</string>
-         </property>
-         <property name="statusTip">
-          <string>Flame height in accordance with PD 7974-1:2019.</string>
-         </property>
-         <property name="text">
-          <string>PD 7974
+   <widget class="QWidget" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>47</x>
+      <y>47</y>
+      <width>411</width>
+      <height>106</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>411</width>
+      <height>106</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>411</width>
+      <height>106</height>
+     </size>
+    </property>
+    <widget class="QLabel" name="label_big_name">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>38</y>
+       <width>157</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>18</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>OFR TOOLBOX</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_copy_right">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>65</y>
+       <width>150</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>OFR Consultants Ltd.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_logo">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>5</y>
+       <width>194</width>
+       <height>105</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>194</width>
+       <height>80</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../images/OFR_LOGO_2_194_80.png</pixmap>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_misc">
+    <property name="geometry">
+     <rect>
+      <x>47</x>
+      <y>169</y>
+      <width>421</width>
+      <height>321</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>421</width>
+      <height>321</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>421</width>
+      <height>321</height>
+     </size>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QPushButton" name="pushButton">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>335</x>
+       <y>30</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_0602_pd7974_flame_height">
+     <property name="geometry">
+      <rect>
+       <x>95</x>
+       <y>30</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Flame height in accordance with PD 7974-1:2019.</string>
+     </property>
+     <property name="statusTip">
+      <string>Flame height in accordance with PD 7974-1:2019.</string>
+     </property>
+     <property name="text">
+      <string>PD 7974
 Flame
 Height</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="b4_01_br187_parallel_11">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="geometry">
-          <rect>
-           <x>170</x>
-           <y>30</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>CFD
+     </property>
+    </widget>
+    <widget class="QPushButton" name="b4_01_br187_parallel_11">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>175</x>
+       <y>30</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>CFD
 Required
 Vent. Size</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_0601_naming_convention">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>30</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>File name generator in accordance with OFR file naming protocal.</string>
-         </property>
-         <property name="statusTip">
-          <string>File name generator in accordance with OFR file naming protocal.</string>
-         </property>
-         <property name="text">
-          <string>File
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_0601_naming_convention">
+     <property name="geometry">
+      <rect>
+       <x>15</x>
+       <y>30</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>File name generator in accordance with OFR file naming protocal.</string>
+     </property>
+     <property name="statusTip">
+      <string>File name generator in accordance with OFR file naming protocal.</string>
+     </property>
+     <property name="text">
+      <string>File
 Naming
 Protocol</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="b4_01_br187_parallel_12">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="geometry">
-          <rect>
-           <x>250</x>
-           <y>30</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>To estimate optimal mesh resolution.</string>
-         </property>
-         <property name="statusTip">
-          <string>To estimate optimal mesh resolution.</string>
-         </property>
-         <property name="text">
-          <string>CFD
+     </property>
+    </widget>
+    <widget class="QPushButton" name="b4_01_br187_parallel_12">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>255</x>
+       <y>30</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>To estimate optimal mesh resolution.</string>
+     </property>
+     <property name="statusTip">
+      <string>To estimate optimal mesh resolution.</string>
+     </property>
+     <property name="text">
+      <string>CFD
 Mesh Size</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_0406_thermal_radiation_analysis_2d">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="geometry">
-          <rect>
-           <x>330</x>
-           <y>230</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>General purpose thermal radiation calculator.</string>
-         </property>
-         <property name="statusTip">
-          <string>General purpose thermal radiation calculator.</string>
-         </property>
-         <property name="text">
-          <string>TRA 2D
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_0406_thermal_radiation_analysis_2d">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>335</x>
+       <y>230</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>General purpose thermal radiation calculator.</string>
+     </property>
+     <property name="statusTip">
+      <string>General purpose thermal radiation calculator.</string>
+     </property>
+     <property name="text">
+      <string>TRA 2D
 Contour</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_0401_br187_parallel_simple">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>230</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
-         </property>
-         <property name="statusTip">
-          <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
-         </property>
-         <property name="text">
-          <string>BR 187
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_0401_br187_parallel_simple">
+     <property name="geometry">
+      <rect>
+       <x>15</x>
+       <y>230</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
+     </property>
+     <property name="statusTip">
+      <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
+     </property>
+     <property name="text">
+      <string>BR 187
 Parallel</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_0403_br187_parallel_complex">
-         <property name="geometry">
-          <rect>
-           <x>170</x>
-           <y>230</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
-         </property>
-         <property name="statusTip">
-          <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
-         </property>
-         <property name="text">
-          <string>BR 187
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_0403_br187_parallel_complex">
+     <property name="geometry">
+      <rect>
+       <x>175</x>
+       <y>230</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
+     </property>
+     <property name="statusTip">
+      <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
+     </property>
+     <property name="text">
+      <string>BR 187
 Parallel Non
 Centered</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_0404_br187_perpendicular_complex">
-         <property name="geometry">
-          <rect>
-           <x>250</x>
-           <y>230</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
-         </property>
-         <property name="statusTip">
-          <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
-         </property>
-         <property name="text">
-          <string>BR 187
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_0404_br187_perpendicular_complex">
+     <property name="geometry">
+      <rect>
+       <x>255</x>
+       <y>230</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
+     </property>
+     <property name="statusTip">
+      <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
+     </property>
+     <property name="text">
+      <string>BR 187
 Perp. Non
 Centered</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_0402_br187_perpendicular_simple">
-         <property name="geometry">
-          <rect>
-           <x>90</x>
-           <y>230</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
-         </property>
-         <property name="statusTip">
-          <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
-         </property>
-         <property name="text">
-          <string>BR 187
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_0402_br187_perpendicular_simple">
+     <property name="geometry">
+      <rect>
+       <x>95</x>
+       <y>230</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
+     </property>
+     <property name="statusTip">
+      <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
+     </property>
+     <property name="text">
+      <string>BR 187
 Perp.</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="b4_01_br187_parallel_10">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="geometry">
-          <rect>
-           <x>330</x>
-           <y>130</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Not implemented.</string>
-         </property>
-         <property name="statusTip">
-          <string>Not implemented.</string>
-         </property>
-         <property name="text">
-          <string>Zone
+     </property>
+    </widget>
+    <widget class="QPushButton" name="b4_01_br187_parallel_10">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>335</x>
+       <y>130</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Not implemented.</string>
+     </property>
+     <property name="statusTip">
+      <string>Not implemented.</string>
+     </property>
+     <property name="text">
+      <string>Zone
 Model</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_0102_bs9999_datasheet_1">
-         <property name="geometry">
-          <rect>
-           <x>90</x>
-           <y>130</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Data sheet 1 for BS 9999:2017, for B1.</string>
-         </property>
-         <property name="statusTip">
-          <string>Data sheet 1 for BS 9999:2017, for B1.</string>
-         </property>
-         <property name="text">
-          <string>BS 9999
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_0102_bs9999_datasheet_1">
+     <property name="geometry">
+      <rect>
+       <x>95</x>
+       <y>130</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Data sheet 1 for BS 9999:2017, for B1.</string>
+     </property>
+     <property name="statusTip">
+      <string>Data sheet 1 for BS 9999:2017, for B1.</string>
+     </property>
+     <property name="text">
+      <string>BS 9999
 Datasheet
 No. 1</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_0101_adb2_datasheet_1">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>130</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Data sheet 1 for Approved Document B (2019) Vol. 2, for B1.</string>
-         </property>
-         <property name="statusTip">
-          <string>Data sheet 1 for Approved Document B (2019) Vol. 2, for B1.</string>
-         </property>
-         <property name="text">
-          <string>ADB 2
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_0101_adb2_datasheet_1">
+     <property name="geometry">
+      <rect>
+       <x>15</x>
+       <y>130</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Data sheet 1 for Approved Document B (2019) Vol. 2, for B1.</string>
+     </property>
+     <property name="statusTip">
+      <string>Data sheet 1 for Approved Document B (2019) Vol. 2, for B1.</string>
+     </property>
+     <property name="text">
+      <string>ADB 2
 Datasheet
 No. 1</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_0111_heat_detector_activation">
-         <property name="geometry">
-          <rect>
-           <x>250</x>
-           <y>130</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
-         </property>
-         <property name="statusTip">
-          <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
-         </property>
-         <property name="text">
-          <string>PD 7974
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_0111_heat_detector_activation">
+     <property name="geometry">
+      <rect>
+       <x>255</x>
+       <y>130</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
+     </property>
+     <property name="statusTip">
+      <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
+     </property>
+     <property name="text">
+      <string>PD 7974
 HD
 Activation
 Time</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_0103_merging_flow">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="geometry">
-          <rect>
-           <x>170</x>
-           <y>130</y>
-           <width>71</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>71</width>
-           <height>71</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Merging flow calculation in accordance with BS 9999:2017.</string>
-         </property>
-         <property name="statusTip">
-          <string>Merging flow calculation in accordance with BS 9999:2017.</string>
-         </property>
-         <property name="text">
-          <string>Merging
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_0103_merging_flow">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>175</x>
+       <y>130</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Merging flow calculation in accordance with BS 9999:2017.</string>
+     </property>
+     <property name="statusTip">
+      <string>Merging flow calculation in accordance with BS 9999:2017.</string>
+     </property>
+     <property name="text">
+      <string>Merging
 Flow</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>205</y>
-           <width>366</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>B4 External fire spread</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_2">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>105</y>
-           <width>366</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>B1 Means of escape</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_3">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>5</y>
-           <width>366</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Miscellaneous</string>
-         </property>
-        </widget>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="widget_2" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>411</width>
-          <height>26</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>411</width>
-          <height>26</height>
-         </size>
-        </property>
-        <widget class="QLabel" name="label_version">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>5</y>
-           <width>366</width>
-           <height>14</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>14</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>14</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>6</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Version #.#.#</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-        </widget>
-       </widget>
-      </item>
-     </layout>
-    </item>
-   </layout>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>15</x>
+       <y>205</y>
+       <width>366</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>B4 External fire spread</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>15</x>
+       <y>105</y>
+       <width>366</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>B1 Means of escape</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>15</x>
+       <y>5</y>
+       <width>366</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Miscellaneous</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="widget_2" native="true">
+    <property name="geometry">
+     <rect>
+      <x>47</x>
+      <y>500</y>
+      <width>411</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>411</width>
+      <height>26</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>411</width>
+      <height>26</height>
+     </size>
+    </property>
+    <widget class="QLabel" name="label_version">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>5</y>
+       <width>366</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>14</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>14</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>6</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Version #.#.#</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>499</width>
+     <width>505</width>
      <height>22</height>
     </rect>
    </property>
