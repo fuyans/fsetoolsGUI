@@ -64,6 +64,9 @@ class QMainWindow(QtWidgets.QMainWindow):
         self.setStyleSheet(style_css)
         self.statusBar().setSizeGripEnabled(False)
 
+        self.centralWidget().adjustSize()
+        self.adjustSize()
+
     def _set_frameless(self):
 
         self.__frameless = True
@@ -91,8 +94,9 @@ class QMainWindow(QtWidgets.QMainWindow):
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
             self.close()
-        elif event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
+        elif (event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter) and self.__shortcut_Return:
             self.__shortcut_Return()
+        event.accept()
 
     def update_label_text(self, QLabel:QtWidgets.QLabel, val: str):
         QLabel.setText(val)
