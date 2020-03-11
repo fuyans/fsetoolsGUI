@@ -213,4 +213,6 @@ class Dialog0111(QMainWindow):
 
         app_.TableModel.sort(0, QtCore.Qt.AscendingOrder)
 
+        app_.TableView.resizeColumnsToContents()
+
         app_.show()
