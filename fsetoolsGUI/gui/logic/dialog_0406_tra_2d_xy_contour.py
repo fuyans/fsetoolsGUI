@@ -102,11 +102,16 @@ class Dialog0406(QMainWindow):
                 break
 
     def table_insert(self, TableModel:TableModel, TableView:QtWidgets.QTableView):
+        print('Inserting a row into table.')
         # get selected row index
         selected_indexes = TableView.selectionModel().selectedIndexes()
         selected_row_index = selected_indexes[-1].row()
+        print(f'row index {selected_row_index}.')
         # insert
         TableModel.insertRow(selected_row_index)
+
+        print(TableView == self.ui.tableView_emitters)
+        TableView.model().layoutChanged.emit()
         TableView.resizeRowsToContents()
         self.repaint()
 
@@ -124,10 +129,8 @@ class Dialog0406(QMainWindow):
         print(selected_row_index)
         # remove
         TableModel.removeRow(selected_row_index)
-        # self.ui.tableView_emitters.layoutChanged().emit()
+        TableView.model().layoutChanged.emit()
         TableView.resizeRowsToContents()
-
-        TableView.resizeColumnsToContents()
         self.repaint()
 
     def init_table(self):
@@ -187,71 +190,28 @@ class Dialog0406(QMainWindow):
                 dict(
                     name='facade 1',
                     x=[0, 5],
-                    y=[4, 4],
+                    y=[0, 0],
                     z=[0, 3],
                     heat_flux=168
                 ),
                 dict(
-                    name='facade 2',
+                    name='facade 1',
                     x=[5, 10],
-                    y=[5, 5],
-                    z=[0, 3],
-                    heat_flux=84
-                ),
-                dict(
-                    name='facade 3',
-                    x=[10, 10],
-                    y=[5, 0],
-                    z=[0, 3],
-                    heat_flux=84
-                ),
-                dict(
-                    name='facade 5',
-                    x=[10, 5],
                     y=[0, 0],
                     z=[0, 3],
                     heat_flux=84
-                ),
-                dict(
-                    name='facade 4',
-                    x=[5, 0],
-                    y=[0, 0],
-                    z=[0, 3],
-                    heat_flux=168
-                ),
-                dict(
-                    name='facade 7',
-                    x=[0, 0],
-                    y=[0, 4],
-                    z=[0, 3],
-                    heat_flux=168
                 ),
             ],
             receiver_list=[
                 dict(
                     name='wall 1',
-                    x=[-5, 15],
-                    y=[-5, -5]
-                ),
-                dict(
-                    name='wall 2',
-                    x=[15, 15],
-                    y=[-5, 15]
-                ),
-                dict(
-                    name='wall 3',
-                    x=[15, -5],
-                    y=[15, 15]
-                ),
-                dict(
-                    name='wall 4',
-                    x=[-5, -5],
-                    y=[15, -5]
-                ),
+                    x=[0, 10],
+                    y=[10, 10]
+                )
             ],
             solver_domain=dict(
-                x=(-10, 20),
-                y=(-10, 20),
+                x=(-5, 15),
+                y=(0, 15),
                 z=''
             ),
             solver_delta=.5
@@ -259,6 +219,35 @@ class Dialog0406(QMainWindow):
 
         self.solver_parameters = param_dict
         self.repaint()
+
+    def update_plot(self):
+        if self.ui.progressBar.value() == 100:
+
+            z_values = [float(i) for i in self.Solver.results['heat_flux_dict'].keys()]
+            z_max, z_min = max(z_values), min(z_values)
+            self.ui.doubleSpinBox_graphic_z.setRange(z_min, z_max)
+            self.ui.doubleSpinBox_graphic_z.setSingleStep((z_max-z_min)/(len(z_values)-1))
+
+            if self.is_first_plot:
+                tra_main_plot(self.Solver.results, ax=self.ax, fig=self.figure, **self.graphic_parameters)
+                self.is_first_plot = False
+            else:
+                self.ax.clear()
+                tra_main_plot(self.Solver.results, ax=self.ax, **self.graphic_parameters)
+
+            # self._update_label_contour_font_size()
+            self.figure.tight_layout()
+            self.figure_canvas.draw()
+            self.repaint()
+
+    def save_figure(self):
+        path_to_file, _ = QtWidgets.QFileDialog.getSaveFileName(
+            parent=self,
+            caption='Save Figure',
+            dir='image.png'
+        )
+
+        self.figure.savefig(path_to_file, dpi=96, transparent=True)
 
     @property
     def solver_parameters(self) -> dict:
@@ -421,26 +410,6 @@ class Dialog0406(QMainWindow):
     def graphic_parameters(self, param_dict: dict):
         pass  # todo
 
-    def update_plot(self):
-        if self.ui.progressBar.value() == 100:
-
-            z_values = [float(i) for i in self.Solver.results['heat_flux_dict'].keys()]
-            z_max, z_min = max(z_values), min(z_values)
-            self.ui.doubleSpinBox_graphic_z.setRange(z_min, z_max)
-            self.ui.doubleSpinBox_graphic_z.setSingleStep((z_max-z_min)/(len(z_values)-1))
-
-            if self.is_first_plot:
-                tra_main_plot(self.Solver.results, ax=self.ax, fig=self.figure, **self.graphic_parameters)
-                self.is_first_plot = False
-            else:
-                self.ax.clear()
-                tra_main_plot(self.Solver.results, ax=self.ax, **self.graphic_parameters)
-
-            # self._update_label_contour_font_size()
-            self.figure.tight_layout()
-            self.figure_canvas.draw()
-            self.repaint()
-
     @property
     def is_first_plot(self):
         return self.__is_first_submit
@@ -448,15 +417,6 @@ class Dialog0406(QMainWindow):
     @is_first_plot.setter
     def is_first_plot(self, v: bool):
         self.__is_first_submit = v
-
-    def save_figure(self):
-        path_to_file, _ = QtWidgets.QFileDialog.getSaveFileName(
-            parent=self,
-            caption='Save Figure',
-            dir='image.png'
-        )
-
-        self.figure.savefig(path_to_file, dpi=96, transparent=True)
 
 
 #Inherit from QThread

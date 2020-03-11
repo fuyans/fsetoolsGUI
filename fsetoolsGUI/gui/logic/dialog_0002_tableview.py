@@ -45,8 +45,7 @@ class TableWindow(QtWidgets.QDialog):
         layout.addWidget(self.TableView)
         self.setLayout(layout)
 
-
-    def CopySelection(self):
+    def copy_selection(self):
         selection = self.TableView.selectedIndexes()
         if selection:
             rows = sorted(index.row() for index in selection)
@@ -65,7 +64,7 @@ class TableWindow(QtWidgets.QDialog):
 
     def keyPressEvent(self, event):
         if QtGui.QKeySequence(event.key() + int(event.modifiers())) == QtGui.QKeySequence('Ctrl+C'):
-            self.CopySelection()
+            self.copy_selection()
 
 
 class TableModel(QtCore.QAbstractTableModel):
@@ -135,6 +134,7 @@ class TableModel(QtCore.QAbstractTableModel):
     def insertRow(self, position, index=QtCore.QModelIndex()):
         self.beginInsertRows(QtCore.QModelIndex(), position, position - 1)
         self.content.insert(position, [''] * len(self.content[0]))
+        print(self.content)
         self.endInsertRows()
         return True
 
