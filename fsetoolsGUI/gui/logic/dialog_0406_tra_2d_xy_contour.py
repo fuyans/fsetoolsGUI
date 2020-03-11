@@ -125,8 +125,6 @@ class Dialog0406(QMainWindow):
             selected_row_index = selected_indexes[-1].row()
         else:
             selected_row_index = selected_indexes[0].row()
-        print(selected_indexes)
-        print(selected_row_index)
         # remove
         TableModel.removeRow(selected_row_index)
         TableView.model().layoutChanged.emit()
@@ -144,11 +142,9 @@ class Dialog0406(QMainWindow):
 
         self.TableModel_emitters = TableModel(self, content=emitter_list_default, row_header=emitter_list_header)
         self.ui.tableView_emitters.setModel(self.TableModel_emitters)
-        # self.ui.tableView_emitters.setFont(QtGui.QFont("Helvetica", 10))
         self.ui.tableView_emitters.resizeColumnsToContents()
 
         # width of each column in the table is set to a percentage of total width
-        # self.ui.tableView_emitters.geometry().width() = 346
         for i_column, width_in_px in enumerate([i * 326 for i in [0.2, 0.2, 0.2, 0.2, 0.2]]):
             self.ui.tableView_emitters.setColumnWidth(i_column, width_in_px)
         self.ui.tableView_emitters.horizontalScrollBar().setEnabled(False)
