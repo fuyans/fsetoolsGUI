@@ -53,17 +53,18 @@ class Dialog0103(QMainWindow):
         self.ui.label_image_context.setPixmap(self.dict_images_pixmap['image_context'])
 
         # entry default values
-        self.ui.radioButton_opt_scenario_3.setChecked(True)
+        self.ui.radioButton_opt_scenario_1.setChecked(True)
         self.change_option_scenarios()
 
         # placeholder texts
-        self.ui.lineEdit_in_S_up.setPlaceholderText('mm')
-        self.ui.lineEdit_in_S_dn.setPlaceholderText('mm')
-        self.ui.lineEdit_in_W_SE.setPlaceholderText('mm')
-        self.ui.lineEdit_in_D.setPlaceholderText('m')
-        self.ui.lineEdit_in_B.setPlaceholderText('person')
-        self.ui.lineEdit_in_N.setPlaceholderText('person')
-        self.ui.lineEdit_in_X.setPlaceholderText('mm/person')
+        # self.ui.lineEdit_in_S_up.setPlaceholderText('mm')
+        # self.ui.lineEdit_in_S_dn.setPlaceholderText('mm')
+        # self.ui.lineEdit_in_W_SE.setPlaceholderText('mm')
+        # self.ui.lineEdit_in_D.setPlaceholderText('m')
+        # self.ui.lineEdit_in_B.setPlaceholderText('person')
+        # self.ui.lineEdit_in_N.setPlaceholderText('person')
+        # self.ui.lineEdit_in_X.setPlaceholderText('mm/person')
+
         # set up validators
 
         # signals
