@@ -474,10 +474,32 @@ QProgressBar {
     border: 1px solid #d2d1d2;
     border-radius: 5px;
 }
-
 QProgressBar::chunk {
     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
     border-radius: 5px;
     /*width: 20px;*/
     /*margin: 0.5px;*/
+}
+
+QScrollBar:vertical {
+    border: 0px solid #999999;
+    background:white;
+    width:10px;
+    margin: 0px 0px 0px 0px;
+}
+QScrollBar::handle:vertical {
+    min-height: 0px;
+    border: 0px solid red;
+    border-radius: 5px;
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
+}
+QScrollBar::add-line:vertical {
+    height: 0px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical {
+    height: 0 px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
 }
