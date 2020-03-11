@@ -225,7 +225,8 @@ class Dialog0406(QMainWindow):
             self.ui.doubleSpinBox_graphic_z.setSingleStep((z_max-z_min)/(len(z_values)-1))
 
             if self.is_first_plot:
-                tra_main_plot(self.Solver.results, ax=self.ax, fig=self.figure, **self.graphic_parameters)
+                # tra_main_plot(self.Solver.results, ax=self.ax, fig=self.figure, **self.graphic_parameters)
+                tra_main_plot(self.Solver.results, ax=self.ax, **self.graphic_parameters)
                 self.is_first_plot = False
             else:
                 self.ax.clear()
