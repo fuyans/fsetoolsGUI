@@ -3,8 +3,12 @@ import typing
 from PySide2 import QtCore, QtWidgets, QtGui
 
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
-from fsetoolsGUI.gui.logic.style import style_css
 
+try:
+    from os.path import join, dirname
+    style_css = open(join(dirname(__file__), 'style.css'), "r").read()
+except FileNotFoundError:
+    from fsetoolsGUI.gui.logic.style import style_css
 
 def dictToCSS(dictionary):
     stylesheet = ""
@@ -57,11 +61,6 @@ class QMainWindow(QtWidgets.QMainWindow):
         self.setWindowIcon(pix_map)
         self.setWindowTitle(self.__title)
 
-        # self.setStyleSheet(dictToCSS(CSS))
-
-        # from os.path import join, dirname
-        # qstr = open(join(dirname(__file__), 'style.css'), "r").read()
-        # self.setStyleSheet(qstr)
         self.setStyleSheet(style_css)
         self.statusBar().setSizeGripEnabled(False)
 
@@ -112,11 +111,11 @@ class QMainWindow(QtWidgets.QMainWindow):
     #     qr.moveCenter(cp)
     #     self.move(qr.topLeft())
 
-    def mousePressEvent(self, event):
-        self.oldPos = event.globalPos()
-
-    def mouseMoveEvent(self, event):
-        delta = QtCore.QPoint(event.globalPos() - self.oldPos)
-        # print(delta)
-        self.move(self.x() + delta.x(), self.y() + delta.y())
-        self.oldPos = event.globalPos()
+    # def mousePressEvent(self, event):
+    #     self.oldPos = event.globalPos()
+    #
+    # def mouseMoveEvent(self, event):
+    #     delta = QtCore.QPoint(event.globalPos() - self.oldPos)
+    #     # print(delta)
+    #     self.move(self.x() + delta.x(), self.y() + delta.y())
+    #     self.oldPos = event.globalPos()
