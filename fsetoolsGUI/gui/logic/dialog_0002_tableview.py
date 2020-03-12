@@ -3,6 +3,67 @@ import io
 import operator
 
 from PySide2 import QtGui, QtCore, QtWidgets
+from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
+
+
+class TableWindow_QMainWindow(QtWidgets.QMainWindow):
+    def __init__(
+            self,
+            data_list: list,
+            header: list,
+            window_title: str = None,
+            window_geometry: tuple = (),
+            parent=None,
+            *args,
+    ):
+
+        super().__init__(
+            parent=parent,
+            *args
+        )
+        self.setWindowFlag(QtCore.Qt.WindowCloseButtonHint, True)
+        self.setWindowFlag(QtCore.Qt.WindowMinimizeButtonHint, True)
+        self.setWindowFlag(QtCore.Qt.WindowMaximizeButtonHint, True)
+
+        if window_geometry:
+            self.setGeometry(*window_geometry)
+
+        if window_title:
+            self.setWindowTitle(window_title)
+
+        self.centralwidget = QtWidgets.QWidget(self)
+        self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
+
+        self.TableView = QtWidgets.QTableView(self.centralwidget)
+
+        self.TableModel = TableModel(self, data_list, header)
+        self.TableView.setModel(self.TableModel)
+        self.TableView.setFont(QtGui.QFont("Courier New", 10))
+        self.TableView.resizeColumnsToContents()
+        self.TableView.setSortingEnabled(True)
+
+        self.gridLayout.addWidget(self.TableView, 0, 0, 1, 1)
+
+        self.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(self)
+        self.menubar.setObjectName(u"menubar")
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 22))
+        self.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(self)
+        self.statusbar.setObjectName(u"statusbar")
+        self.setStatusBar(self.statusbar)
+
+        # window properties
+        ba = QtCore.QByteArray.fromBase64(OFR_LOGO_1_PNG)
+        pix_map = QtGui.QPixmap()
+        pix_map.loadFromData(ba)
+        self.setWindowIcon(pix_map)
+        self.setWindowTitle(window_title)
+
+        self.statusBar().setSizeGripEnabled(False)
+
+        self.centralWidget().adjustSize()
+        self.adjustSize()
 
 
 class TableWindow(QtWidgets.QDialog):
@@ -33,7 +94,7 @@ class TableWindow(QtWidgets.QDialog):
         self.TableView.setModel(self.TableModel)
 
         # set font
-        font = QtGui.QFont("Courier New", 9)
+        font = QtGui.QFont("Courier New", 10)
         self.TableView.setFont(font)
 
         # set column width to fit contents (set font first!)
@@ -45,8 +106,13 @@ class TableWindow(QtWidgets.QDialog):
         layout.addWidget(self.TableView)
         self.setLayout(layout)
 
+        self.TableView.adjustSize()
+        self.adjustSize()
+
     def copy_selection(self):
+
         selection = self.TableView.selectedIndexes()
+
         if selection:
             rows = sorted(index.row() for index in selection)
             columns = sorted(index.column() for index in selection)
@@ -60,6 +126,7 @@ class TableWindow(QtWidgets.QDialog):
             stream = io.StringIO()
             csv.writer(stream, delimiter='\t').writerows(table)
             QtGui.QClipboard().setText(stream.getvalue())
+
         return
 
     def keyPressEvent(self, event):
