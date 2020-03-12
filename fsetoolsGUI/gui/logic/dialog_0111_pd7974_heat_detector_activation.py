@@ -58,6 +58,17 @@ class Dialog0111(QMainWindow):
         self.ui.radioButton_ceiling_jet.setChecked(True)
         self.set_temperature_correlation()
 
+        # set validators
+        self.ui.lineEdit_in_t.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_alpha.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_H.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_R.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_RTI.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_C.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_HRRPUA.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_C_conv.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_T_act.setValidator(self._validator_float_unsigned)
+
         # signals
         self.ui.pushButton_calculate.clicked.connect(self.calculate)
         self.ui.pushButton_test.clicked.connect(self.example)
