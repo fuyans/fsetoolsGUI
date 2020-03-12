@@ -3,21 +3,13 @@ import typing
 from PySide2 import QtCore, QtWidgets, QtGui
 
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
+from fsetoolsGUI.gui.logic.dialog_0002_tableview import TableWindow as TableWindow
 
 try:
     from os.path import join, dirname
     style_css = open(join(dirname(__file__), 'style.css'), "r").read()
 except FileNotFoundError:
     from fsetoolsGUI.gui.logic.style import style_css
-
-def dictToCSS(dictionary):
-    stylesheet = ""
-    for item in dictionary:
-        stylesheet += item + "\n{\n"
-        for attribute in dictionary[item]:
-            stylesheet += "  " + attribute + ": " + dictionary[item][attribute] + ";\n"
-        stylesheet += "}\n"
-    return stylesheet
 
 
 def hex2QColor(c):
@@ -33,24 +25,31 @@ class QMainWindow(QtWidgets.QMainWindow):
             self,
             title: str,
             icon: typing.Union[bytes, QtCore.QByteArray] = OFR_LOGO_1_PNG,
-            shortcut_Return: typing.Callable = None,
             parent=None,
-            freeze_window_size=False
+            shortcut_Return: typing.Callable = None,
+            freeze_window_size: bool = False,
+            quality_assurance_content: list = None,
+
     ):
 
         super().__init__(parent=parent)
 
         # window properties
-        self.__title = title
-        self.__icon = icon
-        self.__shortcut_Return = shortcut_Return
-        self.__frameless:bool = False
+        self.__title: str = title
+        self.__icon: bytes = icon
+        self.__shortcut_Return: typing.Callable = shortcut_Return
+        self.__is_frame_less: bool = False
+        self.__is_freeze_window_size: bool = freeze_window_size
 
-        self._Validator_float_unsigned = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]*\.{0,1}[0-9]*!'))
+        # quality assurance data
+        self.__quality_assurance_header = ['Date', 'Author', 'QA & Technical Review']
+        if quality_assurance_content:
+            self.__quality_assurance_content: list = quality_assurance_content
+        else:
+            self.__quality_assurance_content: list = len(self.__quality_assurance_header) * ['']
 
-        if freeze_window_size:
-            self.statusBar().setSizeGripEnabled(False)
-            self.setFixedSize(self.width(), self.height())
+        # validator templates
+        self._validator_float_unsigned = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]*\.{0,1}[0-9]*!'))
 
     def init(self):
 
@@ -67,15 +66,22 @@ class QMainWindow(QtWidgets.QMainWindow):
         self.centralWidget().adjustSize()
         self.adjustSize()
 
-    def _set_frameless(self):
+        if self.__is_freeze_window_size:
+            self.statusBar().setSizeGripEnabled(False)
+            self.setFixedSize(self.width(), self.height())
 
-        self.__frameless = True
+    def set_frame_less(self):
+        """
+        todo: this is not in full working order. clicking combobox arrow will introduce an error that not clear why.
+        """
+
+        self.__is_frame_less = True
 
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
-        self.background_color = hex2QColor("efefef")
-        self.foreground_color = hex2QColor("333333")
+        # self.background_color = hex2QColor("efefef")
+        # self.foreground_color = hex2QColor("333333")
         self.border_radius = 7
         self.draggable = True
         self.__mousePressPos = None
@@ -90,6 +96,23 @@ class QMainWindow(QtWidgets.QMainWindow):
 
         sizegrip = QtWidgets.QSizeGrip(self)
         sizegrip.setVisible(True)
+
+    def show_quality_assurance_info(self):
+
+        app_ = TableWindow(
+            parent=self,
+            data_list=self.__quality_assurance_content,
+            header=self.__quality_assurance_header,
+            window_title='Quality Assurance Log',
+            # window_geometry=(300, 200, 570, 450)
+        )
+
+        app_.TableModel.sort(0, QtCore.Qt.AscendingOrder)
+        app_.TableView.resizeColumnsToContents()
+
+        app_.show()
+
+        self.dialog_list.append(app_)
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
