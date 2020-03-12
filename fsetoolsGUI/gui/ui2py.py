@@ -14,6 +14,7 @@ def ui2py():
         'dialog_0406_tra_2d_xy_contour.ui',
         'dialog_0601_naming_convention.ui',
         'dialog_0602_pd_7974_flame_height.ui',
+        'standard_qmainwindow_module.ui',
     ]
     
     cwd = join(dirname(realpath(__file__)), 'layout', 'ui')
