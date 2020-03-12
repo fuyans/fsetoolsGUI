@@ -1,9 +1,14 @@
+
 /*https://www.materialui.co/flatuicolors*/
+
+/* =================================================== QLabel ======================================================= */
 
 QMainWindow {
     background-color: #ecf0f1;
     border: 1px solid #000000;
 }
+
+/* =================================================== QLabel ======================================================= */
 
 QWidget {
     background-color: #f6f6f6;
@@ -15,6 +20,8 @@ QWidget {
     border: 1px;
 }
 
+/* =================================================== QLabel ======================================================= */
+
 QGroupBox {
     background-color: #dcdcdc;
     /*padding: 0px;*/
@@ -22,12 +29,21 @@ QGroupBox {
     border-radius: 5px;
 }
 
+/* =================================================== QLabel ======================================================= */
+
+QLabel {
+    background-color: rgba(255, 255, 241, 0);
+}
+QLabel {
+    background-color: rgba(255, 255, 241, 0);
+}
+
+/* ================================================= QPushButton ==================================================== */
+
 QPushButton {
     background-color: #ffffff;
     Text-align:center;
-    /*font: 11px;*/
-    /*font-weight: bold;*/
-    color: #000000;
+    /*color: #000000;*/
     padding: 0px;
     border: 1px solid #d2d1d2;
     border-radius: 5px;
@@ -51,38 +67,7 @@ QPushButton:disabled {
     border: 1px solid #d2d1d2;
 }
 
-QComboBox {
-    background-color: #ffffff;
-    Text-align:center;
-    /*font: 11px;*/
-    /*font-weight: bold;*/
-    color: #000000;
-    padding: 0px;
-    border: 1px solid #d2d1d2;
-    border-radius: 5px;
-}
-QComboBox:hover {
-    border: 1.5px solid #106bfd;
-    color: #ffffff;
-}
-QComboBox:focus {
-    border: 1.5px solid #56aafb;
-}
-
-QLabel {
-    background-color: rgba(255, 255, 241, 0);
-    /*font: 11px;*/
-}
-
-QCheckBox {
-    background-color: rgba(255, 255, 241, 0);
-    /*font: 11px;*/
-}
-
-QRadioButton{
-    background-color: rgba(255, 255, 241, 0);
-    /*font: 11px;*/
-}
+/* ================================================== QLineEdit ===================================================== */
 
 QLineEdit {
     background-color: #ffffff;
@@ -108,9 +93,33 @@ QLineEdit:disabled {
     color: rgb(187, 187, 187);
 }
 
-QTableView {
-    background-color: #ffffff;
+/* ================================================== QCheckBox ===================================================== */
+
+QCheckBox {
+    background-color: rgba(255, 255, 241, 0);
 }
+
+/* ================================================== QComboBox ===================================================== */
+
+QComboBox {
+    background-color: #ffffff;
+    Text-align:center;
+    /*font: 11px;*/
+    /*font-weight: bold;*/
+    color: #000000;
+    padding: 0px;
+    border: 1px solid #d2d1d2;
+    border-radius: 5px;
+}
+QComboBox:hover {
+    border: 1.5px solid #106bfd;
+    color: #ffffff;
+}
+QComboBox:focus {
+    border: 1.5px solid #56aafb;
+}
+
+/* ================================================ QDoubleSpinBox ================================================== */
 
 QDoubleSpinBox {
     background-color: #ffffff;
@@ -131,31 +140,33 @@ QDoubleSpinBox:focus {
     border-radius: 5px;
 }
 
-QProgressBar {
-    border: 1px solid #d2d1d2;
-    border-radius: 5px;
+/* ================================================= QRadioButton =================================================== */
+
+QRadioButton{
+    background-color: rgba(255, 255, 241, 0);
+    /*font: 11px;*/
 }
-QProgressBar::chunk {
-    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
-    border-radius: 5px;
-    /*width: 20px;*/
-    /*margin: 0.5px;*/
+
+/* ================================================== QTableView ==================================================== */
+
+QTableView {
+    background-color: #ffffff;
 }
+
+/* ================================================== QScrollBar ==================================================== */
 
 QScrollBar:vertical {
     border: 0px solid #999999;
-    background:white;
-    width:10px;
-    margin: 0px 0px 0px 0px;
+    background: rgba(0, 0, 0, 0);
+    width:12px;
+    margin: 1px 1px 1px 1px;
 }
 QScrollBar::handle:vertical {
     min-height: 50px;
-    /*max-height: 10px;*/
     border-radius: 5px;
-    background-color: #3295fd;
+    background-color: #d2d1d2;
 }
 QScrollBar::handle:vertical:hover {
-    /*min-height: 10px;*/
     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
 }
 QScrollBar::handle:vertical:pressed {
@@ -172,27 +183,36 @@ QScrollBar::sub-line:vertical {
     subcontrol-origin: margin;
 }
 
-QHorizontalSlider {
-    color: black;
-    background-color: black;
+/* ================================================= QProgressBar =================================================== */
+
+QProgressBar {
+    border: 1px solid #d2d1d2;
+    border-radius: 5px;
+}
+QProgressBar::chunk {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
+    border-radius: 5px;
+    /*width: 20px;*/
+    /*margin: 0.5px;*/
 }
 
+/* =================================================== QSlider ====================================================== */
 
+/* horizontal */
 
-
-
-
-
+QSlider:horizontal {
+    border: 0px solid #d2d1d2;
+    background: rgba(0, 0, 0, 0);
+    height: 2px;
+}
 QSlider::groove:horizontal {
-border: 0px solid #d2d1d2;
-background: #d2d1d2;
-height: 2px;
-border-radius: 2px;
+    border: 0px solid #d2d1d2;
+    background: #d2d1d2;
+    height: 2px;
+    border-radius: 2px;
 }
 QSlider::sub-page:horizontal {
     background: white;
-    /*border: 1px solid #777;*/
-    /*height: 4px;*/
     border-radius: 4px;
 }
 
@@ -214,15 +234,15 @@ QSlider::handle:horizontal:hover {
     background-color: #106bfd;
 }
 QSlider::sub-page:horizontal:disabled {
-background: #bbb;
-border-color: #999;
+    background: #bbb;
+    border-color: #999;
 }
 QSlider::add-page:horizontal:disabled {
-background: #eee;
-border-color: #999;
+    background: #eee;
+    border-color: #999;
 }
 QSlider::handle:horizontal:disabled {
-background: #eee;
-border: 1px solid #aaa;
-border-radius: 4px;
+    background: #eee;
+    border: 1px solid #aaa;
+    border-radius: 4px;
 }
