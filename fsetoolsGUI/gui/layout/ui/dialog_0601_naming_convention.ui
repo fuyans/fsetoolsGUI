@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>466</width>
-    <height>456</height>
+    <height>458</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,6 +50,7 @@
           </property>
           <property name="font">
            <font>
+            <pointsize>10</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -82,6 +83,11 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>20151021</string>
           </property>
@@ -97,6 +103,7 @@
           </property>
           <property name="font">
            <font>
+            <pointsize>10</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -128,6 +135,11 @@
             <width>16777215</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <item>
            <property name="text">
@@ -182,6 +194,7 @@
           </property>
           <property name="font">
            <font>
+            <pointsize>10</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -214,6 +227,11 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>OX20001</string>
           </property>
@@ -229,6 +247,7 @@
           </property>
           <property name="font">
            <font>
+            <pointsize>10</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -261,6 +280,11 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>WP1</string>
           </property>
@@ -276,6 +300,7 @@
           </property>
           <property name="font">
            <font>
+            <pointsize>10</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -304,6 +329,7 @@
           </property>
           <property name="font">
            <font>
+            <pointsize>10</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -329,6 +355,11 @@
             <width>0</width>
             <height>26</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <item>
            <property name="text">
@@ -422,6 +453,7 @@
           </property>
           <property name="font">
            <font>
+            <pointsize>10</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -447,6 +479,11 @@
             <width>0</width>
             <height>26</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <item>
            <property name="text">
@@ -478,6 +515,11 @@
             <height>26</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Outline fire strategy report</string>
           </property>
@@ -487,6 +529,11 @@
       </item>
       <item>
        <spacer name="verticalSpacer">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -500,6 +547,11 @@
       </item>
       <item>
        <widget class="QCheckBox" name="checkBox_replace_spaces">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="toolTip">
          <string>Replace all spaces in the file name to underscore `_`.</string>
         </property>
@@ -519,6 +571,11 @@
           <height>26</height>
          </size>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="toolTip">
          <string>Composed file name.</string>
         </property>
@@ -529,6 +586,11 @@
       </item>
       <item>
        <widget class="Line" name="line_2">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -538,6 +600,11 @@
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <spacer name="horizontalSpacer">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -568,6 +635,11 @@
             <width>16777215</width>
             <height>26</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="toolTip">
            <string>Click (or press Enter) to copy the generated file name.</string>

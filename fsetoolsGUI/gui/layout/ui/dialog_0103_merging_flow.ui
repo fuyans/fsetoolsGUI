@@ -92,6 +92,11 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>m</string>
           </property>
@@ -116,6 +121,11 @@
             <width>16777215</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="text">
            <string>person</string>
@@ -142,6 +152,11 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>mm</string>
           </property>
@@ -166,6 +181,11 @@
             <width>16777215</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="text">
            <string>mm</string>
@@ -203,6 +223,11 @@
             <width>0</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="toolTip">
            <string>Positive float. Width of the stair to upper levels.</string>
@@ -244,6 +269,11 @@
             <height>0</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="toolTip">
            <string>Positive float. Width of the stair to lower (basement) levels.</string>
           </property>
@@ -283,6 +313,11 @@
             <width>0</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="toolTip">
            <string>Positive float. Distance between building final exit to door of ground level or lower stair.</string>
@@ -327,6 +362,11 @@
             <height>0</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="toolTip">
            <string>Positive integer. Number of persons from ground level.</string>
           </property>
@@ -363,6 +403,11 @@
             <width>16777215</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="toolTip">
            <string>Number of persons from ground level.</string>
@@ -401,6 +446,11 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="toolTip">
            <string>Width of the stair to lower (basement) levels.</string>
           </property>
@@ -431,6 +481,11 @@
             <width>16777215</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="toolTip">
            <string>Width of the stair to upper levels.</string>
@@ -463,6 +518,11 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="toolTip">
            <string>Number of persons from lower (basement) level(s).</string>
           </property>
@@ -493,6 +553,11 @@
             <width>16777215</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="toolTip">
            <string>Width of the door from final exit level.</string>
@@ -537,6 +602,11 @@
             <height>0</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="toolTip">
            <string>Positive integer. Number of persons from lower (basement) level.</string>
           </property>
@@ -577,6 +647,11 @@
             <height>0</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="toolTip">
            <string>Positive float. Width of the door from final exit level.</string>
           </property>
@@ -608,6 +683,11 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>person</string>
           </property>
@@ -632,6 +712,11 @@
             <width>16777215</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="text">
            <string>mm</string>
@@ -663,6 +748,11 @@
             <width>16777215</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="toolTip">
            <string>Distance between building final exit to door of ground level or lower stair.</string>
@@ -707,6 +797,11 @@
             <height>0</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="toolTip">
            <string>Positive float. Minimum door width per person.</string>
           </property>
@@ -737,6 +832,11 @@
             <width>16777215</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="text">
            <string>mm/pers.</string>
@@ -769,6 +869,11 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="toolTip">
            <string>Minimum door width per person.</string>
           </property>
@@ -787,6 +892,11 @@
             <width>361</width>
             <height>26</height>
            </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="toolTip">
            <string>Scenario 3. Building final exit serves flow from upper levels, lower (basement) levels and ground level.</string>
@@ -807,6 +917,11 @@
             <height>26</height>
            </rect>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="toolTip">
            <string>Scenario 1. Building final exit serves flow from upper levels and ground level.</string>
           </property>
@@ -825,6 +940,11 @@
             <width>361</width>
             <height>26</height>
            </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="toolTip">
            <string>Scenario 2. Building final exit serves flow from upper levels and lower (basement) levels.</string>
@@ -859,7 +979,7 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>8</pointsize>
+            <pointsize>10</pointsize>
             <weight>75</weight>
             <bold>true</bold>
            </font>
@@ -897,7 +1017,7 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>8</pointsize>
+            <pointsize>10</pointsize>
             <weight>75</weight>
             <bold>true</bold>
            </font>
@@ -921,6 +1041,11 @@
             <height>26</height>
            </rect>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>mm</string>
           </property>
@@ -933,6 +1058,11 @@
             <width>371</width>
             <height>26</height>
            </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="toolTip">
            <string>This indicates whether the condition True (ticked) or False.</string>
@@ -971,6 +1101,11 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="toolTip">
            <string>Solved minimum final exit door width. Double click to select the value.</string>
           </property>
@@ -1005,6 +1140,11 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="toolTip">
            <string>Solved minimum final exit door width.</string>
           </property>
@@ -1038,7 +1178,7 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>8</pointsize>
+            <pointsize>10</pointsize>
             <weight>75</weight>
             <bold>true</bold>
            </font>
@@ -1083,11 +1223,16 @@
         <widget class="QPushButton" name="pushButton_test">
          <property name="geometry">
           <rect>
-           <x>570</x>
+           <x>400</x>
            <y>5</y>
            <width>96</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
          </property>
          <property name="toolTip">
           <string>Click to generate example input parameters.</string>
@@ -1102,11 +1247,16 @@
         <widget class="QPushButton" name="pushButton_calculate">
          <property name="geometry">
           <rect>
-           <x>695</x>
+           <x>700</x>
            <y>5</y>
            <width>96</width>
            <height>26</height>
           </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
          </property>
          <property name="toolTip">
           <string>Click (or press Enter) to calculate.</string>

@@ -10,7 +10,7 @@ QWidget {
     color: #000000;
     /* font: 75 10pt "Yu Gothic UI Light"; */
     /*font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;*/
-    font: 10pt;
+    /*font: 10pt;*/
     /* border: 0px; */
     border: 1px;
 }

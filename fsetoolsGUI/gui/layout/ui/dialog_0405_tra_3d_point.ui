@@ -23,6 +23,11 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
@@ -35,6 +40,11 @@
       <width>201</width>
       <height>251</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="title">
      <string>Inputs</string>
@@ -59,6 +69,11 @@
        <width>99999</width>
        <height>99999</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="toolTip">
       <string>Vertices of emitter</string>
@@ -97,6 +112,11 @@
        <height>99999</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
      <property name="toolTip">
       <string>Heat flux of emitter</string>
      </property>
@@ -133,6 +153,11 @@
        <width>99999</width>
        <height>99999</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="toolTip">
       <string>Emitter orientation (normal)</string>
@@ -177,6 +202,11 @@
        <height>0</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_in_emitter_normal">
      <property name="geometry">
@@ -210,6 +240,11 @@
        <width>0</width>
        <height>0</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="text">
       <string/>
@@ -248,6 +283,11 @@
        <height>0</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
     </widget>
     <widget class="QLabel" name="label_43">
      <property name="geometry">
@@ -269,6 +309,11 @@
        <width>16777215</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>kW/m²</string>
@@ -307,6 +352,11 @@
        <height>0</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
     </widget>
     <widget class="QLabel" name="label_27">
      <property name="geometry">
@@ -334,6 +384,11 @@
        <width>99999</width>
        <height>99999</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="toolTip">
       <string>Receiver orientation (normal)</string>
@@ -372,6 +427,11 @@
        <height>99999</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
      <property name="toolTip">
       <string>Receiver location</string>
      </property>
@@ -391,6 +451,11 @@
        <height>116</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
     </widget>
    </widget>
    <widget class="QLabel" name="label">
@@ -401,6 +466,11 @@
       <width>341</width>
       <height>285</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string/>
@@ -417,6 +487,11 @@
       <width>96</width>
       <height>24</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="toolTip">
      <string>Click (or press Enter) to calculate.</string>
@@ -436,6 +511,11 @@
       <width>186</width>
       <height>86</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="title">
      <string>Optional</string>
@@ -467,6 +547,11 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
     </widget>
     <widget class="QLabel" name="label_14">
      <property name="geometry">
@@ -494,6 +579,11 @@
        <width>16777215</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="toolTip">
       <string>Number of emitting points on emitter surface that the calculation will be based on</string>
@@ -529,6 +619,11 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
      <property name="toolTip">
       <string>Receiver temperature (i.e. ambient temperature)</string>
      </property>
@@ -563,6 +658,11 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
     </widget>
     <widget class="QLabel" name="label_45">
      <property name="geometry">
@@ -572,6 +672,11 @@
        <width>50</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>K</string>
@@ -586,6 +691,11 @@
       <width>96</width>
       <height>24</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="toolTip">
      <string>Click to generate example input parameters.</string>
@@ -605,6 +715,11 @@
       <width>186</width>
       <height>106</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="title">
      <string>Outputs</string>
@@ -636,6 +751,11 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_out_q">
      <property name="geometry">
@@ -664,6 +784,11 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
     </widget>
     <widget class="QLabel" name="label_out_Phi">
      <property name="geometry">
@@ -691,6 +816,11 @@
        <width>40</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="toolTip">
       <string>Solved view factor</string>
@@ -726,6 +856,11 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
      <property name="toolTip">
       <string>Solved heat flux at receiver</string>
      </property>
@@ -741,6 +876,11 @@
        <width>50</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>kW/m²</string>
@@ -772,6 +912,11 @@
        <width>40</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="toolTip">
       <string>Solved temperature at receiver</string>
@@ -807,6 +952,11 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
     </widget>
     <widget class="QLabel" name="label_out_T_unit">
      <property name="geometry">
@@ -816,6 +966,11 @@
        <width>50</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>K</string>

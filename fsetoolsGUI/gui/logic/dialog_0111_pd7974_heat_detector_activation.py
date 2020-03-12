@@ -9,12 +9,13 @@ from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_1 as image_figure_1
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_2 as image_figure_2
 from fsetoolsGUI.gui.layout.dialog_0111_heat_detector_activation import Ui_MainWindow as Ui_Dialog
 from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
+from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.dialog_0002_tableview import TableWindow
 
 
 class Dialog0111(QMainWindow):
 
-    _numerical_results: list = None
+    _numerical_results: dict = None
 
     def __init__(self, parent=None):
         # instantiate ui
@@ -44,8 +45,7 @@ class Dialog0111(QMainWindow):
             self.dict_images_pixmap[k].loadFromData(ba)
 
         # set output items readonly
-        from fsetoolsGUI.gui.logic.common import filter_objects_by_name
-        for i in filter_objects_by_name(self.ui.groupBox_out, object_types=[QtWidgets.QLineEdit]):
+        for i in filter_objects_by_name(self.ui.groupBox_control, object_types=[QtWidgets.QLineEdit], names=['_out_']):
             try:
                 i.setReadOnly(True)
             except AttributeError:
@@ -212,7 +212,5 @@ class Dialog0111(QMainWindow):
         )
 
         app_.TableModel.sort(0, QtCore.Qt.AscendingOrder)
-
         app_.TableView.resizeColumnsToContents()
-
         app_.show()
