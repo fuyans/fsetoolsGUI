@@ -35,10 +35,10 @@ class Dialog0401(QMainWindow):
         self.ui.label_image_page.setPixmap(self.make_pixmap_from_base64(image_figure))
 
         # set up validators
-        self.ui.lineEdit_W.setValidator(self._Validator_float_unsigned)
-        self.ui.lineEdit_H.setValidator(self._Validator_float_unsigned)
-        self.ui.lineEdit_Q.setValidator(self._Validator_float_unsigned)
-        self.ui.lineEdit_S_or_UA.setValidator(self._Validator_float_unsigned)
+        self.ui.lineEdit_W.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_H.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_Q.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_S_or_UA.setValidator(self._validator_float_unsigned)
 
         # signals
         self.ui.comboBox_S_or_UA.currentTextChanged.connect(self.change_mode_S_and_UA)
