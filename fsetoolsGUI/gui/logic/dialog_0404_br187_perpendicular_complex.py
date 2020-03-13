@@ -194,3 +194,13 @@ class Dialog0404(QMainWindow):
             self.ui.lineEdit_out_S_or_UA.setText(f'{S_solved / 2:.2f}')
 
         self.repaint()
+
+
+if __name__ == "__main__":
+    from PySide2 import QtWidgets
+    import sys
+
+    qapp = QtWidgets.QApplication(sys.argv)
+    app = Dialog0404()
+    app.show()
+    qapp.exec_()
