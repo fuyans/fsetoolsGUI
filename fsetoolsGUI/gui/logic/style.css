@@ -105,7 +105,7 @@ QComboBox
 {
     background-color: white;
     color: black;
-    selection-background-color: #3daee9;
+    selection-background-color: #56aafb;
     border: 1px solid #d2d1d2;
     border-radius: 5px;
     /*padding: 5px;*/
@@ -127,7 +127,6 @@ QComboBox::drop-down
 {
     subcontrol-origin: padding;
     subcontrol-position: top right;
-    /*width: 15px;*/
     border-radius: 5px;
     border-left-width: 0px;
     border-left-color: darkgray;
@@ -137,17 +136,17 @@ QComboBox::drop-down
 }
 QComboBox::down-arrow
 {
-    image: url(images/down.png);
+    image: url(gui/images/down.png);
     margin-right: 10px;
 }
 QComboBox::down-arrow:hover
 {
-    image: url(images/down-sky.png);
+    image: url(gui/images/down-sky.png);
     margin-right: 10px;
 }
 QComboBox::down-arrow:on, QComboBox::down-arrow:focus
 {
-    image: url(images/down-ocean.png);
+    image: url(gui/images/down-ocean.png);
     margin-right: 10px;
 }
 /*QComboBox::down-arrow:on, QComboBox::down-arrow:hover,*/
