@@ -142,7 +142,7 @@ class Dialog0111(QMainWindow):
             fire_convection_fraction = float(self.ui.lineEdit_in_C_conv.text()) / 100.
             detector_activation_temperature = float(self.ui.lineEdit_in_T_act.text())
         except Exception as e:
-            self.error('Calculation incomplete. Failed to parse inputs')
+            self.error(f'Failed to parse inputs. Error "{e}".')
             raise e
 
         # calculate all sorts of things
