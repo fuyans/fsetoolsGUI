@@ -219,7 +219,7 @@ class Dialog0111(QMainWindow):
             data_list=list_content,
             header=list_title,
             window_title='Numerical Results',
-            window_geometry=(300, 200, 570, 450)
+            window_geometry=(300, 200, 500, 800)
         )
 
         app_.TableModel.sort(0, QtCore.Qt.AscendingOrder)

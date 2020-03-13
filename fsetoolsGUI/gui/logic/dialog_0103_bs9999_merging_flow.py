@@ -129,7 +129,7 @@ class Dialog0103(QMainWindow):
 
         self.ui.radioButton_opt_scenario_1.setChecked(True)
 
-        self.calculate()
+        self.repaint()
 
     def calculate(self):
 

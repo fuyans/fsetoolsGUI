@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>884</width>
-    <height>862</height>
+    <width>873</width>
+    <height>848</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,61 +15,77 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>35</number>
+    </property>
+    <property name="topMargin">
+     <number>35</number>
+    </property>
+    <property name="rightMargin">
+     <number>35</number>
+    </property>
+    <property name="bottomMargin">
+     <number>35</number>
+    </property>
     <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="leftMargin">
-       <number>35</number>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="minimumSize">
+       <size>
+        <width>803</width>
+        <height>693</height>
+       </size>
       </property>
-      <property name="topMargin">
-       <number>35</number>
+      <property name="maximumSize">
+       <size>
+        <width>803</width>
+        <height>693</height>
+       </size>
       </property>
-      <property name="rightMargin">
-       <number>35</number>
+      <property name="widgetResizable">
+       <bool>true</bool>
       </property>
-      <property name="bottomMargin">
-       <number>35</number>
-      </property>
-      <item>
-       <widget class="QWidget" name="widget" native="true">
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>-19</x>
+         <y>-19</y>
+         <width>803</width>
+         <height>693</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>803</width>
+         <height>693</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>803</width>
+         <height>693</height>
+        </size>
+       </property>
+       <widget class="QWidget" name="widget_content" native="true">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>803</width>
+          <height>731</height>
+         </rect>
+        </property>
         <property name="minimumSize">
          <size>
-          <width>796</width>
+          <width>803</width>
           <height>731</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>796</width>
+          <width>803</width>
           <height>731</height>
          </size>
         </property>
-        <widget class="QPushButton" name="pushButton_calculate">
-         <property name="geometry">
-          <rect>
-           <x>700</x>
-           <y>700</y>
-           <width>96</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Click (or press Enter) to calculate.</string>
-         </property>
-         <property name="statusTip">
-          <string>Click (or press Enter) to calculate.</string>
-         </property>
-         <property name="text">
-          <string>Calculate</string>
-         </property>
-         <property name="autoDefault">
-          <bool>true</bool>
-         </property>
-        </widget>
         <widget class="QLabel" name="label_image_context">
          <property name="geometry">
           <rect>
@@ -107,7 +123,7 @@
           <rect>
            <x>400</x>
            <y>205</y>
-           <width>396</width>
+           <width>391</width>
            <height>481</height>
           </rect>
          </property>
@@ -117,7 +133,7 @@
          <widget class="QLabel" name="label_51">
           <property name="geometry">
            <rect>
-            <x>295</x>
+            <x>305</x>
             <y>375</y>
             <width>66</width>
             <height>26</height>
@@ -147,7 +163,7 @@
          <widget class="QLabel" name="label_48">
           <property name="geometry">
            <rect>
-            <x>295</x>
+            <x>305</x>
             <y>285</y>
             <width>66</width>
             <height>26</height>
@@ -177,7 +193,7 @@
          <widget class="QLabel" name="label_in_R_label">
           <property name="geometry">
            <rect>
-            <x>15</x>
+            <x>25</x>
             <y>225</y>
             <width>181</width>
             <height>26</height>
@@ -213,7 +229,7 @@
          <widget class="QLabel" name="label_40">
           <property name="geometry">
            <rect>
-            <x>15</x>
+            <x>25</x>
             <y>315</y>
             <width>181</width>
             <height>26</height>
@@ -249,7 +265,7 @@
          <widget class="QLineEdit" name="lineEdit_in_C_conv">
           <property name="geometry">
            <rect>
-            <x>200</x>
+            <x>210</x>
             <y>345</y>
             <width>91</width>
             <height>26</height>
@@ -294,7 +310,7 @@
          <widget class="QLabel" name="label_31">
           <property name="geometry">
            <rect>
-            <x>15</x>
+            <x>25</x>
             <y>135</y>
             <width>181</width>
             <height>26</height>
@@ -330,7 +346,7 @@
          <widget class="QLineEdit" name="lineEdit_in_T_act">
           <property name="geometry">
            <rect>
-            <x>200</x>
+            <x>210</x>
             <y>375</y>
             <width>91</width>
             <height>26</height>
@@ -375,7 +391,7 @@
          <widget class="QLabel" name="label_49">
           <property name="geometry">
            <rect>
-            <x>295</x>
+            <x>305</x>
             <y>315</y>
             <width>66</width>
             <height>26</height>
@@ -405,7 +421,7 @@
          <widget class="QLineEdit" name="lineEdit_in_R">
           <property name="geometry">
            <rect>
-            <x>200</x>
+            <x>210</x>
             <y>225</y>
             <width>91</width>
             <height>26</height>
@@ -450,7 +466,7 @@
          <widget class="QLabel" name="label_39">
           <property name="geometry">
            <rect>
-            <x>15</x>
+            <x>25</x>
             <y>285</y>
             <width>181</width>
             <height>26</height>
@@ -486,7 +502,7 @@
          <widget class="QLabel" name="label_in_R_unit">
           <property name="geometry">
            <rect>
-            <x>295</x>
+            <x>305</x>
             <y>225</y>
             <width>66</width>
             <height>26</height>
@@ -516,7 +532,7 @@
          <widget class="QLineEdit" name="lineEdit_in_C">
           <property name="geometry">
            <rect>
-            <x>200</x>
+            <x>210</x>
             <y>285</y>
             <width>91</width>
             <height>26</height>
@@ -561,7 +577,7 @@
          <widget class="QLabel" name="label_47">
           <property name="geometry">
            <rect>
-            <x>295</x>
+            <x>305</x>
             <y>255</y>
             <width>66</width>
             <height>26</height>
@@ -591,7 +607,7 @@
          <widget class="QLabel" name="label_35">
           <property name="geometry">
            <rect>
-            <x>15</x>
+            <x>25</x>
             <y>165</y>
             <width>181</width>
             <height>26</height>
@@ -627,7 +643,7 @@
          <widget class="QLabel" name="label_36">
           <property name="geometry">
            <rect>
-            <x>15</x>
+            <x>25</x>
             <y>195</y>
             <width>181</width>
             <height>26</height>
@@ -663,7 +679,7 @@
          <widget class="QLineEdit" name="lineEdit_in_RTI">
           <property name="geometry">
            <rect>
-            <x>200</x>
+            <x>210</x>
             <y>255</y>
             <width>91</width>
             <height>26</height>
@@ -708,7 +724,7 @@
          <widget class="QLabel" name="label_45">
           <property name="geometry">
            <rect>
-            <x>295</x>
+            <x>305</x>
             <y>195</y>
             <width>66</width>
             <height>26</height>
@@ -738,7 +754,7 @@
          <widget class="QLineEdit" name="lineEdit_in_H">
           <property name="geometry">
            <rect>
-            <x>200</x>
+            <x>210</x>
             <y>195</y>
             <width>91</width>
             <height>26</height>
@@ -783,7 +799,7 @@
          <widget class="QLineEdit" name="lineEdit_in_t">
           <property name="geometry">
            <rect>
-            <x>200</x>
+            <x>210</x>
             <y>135</y>
             <width>91</width>
             <height>26</height>
@@ -828,7 +844,7 @@
          <widget class="QLabel" name="label_43">
           <property name="geometry">
            <rect>
-            <x>295</x>
+            <x>305</x>
             <y>135</y>
             <width>66</width>
             <height>26</height>
@@ -858,7 +874,7 @@
          <widget class="QLineEdit" name="lineEdit_in_alpha">
           <property name="geometry">
            <rect>
-            <x>200</x>
+            <x>210</x>
             <y>165</y>
             <width>91</width>
             <height>26</height>
@@ -903,7 +919,7 @@
          <widget class="QLabel" name="label_41">
           <property name="geometry">
            <rect>
-            <x>15</x>
+            <x>25</x>
             <y>345</y>
             <width>181</width>
             <height>26</height>
@@ -939,7 +955,7 @@
          <widget class="QLabel" name="label_44">
           <property name="geometry">
            <rect>
-            <x>295</x>
+            <x>305</x>
             <y>165</y>
             <width>66</width>
             <height>26</height>
@@ -969,7 +985,7 @@
          <widget class="QLabel" name="label_42">
           <property name="geometry">
            <rect>
-            <x>15</x>
+            <x>25</x>
             <y>375</y>
             <width>181</width>
             <height>26</height>
@@ -1005,7 +1021,7 @@
          <widget class="QLabel" name="label_38">
           <property name="geometry">
            <rect>
-            <x>15</x>
+            <x>25</x>
             <y>255</y>
             <width>181</width>
             <height>26</height>
@@ -1041,7 +1057,7 @@
          <widget class="QLineEdit" name="lineEdit_in_HRRPUA">
           <property name="geometry">
            <rect>
-            <x>200</x>
+            <x>210</x>
             <y>315</y>
             <width>91</width>
             <height>26</height>
@@ -1086,7 +1102,7 @@
          <widget class="QLabel" name="label_50">
           <property name="geometry">
            <rect>
-            <x>295</x>
+            <x>305</x>
             <y>345</y>
             <width>66</width>
             <height>26</height>
@@ -1116,7 +1132,7 @@
          <widget class="QRadioButton" name="radioButton_fire_plume">
           <property name="geometry">
            <rect>
-            <x>15</x>
+            <x>25</x>
             <y>70</y>
             <width>171</width>
             <height>26</height>
@@ -1140,7 +1156,7 @@
          <widget class="QRadioButton" name="radioButton_ceiling_jet">
           <property name="geometry">
            <rect>
-            <x>15</x>
+            <x>25</x>
             <y>45</y>
             <width>176</width>
             <height>26</height>
@@ -1164,7 +1180,7 @@
          <widget class="QLabel" name="label_25">
           <property name="geometry">
            <rect>
-            <x>295</x>
+            <x>305</x>
             <y>440</y>
             <width>50</width>
             <height>26</height>
@@ -1182,7 +1198,7 @@
          <widget class="QLineEdit" name="lineEdit_out_t_act">
           <property name="geometry">
            <rect>
-            <x>200</x>
+            <x>210</x>
             <y>440</y>
             <width>91</width>
             <height>26</height>
@@ -1221,7 +1237,7 @@
          <widget class="QLabel" name="label_11">
           <property name="geometry">
            <rect>
-            <x>15</x>
+            <x>25</x>
             <y>440</y>
             <width>181</width>
             <height>26</height>
@@ -1321,72 +1337,136 @@
           </property>
          </widget>
         </widget>
-        <widget class="QPushButton" name="pushButton_show_results_in_table">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="geometry">
-          <rect>
-           <x>590</x>
-           <y>700</y>
-           <width>96</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Click to show numerical results.</string>
-         </property>
-         <property name="statusTip">
-          <string>Click to show numerical results.</string>
-         </property>
-         <property name="text">
-          <string>Full Results</string>
-         </property>
-         <property name="autoDefault">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_test">
-         <property name="geometry">
-          <rect>
-           <x>400</x>
-           <y>700</y>
-           <width>96</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Click to generate example input parameters.</string>
-         </property>
-         <property name="statusTip">
-          <string>Click to generate example input parameters.</string>
-         </property>
-         <property name="text">
-          <string>Example</string>
-         </property>
-         <property name="autoDefault">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <zorder>label_image_context</zorder>
-        <zorder>pushButton_calculate</zorder>
-        <zorder>label_image_figure</zorder>
-        <zorder>groupBox_control</zorder>
-        <zorder>pushButton_show_results_in_table</zorder>
-        <zorder>pushButton_test</zorder>
        </widget>
-      </item>
-     </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QWidget" name="widget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>791</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>791</width>
+        <height>36</height>
+       </size>
+      </property>
+      <widget class="QPushButton" name="pushButton_test">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>5</y>
+         <width>96</width>
+         <height>26</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Click to generate example input parameters.</string>
+       </property>
+       <property name="statusTip">
+        <string>Click to generate example input parameters.</string>
+       </property>
+       <property name="text">
+        <string>Example</string>
+       </property>
+       <property name="autoDefault">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_calculate">
+       <property name="geometry">
+        <rect>
+         <x>695</x>
+         <y>5</y>
+         <width>96</width>
+         <height>26</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Click (or press Enter) to calculate.</string>
+       </property>
+       <property name="statusTip">
+        <string>Click (or press Enter) to calculate.</string>
+       </property>
+       <property name="text">
+        <string>Calculate</string>
+       </property>
+       <property name="autoDefault">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_show_results_in_table">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>585</x>
+         <y>5</y>
+         <width>96</width>
+         <height>26</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Click to show numerical results.</string>
+       </property>
+       <property name="statusTip">
+        <string>Click to show numerical results.</string>
+       </property>
+       <property name="text">
+        <string>Full Results</string>
+       </property>
+       <property name="autoDefault">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_qa">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>5</y>
+         <width>96</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Click to generate example input parameters.</string>
+       </property>
+       <property name="statusTip">
+        <string>Click to generate example input parameters.</string>
+       </property>
+       <property name="text">
+        <string>QA</string>
+       </property>
+       <property name="autoDefault">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -1395,7 +1475,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>884</width>
+     <width>873</width>
      <height>22</height>
     </rect>
    </property>
@@ -1415,8 +1495,6 @@
   <tabstop>radioButton_ceiling_jet</tabstop>
   <tabstop>radioButton_fire_plume</tabstop>
   <tabstop>lineEdit_out_t_act</tabstop>
-  <tabstop>pushButton_calculate</tabstop>
-  <tabstop>pushButton_show_results_in_table</tabstop>
   <tabstop>pushButton_test</tabstop>
  </tabstops>
  <resources/>

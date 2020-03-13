@@ -106,9 +106,6 @@ class TableWindow(QtWidgets.QDialog):
         layout.addWidget(self.TableView)
         self.setLayout(layout)
 
-        self.TableView.adjustSize()
-        self.adjustSize()
-
     def copy_selection(self):
 
         selection = self.TableView.selectedIndexes()

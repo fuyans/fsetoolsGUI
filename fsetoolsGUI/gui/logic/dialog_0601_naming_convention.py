@@ -67,3 +67,13 @@ class Dialog0601(QMainWindow):
         self.ui.lineEdit_out_result.selectAll()
 
         self.ui.statusbar.showMessage('File name is copied.')
+
+
+if __name__ == "__main__":
+    from PySide2 import QtWidgets
+    import sys
+
+    qapp = QtWidgets.QApplication(sys.argv)
+    app = Dialog0601()
+    app.show()
+    qapp.exec_()

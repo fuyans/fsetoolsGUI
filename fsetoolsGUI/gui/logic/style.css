@@ -101,23 +101,60 @@ QCheckBox {
 
 /* ================================================== QComboBox ===================================================== */
 
-QComboBox {
-    background-color: #ffffff;
-    Text-align:center;
-    /*font: 11px;*/
-    /*font-weight: bold;*/
-    color: #000000;
-    padding: 0px;
+QComboBox
+{
+    background-color: white;
+    color: black;
+    selection-background-color: #3daee9;
     border: 1px solid #d2d1d2;
     border-radius: 5px;
+    /*padding: 5px;*/
+    /*min-width: 75px;*/
 }
-QComboBox:hover {
-    border: 1.5px solid #106bfd;
-    color: #ffffff;
-}
-QComboBox:focus {
+QComboBox:hover
+{
+    background-color: #ffffff;
     border: 1.5px solid #56aafb;
+    border-radius: 5px;
 }
+QComboBox:focus, QComboBox:on
+{
+    background-color: #ffffff;
+    border: 1.5px solid #106bfd;
+    border-radius: 5px;
+}
+QComboBox::drop-down
+{
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    /*width: 15px;*/
+    border-radius: 5px;
+    border-left-width: 0px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow
+{
+    image: url(images/down.png);
+    margin-right: 10px;
+}
+QComboBox::down-arrow:hover
+{
+    image: url(images/down-sky.png);
+    margin-right: 10px;
+}
+QComboBox::down-arrow:on, QComboBox::down-arrow:focus
+{
+    image: url(images/down-ocean.png);
+    margin-right: 10px;
+}
+/*QComboBox::down-arrow:on, QComboBox::down-arrow:hover,*/
+/*QComboBox::down-arrow:focus*/
+/*{*/
+/*    image: url(:/qss_icons/rc/down_arrow.png);*/
+/*}*/
 
 /* ================================================ QDoubleSpinBox ================================================== */
 
