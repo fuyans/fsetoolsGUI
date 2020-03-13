@@ -2,7 +2,7 @@ from fsetools.lib.fse_thermal_radiation import phi_parallel_any_br187, linear_so
 
 from fsetoolsGUI.gui.images_base64 import dialog_0401_figure as image_figure
 from fsetoolsGUI.gui.layout.dialog_0401_br187_parallel_simple import Ui_MainWindow
-from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
+from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
 class Dialog0401(QMainWindow):

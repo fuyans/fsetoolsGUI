@@ -3,7 +3,7 @@ from PySide2 import QtWidgets, QtGui, QtCore
 import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_2_PNG
 from fsetoolsGUI.gui.layout.main import Ui_MainWindow
-from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
+from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.dialog_0101_adb_datasheet_1 import Dialog as Dialog0101
 from fsetoolsGUI.gui.logic.dialog_0102_bs9999_datasheet_1 import Dialog as Dialog0102
 from fsetoolsGUI.gui.logic.dialog_0103_bs9999_merging_flow import Dialog0103 as Dialog0103

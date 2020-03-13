@@ -6,8 +6,8 @@ from PySide2 import QtWidgets, QtCore
 from fsetools.lib.fse_thermal_radiation_2d_v2 import main as tra_main, main_plot as tra_main_plot
 
 from fsetoolsGUI.gui.layout.dialog_0406_tra_2d_xy_contour import Ui_MainWindow
-from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
-from fsetoolsGUI.gui.logic.dialog_0002_tableview import TableModel
+from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_tableview import TableModel
 
 try:
     from matplotlib.backends.backend_qt5agg import (

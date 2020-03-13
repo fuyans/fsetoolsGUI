@@ -3,7 +3,7 @@ from fsetools.lib.fse_thermal_radiation import phi_perpendicular_any_br187, line
 from fsetoolsGUI.gui.images_base64 import dialog_0404_figure as image_figure
 from fsetoolsGUI.gui.images_base64 import dialog_0404_page as image_page
 from fsetoolsGUI.gui.layout.dialog_0403_br187_parallel_complex import Ui_MainWindow
-from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
+from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
 class Dialog0404(QMainWindow):

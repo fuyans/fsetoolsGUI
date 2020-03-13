@@ -3,7 +3,7 @@ import typing
 from PySide2 import QtCore, QtWidgets, QtGui
 
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
-from fsetoolsGUI.gui.logic.dialog_0002_tableview import TableWindow as TableWindow
+from fsetoolsGUI.gui.logic.custom_tableview import TableWindow as TableWindow
 
 try:
     from os.path import join, dirname
@@ -21,6 +21,9 @@ def hex2QColor(c):
 
 
 class QMainWindow(QtWidgets.QMainWindow):
+
+    activated_dialogs: list = list()
+
     def __init__(
             self,
             title: str,
@@ -31,6 +34,15 @@ class QMainWindow(QtWidgets.QMainWindow):
             quality_assurance_content: list = None,
 
     ):
+        """
+        todo: finalise docstr
+        :param quality_assurance_content:
+            Quality assurance review log data complies format [[{date}, {author}, {reviewer}], [{date}, ...], ...].
+            Where:
+                date        YYYYMMDD is the date of the check.
+                author      name of the author who made latest changes to the module.
+                reviewer    name of the person who checked the module.
+        """
 
         super().__init__(parent=parent)
 
@@ -104,7 +116,7 @@ class QMainWindow(QtWidgets.QMainWindow):
             data_list=self.__quality_assurance_content,
             header=self.__quality_assurance_header,
             window_title='Quality Assurance Log',
-            # window_geometry=(300, 200, 570, 450)
+            window_geometry=(300, 200, 570, 450)
         )
 
         app_.TableModel.sort(0, QtCore.Qt.AscendingOrder)
@@ -112,7 +124,7 @@ class QMainWindow(QtWidgets.QMainWindow):
 
         app_.show()
 
-        self.dialog_list.append(app_)
+        self.activated_dialogs.append(app_)
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:

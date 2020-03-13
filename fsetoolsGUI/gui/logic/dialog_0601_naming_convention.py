@@ -3,7 +3,7 @@ from datetime import datetime
 from PySide2 import QtCore, QtGui
 
 from fsetoolsGUI.gui.layout.dialog_0601_naming_convention import Ui_MainWindow
-from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
+from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
 class Dialog0601(QMainWindow):

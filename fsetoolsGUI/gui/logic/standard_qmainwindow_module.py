@@ -1,12 +1,13 @@
 from PySide2 import QtWidgets, QtCore
 
 from fsetoolsGUI.gui.layout.standard_qmainwindow_module import Ui_MainWindow
-from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
-from fsetoolsGUI.gui.logic.dialog_0002_tableview import TableWindow as TableWindow_QMainWindow
+from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_tableview import TableWindow as TableWindow_QMainWindow
 
 
 class App(QMainWindow):
 
+    # quality assurance log data with following format [[], []]
     qa_data: list = [
         [
             '00000000',  # date
@@ -14,8 +15,6 @@ class App(QMainWindow):
             'XXX XXX'  # QA & Technical Review
         ]
     ]
-
-    dialog_list = []
 
     def __init__(self, parent=None):
 

@@ -580,8 +580,7 @@ Perp.</string>
       <string>Not implemented.</string>
      </property>
      <property name="text">
-      <string>Zone
-Model</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_0102_bs9999_datasheet_1">

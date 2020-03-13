@@ -108,20 +108,19 @@ QComboBox
     selection-background-color: #56aafb;
     border: 1px solid #d2d1d2;
     border-radius: 5px;
-    /*padding: 5px;*/
-    /*min-width: 75px;*/
+    padding: 0.5px;
 }
 QComboBox:hover
 {
     background-color: #ffffff;
     border: 1.5px solid #56aafb;
-    border-radius: 5px;
+    padding: 0px;
 }
 QComboBox:focus, QComboBox:on
 {
     background-color: #ffffff;
     border: 1.5px solid #106bfd;
-    border-radius: 5px;
+    padding: 0px;
 }
 QComboBox::drop-down
 {
@@ -138,11 +137,13 @@ QComboBox::down-arrow
 {
     image: url(gui/images/down.png);
     margin-right: 10px;
+    padding: 1.5px;
 }
 QComboBox::down-arrow:hover
 {
     image: url(gui/images/down-sky.png);
     margin-right: 10px;
+    padding: 0px;
 }
 QComboBox::down-arrow:on, QComboBox::down-arrow:focus
 {
@@ -156,14 +157,15 @@ QComboBox::down-arrow:on, QComboBox::down-arrow:focus
 /*}*/
 
 /* ================================================ QDoubleSpinBox ================================================== */
+/*https://stackoverflow.com/questions/9389770/qspinbox-arrows-place-outside-line-edit-css*/
 
 QDoubleSpinBox {
-    background-color: #ffffff;
+    background-color: white;
+    color: black;
+    selection-background-color: #56aafb;
     border: 1px solid #d2d1d2;
     border-radius: 5px;
     padding-right: 15px; /* make room for the arrows */
-    /*border-width: 5px;*/
-    color: #000000;
 }
 QDoubleSpinBox:hover {
     background-color: #ffffff;
@@ -174,6 +176,11 @@ QDoubleSpinBox:focus {
     background-color: #ffffff;
     border: 1.5px solid #106bfd;
     border-radius: 5px;
+}
+QDoubleSpinBox::down-arrow
+{
+    image: url(gui/images/down.png);
+    margin-right: 10px;
 }
 
 /* ================================================= QRadioButton =================================================== */
@@ -251,7 +258,6 @@ QSlider::sub-page:horizontal {
     background: white;
     border-radius: 4px;
 }
-
 QSlider::add-page:horizontal {
     background: #d2d1d2;
     border: 0px solid #d2d1d2;

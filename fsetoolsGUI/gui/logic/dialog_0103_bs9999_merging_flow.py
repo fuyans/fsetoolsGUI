@@ -8,19 +8,28 @@ from fsetoolsGUI.gui.images_base64 import dialog_0103_bs9999_mergine_flow_figure
 from fsetoolsGUI.gui.images_base64 import dialog_0103_bs9999_mergine_flow_figure_3 as image_figure_3
 from fsetoolsGUI.gui.images_base64 import dialog_0103_bs9999_merging_flow_context as image_context
 from fsetoolsGUI.gui.layout.dialog_0103_merging_flow import Ui_MainWindow
-from fsetoolsGUI.gui.logic.OFRCustom import QMainWindow
+from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 
 
 class Dialog0103(QMainWindow):
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
 
+    qa_data: list = [
+        [
+            '20200311',  # date
+            'Ian Fu',  # latest author
+            'Alex Todd'  # QA & Technical Review
+        ]
+    ]
+
     def __init__(self, parent=None):
         # instantiation
         super().__init__(
             parent=parent,
             title='Means of Escape Merging Flow',
-            shortcut_Return=self.calculate
+            shortcut_Return=self.calculate,
+            quality_assurance_content=self.qa_data,
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -73,6 +82,8 @@ class Dialog0103(QMainWindow):
         self.ui.radioButton_opt_scenario_1.toggled.connect(self.change_option_scenarios)
         self.ui.radioButton_opt_scenario_2.toggled.connect(self.change_option_scenarios)
         self.ui.radioButton_opt_scenario_3.toggled.connect(self.change_option_scenarios)
+        self.ui.pushButton_qa.clicked.connect(self.show_quality_assurance_info)
+
 
     def change_option_scenarios(self):
         """When mode changes, turn off (grey them out) not required inputs and clear their value."""

@@ -32,7 +32,7 @@
       <property name="minimumSize">
        <size>
         <width>803</width>
-        <height>578</height>
+        <height>541</height>
        </size>
       </property>
       <property name="widgetResizable">
@@ -42,15 +42,15 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-7</y>
+         <y>0</y>
          <width>803</width>
-         <height>566</height>
+         <height>559</height>
         </rect>
        </property>
        <property name="minimumSize">
         <size>
          <width>803</width>
-         <height>566</height>
+         <height>541</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -100,7 +100,7 @@
          <property name="geometry">
           <rect>
            <x>400</x>
-           <y>75</y>
+           <y>50</y>
            <width>396</width>
            <height>491</height>
           </rect>
@@ -1307,7 +1307,7 @@
         <string>Calculate</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_test_2">
+      <widget class="QPushButton" name="pushButton_qa">
        <property name="geometry">
         <rect>
          <x>0</x>
