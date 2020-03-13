@@ -1,39 +1,39 @@
 
-/*https://www.materialui.co/flatuicolors*/
-
-/* =================================================== QLabel ======================================================= */
+/* ================================================ QMainWindow ===================================================== */
 
 QMainWindow {
-    background-color: #ecf0f1;
+    background-color: #f6f6f6;
     border: 1px solid #000000;
 }
 
-/* =================================================== QLabel ======================================================= */
+/* ================================================== QWidget ======================================================= */
 
 QWidget {
     background-color: #f6f6f6;
     color: #000000;
-    /* font: 75 10pt "Yu Gothic UI Light"; */
-    /*font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;*/
-    /*font: 10pt;*/
-    /* border: 0px; */
     border: 1px;
+}
+
+/* ================================================= QStatusBar ===================================================== */
+
+QStatusBar {
+    background: white;
+}
+QStatusBar::item {
+    border: 1px solid red;
+    border-radius: 3px;
 }
 
 /* =================================================== QLabel ======================================================= */
 
 QGroupBox {
     background-color: #dcdcdc;
-    /*padding: 0px;*/
     border: 1px solid #d2d1d2;
     border-radius: 5px;
 }
 
 /* =================================================== QLabel ======================================================= */
 
-QLabel {
-    background-color: rgba(255, 255, 241, 0);
-}
 QLabel {
     background-color: rgba(255, 255, 241, 0);
 }
@@ -157,6 +157,7 @@ QComboBox::down-arrow:on, QComboBox::down-arrow:focus
 /*}*/
 
 /* ================================================ QDoubleSpinBox ================================================== */
+
 /*https://stackoverflow.com/questions/9389770/qspinbox-arrows-place-outside-line-edit-css*/
 
 QDoubleSpinBox {
@@ -266,7 +267,6 @@ QSlider::add-page:horizontal {
 }
 QSlider::handle:horizontal {
     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
-    /*border: 1px solid #777;*/
     width: 10px;
     margin-top: -4px;
     margin-bottom: -4px;
