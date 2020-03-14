@@ -37,6 +37,8 @@ class Dialog0406(QMainWindow):
         self.figure.patch.set_facecolor('None')
 
         self.ax = self.figure.subplots()
+        self.ax.set_xticks([])
+        self.ax.set_yticks([])
         self.figure_canvas = FigureCanvas(self.figure)
         self.figure_canvas.setStyleSheet("background-color:transparent;")  # set the plt widget background from white to transparent.
         self.ui.verticalLayout_plot.addWidget(self.figure_canvas)
