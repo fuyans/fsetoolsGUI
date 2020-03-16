@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>873</width>
-    <height>656</height>
+    <height>666</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,8 +54,8 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-19</y>
-         <width>791</width>
+         <y>0</y>
+         <width>801</width>
          <height>501</height>
         </rect>
        </property>
@@ -139,6 +139,11 @@
            <width>101</width>
            <height>31</height>
           </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>13</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Bottom Margin&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;35 px&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>

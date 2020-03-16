@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1274</width>
-    <height>879</height>
+    <height>885</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -564,6 +564,9 @@
          <property name="statusTip">
           <string>This table shows all defined receivers.</string>
          </property>
+         <property name="sortingEnabled">
+          <bool>true</bool>
+         </property>
         </widget>
         <widget class="QLineEdit" name="lineEdit_solver_z">
          <property name="geometry">
@@ -618,6 +621,12 @@
          <property name="statusTip">
           <string>This table shows all defined emitters. Point 1 (x1, y1) and 2 (x2, y2) define the start and end of the emiter on a z-plane, accordingly.</string>
          </property>
+         <property name="sortingEnabled">
+          <bool>true</bool>
+         </property>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
         </widget>
         <widget class="QLabel" name="label_12">
          <property name="geometry">

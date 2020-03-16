@@ -4,6 +4,7 @@
 QMainWindow {
     background-color: #f6f6f6;
     border: 1px solid #000000;
+    font: 10px;
 }
 
 /* ================================================== QWidget ======================================================= */
@@ -12,6 +13,7 @@ QWidget {
     background-color: #f6f6f6;
     color: #000000;
     border: 1px;
+    font: 10px;
 }
 
 /* ================================================= QStatusBar ===================================================== */
@@ -72,6 +74,7 @@ QPushButton:disabled {
 QLineEdit {
     background-color: #ffffff;
     border: 1px solid #d2d1d2;
+    margin: 0.5px;
     border-radius: 5px;
     /* color: rgb(235, 242, 250); */
 }
@@ -79,6 +82,7 @@ QLineEdit:hover {
     background-color: #ffffff;
     border: 1.5px solid #56aafb;
     border-radius: 5px;
+    margin: 0px;
     /* color: rgb(235, 242, 250); */
 }
 QLineEdit:focus {
@@ -108,19 +112,16 @@ QComboBox
     selection-background-color: #56aafb;
     border: 1px solid #d2d1d2;
     border-radius: 5px;
-    padding: 0.5px;
 }
 QComboBox:hover
 {
     background-color: #ffffff;
     border: 1.5px solid #56aafb;
-    padding: 0px;
 }
 QComboBox:focus, QComboBox:on
 {
     background-color: #ffffff;
     border: 1.5px solid #106bfd;
-    padding: 0px;
 }
 QComboBox::drop-down
 {
@@ -137,13 +138,11 @@ QComboBox::down-arrow
 {
     image: url(gui/images/down.png);
     margin-right: 10px;
-    padding: 1.5px;
 }
 QComboBox::down-arrow:hover
 {
     image: url(gui/images/down-sky.png);
     margin-right: 10px;
-    padding: 0px;
 }
 QComboBox::down-arrow:on, QComboBox::down-arrow:focus
 {
@@ -178,10 +177,44 @@ QDoubleSpinBox:focus {
     border: 1.5px solid #106bfd;
     border-radius: 5px;
 }
+
+QDoubleSpinBox::up-button {
+    background-color: rgba(255, 255, 241, 0);
+}
+QDoubleSpinBox::down-button {
+    background-color: rgba(255, 255, 241, 0);
+}
+
 QDoubleSpinBox::down-arrow
 {
     image: url(gui/images/down.png);
-    margin-right: 10px;
+    margin-right: 5px;
+}
+QDoubleSpinBox::down-arrow:hover
+{
+    image: url(gui/images/down-sky.png);
+    margin-right: 5px;
+}
+QDoubleSpinBox::down-arrow:pressed
+{
+    image: url(gui/images/down-ocean.png);
+    margin-right: 5px;
+}
+
+QDoubleSpinBox::up-arrow
+{
+    image: url(gui/images/up.png);
+    margin-right: 5px;
+}
+QDoubleSpinBox::up-arrow:hover
+{
+    image: url(gui/images/up-sky.png);
+    margin-right: 5px;
+}
+QDoubleSpinBox::up-arrow:pressed
+{
+    image: url(gui/images/up-ocean.png);
+    margin-right: 5px;
 }
 
 /* ================================================= QRadioButton =================================================== */
@@ -193,8 +226,39 @@ QRadioButton{
 
 /* ================================================== QTableView ==================================================== */
 
+/* Header */
+
+/* https://stackoverflow.com/questions/37232302/centering-the-text-of-a-vertical-header-in-a-qtableview */
+/* https://doc.qt.io/qt-5/stylesheet-syntax.html#setting-qobject-properties */
+QHeaderView {
+    font: 10px;
+    qproperty-defaultAlignment: AlignLeft;
+}
+
+QHeaderView::section {
+    background-color: white;
+    color: black;
+}
+
+QHeaderView::section:checked
+{
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
+}
+
+/* Table */
+
 QTableView {
-    background-color: #ffffff;
+    selection-background-color: grey;
+    border-radius: 5px;
+}
+QTableView QTableCornerButton::section {
+    background: red;
+    border: 2px outset red;
+    border-radius: 5px;
+}
+QTableView::indicator:unchecked {
+    background-color: black;
+    border-radius: 5px;
 }
 
 /* ================================================== QScrollBar ==================================================== */
@@ -265,15 +329,17 @@ QSlider::add-page:horizontal {
     height: 10px;
     border-radius: 4px;
 }
+
 QSlider::handle:horizontal {
-    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
+    border: 1px solid darkgray;
+    background-color: white;
     width: 10px;
-    margin-top: -4px;
-    margin-bottom: -4px;
+    margin-top: -5px;
+    margin-bottom: -5px;
     border-radius: 5px;
 }
 QSlider::handle:horizontal:hover {
-    background-color: #106bfd;
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
 }
 QSlider::sub-page:horizontal:disabled {
     background: #bbb;
