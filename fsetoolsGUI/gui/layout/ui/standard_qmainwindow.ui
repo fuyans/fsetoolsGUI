@@ -55,14 +55,14 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>801</width>
-         <height>501</height>
+         <width>791</width>
+         <height>601</height>
         </rect>
        </property>
        <property name="minimumSize">
         <size>
          <width>791</width>
-         <height>501</height>
+         <height>601</height>
         </size>
        </property>
        <widget class="QFrame" name="frame_content">
@@ -85,6 +85,14 @@
           <width>791</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QFrame{
+border:1px solid rgb(0, 0, 0);
+}
+QLabel{
+border: 0px solid rbg(0,0,0,0)
+};</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -233,6 +241,12 @@
          <pointsize>10</pointsize>
         </font>
        </property>
+       <property name="toolTip">
+        <string>Click to calculate.</string>
+       </property>
+       <property name="statusTip">
+        <string>Click to calculate.</string>
+       </property>
        <property name="text">
         <string>OK</string>
        </property>
@@ -254,6 +268,12 @@
          <pointsize>10</pointsize>
         </font>
        </property>
+       <property name="toolTip">
+        <string>Click to show example input parameters.</string>
+       </property>
+       <property name="statusTip">
+        <string>Click to show example input parameters.</string>
+       </property>
        <property name="text">
         <string>Example</string>
        </property>
@@ -261,7 +281,7 @@
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_control_qa">
+      <widget class="QPushButton" name="pushButton_control_about">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -275,8 +295,14 @@
          <pointsize>10</pointsize>
         </font>
        </property>
+       <property name="toolTip">
+        <string>Click to show information about this tool.</string>
+       </property>
+       <property name="statusTip">
+        <string>Click to show information about this tool.</string>
+       </property>
        <property name="text">
-        <string>QA</string>
+        <string>About</string>
        </property>
       </widget>
      </widget>
