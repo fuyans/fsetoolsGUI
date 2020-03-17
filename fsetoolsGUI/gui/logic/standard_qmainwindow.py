@@ -1,8 +1,7 @@
-from PySide2 import QtWidgets, QtCore
+from PySide2 import QtWidgets
 
-from fsetoolsGUI.gui.layout.standard_qmainwindow_module import Ui_MainWindow
+from fsetoolsGUI.gui.layout.standard_qmainwindow import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
-from fsetoolsGUI.gui.logic.custom_tableview import TableWindow as TableWindow_QMainWindow
 
 
 class App(QMainWindow):
@@ -21,7 +20,7 @@ class App(QMainWindow):
         # instantiate ui
         super().__init__(
             parent=parent,
-            title='Standard Layout QMainWindow Module',
+            title='Standard Layout MainWindow',
             shortcut_Return=self.calculate,
             quality_assurance_content=self.qa_data,
         )
@@ -29,7 +28,7 @@ class App(QMainWindow):
         self.ui.setupUi(self)
         self.init()
 
-        self.ui.pushButton_control_qa.clicked.connect(self.show_quality_assurance_info)
+        self.ui.pushButton_control_ok.clicked.connect(self.show_quality_assurance_info)
 
     def example(self):
         pass
