@@ -20,6 +20,32 @@ def hex2QColor(c):
     return QtGui.QColor(r,g,b)
 
 
+class AboutDialog(QtWidgets.QDialog):
+
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
+        # Create widgets
+        # self.edit = QtWidgets.QLineEdit("Write my name here")
+        # self.button = QtWidgets.QPushButton("Show Greetings")
+        self.label = QtWidgets.QLabel()
+        # Create layout and add widgets
+        layout = QtWidgets.QVBoxLayout()
+        # layout.addWidget(self.edit)
+        # layout.addWidget(self.button)
+        layout.addWidget(self.label)
+        # Set dialog layout
+        self.setLayout(layout)
+        # Add button signal to greetings slot
+
+        self.label.setText(r'<table><tr><th>Review date</th><th>Author</th><th>Reviewer  <br></th><th>Note</th></tr><tr><td>02020316<br></td><td>IF</td><td>XX</td><td>This is a note</td></tr><tr><td>02020317</td><td>IF</td><td>XX</td><td>This is another note</td></tr></table>')
+        # self.button.clicked.connect(self.greetings)
+
+    # Greets the user
+    def greetings(self):
+        print("Hello %s" % self.edit.text())
+
+
+
 class QMainWindow(QtWidgets.QMainWindow):
 
     activated_dialogs: list = list()
@@ -54,6 +80,7 @@ class QMainWindow(QtWidgets.QMainWindow):
         self.__is_freeze_window_size: bool = freeze_window_size
 
         # quality assurance data
+        self.__about_form = AboutDialog()
         self.__quality_assurance_header = ['Date', 'Author', 'QA & Technical Review']
         if quality_assurance_content:
             self.__quality_assurance_content: list = quality_assurance_content
@@ -110,6 +137,9 @@ class QMainWindow(QtWidgets.QMainWindow):
         sizegrip.setVisible(True)
 
     def show_quality_assurance_info(self):
+        self.__about_form.show()
+
+    def show_quality_assurance_info_backedup(self):
 
         app_ = TableWindow(
             parent=self,
