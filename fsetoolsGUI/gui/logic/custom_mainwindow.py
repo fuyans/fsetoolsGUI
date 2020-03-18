@@ -20,29 +20,48 @@ def hex2QColor(c):
     return QtGui.QColor(r,g,b)
 
 
+def list2htmltable(table_list: list, compact: bool = False):
+
+    is_header = True
+    table_html = list()
+    table_html_append = table_html.append
+    for row in table_list:
+        if is_header:
+            row = '\n'.join([f'<td><b>{i.strip()}</b>&nbsp;&nbsp;</td>' for i in row])
+            is_header = False
+        else:
+            row = '\n'.join([f'<td>{i.strip()}&nbsp;&nbsp;</td>' for i in row])
+        table_html_append(f'<tr>\n{row}\n</tr>')
+
+    table_html = '\n'.join(table_html)
+    table_html = f'<table>\n{table_html}\n</table>'
+    if compact:
+        table_html = table_html.replace('\n', '')
+
+    return table_html
+
+
+def _test_list2htmltable():
+    table_list = [
+        ['11', '12'],
+        ['21', '22'],
+    ]
+
+    print(list2htmltable(table_list, compact=True))
+
+
 class AboutDialog(QtWidgets.QDialog):
 
-    def __init__(self, parent=None):
+    def __init__(self, qa_list: list = None, parent=None):
         super().__init__(parent=parent)
+
         # Create widgets
-        # self.edit = QtWidgets.QLineEdit("Write my name here")
-        # self.button = QtWidgets.QPushButton("Show Greetings")
-        self.label = QtWidgets.QLabel()
-        # Create layout and add widgets
+        self.label_qa = QtWidgets.QLabel()
         layout = QtWidgets.QVBoxLayout()
-        # layout.addWidget(self.edit)
-        # layout.addWidget(self.button)
-        layout.addWidget(self.label)
-        # Set dialog layout
+        layout.addWidget(self.label_qa)
         self.setLayout(layout)
-        # Add button signal to greetings slot
 
-        self.label.setText(r'<table><tr><th>Review date</th><th>Author</th><th>Reviewer  <br></th><th>Note</th></tr><tr><td>02020316<br></td><td>IF</td><td>XX</td><td>This is a note</td></tr><tr><td>02020317</td><td>IF</td><td>XX</td><td>This is another note</td></tr></table>')
-        # self.button.clicked.connect(self.greetings)
-
-    # Greets the user
-    def greetings(self):
-        print("Hello %s" % self.edit.text())
+        self.label_qa.setText(list2htmltable(qa_list))
 
 
 class QMainWindow(QtWidgets.QMainWindow):
@@ -79,7 +98,6 @@ class QMainWindow(QtWidgets.QMainWindow):
         self.__is_freeze_window_size: bool = freeze_window_size
 
         # quality assurance data
-        self.__about_form = AboutDialog()
         self.__quality_assurance_header = ['Date', 'Author', 'QA & Technical Review']
         if quality_assurance_content:
             self.__quality_assurance_content: list = quality_assurance_content
@@ -108,6 +126,12 @@ class QMainWindow(QtWidgets.QMainWindow):
             self.statusBar().setSizeGripEnabled(False)
             self.setFixedSize(self.width(), self.height())
 
+        # quality assurance data
+        self.__AboutForm = AboutDialog(
+            qa_list=self.__quality_assurance_content,
+            parent=self
+        )
+        self.__AboutForm.setWindowTitle(f'About `{self.__title}`')
 
     def set_frame_less(self):
         """
@@ -136,8 +160,9 @@ class QMainWindow(QtWidgets.QMainWindow):
         sizegrip = QtWidgets.QSizeGrip(self)
         sizegrip.setVisible(True)
 
-    def show_quality_assurance_info(self):
-        self.__about_form.show()
+    def show_about(self):
+        """"""
+        self.__AboutForm.show()
 
     def show_quality_assurance_info_backedup(self):
 
@@ -188,3 +213,7 @@ class QMainWindow(QtWidgets.QMainWindow):
     #     # print(delta)
     #     self.move(self.x() + delta.x(), self.y() + delta.y())
     #     self.oldPos = event.globalPos()
+
+
+if __name__ == '__main__':
+    _test_list2htmltable()
