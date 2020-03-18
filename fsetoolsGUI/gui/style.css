@@ -144,17 +144,17 @@ QComboBox::drop-down
 }
 QComboBox::down-arrow
 {
-    image: url(gui/images/down.png);
+    image: url(fsetoolsGUI/gui/images/down.png);
     margin-right: 10px;
 }
 QComboBox::down-arrow:hover
 {
-    image: url(gui/images/down-sky.png);
+    image: url(fsetoolsGUI/gui/images/down-sky.png);
     margin-right: 10px;
 }
-QComboBox::down-arrow:on, QComboBox::down-arrow:focus
+QComboBox::down-arrow:on
 {
-    image: url(gui/images/down-ocean.png);
+    image: url(fsetoolsGUI/gui/images/down-ocean.png);
     margin-right: 10px;
 }
 /*QComboBox::down-arrow:on, QComboBox::down-arrow:hover,*/
