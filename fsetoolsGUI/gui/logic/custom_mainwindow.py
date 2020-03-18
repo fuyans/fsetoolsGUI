@@ -5,11 +5,8 @@ from PySide2 import QtCore, QtWidgets, QtGui
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
 from fsetoolsGUI.gui.logic.custom_tableview import TableWindow as TableWindow
 
-try:
-    from os.path import join, dirname
-    style_css = open(join(dirname(__file__), 'style.css'), "r").read()
-except FileNotFoundError:
-    from fsetoolsGUI.gui.logic.style import style_css
+from os.path import join, dirname
+style_css = open(join(dirname(dirname(__file__)), 'style.css'), "r").read()
 
 
 def hex2QColor(c):
