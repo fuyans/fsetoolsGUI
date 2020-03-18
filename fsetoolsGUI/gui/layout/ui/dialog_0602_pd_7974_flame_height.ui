@@ -102,7 +102,7 @@
           <pixmap>../../../../../../../Library/Mobile Documents/6LVTQB9699~com~seriflabs~affinitydesigner/Documents/FSEUTIL/png/0602_context_794_681.png</pixmap>
          </property>
         </widget>
-        <widget class="QFrame" name="frame_io">
+        <widget class="QGroupBox" name="groupBox_io">
          <property name="geometry">
           <rect>
            <x>415</x>
@@ -123,17 +123,11 @@
            <height>16777215</height>
           </size>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
          <widget class="QComboBox" name="comboBox_fuel_type">
           <property name="geometry">
            <rect>
             <x>112</x>
-            <y>297</y>
+            <y>295</y>
             <width>186</width>
             <height>26</height>
            </rect>
@@ -181,7 +175,7 @@
           <property name="geometry">
            <rect>
             <x>26</x>
-            <y>266</y>
+            <y>265</y>
             <width>81</width>
             <height>26</height>
            </rect>
@@ -223,7 +217,7 @@
           <property name="geometry">
            <rect>
             <x>26</x>
-            <y>297</y>
+            <y>295</y>
             <width>81</width>
             <height>26</height>
            </rect>
@@ -265,7 +259,7 @@
           <property name="geometry">
            <rect>
             <x>112</x>
-            <y>266</y>
+            <y>265</y>
             <width>186</width>
             <height>26</height>
            </rect>
@@ -1401,7 +1395,7 @@
         </widget>
         <zorder>label_image_context</zorder>
         <zorder>label_image_figure</zorder>
-        <zorder>frame_io</zorder>
+        <zorder>groupBox_io</zorder>
        </widget>
       </item>
       <item>

@@ -34,7 +34,7 @@ class Dialog0602(QMainWindow):
             self.dict_images_pixmap[k] = QtGui.QPixmap()
             self.dict_images_pixmap[k].loadFromData(ba)
 
-        for i in filter_objects_by_name(self.ui.frame_io, object_types=[QtWidgets.QLineEdit], names=['_out_']):
+        for i in filter_objects_by_name(self.ui.groupBox_io, object_types=[QtWidgets.QLineEdit], names=['_out_']):
             try:
                 i.setReadOnly(True)
             except AttributeError:
