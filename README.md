@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/fsepy/fsetools.svg?branch=master)](https://travis-ci.com/fsepy/fsetools)
 
-`FSETOOLS` = Fire safety Engineering Tools ().
+`fsetoolsGUI` = Fire safety Engineering Tools Graphical User Interface, is a GUI application built based on [`fsetools`](https://github.com/fsepy/fsetools).
 
 ## Getting started
 
