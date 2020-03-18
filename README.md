@@ -1,10 +1,10 @@
-# fseutil
+# fsetoolsGUI
 
 [![Build Status](https://travis-ci.com/fsepy/fsetools.svg?branch=master)](https://travis-ci.com/fsepy/fsetools)
 
-Fire Safety Engineering Tools.
+`FSETOOLS` = Fire safety Engineering Tools ().
 
-## Getting Started
+## Getting started
 
 Documentation is work in progress.
 
@@ -17,29 +17,70 @@ Documentation is work in progress.
 1. to use `pip` install from PyPI:
 
     ```sh
-    pip install --upgrade fsetools
+    pip install --upgrade fsetoolsGUI
     ```
 
 2. to use `pip` install from GitHub (requires [git](https://git-scm.com/downloads)):  
 
-    *Note installing `fsetools` via this route will include the latest commits/changes to the library.*  
+    *Note installing `fsetoolsGUI` via this route will include the latest commits/changes to the library.*  
 
     ```sh
-    pip install --upgrade "git+https://github.com/fsepy/fsetools.git@dev"
+    pip install --upgrade "git+https://github.com/fuyans/fsetoolsGUI.git@master"
     ```
 
+## Key features
+
+todo
+
+## Summary of completed and work in progress modules
+
+Module code follows the format below:
+
+- 01**. Means of escape related calculations.
+- 04**. External fire spread related calculations.
+- 06**. Miscellaneous and/or uncategorised tools.
+
+Status designation:
+
+- Planned. Planned but not started.
+- WIP. Work in progress.
+- Completed. Completed and peer reviewed.
+
+| Module code | Module name                       | Status    |
+| ----------- | --------------------------------- | --------- |
+| 0101        | ADB datasheet no. 1               | Completed |
+| 0102        | BS 9999 datasheet no. 1           | Completed |
+| 0103        | BS 9999 merging flow              | Completed |
+| 0104        | PD 7974 kitchen hob radiation     | Planned   |
+| 0111        | PD 7974 heat detector activation  | Completed |
+| 0401        | BR 187 parallel centered          | Completed |
+| 0402        | BR 187 perpendicular centered     | Completed |
+| 0403        | BR 187 parallel non-centered      | WIP       |
+| 0404        | BR 187 perpendicular non-centered | WIP       |
+| 0405        | TRA 3D single point               | Planned   |
+| 0406        | TRA 2D contour parallel           | WIP       |
+| 0601        | OFR file naming protocol          | Completed |
+| 0602        | PD 7974 flame height              | Completed |
+| 0603        | FDS mesh resolution               | Planned   |
+| 0604        | FDS min. vent size                | Planned   |
 
 ### Command line interface
 
-Once `fsetools` is installed, CLI help can be summoned using the following command:
+Once `fsetoolsGUI` is installed, CLI help can be summoned using the following command:
 
 ```shell
 (base) C:\Users\Fu>fsetools -h
 ```
 
+## Graphical user interface
+
+Compiled GUI executables are available in the `release` page. This can also be summoned in the CLI version mentioned in previous sections.
+
 ## Authors
 
 **Ian Fu** - *fuyans@gmail.com*
+
+**Alex Todd** - *alex.todd@ofrconsultants.com*
 
 ## License
 
