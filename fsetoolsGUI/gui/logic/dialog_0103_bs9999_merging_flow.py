@@ -16,10 +16,12 @@ class Dialog0103(QMainWindow):
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
 
     qa_data: list = [
+        ['Date', 'Author', 'Reviewer', 'Note'],
         [
             '20200311',  # date
             'Ian Fu',  # latest author
-            'Alex Todd'  # QA & Technical Review
+            'Alex Todd',  # QA & Technical Review
+            '-'
         ]
     ]
 
@@ -82,7 +84,7 @@ class Dialog0103(QMainWindow):
         self.ui.radioButton_opt_scenario_1.toggled.connect(self.change_option_scenarios)
         self.ui.radioButton_opt_scenario_2.toggled.connect(self.change_option_scenarios)
         self.ui.radioButton_opt_scenario_3.toggled.connect(self.change_option_scenarios)
-        self.ui.pushButton_about.clicked.connect(self.show_quality_assurance_info)
+        self.ui.pushButton_about.clicked.connect(self.show_about)
 
 
     def change_option_scenarios(self):

@@ -28,7 +28,7 @@ class App(QMainWindow):
         self.ui.setupUi(self)
         self.init()
 
-        self.ui.pushButton_control_ok.clicked.connect(self.show_quality_assurance_info)
+        self.ui.pushButton_about.clicked.connect(self.show_about)
 
     def example(self):
         pass
