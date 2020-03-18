@@ -86,34 +86,34 @@
          </property>
          <property name="geometry">
           <rect>
-           <x>395</x>
-           <y>255</y>
-           <width>396</width>
-           <height>311</height>
+           <x>415</x>
+           <y>215</y>
+           <width>376</width>
+           <height>336</height>
           </rect>
          </property>
          <property name="title">
           <string/>
          </property>
-         <widget class="QLabel" name="label_unit_S_or_UA">
+         <widget class="QLabel" name="label_in_S_unit">
           <property name="geometry">
            <rect>
-            <x>330</x>
-            <y>135</y>
-            <width>40</width>
+            <x>318</x>
+            <y>140</y>
+            <width>51</width>
             <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>16777215</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -128,22 +128,22 @@
          <widget class="QLabel" name="label_34">
           <property name="geometry">
            <rect>
-            <x>330</x>
-            <y>105</y>
-            <width>40</width>
+            <x>318</x>
+            <y>109</y>
+            <width>51</width>
             <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>16777215</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -158,22 +158,22 @@
          <widget class="QLabel" name="label_33">
           <property name="geometry">
            <rect>
-            <x>330</x>
-            <y>75</y>
-            <width>40</width>
+            <x>318</x>
+            <y>78</y>
+            <width>51</width>
             <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>16777215</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -188,22 +188,22 @@
          <widget class="QLabel" name="label_32">
           <property name="geometry">
            <rect>
-            <x>330</x>
-            <y>45</y>
-            <width>40</width>
+            <x>318</x>
+            <y>47</y>
+            <width>51</width>
             <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>16777215</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -215,11 +215,11 @@
            <string>m</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_W">
+         <widget class="QLineEdit" name="lineEdit_in_W">
           <property name="geometry">
            <rect>
-            <x>225</x>
-            <y>45</y>
+            <x>211</x>
+            <y>47</y>
             <width>91</width>
             <height>26</height>
            </rect>
@@ -232,14 +232,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>16777215</height>
+            <height>26</height>
            </size>
           </property>
           <property name="baseSize">
@@ -263,11 +263,11 @@
            <string>Positive float.</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_H">
+         <widget class="QLineEdit" name="lineEdit_in_H">
           <property name="geometry">
            <rect>
-            <x>225</x>
-            <y>75</y>
+            <x>211</x>
+            <y>78</y>
             <width>91</width>
             <height>26</height>
            </rect>
@@ -280,14 +280,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>16777215</height>
+            <height>26</height>
            </size>
           </property>
           <property name="baseSize">
@@ -308,11 +308,11 @@
            <string>Positive float.</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_S_or_UA">
+         <widget class="QLineEdit" name="lineEdit_in_S">
           <property name="geometry">
            <rect>
-            <x>225</x>
-            <y>135</y>
+            <x>211</x>
+            <y>140</y>
             <width>91</width>
             <height>26</height>
            </rect>
@@ -325,14 +325,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>16777215</height>
+            <height>26</height>
            </size>
           </property>
           <property name="baseSize">
@@ -353,11 +353,11 @@
            <string>Positive float.</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_Q">
+         <widget class="QLineEdit" name="lineEdit_in_Q">
           <property name="geometry">
            <rect>
-            <x>225</x>
-            <y>105</y>
+            <x>211</x>
+            <y>109</y>
             <width>91</width>
             <height>26</height>
            </rect>
@@ -370,14 +370,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>16777215</height>
+            <height>26</height>
            </size>
           </property>
           <property name="baseSize">
@@ -398,60 +398,11 @@
            <string>Positive float. {'Reduced fire load': 84, 'Normal fire load': 168}.</string>
           </property>
          </widget>
-         <widget class="QComboBox" name="comboBox_S_or_UA">
+         <widget class="QLabel" name="label_in_Q">
           <property name="geometry">
            <rect>
             <x>25</x>
-            <y>135</y>
-            <width>181</width>
-            <height>26</height>
-           </rect>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>9999</width>
-            <height>9999</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="toolTip">
-           <string>This should be dealt within gui logic</string>
-          </property>
-          <property name="statusTip">
-           <string>This should be dealt within gui logic</string>
-          </property>
-          <item>
-           <property name="text">
-            <string>½S, emitter to boundary</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Unprotected area</string>
-           </property>
-          </item>
-         </widget>
-         <widget class="QLabel" name="label_23">
-          <property name="geometry">
-           <rect>
-            <x>25</x>
-            <y>105</y>
+            <y>109</y>
             <width>181</width>
             <height>26</height>
            </rect>
@@ -464,14 +415,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>9999</width>
-            <height>9999</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -489,11 +440,11 @@
            <string>Q, emitter heat flux</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_26">
+         <widget class="QLabel" name="label_in_H">
           <property name="geometry">
            <rect>
             <x>25</x>
-            <y>75</y>
+            <y>78</y>
             <width>181</width>
             <height>26</height>
            </rect>
@@ -506,14 +457,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>9999</width>
-            <height>9999</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -531,25 +482,25 @@
            <string>H, emitter height</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_30">
+         <widget class="QLabel" name="label_in_W">
           <property name="geometry">
            <rect>
             <x>25</x>
-            <y>45</y>
+            <y>47</y>
             <width>181</width>
             <height>26</height>
            </rect>
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>9999</width>
-            <height>9999</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -571,7 +522,7 @@
           <property name="geometry">
            <rect>
             <x>25</x>
-            <y>235</y>
+            <y>264</y>
             <width>181</width>
             <height>26</height>
            </rect>
@@ -584,14 +535,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>20</width>
-            <height>0</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>16777215</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -612,8 +563,8 @@
          <widget class="QLineEdit" name="lineEdit_out_Phi">
           <property name="geometry">
            <rect>
-            <x>225</x>
-            <y>205</y>
+            <x>211</x>
+            <y>233</y>
             <width>91</width>
             <height>26</height>
            </rect>
@@ -626,14 +577,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>16777215</height>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -649,7 +600,7 @@
           <property name="geometry">
            <rect>
             <x>25</x>
-            <y>205</y>
+            <y>233</y>
             <width>181</width>
             <height>26</height>
            </rect>
@@ -662,14 +613,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>40</width>
-            <height>0</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>16777215</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -686,15 +637,33 @@
           <property name="text">
            <string>Φ, view factor</string>
           </property>
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <property name="indent">
+           <number>-1</number>
+          </property>
          </widget>
          <widget class="QLabel" name="label_out_q_unit">
           <property name="geometry">
            <rect>
-            <x>330</x>
-            <y>235</y>
-            <width>40</width>
+            <x>318</x>
+            <y>264</y>
+            <width>51</width>
             <height>26</height>
            </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>51</width>
+            <height>26</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>51</width>
+            <height>26</height>
+           </size>
           </property>
           <property name="font">
            <font>
@@ -708,8 +677,8 @@
          <widget class="QLineEdit" name="lineEdit_out_S_or_UA">
           <property name="geometry">
            <rect>
-            <x>225</x>
-            <y>265</y>
+            <x>211</x>
+            <y>295</y>
             <width>91</width>
             <height>26</height>
            </rect>
@@ -722,14 +691,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>16777215</height>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -742,7 +711,7 @@
           <property name="geometry">
            <rect>
             <x>25</x>
-            <y>265</y>
+            <y>295</y>
             <width>181</width>
             <height>26</height>
            </rect>
@@ -755,14 +724,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>20</width>
-            <height>0</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>16777215</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -783,8 +752,8 @@
          <widget class="QLineEdit" name="lineEdit_out_q">
           <property name="geometry">
            <rect>
-            <x>225</x>
-            <y>235</y>
+            <x>211</x>
+            <y>264</y>
             <width>91</width>
             <height>26</height>
            </rect>
@@ -797,14 +766,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>51</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>16777215</height>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -816,11 +785,158 @@
          <widget class="QLabel" name="label_out_S_or_UA_unit">
           <property name="geometry">
            <rect>
-            <x>330</x>
-            <y>265</y>
-            <width>40</width>
+            <x>318</x>
+            <y>295</y>
+            <width>51</width>
             <height>26</height>
            </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>51</width>
+            <height>26</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>51</width>
+            <height>26</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>%</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButton_in_S">
+          <property name="geometry">
+           <rect>
+            <x>25</x>
+            <y>140</y>
+            <width>181</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>181</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>181</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>½S, emitter to boundary</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButton_in_UA">
+          <property name="geometry">
+           <rect>
+            <x>25</x>
+            <y>171</y>
+            <width>181</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>181</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>181</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Unprotected area</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_in_UA">
+          <property name="geometry">
+           <rect>
+            <x>211</x>
+            <y>171</y>
+            <width>91</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>51</width>
+            <height>26</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>26</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Positive float.</string>
+          </property>
+          <property name="statusTip">
+           <string>Positive float.</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_in_UA_unit">
+          <property name="geometry">
+           <rect>
+            <x>318</x>
+            <y>171</y>
+            <width>51</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>51</width>
+            <height>26</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>51</width>
+            <height>26</height>
+           </size>
           </property>
           <property name="font">
            <font>
@@ -835,7 +951,7 @@
           <property name="geometry">
            <rect>
             <x>15</x>
-            <y>175</y>
+            <y>202</y>
             <width>181</width>
             <height>26</height>
            </rect>
@@ -848,14 +964,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>40</width>
-            <height>0</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>16777215</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -874,12 +990,15 @@
           <property name="text">
            <string>Output parameters</string>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
          </widget>
          <widget class="QLabel" name="label_input_parameters">
           <property name="geometry">
            <rect>
             <x>15</x>
-            <y>15</y>
+            <y>16</y>
             <width>181</width>
             <height>26</height>
            </rect>
@@ -892,14 +1011,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>40</width>
-            <height>0</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>16777215</height>
+            <width>181</width>
+            <height>26</height>
            </size>
           </property>
           <property name="font">
@@ -917,6 +1036,12 @@
           </property>
           <property name="text">
            <string>Input parameters</string>
+          </property>
+          <property name="indent">
+           <number>-1</number>
+          </property>
+          <property name="textInteractionFlags">
+           <set>Qt::LinksAccessibleByMouse</set>
           </property>
          </widget>
         </widget>
@@ -1074,11 +1199,10 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <tabstops>
-  <tabstop>lineEdit_W</tabstop>
-  <tabstop>lineEdit_H</tabstop>
-  <tabstop>lineEdit_Q</tabstop>
-  <tabstop>comboBox_S_or_UA</tabstop>
-  <tabstop>lineEdit_S_or_UA</tabstop>
+  <tabstop>lineEdit_in_W</tabstop>
+  <tabstop>lineEdit_in_H</tabstop>
+  <tabstop>lineEdit_in_Q</tabstop>
+  <tabstop>lineEdit_in_S</tabstop>
   <tabstop>lineEdit_out_Phi</tabstop>
   <tabstop>lineEdit_out_q</tabstop>
   <tabstop>lineEdit_out_S_or_UA</tabstop>

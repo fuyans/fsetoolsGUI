@@ -19,7 +19,7 @@ class Dialog0401(QMainWindow):
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
 
     def __init__(self, parent=None):
-        # instantiation
+        # ui instantiation
         super().__init__(
             title='BR 187 Thermal Radiation Calculation (Rectangular and Parallel)',
             parent=parent,
@@ -29,39 +29,59 @@ class Dialog0401(QMainWindow):
         self.ui.setupUi(self)
         self.init()
 
-        self.change_mode_S_and_UA()
-
         # set up radiation figure
         self.ui.label_image_page.setPixmap(self.make_pixmap_from_base64(image_figure))
 
         # set up validators
-        self.ui.lineEdit_W.setValidator(self._validator_float_unsigned)
-        self.ui.lineEdit_H.setValidator(self._validator_float_unsigned)
-        self.ui.lineEdit_Q.setValidator(self._validator_float_unsigned)
-        self.ui.lineEdit_S_or_UA.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_W.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_H.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_Q.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_S.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_UA.setValidator(self._validator_float_unsigned)
+
+        # set default values
+        self.ui.radioButton_in_S.setChecked(True)
+        self.change_mode_S_and_UA()
 
         # signals
-        self.ui.comboBox_S_or_UA.currentTextChanged.connect(self.change_mode_S_and_UA)
+        self.ui.radioButton_in_S.toggled.connect(self.change_mode_S_and_UA)
+        self.ui.radioButton_in_UA.toggled.connect(self.change_mode_S_and_UA)
         self.ui.pushButton_ok.clicked.connect(self.calculate)
         self.ui.pushButton_example.clicked.connect(self.example)
+
+    def example(self):
+
+        self.ui.radioButton_in_S.setChecked(True)
+        self.ui.lineEdit_in_W.setText('10')
+        self.ui.lineEdit_in_H.setText('10')
+        self.ui.lineEdit_in_Q.setText('84')
+        self.ui.lineEdit_in_S.setText('2')
+        self.change_mode_S_and_UA()
+
+        self.repaint()
 
     def change_mode_S_and_UA(self):
         """update ui to align with whether to calculate boundary distance or unprotected area %"""
 
         # change input and output labels and units
-        if self.ui.comboBox_S_or_UA.currentIndex() == 0:  # to calculate separation to boundary
-            self.ui.label_unit_S_or_UA.setText('m')
-            self.ui.comboBox_S_or_UA.setToolTip('Separation distance from emitter to notional boundary.')
-            self.ui.comboBox_S_or_UA.setStatusTip('Separation distance from emitter to notional boundary.')
+        if self.ui.radioButton_in_S.isChecked():  # to calculate separation to boundary
+            self.ui.lineEdit_in_UA.setEnabled(False)  # disable UA related inputs
+            self.ui.label_in_UA_unit.setEnabled(False)  # disable UA related inputs
+            self.ui.lineEdit_in_S.setEnabled(True)  # enable S related inputs
+            self.ui.label_in_S_unit.setEnabled(True)  # enable S related inputs
             self.ui.label_out_S_or_UA.setText('Unprotected area')
             self.ui.label_out_S_or_UA_unit.setText('%')
-
-        elif self.ui.comboBox_S_or_UA.currentIndex() == 1:  # to calculate unprotected area percentage
-            self.ui.label_unit_S_or_UA.setText('%')
-            self.ui.comboBox_S_or_UA.setToolTip('Unprotected area.')
-            self.ui.comboBox_S_or_UA.setStatusTip('Unprotected area.')
+            self.ui.label_out_S_or_UA.setStatusTip('Solved maximum permitted unprotected area')
+            self.ui.label_out_S_or_UA.setToolTip('Solved maximum permitted unprotected area')
+        elif self.ui.radioButton_in_UA.isChecked():  # to calculate unprotected area percentage
+            self.ui.lineEdit_in_S.setEnabled(False)  # disable S related inputs
+            self.ui.label_in_S_unit.setEnabled(False)  # disable S related inputs
+            self.ui.lineEdit_in_UA.setEnabled(True)  # enable UA related inputs
+            self.ui.label_in_UA_unit.setEnabled(True)  # enable UA related inputs
             self.ui.label_out_S_or_UA.setText('½S, emitter to boundary')
             self.ui.label_out_S_or_UA_unit.setText('m')
+            self.ui.label_out_S_or_UA.setStatusTip('Solved minimum separation distance.')
+            self.ui.label_out_S_or_UA.setToolTip('Solved minimum separation distance.')
         else:
             raise ValueError('Unknown value for input UA or S.')
 
@@ -69,17 +89,6 @@ class Dialog0401(QMainWindow):
         self.ui.lineEdit_out_Phi.setText('')
         self.ui.lineEdit_out_q.setText('')
         self.ui.lineEdit_out_S_or_UA.setText('')
-
-        self.repaint()
-
-    def example(self):
-
-        self.ui.lineEdit_W.setText('10')
-        self.ui.lineEdit_H.setText('10')
-        self.ui.lineEdit_Q.setText('84')
-        self.ui.comboBox_S_or_UA.setCurrentIndex(0)
-        self.change_mode_S_and_UA()
-        self.ui.lineEdit_S_or_UA.setText('2')
 
         self.repaint()
 
@@ -93,9 +102,15 @@ class Dialog0401(QMainWindow):
 
         # parse inputs from ui
         try:
-            W = float(self.ui.lineEdit_W.text())
-            H = float(self.ui.lineEdit_H.text())
-            Q = float(self.ui.lineEdit_Q.text())
+            W = float(self.ui.lineEdit_in_W.text())
+            H = float(self.ui.lineEdit_in_H.text())
+            Q = float(self.ui.lineEdit_in_Q.text())
+            if self.ui.radioButton_in_S.isChecked():
+                S = float(self.ui.lineEdit_in_S.text()) * 2.
+                UA = None
+            elif self.ui.radioButton_in_UA.isChecked():
+                S = None
+                UA = float(self.ui.lineEdit_in_UA.text()) / 100.
         except ValueError as e:
             self.statusBar().showMessage(
                 'Calculation unsuccessful. '
@@ -108,8 +123,7 @@ class Dialog0401(QMainWindow):
 
         q_target = self.maximum_acceptable_thermal_radiation_heat_flux
 
-        if self.ui.comboBox_S_or_UA.currentIndex() == 0:  # to calculate maximum unprotected area
-            S = float(self.ui.lineEdit_S_or_UA.text()) * 2
+        if self.ui.radioButton_in_S.isChecked():  # to calculate maximum unprotected area
             if S <= 2.:
                 self.statusBar().showMessage(
                     'Calculation incomplete. '
@@ -117,7 +131,6 @@ class Dialog0401(QMainWindow):
                 )
                 self.repaint()
                 raise ValueError
-
             try:
                 phi_solved = phi_parallel_any_br187(W_m=W, H_m=H, w_m=0.5*W, h_m=0.5*H, S_m=S)
             except ValueError:
@@ -142,12 +155,11 @@ class Dialog0401(QMainWindow):
             self.statusBar().showMessage('Calculation complete.')
 
         # to calculate minimum separation distance to boundary
-        elif self.ui.comboBox_S_or_UA.currentIndex() == 1:
-            UA = float(self.ui.lineEdit_S_or_UA.text()) / 100.
+        elif self.ui.radioButton_in_UA.isChecked():
             if not 0 < UA <= 1:
                 self.statusBar().showMessage(
                     'Calculation failed. '
-                    'Unprotected area should be greater >0% and <100%.'
+                    'Unprotected area should be >0 and ≤100 %.'
                 )
                 self.repaint()
                 raise ValueError
@@ -211,3 +223,12 @@ class Dialog0401(QMainWindow):
         else:
             raise ValueError('Option unknown.')
         self.repaint()
+
+
+if __name__ == "__main__":
+    import sys
+    from PySide2 import QtWidgets
+    qapp = QtWidgets.QApplication(sys.argv)
+    app = Dialog0401()
+    app.show()
+    qapp.exec_()
