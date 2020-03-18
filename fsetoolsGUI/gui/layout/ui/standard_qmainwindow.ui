@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>873</width>
-    <height>666</height>
+    <height>656</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -117,7 +117,7 @@ border: 0px solid rbg(0,0,0,0)
          <property name="geometry">
           <rect>
            <x>25</x>
-           <y>460</y>
+           <y>565</y>
            <width>156</width>
            <height>36</height>
           </rect>
@@ -142,10 +142,10 @@ border: 0px solid rbg(0,0,0,0)
         <widget class="QLabel" name="label_6">
          <property name="geometry">
           <rect>
-           <x>355</x>
-           <y>465</y>
-           <width>101</width>
-           <height>31</height>
+           <x>280</x>
+           <y>565</y>
+           <width>256</width>
+           <height>36</height>
           </rect>
          </property>
          <property name="font">
@@ -154,7 +154,7 @@ border: 0px solid rbg(0,0,0,0)
           </font>
          </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Bottom Margin&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;35 px&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Bottom margin (below Control Widget)&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;35 px&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
         <widget class="QLabel" name="label_7">
@@ -196,6 +196,24 @@ border: 0px solid rbg(0,0,0,0)
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;ScrollArea Widget&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Width: 803 px (791 px + 12 px)&lt;br/&gt;Height: &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;variable&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
+        <widget class="QLabel" name="label_10">
+         <property name="geometry">
+          <rect>
+           <x>280</x>
+           <y>460</y>
+           <width>256</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>13</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;ScrollArea frame bottom edge&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
        </widget>
       </widget>
      </widget>
@@ -227,7 +245,7 @@ border: 0px solid rbg(0,0,0,0)
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Control Widget; &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Width: 791 px; Height: 36 px&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_control_ok">
+      <widget class="QPushButton" name="pushButton_ok">
        <property name="geometry">
         <rect>
          <x>695</x>
@@ -254,7 +272,7 @@ border: 0px solid rbg(0,0,0,0)
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_control_example">
+      <widget class="QPushButton" name="pushButton_example">
        <property name="geometry">
         <rect>
          <x>110</x>
@@ -281,7 +299,7 @@ border: 0px solid rbg(0,0,0,0)
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_control_about">
+      <widget class="QPushButton" name="pushButton_about">
        <property name="geometry">
         <rect>
          <x>0</x>
