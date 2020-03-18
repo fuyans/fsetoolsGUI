@@ -45,7 +45,6 @@ class AboutDialog(QtWidgets.QDialog):
         print("Hello %s" % self.edit.text())
 
 
-
 class QMainWindow(QtWidgets.QMainWindow):
 
     activated_dialogs: list = list()
@@ -108,6 +107,7 @@ class QMainWindow(QtWidgets.QMainWindow):
         if self.__is_freeze_window_size:
             self.statusBar().setSizeGripEnabled(False)
             self.setFixedSize(self.width(), self.height())
+
 
     def set_frame_less(self):
         """

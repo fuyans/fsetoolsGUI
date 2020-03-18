@@ -47,8 +47,8 @@
       <widget class="QWidget" name="scrollAreaWidgetContents">
        <property name="geometry">
         <rect>
-         <x>-19</x>
-         <y>-19</y>
+         <x>0</x>
+         <y>0</y>
          <width>803</width>
          <height>693</height>
         </rect>
@@ -1333,7 +1333,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Output</string>
+           <string>Output parameters</string>
           </property>
          </widget>
         </widget>
@@ -1355,7 +1355,7 @@
         <height>36</height>
        </size>
       </property>
-      <widget class="QPushButton" name="pushButton_test">
+      <widget class="QPushButton" name="pushButton_example">
        <property name="geometry">
         <rect>
          <x>110</x>
@@ -1382,7 +1382,7 @@
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_calculate">
+      <widget class="QPushButton" name="pushButton_ok">
        <property name="geometry">
         <rect>
          <x>695</x>
@@ -1433,13 +1433,13 @@
         <string>Click to show numerical results.</string>
        </property>
        <property name="text">
-        <string>Full Results</string>
+        <string>Num. Results</string>
        </property>
        <property name="autoDefault">
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_qa">
+      <widget class="QPushButton" name="pushButton_about">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -1460,7 +1460,7 @@
         <string>Click to generate example input parameters.</string>
        </property>
        <property name="text">
-        <string>QA</string>
+        <string>About</string>
        </property>
        <property name="autoDefault">
         <bool>true</bool>
@@ -1495,7 +1495,7 @@
   <tabstop>radioButton_ceiling_jet</tabstop>
   <tabstop>radioButton_fire_plume</tabstop>
   <tabstop>lineEdit_out_t_act</tabstop>
-  <tabstop>pushButton_test</tabstop>
+  <tabstop>pushButton_example</tabstop>
  </tabstops>
  <resources/>
  <connections/>

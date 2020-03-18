@@ -134,6 +134,9 @@ dmypy.json
 
 # Dev files
 /.coverage
+*key.txt
+*__key__.py
+*.png
 
 # build files
 buildscript/build
@@ -149,6 +152,4 @@ fsetoolsGUI/gui/layout/*.py
 
 # Include project files
 !fsetoolsGUI/lib/
-*key.txt
-*__key__.py
-*.png
+!fsetoolsGUI/gui/images/*.png

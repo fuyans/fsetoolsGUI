@@ -8,6 +8,7 @@ from fsetoolsGUI.gui.images_base64 import dialog_0602_context as image_context
 from fsetoolsGUI.gui.images_base64 import dialog_0602_figure as image_figure
 from fsetoolsGUI.gui.layout.dialog_0602_pd_7974_flame_height import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 
 
 class Dialog0602(QMainWindow):
@@ -33,8 +34,7 @@ class Dialog0602(QMainWindow):
             self.dict_images_pixmap[k] = QtGui.QPixmap()
             self.dict_images_pixmap[k].loadFromData(ba)
 
-        from fsetoolsGUI.gui.logic.common import filter_objects_by_name
-        for i in filter_objects_by_name(self.ui.groupBox_outputs, object_types=[QtWidgets.QLineEdit]):
+        for i in filter_objects_by_name(self.ui.frame_io, object_types=[QtWidgets.QLineEdit], names=['_out_']):
             try:
                 i.setReadOnly(True)
             except AttributeError:
@@ -50,8 +50,14 @@ class Dialog0602(QMainWindow):
 
         # signal and slots
         self.ui.comboBox_fire_shape.currentIndexChanged.connect(self.change_fire_shape)
-        self.ui.pushButton_test.clicked.connect(self.example)
-        self.ui.pushButton_calculate.clicked.connect(self.calculate)
+        self.ui.pushButton_example.clicked.connect(self.example)
+        self.ui.pushButton_ok.clicked.connect(self.calculate)
+
+        # try:
+        #     self.ui.frame_io.setProperties("cssClass", "io")
+        #     print('hello')
+        # except AttributeError:
+        #     pass
 
     def change_fire_shape(self):
         if self.ui.comboBox_fire_shape.currentIndex() == 0:  # circular fire source

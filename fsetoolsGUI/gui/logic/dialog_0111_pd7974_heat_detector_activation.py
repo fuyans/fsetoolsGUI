@@ -70,8 +70,8 @@ class Dialog0111(QMainWindow):
         self.ui.lineEdit_in_T_act.setValidator(self._validator_float_unsigned)
 
         # signals
-        self.ui.pushButton_calculate.clicked.connect(self.calculate)
-        self.ui.pushButton_test.clicked.connect(self.example)
+        self.ui.pushButton_ok.clicked.connect(self.calculate)
+        self.ui.pushButton_example.clicked.connect(self.example)
         self.ui.radioButton_fire_plume.toggled.connect(self.set_temperature_correlation)
         self.ui.pushButton_show_results_in_table.clicked.connect(self.show_results_in_table)
 

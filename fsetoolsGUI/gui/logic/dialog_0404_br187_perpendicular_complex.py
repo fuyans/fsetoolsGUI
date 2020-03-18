@@ -24,10 +24,10 @@ class Dialog0404(QMainWindow):
         self.ui.label_image_page.setPixmap(self.make_pixmap_from_base64(image_page))
 
         self.ui.comboBox_S_or_UA.currentTextChanged.connect(self.change_mode_S_and_UA)
-        self.ui.pushButton_calculate.clicked.connect(self.calculate)
-        self.ui.pushButton_test.clicked.connect(self.test)
+        self.ui.pushButton_ok.clicked.connect(self.calculate)
+        self.ui.pushButton_example.clicked.connect(self.example)
 
-    def test(self):
+    def example(self):
 
         self.ui.lineEdit_W.setText('50')
         self.ui.lineEdit_H.setText('50')

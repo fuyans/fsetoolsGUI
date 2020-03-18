@@ -28,8 +28,8 @@ class Dialog0402(QMainWindow):
         self.ui.label_image_figure.setPixmap(self.make_pixmap_from_base64(image_figure))
 
         self.ui.comboBox_S_or_UA.currentTextChanged.connect(self.change_mode_S_and_UA)
-        self.ui.pushButton_calculate.clicked.connect(self.calculate)
-        self.ui.pushButton_test.clicked.connect(self.example)
+        self.ui.pushButton_ok.clicked.connect(self.calculate)
+        self.ui.pushButton_example.clicked.connect(self.example)
 
     def keyPressEvent(self, event):
         if event.key() == 16777221 or event.key() == 16777220 or event.key() == QtCore.Qt.Key_Enter:

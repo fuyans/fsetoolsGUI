@@ -1259,7 +1259,7 @@
         <height>36</height>
        </size>
       </property>
-      <widget class="QPushButton" name="pushButton_test">
+      <widget class="QPushButton" name="pushButton_example">
        <property name="geometry">
         <rect>
          <x>110</x>
@@ -1283,7 +1283,7 @@
         <string>Example</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_calculate">
+      <widget class="QPushButton" name="pushButton_ok">
        <property name="geometry">
         <rect>
          <x>700</x>
@@ -1307,7 +1307,7 @@
         <string>Calculate</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_qa">
+      <widget class="QPushButton" name="pushButton_about">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -1328,7 +1328,7 @@
         <string>Click to show quanlity assurance log.</string>
        </property>
        <property name="text">
-        <string>QA</string>
+        <string>About</string>
        </property>
       </widget>
      </widget>

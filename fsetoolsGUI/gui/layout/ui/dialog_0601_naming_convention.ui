@@ -821,7 +821,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_copy">
+         <widget class="QPushButton" name="pushButton_ok">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -884,7 +884,7 @@
   <tabstop>comboBox_7_security_status</tabstop>
   <tabstop>checkBox_replace_spaces</tabstop>
   <tabstop>lineEdit_out_result</tabstop>
-  <tabstop>pushButton_copy</tabstop>
+  <tabstop>pushButton_ok</tabstop>
  </tabstops>
  <resources/>
  <connections/>

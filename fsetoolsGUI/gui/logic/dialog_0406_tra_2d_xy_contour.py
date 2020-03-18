@@ -51,7 +51,7 @@ class Dialog0406(QMainWindow):
         self.init_table()
 
         # signals
-        self.ui.pushButton_submit.clicked.connect(self.calculate)
+        self.ui.pushButton_ok.clicked.connect(self.calculate)
         self.ui.pushButton_refresh.clicked.connect(self.update_plot)
         self.ui.pushButton_save_figure.clicked.connect(self.save_figure)
         self.ui.pushButton_example.clicked.connect(self.example)

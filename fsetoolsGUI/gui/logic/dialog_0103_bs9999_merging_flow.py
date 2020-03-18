@@ -77,12 +77,12 @@ class Dialog0103(QMainWindow):
         # set up validators
 
         # signals
-        self.ui.pushButton_calculate.clicked.connect(self.calculate)
-        self.ui.pushButton_test.clicked.connect(self.example)
+        self.ui.pushButton_ok.clicked.connect(self.calculate)
+        self.ui.pushButton_example.clicked.connect(self.example)
         self.ui.radioButton_opt_scenario_1.toggled.connect(self.change_option_scenarios)
         self.ui.radioButton_opt_scenario_2.toggled.connect(self.change_option_scenarios)
         self.ui.radioButton_opt_scenario_3.toggled.connect(self.change_option_scenarios)
-        self.ui.pushButton_qa.clicked.connect(self.show_quality_assurance_info)
+        self.ui.pushButton_about.clicked.connect(self.show_quality_assurance_info)
 
 
     def change_option_scenarios(self):

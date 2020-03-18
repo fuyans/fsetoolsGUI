@@ -38,7 +38,7 @@ class Dialog0601(QMainWindow):
         self.ui.comboBox_6_type.currentTextChanged.connect(self.make_file_name)
         self.ui.comboBox_7_security_status.currentTextChanged.connect(self.make_file_name)
         self.ui.checkBox_replace_spaces.stateChanged.connect(self.make_file_name)
-        self.ui.pushButton_copy.clicked.connect(self.copy_file_name)
+        self.ui.pushButton_ok.clicked.connect(self.copy_file_name)
 
         # clean up
         self.make_file_name()  # make file name, do not leave the output slot empty

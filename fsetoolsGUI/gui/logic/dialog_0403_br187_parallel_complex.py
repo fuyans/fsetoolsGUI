@@ -31,8 +31,8 @@ class Dialog0403(QMainWindow):
         self.ui.lineEdit_S_or_UA.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]*\.{0,1}[0-9]*!')))
 
         self.ui.comboBox_S_or_UA.currentTextChanged.connect(self.change_mode_S_and_UA)
-        self.ui.pushButton_calculate.clicked.connect(self.calculate)
-        self.ui.pushButton_test.clicked.connect(self.test)
+        self.ui.pushButton_ok.clicked.connect(self.calculate)
+        self.ui.pushButton_example.clicked.connect(self.example)
 
     def change_mode_S_and_UA(self):
         """update ui to align with whether to calculate boundary distance or unprotected area %"""
@@ -59,7 +59,7 @@ class Dialog0403(QMainWindow):
 
         self.repaint()
 
-    def test(self):
+    def example(self):
 
         self.ui.lineEdit_W.setText('10')
         self.ui.lineEdit_H.setText('10')
