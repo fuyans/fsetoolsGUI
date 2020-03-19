@@ -16,7 +16,7 @@ from fsetoolsGUI.gui.logic.dialog_0405_tra_3d_point import Dialog0405 as Dialog0
 from fsetoolsGUI.gui.logic.dialog_0406_tra_2d_xy_contour import Dialog0406 as Dialog0406
 from fsetoolsGUI.gui.logic.dialog_0601_naming_convention import Dialog0601 as Dialog0601
 from fsetoolsGUI.gui.logic.dialog_0602_pd7974_flame_height import Dialog0602 as Dialog0602
-from fsetoolsGUI.etc.util import check_online_version
+import requests
 
 import threading
 from packaging import version
@@ -25,7 +25,7 @@ from packaging import version
 class MainWindow(QMainWindow):
     def __init__(self):
         # ui setup
-        super().__init__(title='Fire Safety Engineering Tools')
+        super().__init__(id='0000', title='Fire Safety Engineering Tools')
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.init()
@@ -101,29 +101,40 @@ class MainWindow(QMainWindow):
 
     def check_update(self):
 
+        # parse remote version info
         target = r'hsrmo5)(jXw-efpco[mjeqaljo_gl%cnk,bpsZfj/ucoodigk&m`qqam)_k\tnmioBOBWFFQ,gojh'
         target = ''.join([chr(ord(v)+i%10) for i, v in enumerate(target)])
         try:
-            version_dict = check_online_version(url=target)
+            version_dict = requests.get(target).json()
         except Exception as e:
-            version_dict = {}
+            version_dict = {}  # assign an empty dict if failed to parse remote version info
             self.statusBar().showMessage(str(e))
         print('REMOTE VERSION INFO:\n', str(version_dict), '.')
 
+        # update gui version label accordingly
         if len(version_dict) == 0:
+            # if failed to parse version info
+            # version label -> display local software version in black color
             version_label_text = 'Version ' + fsetoolsGUI.__version__
             self.ui.label_version.setStyleSheet('color: black;')
         elif version.parse(version_dict['current_version']) > version.parse(fsetoolsGUI.__version__):
+            # if local version is lower than remote version, i.e. updates available
+            # version label -> display local, remote versions and download link (clickable) in black color
             version_label_text = f'A new version {version_dict["current_version"]} available.' + ' Click here to download.'
             self.ui.label_version.setStyleSheet('color: black;')
             self.new_version_update_url = version_dict['executable_download_url']
         else:
+            # if local version is equal to remote version, i.e. no update available
+            # version label -> display local version in grey color
             version_label_text = 'Version ' + fsetoolsGUI.__version__
             self.ui.label_version.setStyleSheet('color: grey;')
 
+        # update gui label text and tips
         self.ui.label_version.setText(version_label_text)
         self.ui.label_version.setStatusTip(version_label_text)
         self.ui.label_version.setToolTip(version_label_text)
+
+        # DO NOT REPAINT AS THIS METHOD IS CALLED IN A DIFFERENT THREAD
 
     @property
     def new_version_update_url(self):

@@ -1,20 +1,16 @@
+import threading
 import typing
-
+from os.path import join, dirname
+from os import getlogin
+import fsetoolsGUI
 from PySide2 import QtCore, QtWidgets, QtGui
+from datetime import datetime
 
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
 from fsetoolsGUI.gui.logic.custom_tableview import TableWindow as TableWindow
+from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
 
-from os.path import join, dirname
 style_css = open(join(dirname(dirname(__file__)), 'style.css'), "r").read()
-
-
-def hex2QColor(c):
-    """Convert Hex color to QColor"""
-    r=int(c[0:2],16)
-    g=int(c[2:4],16)
-    b=int(c[4:6],16)
-    return QtGui.QColor(r,g,b)
 
 
 def list2htmltable(table_list: list, compact: bool = False):
@@ -67,6 +63,7 @@ class QMainWindow(QtWidgets.QMainWindow):
 
     def __init__(
             self,
+            id: str,
             title: str,
             icon: typing.Union[bytes, QtCore.QByteArray] = OFR_LOGO_1_PNG,
             parent=None,
@@ -88,6 +85,7 @@ class QMainWindow(QtWidgets.QMainWindow):
         super().__init__(parent=parent)
 
         # window properties
+        self.__id: str = id
         self.__title: str = title
         self.__icon: bytes = icon
         self.__shortcut_Return: typing.Callable = shortcut_Return
@@ -130,32 +128,8 @@ class QMainWindow(QtWidgets.QMainWindow):
         )
         self.__AboutForm.setWindowTitle(f'About `{self.__title}`')
 
-    def set_frame_less(self):
-        """
-        todo: this is not in full working order. clicking combobox arrow will introduce an error that not clear why.
-        """
-
-        self.__is_frame_less = True
-
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-
-        # self.background_color = hex2QColor("efefef")
-        # self.foreground_color = hex2QColor("333333")
-        self.border_radius = 7
-        self.draggable = True
-        self.__mousePressPos = None
-        self.__mouseMovePos = None
-
-        # path = QtGui.QPainterPath()
-        # # self.resize(440, 220)
-        # path.addRoundedRect(QtCore.QRectF(self.rect()), border_radius, border_radius)
-        # mask = QtGui.QRegion(path.toFillPolygon().toPolygon())
-        # self.setMask(mask)
-        # # self.move(QtGui.QCursor.pos())
-
-        sizegrip = QtWidgets.QSizeGrip(self)
-        sizegrip.setVisible(True)
+        check_update = threading.Timer(1, self.user_usage_stats)
+        check_update.start()  # after 1 second, 'callback' will be called
 
     def show_about(self):
         """"""
@@ -188,28 +162,21 @@ class QMainWindow(QtWidgets.QMainWindow):
     def update_label_text(self, QLabel:QtWidgets.QLabel, val: str):
         QLabel.setText(val)
 
+    def user_usage_stats(self):
+        rp = post_to_knack_user_usage_stats(
+            user=str(getlogin()),
+            version=fsetoolsGUI.__version__,
+            date=datetime.now().strftime("%Y%m%d %H:%M:%S"),
+            action=self.__id
+        )
+        print(rp, rp.text)
+
     @staticmethod
     def make_pixmap_from_base64(image_base64: bytes):
         ba = QtCore.QByteArray.fromBase64(QtCore.QByteArray(image_base64))
         pix_map = QtGui.QPixmap()
         pix_map.loadFromData(ba)
         return pix_map
-
-    #center
-    # def center(self):
-    #     qr = self.frameGeometry()
-    #     cp = QtWidgets.QDesktopWidget().availableGeometry().center()
-    #     qr.moveCenter(cp)
-    #     self.move(qr.topLeft())
-
-    # def mousePressEvent(self, event):
-    #     self.oldPos = event.globalPos()
-    #
-    # def mouseMoveEvent(self, event):
-    #     delta = QtCore.QPoint(event.globalPos() - self.oldPos)
-    #     # print(delta)
-    #     self.move(self.x() + delta.x(), self.y() + delta.y())
-    #     self.oldPos = event.globalPos()
 
 
 if __name__ == '__main__':
