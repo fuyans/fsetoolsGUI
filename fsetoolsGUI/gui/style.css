@@ -84,7 +84,7 @@ QPushButton:disabled {
 
 QLineEdit {
     background-color: #ffffff;
-    border: 1px solid #d2d1d2;
+    border: 1px solid #cccccc;
     margin: 0.5px;
     border-radius: 3px;
     /* color: rgb(235, 242, 250); */
@@ -98,12 +98,14 @@ QLineEdit:hover {
 QLineEdit:focus {
     background-color: #ffffff;
     border: 1.5px solid #106bfd;
+    margin: 0px;
     /* color: rgb(235, 242, 250); */
 }
 QLineEdit:disabled {
     background-color: #bdc3c7;
     border: 1px solid #bdc3c7;
     color: rgb(187, 187, 187);
+    margin: 0.5px;
 }
 
 /* ================================================== QCheckBox ===================================================== */
@@ -119,18 +121,21 @@ QComboBox
     background-color: white;
     color: black;
     selection-background-color: #56aafb;
-    border: 1px solid #d2d1d2;
+    border: 1px solid #cccccc;
+    margin: 0.5px;
     border-radius: 3px;
 }
 QComboBox:hover
 {
     background-color: #ffffff;
     border: 1.5px solid #56aafb;
+    margin: 0;
 }
 QComboBox:focus, QComboBox:on
 {
     background-color: #ffffff;
     border: 1.5px solid #106bfd;
+    margin: 0;
 }
 QComboBox::drop-down
 {
@@ -138,24 +143,24 @@ QComboBox::drop-down
     subcontrol-position: top right;
     border-radius: 3px;
     border-left-width: 0px;
-    border-left-color: darkgray;
+    border-left-color: #cccccc;
     border-left-style: solid;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
 }
 QComboBox::down-arrow
 {
-    image: url(fsetoolsGUI/gui/images/down.png);
+    image: url(gui/images/down.png);
     margin-right: 10px;
 }
 QComboBox::down-arrow:hover
 {
-    image: url(fsetoolsGUI/gui/images/down-sky.png);
+    image: url(gui/images/down-sky.png);
     margin-right: 10px;
 }
 QComboBox::down-arrow:on
 {
-    image: url(fsetoolsGUI/gui/images/down-ocean.png);
+    image: url(gui/images/down-ocean.png);
     margin-right: 10px;
 }
 /*QComboBox::down-arrow:on, QComboBox::down-arrow:hover,*/
