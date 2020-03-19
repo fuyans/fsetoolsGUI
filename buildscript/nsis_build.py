@@ -43,10 +43,12 @@ def make_nsi_file():
         dict_var['version_major'] = v_list[0]
     except IndexError:
         dict_var['version_major'] = 0
+
     try:
         dict_var['version_minor'] = v_list[1]
     except IndexError:
         dict_var['version_minor'] = 0
+
     try:
         dict_var['version_build'] = v_list[2]
     except IndexError:

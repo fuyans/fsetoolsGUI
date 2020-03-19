@@ -1,10 +1,14 @@
 """fsetoolsGUI CLI Help.
 Usage:
-    fsetoolsGUI
+    fsetoolsgui
+    fsetoolsgui -m=<module_id>
+
+Options:
+    -m      Trigger a specific module
 
 Commands:
-    fsetoolsGUI
-        `fsetoolsGUI` graphical user interface.
+    fsetoolsgui
+        `fsetoolsgui` graphical user interface.
 """
 
 
@@ -37,5 +41,6 @@ def gui():
 
 def main():
     arguments = docopt(__doc__)
+    print(arguments)
     if len(arguments) == 0:
         gui()
