@@ -46,6 +46,6 @@ setuptools.setup(
     entry_points={"console_scripts": ["fsetoolsGUI=fsetoolsGUI.cli.__main__:main"]},
     ext_modules=[
         setuptools.extension.Extension("fputs", ["fsetoolsGUI/etc/realpythonexample.c"]),
-        setuptools.extension.Extension("superfastexample", ["fsetoolsGUI/etc/msexample.cpp"])
+        # setuptools.extension.Extension("superfastexample", ["fsetoolsGUI/etc/msexample.cpp"])
     ],
 )
