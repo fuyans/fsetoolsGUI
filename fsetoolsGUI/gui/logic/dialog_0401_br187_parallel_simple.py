@@ -21,6 +21,7 @@ class Dialog0401(QMainWindow):
     def __init__(self, parent=None):
         # ui instantiation
         super().__init__(
+            id='0401',
             title='BR 187 Thermal Radiation Calculation (Rectangular and Parallel)',
             parent=parent,
             shortcut_Return=self.calculate

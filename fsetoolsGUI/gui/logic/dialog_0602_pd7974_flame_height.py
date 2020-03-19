@@ -18,6 +18,7 @@ class Dialog0602(QMainWindow):
 
         # instantiate ui
         super().__init__(
+            id='0602',
             parent=parent,
             title='PD 7974-1:2019 Mean Flame Height',
             shortcut_Return=self.calculate

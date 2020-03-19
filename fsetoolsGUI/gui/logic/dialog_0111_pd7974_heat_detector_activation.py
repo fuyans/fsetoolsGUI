@@ -20,6 +20,7 @@ class Dialog0111(QMainWindow):
     def __init__(self, parent=None):
         # instantiate ui
         super().__init__(
+            id='0111',
             parent=parent,
             title='PD 7974-1:2019 Heat Detecting Element Activation Time',
             shortcut_Return=self.calculate

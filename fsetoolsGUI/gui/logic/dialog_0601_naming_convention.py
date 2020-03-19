@@ -10,6 +10,7 @@ class Dialog0601(QMainWindow):
     def __init__(self, parent=None):
         # init
         super().__init__(
+            id='0601',
             parent=parent,
             title='OFR File Name Generator',
             shortcut_Return=self.copy_file_name

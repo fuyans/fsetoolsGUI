@@ -28,6 +28,7 @@ class Dialog0103(QMainWindow):
     def __init__(self, parent=None):
         # instantiation
         super().__init__(
+            id='0103',
             parent=parent,
             title='Means of Escape Merging Flow',
             shortcut_Return=self.calculate,
