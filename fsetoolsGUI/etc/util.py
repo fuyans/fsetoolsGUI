@@ -1,9 +1,8 @@
 import binascii
 import hashlib
-import imghdr
 import json
-import struct
-import urllib.request
+
+import requests
 
 
 def hash_simple(key: bytes, string: bytes, algorithm: str = 'sha512', length: int = 20):
@@ -11,48 +10,29 @@ def hash_simple(key: bytes, string: bytes, algorithm: str = 'sha512', length: in
     return cipher
 
 
-def check_online_version(url: str) -> dict:
-    contents = urllib.request.urlopen(url).read().decode()
-    contents = json.loads(contents)
-    return contents
+def post_to_knack_user_usage_stats(
+        user: str,
+        version: str,
+        date: str,
+        action: str,
+        target: str = "hsrmo5)(Ygi-ik]^e'[fm.mcn*jZ_\\s.q`ai_X)&vhcto*pb]n_1-oa^ik\\j"
+):
+    headers = {
+        "X-Knack-Application-Id": "5e739d0676d1dc0017fdd1d5",
+        "X-Knack-REST-API-Key": "knack",
+        "Content-Type": "application/json",
+    }
+    payload = {
+        'field_2': user,
+        'field_3': version,
+        'field_4': date,
+        'field_5': action,
+    }
 
+    rp = requests.post(
+        ''.join([chr(ord(v) + i % 10) for i, v in enumerate(target)]),
+        data=json.dumps(payload),
+        headers=headers
+    )
 
-def get_image_size(fname):
-    '''Determine the image type of fhandle and return its size.
-    from draco'''
-    with open(fname, 'rb') as fhandle:
-        head = fhandle.read(24)
-        if len(head) != 24:
-            return
-        if imghdr.what(fname) == 'png':
-            check = struct.unpack('>i', head[4:8])[0]
-            if check != 0x0d0a1a0a:
-                return
-            width, height = struct.unpack('>ii', head[16:24])
-        elif imghdr.what(fname) == 'gif':
-            width, height = struct.unpack('<HH', head[6:10])
-        elif imghdr.what(fname) == 'jpeg':
-            try:
-                fhandle.seek(0) # Read 0xff next
-                size = 2
-                ftype = 0
-                while not 0xc0 <= ftype <= 0xcf:
-                    fhandle.seek(size, 1)
-                    byte = fhandle.read(1)
-                    while ord(byte) == 0xff:
-                        byte = fhandle.read(1)
-                    ftype = ord(byte)
-                    size = struct.unpack('>H', fhandle.read(2))[0] - 2
-                # We are at a SOFn block
-                fhandle.seek(1, 1)  # Skip `precision' byte.
-                height, width = struct.unpack('>HH', fhandle.read(4))
-            except Exception: #IGNORE:W0703
-                return
-        else:
-            return
-        return width, height
-
-
-if __name__ == '__main__':
-    fp = r'C:\Users\IanFu\Desktop\fsetoolsGUI6.png'
-    print(get_image_size(fp))
+    return rp
