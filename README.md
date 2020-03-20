@@ -8,6 +8,10 @@
 
 Documentation is work in progress.
 
+### Dependencies
+
+See `Requirements.txt`.
+
 ### Installation
 
 [Python](https://www.python.org/downloads/) 3.7 or later is required. [Anaconda Distribution](https://www.anaconda.com/distribution/#download-section) is recommended for new starters, it includes Python and few useful packages including a package management tool pip (see below).
@@ -28,14 +32,35 @@ Documentation is work in progress.
     pip install --upgrade "git+https://github.com/fuyans/fsetoolsGUI.git@master"
     ```
 
-## Key features
+## Project structure
 
-todo
+```
+fsetoolsGUI/
+├── fsetoolsGUI/
+│   ├── cli/
+│   ├── etc/
+│   └── gui/
+│       ├── images/
+│       ├── layout/
+│       └── logic/
+└── buildscript/
+```
 
-## Summary of completed and work in progress modules
+The root directory contains two folder, `fsetoolsGUI` and `buildscript` are for source code / data and compile script, respectively.
+
+Within `fsetoolsGUI`:
+
+ - `cli` command line interface modules;
+ - `etc` helper / utility functions that useful to wider project modules; and
+ - `gui` graphical user interface modules:
+    - `layout` UI layouts; and
+    - `logic` UI logic.
+
+## Summary of available and planned modules
 
 Module code follows the format below:
 
+- 00**. Utility modules that the main application dependent on, e.g. update routine etc.
 - 01**. Means of escape related calculations.
 - 04**. External fire spread related calculations.
 - 06**. Miscellaneous and/or uncategorised tools.
@@ -62,14 +87,14 @@ Status designation:
 | 0601        | OFR file naming protocol          | Completed |
 | 0602        | PD 7974 flame height              | Completed |
 | 0603        | FDS mesh resolution               | Planned   |
-| 0604        | FDS min. vent size                | Planned   |
+| 0604        | FDS minimum vent size             | Planned   |
 
-### Command line interface
+## Command line interface
 
-Once `fsetoolsGUI` is installed, CLI help can be summoned using the following command:
+Once `fsetoolsGUI` is installed, CLI usage can be revealed using the following command:
 
 ```shell
-(base) C:\Users\Fu>fsetools -h
+(base) C:\Users\Fu>fsetoolsgui -h
 ```
 
 ## Graphical user interface
@@ -79,8 +104,6 @@ Compiled GUI executables are available in the `release` page. This can also be s
 ## Authors
 
 **Ian Fu** - *fuyans@gmail.com*
-
-**Alex Todd** - *alex.todd@ofrconsultants.com*
 
 ## License
 
