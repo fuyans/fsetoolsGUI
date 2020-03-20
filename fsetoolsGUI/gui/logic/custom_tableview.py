@@ -97,14 +97,15 @@ class TableWindow(QtWidgets.QDialog):
         font = QtGui.QFont("Courier New", 10)
         self.TableView.setFont(font)
 
-        # set column width to fit contents (set font first!)
-        self.TableView.resizeColumnsToContents()
-
         # enable sorting
         self.TableView.setSortingEnabled(True)
         layout = QtWidgets.QVBoxLayout(self)
         layout.addWidget(self.TableView)
         self.setLayout(layout)
+
+        # set column width to fit contents (set font first!)
+        self.TableView.resizeColumnsToContents()
+        self.TableView.resizeRowsToContents()
 
     def copy_selection(self):
 
