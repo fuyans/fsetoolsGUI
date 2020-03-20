@@ -1,5 +1,5 @@
 import numpy as np
-from PySide2 import QtWidgets, QtGui, QtCore
+from PySide2 import QtGui, QtCore
 from fsetools.lib.fse_activation_hd import heat_detector_temperature_pd7974
 from fsetools.libstd.pd_7974_1_2019 import eq_22_t_squared_fire_growth
 
@@ -8,8 +8,8 @@ from fsetoolsGUI.gui.images_base64 import dialog_0111_context_2 as image_context
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_1 as image_figure_1
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_2 as image_figure_2
 from fsetoolsGUI.gui.layout.dialog_0111_heat_detector_activation import Ui_MainWindow as Ui_Dialog
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
+from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.custom_tableview import TableWindow
 
 

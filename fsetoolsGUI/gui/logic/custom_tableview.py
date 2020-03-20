@@ -3,6 +3,7 @@ import io
 import operator
 
 from PySide2 import QtGui, QtCore, QtWidgets
+
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
 
 

@@ -3,10 +3,10 @@ import subprocess
 import sys
 from os.path import join, realpath, dirname
 
-from buildscript.pyinstaller_build import main as main_pyinstaller
-from fsetoolsGUI.gui.ui2py import ui2py
 import fsetoolsGUI
 from buildscript import nsis_build_nsi
+from buildscript.pyinstaller_build import main as main_pyinstaller
+from fsetoolsGUI.gui.ui2py import ui2py
 
 
 def find_all_dist_files(dir_build: str, include_root_name: bool = True):

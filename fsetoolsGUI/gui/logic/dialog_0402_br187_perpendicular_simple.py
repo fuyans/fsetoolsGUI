@@ -1,4 +1,3 @@
-from PySide2 import QtCore
 from fsetools.lib.fse_thermal_radiation import phi_perpendicular_any_br187, linear_solver
 
 from fsetoolsGUI.gui.images_base64 import dialog_0402_figure as image_figure

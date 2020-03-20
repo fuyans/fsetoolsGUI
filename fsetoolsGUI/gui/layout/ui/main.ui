@@ -54,7 +54,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>38</y>
+       <y>35</y>
        <width>157</width>
        <height>26</height>
       </rect>
@@ -105,7 +105,7 @@
     <widget class="QLabel" name="label_logo">
      <property name="geometry">
       <rect>
-       <x>225</x>
+       <x>235</x>
        <y>0</y>
        <width>194</width>
        <height>105</height>
@@ -149,39 +149,6 @@
     <property name="title">
      <string/>
     </property>
-    <widget class="QPushButton" name="pushButton">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>340</x>
-       <y>30</y>
-       <width>71</width>
-       <height>71</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>71</width>
-       <height>71</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>71</width>
-       <height>71</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
     <widget class="QPushButton" name="pushButton_0602_pd7974_flame_height">
      <property name="geometry">
       <rect>
@@ -225,7 +192,7 @@ Height</string>
     </widget>
     <widget class="QPushButton" name="b4_01_br187_parallel_11">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="geometry">
       <rect>
@@ -301,7 +268,7 @@ Protocol</string>
     </widget>
     <widget class="QPushButton" name="b4_01_br187_parallel_12">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="geometry">
       <rect>
@@ -544,45 +511,6 @@ Perp.</string>
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="b4_01_br187_parallel_10">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>340</x>
-       <y>130</y>
-       <width>71</width>
-       <height>71</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>71</width>
-       <height>71</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>71</width>
-       <height>71</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Not implemented.</string>
-     </property>
-     <property name="statusTip">
-      <string>Not implemented.</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
     <widget class="QPushButton" name="pushButton_0102_bs9999_datasheet_1">
      <property name="geometry">
       <rect>
@@ -816,7 +744,7 @@ Flow</string>
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>416</width>
+       <width>426</width>
        <height>26</height>
       </rect>
      </property>
@@ -842,6 +770,9 @@ Flow</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>
@@ -913,12 +844,10 @@ Flow</string>
   <tabstop>pushButton_0602_pd7974_flame_height</tabstop>
   <tabstop>b4_01_br187_parallel_11</tabstop>
   <tabstop>b4_01_br187_parallel_12</tabstop>
-  <tabstop>pushButton</tabstop>
   <tabstop>pushButton_0101_adb2_datasheet_1</tabstop>
   <tabstop>pushButton_0102_bs9999_datasheet_1</tabstop>
   <tabstop>pushButton_0103_merging_flow</tabstop>
   <tabstop>pushButton_0111_heat_detector_activation</tabstop>
-  <tabstop>b4_01_br187_parallel_10</tabstop>
   <tabstop>pushButton_0401_br187_parallel_simple</tabstop>
   <tabstop>pushButton_0402_br187_perpendicular_simple</tabstop>
   <tabstop>pushButton_0403_br187_parallel_complex</tabstop>

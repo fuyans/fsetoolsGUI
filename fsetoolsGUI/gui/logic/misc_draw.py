@@ -1,6 +1,6 @@
 import sys
-from PySide2 import QtCore, QtGui, QtWidgets
-from PySide2.QtCore import Qt
+
+from PySide2 import QtGui, QtWidgets
 
 
 class MainWindow(QtWidgets.QMainWindow):
