@@ -3,7 +3,8 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 from PySide2 import QtWidgets, QtCore
-from fsetools.lib.fse_thermal_radiation_2d_v2 import main as tra_main, main_plot as tra_main_plot
+from fsetools.lib.fse_thermal_radiation_2d_v2 import main as tra_main
+from matplotlib import cm
 
 from fsetoolsGUI.gui.layout.dialog_0406_tra_2d_xy_contour import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
@@ -19,6 +20,81 @@ except ModuleNotFoundError:
         FigureCanvas,
         NavigationToolbar2QT as NavigationToolbar
     )
+
+
+def tra_main_plot(
+        param_dict: dict,
+        ax,
+        fig=None,
+        critical_heat_flux: float = 12.6,
+        contour_line_font_size: float = 12,
+        emitter_receiver_line_thickness: float = 5.,
+        **kwargs
+):
+    x1, x2 = param_dict['solver_domain']['x']
+    y1, y2 = param_dict['solver_domain']['y']
+    delta = param_dict['solver_delta']
+    xx, yy = np.meshgrid(np.arange(x1, x2 + 0.5 * delta, delta), np.arange(y1, y2 + 0.5 * delta, delta))
+    zz = param_dict['heat_flux']
+
+    if 'figure_levels' in param_dict:
+        figure_levels = param_dict['figure_levels']
+    else:
+        figure_levels = (0, 12.6, 20, 40, 60, 80, 200)
+    figure_levels = list(figure_levels) + [critical_heat_flux]
+    figure_levels = tuple(sorted(set(figure_levels)))
+
+    figure_levels_contour = figure_levels
+    figure_colors_contour = ['r' if i == critical_heat_flux else 'k' for i in figure_levels_contour]
+    figure_levels_contourf = figure_levels_contour
+    figure_colors_contourf = [cm.get_cmap('YlOrRd')(i / (len(figure_levels_contour) - 1)) for i, _ in
+                              enumerate(figure_levels_contour)]
+    figure_colors_contourf = [(r_, g_, b_, 0.65) for r_, g_, b_, a_ in figure_colors_contourf]
+    figure_colors_contourf[0] = (195 / 255, 255 / 255, 143 / 255, 0.65)
+
+    # create axes
+    cs = ax.contour(xx, yy, zz, levels=figure_levels_contour, colors=figure_colors_contour)
+    cs_f = ax.contourf(xx, yy, zz, levels=figure_levels_contourf, colors=figure_colors_contourf)
+
+    if contour_line_font_size > 0:
+        ax.clabel(cs, inline=1, fontsize=contour_line_font_size, fmt='%1.1f kW')
+
+    ax.grid(b=True, which='major', axis='both', color='k', alpha=0.1)
+
+    # axis ticks
+    ax.set_xticks(np.arange(np.amin(xx), np.amax(xx) + .5, 1))
+    ax.set_xticklabels([f'{i:.0f}' for i in np.arange(np.amin(xx), np.amax(xx) + .5, 1)], fontsize=9)
+    ax.set_yticks(np.arange(np.amin(yy), np.amax(yy) + .5, 1))
+    ax.set_yticklabels([f'{i:.0f}' for i in np.arange(np.amin(yy), np.amax(yy) + .5, 1)], fontsize=9)
+    ax.tick_params(axis=u'both', which=u'both', direction='in')
+
+    # axis limits
+    ax.set_xlim((np.amin(xx), np.amax(xx)))
+    ax.set_ylim((np.amin(yy), np.amax(yy)))
+
+    ax.set_aspect(1)
+
+    if emitter_receiver_line_thickness > 0:
+        for i in range(len(param_dict['emitter_list'])):
+            ax.plot(param_dict['emitter_list'][i]['x'], param_dict['emitter_list'][i]['y'],
+                    lw=emitter_receiver_line_thickness, c='r', ls='--')
+
+        try:
+            for i in range(len(param_dict['receiver_list'])):
+                ax.plot(param_dict['receiver_list'][i]['x'], param_dict['receiver_list'][i]['y'],
+                        lw=emitter_receiver_line_thickness, c='k', ls='--')
+        except KeyError:
+            pass
+
+    ax.set_xlim(*param_dict['solver_domain']['x'])
+    ax.set_ylim(*param_dict['solver_domain']['y'])
+
+    # colour bar, only plot colorbar when figure object is provided to prevent double plotting
+    if fig:
+        cbar = fig.colorbar(cs_f)
+        cbar.ax.set_yticklabels([f'{i:.1f}'.rstrip('0').rstrip('.') + '\nkW/m²' for i in figure_levels])
+
+    return fig, ax
 
 
 class Dialog0406(QMainWindow):
