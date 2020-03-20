@@ -1,16 +1,20 @@
 import threading
 import typing
-from os.path import join, dirname
-from os import getlogin
-import fsetoolsGUI
-from PySide2 import QtCore, QtWidgets, QtGui
 from datetime import datetime
+from os import getlogin
+from os.path import join, dirname
 
+from PySide2 import QtCore, QtWidgets, QtGui
+
+import fsetoolsGUI
+from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
 from fsetoolsGUI.gui.logic.custom_tableview import TableWindow as TableWindow
-from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
 
-style_css = open(join(dirname(dirname(__file__)), 'style.css'), "r").read()
+try:
+    style_css = open(join(dirname(dirname(__file__)), 'style.css'), "r").read()
+except FileNotFoundError:
+    style_css = open(join(dirname(dirname(dirname(dirname(__file__)))), 'gui', 'style.css'), "r").read()
 
 
 def list2htmltable(table_list: list, compact: bool = False):
