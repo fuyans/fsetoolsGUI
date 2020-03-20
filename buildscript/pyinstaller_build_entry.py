@@ -13,7 +13,7 @@ from PySide2 import QtWidgets, QtCore
 
 QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 try:
-    from buildscript.__key__ import key
+    from fsetoolsGUI.__key__ import key
 
     KEY = key()
 except ModuleNotFoundError:
@@ -46,8 +46,16 @@ if __name__ == "__main__":
             app_ = Dialog0001()
             app_.show()
             app_.exec_()
-            if int(app_.pass_code) != KEY:
-                time.sleep(2)
+
+            try:
+                pass_code = int(app_.pass_code)
+            except ValueError:
+                pass_code = None
+
+            if pass_code != KEY:
+                app_.edit.setText('Incorrect password')
+                app_.repaint()
+                time.sleep(5)
                 raise ValueError('Incorrect password.')
             app_.close()
             del app_
