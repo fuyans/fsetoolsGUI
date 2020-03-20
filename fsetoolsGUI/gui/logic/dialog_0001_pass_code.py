@@ -1,9 +1,8 @@
+import requests
 from PySide2 import QtWidgets, QtGui, QtCore
 
 import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
-
-EXPIRY_DATE_PERIOD = 90
 
 
 class Dialog0001(QtWidgets.QDialog):
@@ -14,9 +13,23 @@ class Dialog0001(QtWidgets.QDialog):
 
         # ui elements instantiation
         self.label = QtWidgets.QLabel(
-            f'Software is too old to run.\nEither to get the latest version or enter passcode.\n{fsetoolsGUI.__version__}.')
+            f'Version {fsetoolsGUI.__version__} released on {fsetoolsGUI.__date_released__.strftime("%Y %B %d")} is expired.\n'
+            f'Download the latest version (follow link below) or enter a pass code in the input box below.'
+        )
+
         self.edit = QtWidgets.QLineEdit()
-        self.button = QtWidgets.QPushButton('Submit')
+
+        try:
+            target = ''.join([chr(ord(v) + i % 10) for i, v in enumerate(fsetoolsGUI.__remote_version_url__)])
+            version_dict = requests.get(target).json()
+            self.edit.setText(version_dict['executable_download_url'])
+        except Exception as e:
+            if isinstance(e, requests.exceptions.ConnectionError):
+                self.edit.setText(f'Connection error, failed to reach {fsetoolsGUI.__remote_version_url__}.')
+            else:
+                self.edit.setText(str(e))
+
+        self.button = QtWidgets.QPushButton('OK')
 
         # layout
         layout = QtWidgets.QVBoxLayout()
@@ -41,4 +54,7 @@ class Dialog0001(QtWidgets.QDialog):
 
     @property
     def pass_code(self) -> str:
-        return self._pass_code
+        if self._pass_code is None:
+            return '-1'
+        else:
+            return self._pass_code
