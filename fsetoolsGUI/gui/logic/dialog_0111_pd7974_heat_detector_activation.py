@@ -226,3 +226,12 @@ class Dialog0111(QMainWindow):
         app_.TableModel.sort(0, QtCore.Qt.AscendingOrder)
         app_.TableView.resizeColumnsToContents()
         app_.show()
+
+
+if __name__ == '__main__':
+    import sys
+    from PySide2 import QtWidgets
+    qapp = QtWidgets.QApplication(sys.argv)
+    app = Dialog0111()
+    app.show()
+    qapp.exec_()
