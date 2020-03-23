@@ -1,6 +1,7 @@
 from fsetools.lib.fse_thermal_radiation import phi_parallel_any_br187, linear_solver
 
 from fsetoolsGUI.gui.images_base64 import dialog_0401_figure as image_figure
+from fsetoolsGUI.gui.images_base64 import dialog_0401_page as image_page
 from fsetoolsGUI.gui.layout.dialog_0401_br187_parallel_simple import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
@@ -31,8 +32,8 @@ class Dialog0401(QMainWindow):
         self.init()
 
         # set up radiation figure
-        self.ui.label_image_page.setPixmap(self.make_pixmap_from_base64(image_figure))
-
+        self.ui.label_image_page.setPixmap(self.make_pixmap_from_base64(image_page))
+        self.ui.label_image_figure.setPixmap(self.make_pixmap_from_base64(image_figure))
         # set up validators
         self.ui.lineEdit_in_W.setValidator(self._validator_float_unsigned)
         self.ui.lineEdit_in_H.setValidator(self._validator_float_unsigned)

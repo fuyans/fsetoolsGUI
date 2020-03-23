@@ -2,6 +2,7 @@ from PySide2 import QtGui, QtCore
 from fsetools.lib.fse_thermal_radiation import phi_parallel_any_br187, linear_solver
 
 from fsetoolsGUI.gui.images_base64 import dialog_0403_figure as image_figure
+from fsetoolsGUI.gui.images_base64 import dialog_0403_page as image_page
 from fsetoolsGUI.gui.layout.dialog_0403_br187_parallel_complex import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
@@ -21,7 +22,8 @@ class Dialog0403(QMainWindow):
         self.init()
 
         # set up radiation figure
-        self.ui.label_image_page.setPixmap(self.make_pixmap_from_base64(image_figure))
+        self.ui.label_image_figure.setPixmap(self.make_pixmap_from_base64(image_figure))
+        self.ui.label_image_page.setPixmap(self.make_pixmap_from_base64(image_page))
 
         # set validators
         self.ui.lineEdit_W.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]*\.{0,1}[0-9]*!')))
