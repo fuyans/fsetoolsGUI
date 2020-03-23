@@ -1,5 +1,5 @@
 import numpy as np
-from PySide2 import QtGui, QtCore
+from PySide2 import QtGui, QtCore, QtWidgets
 from fsetools.lib.fse_activation_hd import heat_detector_temperature_pd7974
 from fsetools.libstd.pd_7974_1_2019 import eq_22_t_squared_fire_growth
 
@@ -12,9 +12,10 @@ from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.custom_tableview import TableWindow
 
+QtWidgets = QtWidgets
+
 
 class Dialog0111(QMainWindow):
-
     _numerical_results: dict = None
 
     def __init__(self, parent=None):
