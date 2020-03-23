@@ -197,9 +197,9 @@ class MainWindow(QMainWindow):
                 if 'executable_download_url' in specific_remote_version:
                     upgrade_executable_url = specific_remote_version['executable_download_url']
                     print(f'SUCCESSFULLY PARSED `executable_download_url`. {upgrade_executable_url}')
-                elif 'latest_executable_download_url' in self.remote_version:
+                if 'latest_executable_download_url' in self.remote_version and upgrade_executable_url is None:
                     upgrade_executable_url = self.remote_version['latest_executable_download_url']
-                    print('SUCCESSFULLY PARSED `latest_executable_download_url`.')
+                    print(f'SUCCESSFULLY PARSED `latest_executable_download_url`. {upgrade_executable_url}')
             except Exception as e:
                 # if both `executable_download_url` and `latest_executable_download_url` not exist, assign None and
                 # print an indicative message.
