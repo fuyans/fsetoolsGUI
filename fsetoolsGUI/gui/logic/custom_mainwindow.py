@@ -168,12 +168,21 @@ class QMainWindow(QtWidgets.QMainWindow):
 
     def user_usage_stats(self):
         rp = post_to_knack_user_usage_stats(
+            # user indicator
             user=str(getlogin()),
+
+            # current app version
             version=fsetoolsGUI.__version__,
-            date=datetime.now().strftime("%Y%m%d %H:%M:%S"),
+
+            # datetime format following https://www.knack.com/developer-documentation/#type-date-time one line string
+            # example "03/28/2014 10:30pm"
+            date=datetime.now().strftime("%d%m%Y %H:%M%p"),
+
+            # action is the current app id
             action=self.__id
         )
-        print(rp, rp.text)
+
+        print(f'STATS POST STATUS: {rp} {rp.text}')
 
     @staticmethod
     def make_pixmap_from_base64(image_base64: bytes):
