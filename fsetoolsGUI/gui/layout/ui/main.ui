@@ -34,19 +34,19 @@
      <rect>
       <x>45</x>
       <y>50</y>
-      <width>431</width>
+      <width>421</width>
       <height>106</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>431</width>
+      <width>421</width>
       <height>106</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>431</width>
+      <width>421</width>
       <height>106</height>
      </size>
     </property>
@@ -130,20 +130,20 @@
      <rect>
       <x>45</x>
       <y>165</y>
-      <width>431</width>
-      <height>321</height>
+      <width>421</width>
+      <height>326</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>431</width>
-      <height>321</height>
+      <width>421</width>
+      <height>326</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>431</width>
-      <height>321</height>
+      <width>421</width>
+      <height>326</height>
      </size>
     </property>
     <property name="title">
@@ -152,8 +152,8 @@
     <widget class="QPushButton" name="pushButton_0602_pd7974_flame_height">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>30</y>
+       <x>95</x>
+       <y>40</y>
        <width>71</width>
        <height>71</height>
       </rect>
@@ -196,8 +196,8 @@ Height</string>
      </property>
      <property name="geometry">
       <rect>
-       <x>180</x>
-       <y>30</y>
+       <x>175</x>
+       <y>40</y>
        <width>71</width>
        <height>71</height>
       </rect>
@@ -228,8 +228,8 @@ Vent. Size</string>
     <widget class="QPushButton" name="pushButton_0601_naming_convention">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>30</y>
+       <x>15</x>
+       <y>40</y>
        <width>71</width>
        <height>71</height>
       </rect>
@@ -272,8 +272,8 @@ Protocol</string>
      </property>
      <property name="geometry">
       <rect>
-       <x>260</x>
-       <y>30</y>
+       <x>255</x>
+       <y>40</y>
        <width>71</width>
        <height>71</height>
       </rect>
@@ -312,8 +312,8 @@ Mesh Size</string>
      </property>
      <property name="geometry">
       <rect>
-       <x>340</x>
-       <y>230</y>
+       <x>335</x>
+       <y>240</y>
        <width>71</width>
        <height>71</height>
       </rect>
@@ -352,8 +352,8 @@ Contour</string>
     <widget class="QPushButton" name="pushButton_0401_br187_parallel_simple">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>230</y>
+       <x>15</x>
+       <y>240</y>
        <width>71</width>
        <height>71</height>
       </rect>
@@ -392,8 +392,8 @@ Parallel</string>
     <widget class="QPushButton" name="pushButton_0403_br187_parallel_complex">
      <property name="geometry">
       <rect>
-       <x>180</x>
-       <y>230</y>
+       <x>175</x>
+       <y>240</y>
        <width>71</width>
        <height>71</height>
       </rect>
@@ -433,8 +433,8 @@ Centered</string>
     <widget class="QPushButton" name="pushButton_0404_br187_perpendicular_complex">
      <property name="geometry">
       <rect>
-       <x>260</x>
-       <y>230</y>
+       <x>255</x>
+       <y>240</y>
        <width>71</width>
        <height>71</height>
       </rect>
@@ -474,8 +474,8 @@ Centered</string>
     <widget class="QPushButton" name="pushButton_0402_br187_perpendicular_simple">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>230</y>
+       <x>95</x>
+       <y>240</y>
        <width>71</width>
        <height>71</height>
       </rect>
@@ -514,8 +514,8 @@ Perp.</string>
     <widget class="QPushButton" name="pushButton_0102_bs9999_datasheet_1">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>130</y>
+       <x>95</x>
+       <y>140</y>
        <width>71</width>
        <height>71</height>
       </rect>
@@ -555,8 +555,8 @@ No. 1</string>
     <widget class="QPushButton" name="pushButton_0101_adb2_datasheet_1">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>130</y>
+       <x>15</x>
+       <y>140</y>
        <width>71</width>
        <height>71</height>
       </rect>
@@ -596,8 +596,8 @@ No. 1</string>
     <widget class="QPushButton" name="pushButton_0111_heat_detector_activation">
      <property name="geometry">
       <rect>
-       <x>260</x>
-       <y>130</y>
+       <x>255</x>
+       <y>140</y>
        <width>71</width>
        <height>71</height>
       </rect>
@@ -641,8 +641,8 @@ Time</string>
      </property>
      <property name="geometry">
       <rect>
-       <x>180</x>
-       <y>130</y>
+       <x>175</x>
+       <y>140</y>
        <width>71</width>
        <height>71</height>
       </rect>
@@ -681,11 +681,16 @@ Flow</string>
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>205</y>
+       <x>15</x>
+       <y>215</y>
        <width>366</width>
        <height>26</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>B4 External fire spread</string>
@@ -694,11 +699,16 @@ Flow</string>
     <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>105</y>
+       <x>15</x>
+       <y>115</y>
        <width>366</width>
        <height>26</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>B1 Means of escape</string>
@@ -707,14 +717,60 @@ Flow</string>
     <widget class="QLabel" name="label_3">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>5</y>
+       <x>15</x>
+       <y>15</y>
        <width>366</width>
        <height>26</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Miscellaneous</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_0111_heat_detector_activation_2">
+     <property name="geometry">
+      <rect>
+       <x>335</x>
+       <y>140</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>71</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
+     </property>
+     <property name="statusTip">
+      <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
+     </property>
+     <property name="text">
+      <string>PD 7974
+Kitchen
+hob</string>
+     </property>
+     <property name="autoDefault">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>
@@ -723,19 +779,19 @@ Flow</string>
      <rect>
       <x>47</x>
       <y>500</y>
-      <width>431</width>
+      <width>421</width>
       <height>26</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>431</width>
+      <width>421</width>
       <height>26</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>431</width>
+      <width>421</width>
       <height>26</height>
      </size>
     </property>
@@ -744,7 +800,7 @@ Flow</string>
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>426</width>
+       <width>416</width>
        <height>26</height>
       </rect>
      </property>
