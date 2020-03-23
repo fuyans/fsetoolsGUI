@@ -2,17 +2,35 @@
 
 [![Build Status](https://travis-ci.com/fsepy/fsetools.svg?branch=master)](https://travis-ci.com/fsepy/fsetools)
 
-`fsetoolsGUI` = Fire safety Engineering Tools Graphical User Interface, is a GUI application built based on [`fsetools`](https://github.com/fsepy/fsetools).
+`fsetoolsGUI` = Fire safety Engineering Tools Graphical User Interface, is a GUI wrapper to [`fsetools`](https://github.com/fsepy/fsetools).
 
 ## Getting started
 
 Documentation is work in progress.
 
-### Dependencies
+This tool is recommended to be used via three ways:
 
-See `Requirements.txt`.
+1. Install the app on your machine. No Python runtime is required (i.e. no programming involved).
+2. Use command line interface implemented in `fsetoolsGUI`. This requires Python runtime and installation of `fsetoolsGUI` as a library.
+3. Use as a library (i.e. to make changes)
 
-### Installation
+As always, `fsetoolsGUI` can be used as a Python library (`import fsetoolsgui as ft`). Uses are documented in docstring.
+
+### Graphical user interface
+
+Compiled GUI executable can be downloaded on the [Releases](https://github.com/fuyans/fsetoolsGUI/releases) page.
+
+GUI components can also accessed from the CLI (see section below).
+
+### Command line interface
+
+Once `fsetoolsGUI` is installed as a Python library, CLI usage can be revealed using the following command:
+
+```shell
+(base) C:\Users\Fu>fsetoolsgui -h
+```
+
+### Installation of fsetoolsGUI as a library
 
 [Python](https://www.python.org/downloads/) 3.7 or later is required. [Anaconda Distribution](https://www.anaconda.com/distribution/#download-section) is recommended for new starters, it includes Python and few useful packages including a package management tool pip (see below).
 
@@ -32,6 +50,8 @@ See `Requirements.txt`.
     pip install --upgrade "git+https://github.com/fuyans/fsetoolsGUI.git@master"
     ```
 
+Dependencies see [requirements.txt](.\requirements.txt).
+
 ## Project structure
 
 ```
@@ -50,10 +70,10 @@ The root directory contains two folder, `fsetoolsGUI` and `buildscript` are for 
 
 Within `fsetoolsGUI`:
 
- - `cli` command line interface modules;
- - `etc` helper / utility functions that useful to wider project modules; and
+ - `cli` command line interface modules.
+ - `etc` helper / utility functions that useful to wider project modules.
  - `gui` graphical user interface modules:
-    - `layout` UI layouts; and
+    - `layout` UI layouts.
     - `logic` UI logic.
 
 ## Summary of available and planned modules
@@ -73,8 +93,8 @@ Status designation:
 
 | Module code | Module name                       | Status    |
 | ----------- | --------------------------------- | --------- |
-| 0101        | ADB datasheet no. 1               | Completed |
-| 0102        | BS 9999 datasheet no. 1           | Completed |
+| 0101        | ADB data sheet no. 1              | Completed |
+| 0102        | BS 9999 data sheet no. 1          | Completed |
 | 0103        | BS 9999 merging flow              | Completed |
 | 0104        | PD 7974 kitchen hob radiation     | Planned   |
 | 0111        | PD 7974 heat detector activation  | Completed |
@@ -83,23 +103,11 @@ Status designation:
 | 0403        | BR 187 parallel non-centered      | WIP       |
 | 0404        | BR 187 perpendicular non-centered | WIP       |
 | 0405        | TRA 3D single point               | Planned   |
-| 0406        | TRA 2D contour parallel           | WIP       |
+| 0406        | TRA 2D parallel contour           | WIP       |
 | 0601        | OFR file naming protocol          | Completed |
 | 0602        | PD 7974 flame height              | Completed |
 | 0603        | FDS mesh resolution               | Planned   |
 | 0604        | FDS minimum vent size             | Planned   |
-
-## Command line interface
-
-Once `fsetoolsGUI` is installed, CLI usage can be revealed using the following command:
-
-```shell
-(base) C:\Users\Fu>fsetoolsgui -h
-```
-
-## Graphical user interface
-
-Compiled GUI executables are available in the `release` page. This can also be summoned in the CLI version mentioned in previous sections.
 
 ## Authors
 
