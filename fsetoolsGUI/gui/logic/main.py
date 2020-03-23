@@ -67,12 +67,7 @@ class MainWindow(QMainWindow):
 
     def init_logos(self):
 
-        ba = QtCore.QByteArray.fromBase64(OFR_LOGO_2_PNG)
-        pix_map = QtGui.QPixmap()
-        pix_map.loadFromData(ba)
-        self.ui.label_logo.setPixmap(pix_map)
-
-        # tips
+        self.ui.label_logo.setPixmap(self.make_pixmap_from_base64(OFR_LOGO_2_PNG))
         self.ui.label_logo.setToolTip('Click to go to ofrconsultants.com')
         self.ui.label_logo.setStatusTip('Click to go to ofrconsultants.com')
 
@@ -82,6 +77,10 @@ class MainWindow(QMainWindow):
 
     @Slot(bool)
     def setEnabled_all_buttons(self, v: bool):
+        """
+        To disable/enable all buttons in `groupBox` depending on `v`.
+        Used as Slot to disable all buttons depend on remote version data `is_executable`.
+        """
         if not self.is_executable:
             for pushButton in filter_objects_by_name(self.ui.groupBox_misc, object_types=[QtWidgets.QPushButton]):
                 pushButton.setEnabled(v)
@@ -95,6 +94,9 @@ class MainWindow(QMainWindow):
             QtGui.QDesktopServices.openUrl(QtCore.QUrl(self.new_version_update_url))
 
     def init_buttons(self):
+        """
+        To assign Signal for all buttons
+        """
 
         self.ui.pushButton_0101_adb2_datasheet_1.clicked.connect(lambda: self.activate_app(Dialog0101))
         self.ui.pushButton_0102_bs9999_datasheet_1.clicked.connect(lambda: self.activate_app(Dialog0102))
@@ -126,42 +128,75 @@ class MainWindow(QMainWindow):
             version_dict = {}  # assign an empty dict if failed to parse remote version info
             self.statusBar().showMessage(str(e))
         self.remote_version = version_dict  # assign version info to object
-        print(f'PARSED REMOTE VERSION. REMOTE VERSION INFO:\n{str(version_dict)}.')
+        print(f'PARSED REMOTE VERSION. REMOTE VERSION INFO: {str(version_dict)}.')
 
         # update gui version label accordingly
         if len(version_dict) == 0:
-            # if failed to parse version info
-            # version label -> display local software version in black color
+            '''
+            if failed to parse version info
+            version label -> display local software version in black color
+            '''
             version_label_text = 'Version ' + fsetoolsGUI.__version__
             self.ui.label_version.setStyleSheet('color: black;')
 
         elif version.parse(version_dict['latest_version']) > version.parse(fsetoolsGUI.__version__):
-            # if local version is lower than remote version, i.e. updates available
-            # logic
-            # if update available and local version executable ->
-            #   show update available message in black
-            # if update available and local version NOT executable ->
-            #   disable all modules (buttons)
-            #   show update message in black
-            # if no update available
-            #   show local version in grey
+            '''
+            if local version is lower than remote version, i.e. updates available, follow the procedures below.
+            
+                if update available and local version executable ->
+                    show update available message in black
+                if update available and local version NOT executable ->
+                    disable all modules (buttons)
+                    show update message in black
+                if no update available
+                    show local version in grey
 
-            # caveat
-            # only local version specific data is parsed from the remote version data.
-            # if no local version specific data available in remote version data, this will be effectively be
-            # `no update available` as above.
+            caveat.
+                only local version specific data is parsed from the remote version data.
+                if no local version specific data available in remote version data, this will be effectively be
+                `no update available` as above.
+            '''
 
-            # parse remote version info
+            # parse local version specific info from remote version data
+            specific_remote_version = None
             try:
-                is_local_version_executable = self.remote_version[fsetoolsGUI.__version__]['is_executable']
-                is_local_version_upgradable = self.remote_version[fsetoolsGUI.__version__]['is_upgradable']
-                upgrade_executable_url = self.remote_version[fsetoolsGUI.__version__]['is_upgradable']
-                print('SUCCESSFULLY PARSED LOCAL VERSION `is_executable` FROM REMOTE VERSION DATA.')
+                specific_remote_version = self.remote_version[fsetoolsGUI.__version__]
+                print(
+                    f'SUCCESSFULLY PARSED LOCAL VERSION FROM REMOTE VERSION DATA. {self.remote_version[fsetoolsGUI.__version__]}')
             except Exception as e:
-                is_local_version_upgradable = False
-                is_local_version_executable = True
-                upgrade_executable_url = None
-                pass
+                print(f'FAILED PARSED LOCAL SPECIFIC DATA FROM REMOTE VERSION DATA. ERROR {e}.')
+
+            # parse `is_executable` from remote version info
+            is_local_version_executable = None
+            try:
+                assert specific_remote_version
+                is_local_version_executable = specific_remote_version['is_executable']
+                print(f'SUCCESSFULLY PARSED `is_executable`. {is_local_version_executable}')
+            except Exception as e:
+                print(f'FAILED TO PARSE `is_executable`. ERROR {e}.')
+
+            # parse `is_upgradable` from remote version info
+            is_local_version_upgradable = None
+            try:
+                assert specific_remote_version
+                is_local_version_upgradable = specific_remote_version['is_upgradable']
+                print(f'SUCCESSFULLY PARSED `is_upgradable`. {is_local_version_upgradable}')
+            except Exception as e:
+                print(f'FAILED TO PARSE `is_upgradable`. ERROR {e}.')
+
+            # parse `executable_download_url` from remote version info
+            upgrade_executable_url = None
+            try:
+                if 'executable_download_url' in specific_remote_version:
+                    upgrade_executable_url = specific_remote_version['executable_download_url']
+                    print(f'SUCCESSFULLY PARSED `executable_download_url`. {upgrade_executable_url}')
+                elif 'latest_executable_download_url' in self.remote_version:
+                    upgrade_executable_url = self.remote_version['latest_executable_download_url']
+                    print('SUCCESSFULLY PARSED `latest_executable_download_url`.')
+            except Exception as e:
+                # if both `executable_download_url` and `latest_executable_download_url` not exist, assign None and
+                # print an indicative message.
+                print(f'FAILED TO LOCAL VERSION FROM REMOVE VERSION DATA. ERROR {e}')
 
             if is_local_version_upgradable:
                 if is_local_version_executable:
@@ -176,11 +211,10 @@ class MainWindow(QMainWindow):
                     self.ui.label_version.setStyleSheet('color: black;')
                     self.is_executable = False
 
+                self.new_version_update_url = upgrade_executable_url
             else:
                 version_label_text = f'Version {fsetoolsGUI.__version__}'
                 self.ui.label_version.setStyleSheet('color: grey;')
-
-            self.new_version_update_url = upgrade_executable_url
 
         else:
             # if local version is equal to remote version, i.e. no update available
