@@ -23,14 +23,18 @@ from fsetoolsGUI.gui.logic.dialog_0601_naming_convention import Dialog0601 as Di
 from fsetoolsGUI.gui.logic.dialog_0602_pd7974_flame_height import Dialog0602 as Dialog0602
 
 
-class CheckUpdateSignal(QtCore.QObject):
-    signal = QtCore.Signal(bool)
+class Signals(QtCore.QObject):
+    """
+    Collection of signal(s) that used in the app.
+    """
+
+    check_update_complete = QtCore.Signal(bool)
 
 
 class MainWindow(QMainWindow):
     remote_version: dict = None
     is_executable: bool = True
-    signal_check_update = CheckUpdateSignal()
+    Signals = Signals()
 
     def __init__(self):
         # ui setup
@@ -39,7 +43,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.init()
 
-        self.signal_check_update.signal.connect(self.setEnabled_all_buttons)
+        self.Signals.check_update_complete.connect(self.setEnabled_all_buttons)
 
         # check update
         check_update = threading.Timer(0, self.check_update)
@@ -119,6 +123,9 @@ class MainWindow(QMainWindow):
         self.__dialog_opened.append(app_)
 
     def check_update(self):
+        """
+        This method will be called in a thread! Try to avoid competing with the main GUI thread, e.g. avoid repaint etc.
+        """
 
         # parse remote version info
         target = ''.join([chr(ord(v) + i % 10) for i, v in enumerate(fsetoolsGUI.__remote_version_url__)])
@@ -227,8 +234,8 @@ class MainWindow(QMainWindow):
         self.ui.label_version.setStatusTip(version_label_text)
         self.ui.label_version.setToolTip(version_label_text)
 
-        # emit signal to disable modules/buttons if necessary
-        self.signal_check_update.signal.emit(self.is_executable)
+        # emit a signal to disable modules/buttons if necessary
+        self.Signals.check_update_complete.emit(self.is_executable)
 
         # DO NOT REPAINT AS THIS METHOD IS CALLED IN A DIFFERENT THREAD
 
