@@ -34,12 +34,13 @@ class Dialog0401(QMainWindow):
         # set up radiation figure
         self.ui.label_image_page.setPixmap(self.make_pixmap_from_base64(image_page))
         self.ui.label_image_figure.setPixmap(self.make_pixmap_from_base64(image_figure))
+
         # set up validators
-        self.ui.lineEdit_in_W.setValidator(self._validator_float_unsigned)
-        self.ui.lineEdit_in_H.setValidator(self._validator_float_unsigned)
-        self.ui.lineEdit_in_Q.setValidator(self._validator_float_unsigned)
-        self.ui.lineEdit_in_S.setValidator(self._validator_float_unsigned)
-        self.ui.lineEdit_in_UA.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_W.setValidator(self._validator_unsigned_float)
+        self.ui.lineEdit_in_H.setValidator(self._validator_unsigned_float)
+        self.ui.lineEdit_in_Q.setValidator(self._validator_unsigned_float)
+        self.ui.lineEdit_in_S.setValidator(self._validator_unsigned_float)
+        self.ui.lineEdit_in_UA.setValidator(self._validator_unsigned_float)
 
         # set default values
         self.ui.radioButton_in_S.setChecked(True)

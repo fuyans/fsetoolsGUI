@@ -36,11 +36,11 @@ class Dialog0402(QMainWindow):
         self.ui.label_image_figure.setPixmap(self.make_pixmap_from_base64(image_figure))
 
         # set up validators
-        self.ui.lineEdit_in_W.setValidator(self._validator_float_unsigned)
-        self.ui.lineEdit_in_H.setValidator(self._validator_float_unsigned)
-        self.ui.lineEdit_in_Q.setValidator(self._validator_float_unsigned)
-        self.ui.lineEdit_in_S.setValidator(self._validator_float_unsigned)
-        self.ui.lineEdit_in_UA.setValidator(self._validator_float_unsigned)
+        self.ui.lineEdit_in_W.setValidator(self._validator_unsigned_float)
+        self.ui.lineEdit_in_H.setValidator(self._validator_unsigned_float)
+        self.ui.lineEdit_in_Q.setValidator(self._validator_unsigned_float)
+        self.ui.lineEdit_in_S.setValidator(self._validator_unsigned_float)
+        self.ui.lineEdit_in_UA.setValidator(self._validator_unsigned_float)
 
         # set default values
         self.ui.radioButton_in_S.setChecked(True)
@@ -195,7 +195,7 @@ class Dialog0402(QMainWindow):
                 self.repaint()
                 raise ValueError
 
-            phi_solved = phi_perpendicular_any_br187(W_m=W, H_m=H, w_m=0.5 * W, h_m=0.5 * H, S_m=S_solved)
+            phi_solved = phi_perpendicular_any_br187(W_m=W, H_m=H, w_m=0., h_m=0., S_m=S_solved)
             q_solved = Q * phi_solved
 
             if S_solved == 1000:

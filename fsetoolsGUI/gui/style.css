@@ -17,6 +17,12 @@ QWidget {
     outline: 0;
 }
 
+QWidget#widget_userio {
+    background-color: #dcdcdc;
+    border: 1px solid #d2d1d2;
+    border-radius: 5px;
+}
+
 /* ================================================= QStatusBar ===================================================== */
 
 QStatusBar {
@@ -33,14 +39,14 @@ QGroupBox {
 
 /* =================================================== QFrame ======================================================= */
 
-QFrame#frame_io {
-    background-color: #dcdcdc;
-    border: 1px solid #d2d1d2;
-    border-radius: 5px;
-}
-QGridLayout {
-    background-color: rgba(255, 255, 255, 0);
-}
+/*QFrame#frame_io {*/
+/*    background-color: #dcdcdc;*/
+/*    border: 1px solid #d2d1d2;*/
+/*    border-radius: 5px;*/
+/*}*/
+/*QFrame {*/
+/*    background-color: rgba(255, 255, 255, 0);*/
+/*}*/
 
 /* =================================================== QLabel ======================================================= */
 

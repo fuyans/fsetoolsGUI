@@ -104,7 +104,8 @@ class QMainWindow(QtWidgets.QMainWindow):
             self.__quality_assurance_content: list = len(self.__quality_assurance_header) * ['']
 
         # validator templates
-        self._validator_float_unsigned = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]*\.{0,1}[0-9]*!'))
+        self._validator_unsigned_float = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]*\.{0,1}[0-9]*!'))
+        self._validator_signed_float = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[\+\-]*[0-9]*\.{0,1}[0-9]*!'))
 
     def init(self):
 

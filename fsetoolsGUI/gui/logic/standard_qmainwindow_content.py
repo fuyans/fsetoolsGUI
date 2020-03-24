@@ -23,6 +23,7 @@ class App(QMainWindow):
             title='Standard Layout MainWindow Content',
             shortcut_Return=self.calculate,
             quality_assurance_content=self.qa_data,
+            id='null'
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
