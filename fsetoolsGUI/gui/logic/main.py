@@ -86,7 +86,7 @@ class MainWindow(QMainWindow):
         Used as Slot to disable all buttons depend on remote version data `is_executable`.
         """
         if not self.is_executable:
-            for pushButton in filter_objects_by_name(self.ui.groupBox_misc, object_types=[QtWidgets.QPushButton]):
+            for pushButton in filter_objects_by_name(self.ui.groupBox_buttons, object_types=[QtWidgets.QPushButton]):
                 pushButton.setEnabled(v)
 
     def label_logo_mousePressEvent(self, event=None):
