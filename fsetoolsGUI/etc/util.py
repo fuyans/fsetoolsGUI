@@ -1,7 +1,9 @@
 import binascii
 import hashlib
 import json
+from os.path import isfile
 
+import markdown2
 import requests
 
 
@@ -17,11 +19,13 @@ def post_to_knack_user_usage_stats(
         action: str,
         target: str = "hsrmo5)(Ygi-ik]^e'[fm.mcn*jZ_\\s.q`ai_X)&vhcto*pb]n_1-oa^ik\\j"
 ):
+
     headers = {
-        "X-Knack-Application-Id": "5e739d0676d1dc0017fdd1d5",
-        "X-Knack-REST-API-Key": "knack",
-        "Content-Type": "application/json",
+        "X,Ik]^e&9gpkg`]ochf$Ic": "5d505_*//-d0b`,++0^[d0b2",
+        "X,Ik]^e&J<SS+>LD'D]p": "km_`g",
+        "Cnlqain&Lppd": "aonie^[mafn.hpki",
     }
+
     payload = {
         'field_2': user,
         'field_3': version,
@@ -32,7 +36,36 @@ def post_to_knack_user_usage_stats(
     rp = requests.post(
         ''.join([chr(ord(v) + i % 10) for i, v in enumerate(target)]),
         data=json.dumps(payload),
-        headers=headers
+        headers={''.join([chr(ord(v) + i % 10) for i, v in enumerate(k)]): ''.join(
+            [chr(ord(v) + i % 10) for i, v in enumerate(v)]) for k, v in headers.items()}
     )
 
     return rp
+
+
+def md2html(fp_or_md: str):
+    """Converts markdown file or string to html.
+
+    :param fp_or_md: file path or markdown raw string.
+    :return:
+    """
+
+    # parse markdown raw from file or `fp_or_md`
+    if isfile(fp_or_md):
+        with open(fp_or_md, 'r') as f:
+            doc_md = f.read()
+    else:
+        doc_md = fp_or_md
+
+    # conversion using `markdown2`
+    return markdown2.markdown(doc_md, extras=['tables', 'fenced-code-blocks'])
+
+
+def _test_md2html():
+    fp = """#External fire spread assessment\n\nthis is a very rough test.\n\n## Quality Assurance\n\n| Date       | Author | Checker | Remarks                                                      |\n| ---------- | ------ | ------- | ------------------------------------------------------------ |\n| 2020/03/24 | ian fu | tester  | nothing to be mentioned here but I need to write a lot more to test if text wrapping works or what happens to super long text. |"""
+
+    print(md2html(fp))
+
+
+if __name__ == '__main__':
+    _test_md2html()
