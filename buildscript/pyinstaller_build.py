@@ -2,7 +2,7 @@
 import os
 import subprocess
 import sys
-from os.path import join, realpath, dirname
+from os.path import join, realpath, dirname, relpath
 
 import fsetoolsGUI
 
@@ -21,6 +21,8 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
     cmd_option_list = [
         f'-n={app_name}',
         "--icon=" + realpath(join("etc", "ofr_logo_1_80_80.ico")),
+
+        # To exclude modules that not required in compiled GUI app
         '--exclude-module=' + 'docopt',
         '--exclude-module=' + 'setuptools',
     ]
@@ -50,27 +52,35 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
             f.write(c)
 
 
+def make_fp_images() -> list:
+    list_fp = list()
+    list_fp_append = list_fp.append
+
+    for dirpath, dirnames, filenames in os.walk(join(fsetoolsGUI.__root_dir__, 'gui')):
+
+        for fn in filenames:
+            if fn.endswith('.png') or fn.endswith('.md') or fn.endswith('.css'):
+                list_fp_append(join(dirpath, fn))
+
+    return list_fp
+
+
 def main():
+    options = [
+        "--onedir",  # output unpacked dist to one directory, including an .exe file
+        "--noconfirm",  # replace output directory without asking for confirmation
+        "--clean",  # clean pyinstaller cache and remove temporary files
+        f'--add-data={realpath(join("etc", "ofr_logo_1_80_80.ico"))}{os.pathsep}etc',  # include icon file
+    ]
 
-    dir_project_root = join(dirname(dirname(__file__)), 'fsetoolsGUI')
+    # include fsetoolsGUI/gui/*
+    options.extend([f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=fsetoolsGUI.__root_dir__)}' for fp in
+                    make_fp_images()])
 
-    build_gui(
-        options=[
-            "--onedir",  # output unpacked dist to one directory, including an .exe file
-            "--noconfirm",  # replace output directory without asking for confirmation
-            "--clean",  # clean pyinstaller cache and remove temporary files
-            f'--add-data={realpath(join("etc", "ofr_logo_1_80_80.ico"))}{os.pathsep}etc',  # include icon file
+    # include fsetoolsGUI/gui/docs/*.md
+    # options.extend([f'--add-data={fp}{os.pathsep}{join("gui", "docs")}' for fp in make_fp_about_md()])
 
-            # include gui icons and images
-            f'--add-data={join(dir_project_root, "gui", "images", "down.png")}{os.pathsep}{join("gui", "images")}',
-            f'--add-data={join(dir_project_root, "gui", "images", "down-sky.png")}{os.pathsep}{join("gui", "images")}',
-            f'--add-data={join(dir_project_root, "gui", "images", "down-ocean.png")}{os.pathsep}{join("gui", "images")}',
-            f'--add-data={join(dir_project_root, "gui", "images", "up.png")}{os.pathsep}{join("gui", "images")}',
-            f'--add-data={join(dir_project_root, "gui", "images", "up-sky.png")}{os.pathsep}{join("gui", "images")}',
-            f'--add-data={join(dir_project_root, "gui", "images", "up-ocean.png")}{os.pathsep}{join("gui", "images")}',
-            f'--add-data={join(dir_project_root, "gui", "style.css")}{os.pathsep}{join("gui")}',
-        ]
-    )
+    build_gui(options=options)
 
 
 if __name__ == "__main__":
