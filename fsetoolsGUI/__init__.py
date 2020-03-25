@@ -1,3 +1,16 @@
+import os
+
+# make root directory of this app which will be used 1. when running the app; 2. pyinstaller at compiling the app.
+__root_dir__ = None
+if os.path.exists(os.path.dirname(__file__)):
+    # this path should be used when running the app as a Python package (non compiled) and/or pyinstaller at compiling
+    # stage.
+    __root_dir__ = os.path.dirname(__file__)
+elif os.path.exists(os.path.dirname(os.path.dirname(__file__))):
+    # the path will become invalid when the app run after compiled as the dirname `fsetoolsGUI` will disappear.
+    # instead, the parent folder of the project dir will be used.
+    __root_dir__ = os.path.dirname(os.path.dirname(__file__))
+
 """
 VERSION IDENTIFICATION RULES DOCUMENTED IN PEP 440.
 
