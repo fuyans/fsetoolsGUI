@@ -17,7 +17,7 @@ QWidget {
     outline: 0;
 }
 
-QWidget#widget_userio {
+QWidget#widget_userio, QWidget#widget_userio1, QWidget#widget_userio2, QWidget#widget_userio3, QWidget#widget_userio4 {
     background-color: #dcdcdc;
     border: 1px solid #d2d1d2;
     border-radius: 5px;
@@ -54,15 +54,23 @@ QLabel {
     background-color: rgba(255, 255, 255, 0);
     border: 0px solid rgba(255, 255, 255, 0);
 }
+
 QLabel:disabled {
     color: #bdc3c7;
+}
+
+/* ================================================ QTextBroswer ==================================================== */
+
+QTextBrowser {
+    background-color: rgba(255, 255, 255, 0);
+    border: 0px solid rgba(255, 255, 255, 0);
 }
 
 /* ================================================= QPushButton ==================================================== */
 
 QPushButton {
     background-color: #ffffff;
-    Text-align:center;
+    Text-align: center;
     /*color: #000000;*/
     padding: 0px;
     border: 1px solid #d2d1d2;
