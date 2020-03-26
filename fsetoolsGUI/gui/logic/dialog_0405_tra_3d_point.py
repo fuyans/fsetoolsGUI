@@ -18,7 +18,6 @@ class Dialog0405(QMainWindow):
         super().__init__(
             id='0405',
             parent=parent,
-            title='TRA 3D Any Point',
             shortcut_Return=self.calculate
         )
         self.ui = Ui_MainWindow()

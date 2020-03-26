@@ -28,7 +28,6 @@ class Dialog0402(QMainWindow):
         super().__init__(
             id='0402',
             parent=parent,
-            title='BR 187 Thermal Radiation Calculation (Rectangular and Perpendicular)',
             shortcut_Return=self.calculate,
             about_fp_or_md=self.fp_doc
         )

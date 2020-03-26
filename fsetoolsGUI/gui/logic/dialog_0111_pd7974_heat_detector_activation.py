@@ -26,7 +26,6 @@ class Dialog0111(QMainWindow):
         super().__init__(
             id='0111',
             parent=parent,
-            title='PD 7974-1:2019 Heat Detecting Element Activation Time',
             shortcut_Return=self.calculate,
             about_fp_or_md=os.path.join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0111.md')
         )

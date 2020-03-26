@@ -105,7 +105,6 @@ class Dialog0406(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(
             id='0406',
-            title='TRA 2D Parallel',
             parent=parent,
             shortcut_Return=self.calculate,
             about_fp_or_md=self.fp_doc
