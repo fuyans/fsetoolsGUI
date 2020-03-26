@@ -1,9 +1,12 @@
+from os.path import join
+
 from PySide2 import QtWidgets, QtCore, QtGui
 from fsetools.lib.fse_flame_height import mean_flame_height_pd_7974
 from fsetools.libstd.pd_7974_1_2019 import eq_11_dimensionless_hrr_rectangular
 from fsetools.libstd.pd_7974_1_2019 import eq_12_dimensionless_hrr_line
 from fsetools.libstd.pd_7974_1_2019 import eq_5_dimensionless_hrr
 
+import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import dialog_0602_context as image_context
 from fsetoolsGUI.gui.images_base64 import dialog_0602_figure as image_figure
 from fsetoolsGUI.gui.layout.dialog_0602_pd_7974_flame_height import Ui_MainWindow
@@ -13,6 +16,7 @@ from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 class Dialog0602(QMainWindow):
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
+    fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0602.md')  # doc file path
 
     def __init__(self, parent=None):
 
@@ -21,11 +25,12 @@ class Dialog0602(QMainWindow):
             id='0602',
             parent=parent,
             title='PD 7974-1:2019 Mean Flame Height',
-            shortcut_Return=self.calculate
+            shortcut_Return=self.calculate,
+            about_fp_or_md=self.fp_doc
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init()
+        self.init(self)
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(image_context=image_context,

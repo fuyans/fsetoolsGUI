@@ -1,7 +1,10 @@
+from os.path import join
+
 import numpy as np
 from PySide2 import QtWidgets, QtGui, QtCore
 from fsetools.lib.fse_thermal_radiation_3d import single_receiver, heat_flux_to_temperature
 
+import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import dialog_0404_page as image_figure
 from fsetoolsGUI.gui.layout.dialog_0405_tra_3d_point import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
@@ -9,6 +12,7 @@ from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 class Dialog0405(QMainWindow):
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
+    fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0405.md')  # doc file path
 
     def __init__(self, parent=None):
         super().__init__(
@@ -19,7 +23,7 @@ class Dialog0405(QMainWindow):
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init()
+        self.init(self)
 
         from fsetoolsGUI.gui.logic.common import filter_objects_by_name
         for i in filter_objects_by_name(self.ui.groupBox_out, object_types=[QtWidgets.QLineEdit]):

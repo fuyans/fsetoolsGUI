@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/fsepy/fsetools.svg?branch=master)](https://travis-ci.com/fsepy/fsetools)
 
-`fsetoolsGUI` = Fire safety Engineering Tools Graphical User Interface, is a GUI wrapper to [`fsetools`](https://github.com/fsepy/fsetools).
+`fsetoolsGUI` Fire safety Engineering Tools Graphical User Interface, is a GUI wrapper to [`fsetools`](https://github.com/fsepy/fsetools).
 
 ## Getting started
 
@@ -30,7 +30,7 @@ Once `fsetoolsGUI` is installed as a Python library, CLI usage can be revealed u
 (base) C:\Users\Fu>fsetoolsgui -h
 ```
 
-### Installation of fsetoolsGUI as a library
+### Install fsetoolsGUI as a library
 
 [Python](https://www.python.org/downloads/) 3.7 or later is required. [Anaconda Distribution](https://www.anaconda.com/distribution/#download-section) is recommended for new starters, it includes Python and few useful packages including a package management tool pip (see below).
 
@@ -91,23 +91,23 @@ Status designation:
 - WIP. Work in progress.
 - Completed. Completed and peer reviewed.
 
-| Module code | Module name                       | Status    |
-| ----------- | --------------------------------- | --------- |
-| 0101        | ADB data sheet no. 1              | Completed |
-| 0102        | BS 9999 data sheet no. 1          | Completed |
-| 0103        | BS 9999 merging flow              | Completed |
-| 0104        | PD 7974 kitchen hob radiation     | Planned   |
-| 0111        | PD 7974 heat detector activation  | Completed |
-| 0401        | BR 187 parallel centered          | Completed |
-| 0402        | BR 187 perpendicular centered     | Completed |
-| 0403        | BR 187 parallel non-centered      | WIP       |
-| 0404        | BR 187 perpendicular non-centered | WIP       |
-| 0405        | TRA 3D single point               | Planned   |
-| 0406        | TRA 2D parallel contour           | WIP       |
-| 0601        | OFR file naming protocol          | Completed |
-| 0602        | PD 7974 flame height              | Completed |
-| 0603        | FDS mesh resolution               | Planned   |
-| 0604        | FDS minimum vent size             | Planned   |
+| Module code | Module name                                                  | Status    |
+| ----------- | ------------------------------------------------------------ | --------- |
+| 0101        | ADB data sheet no. 1                                         | Completed |
+| 0102        | BS 9999 data sheet no. 1                                     | Completed |
+| 0103        | BS 9999 merging flow                                         | Completed |
+| 0104        | PD 7974 kitchen hob radiation                                | Planned   |
+| 0111        | PD 7974 heat detector activation                             | Completed |
+| 0401        | BR 187 parallel oriented rectangle emitter and receiver      | Completed |
+| 0402        | BR 187 perpendicular oriented rectangle emitter and receiver | Completed |
+| 0403        | BR 187 parallel oriented rectangle emitter and receiver (non-centered) | WIP       |
+| 0404        | BR 187 perpendicular oriented rectangle emitter and receiver (non-centered) | WIP       |
+| 0405        | TRA 3D polygon emitter and a single point                    | Planned   |
+| 0406        | TRA 2D parallel orientated contour plot                      | WIP       |
+| 0601        | OFR file naming protocol                                     | Completed |
+| 0602        | PD 7974 flame height                                         | Completed |
+| 0603        | FDS mesh resolution                                          | Planned   |
+| 0604        | FDS minimum vent size                                        | Planned   |
 
 ## Authors
 
@@ -115,4 +115,4 @@ Status designation:
 
 ## License
 
-This project is licensed under the Apache License version 2.0 - see the [LICENSE](LICENSE) file for details
+This project is licensed under the Apache License version 2.0 - see the [LICENSE](LICENSE) file for details.

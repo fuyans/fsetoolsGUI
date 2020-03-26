@@ -1,4 +1,5 @@
 import sys
+from os.path import join
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -6,6 +7,7 @@ from PySide2 import QtWidgets, QtCore
 from fsetools.lib.fse_thermal_radiation_2d_v2 import main as tra_main
 from matplotlib import cm
 
+import fsetoolsGUI
 from fsetoolsGUI.gui.layout.dialog_0406_tra_2d_xy_contour import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.custom_tableview import TableModel
@@ -98,13 +100,15 @@ def tra_main_plot(
 
 
 class Dialog0406(QMainWindow):
+    fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0406.md')  # doc file path
 
     def __init__(self, parent=None):
         super().__init__(
             id='0406',
             title='TRA 2D Parallel',
             parent=parent,
-            shortcut_Return=self.calculate
+            shortcut_Return=self.calculate,
+            about_fp_or_md=self.fp_doc
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -148,7 +152,7 @@ class Dialog0406(QMainWindow):
         self.__solver_parameters: dict = dict()
         self.__solver_results: dict = dict()
 
-        self.init()
+        self.init(self)
 
     def graphics_max_heat_flux_check(self):
         if self.ui.checkBox_max_heat_flux.isChecked():

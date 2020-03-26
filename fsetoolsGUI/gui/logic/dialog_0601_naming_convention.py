@@ -1,19 +1,23 @@
 from datetime import datetime
+from os.path import join
 
 from PySide2 import QtCore, QtGui
 
+import fsetoolsGUI
 from fsetoolsGUI.gui.layout.dialog_0601_naming_convention import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
 class Dialog0601(QMainWindow):
+    fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0601.md')  # doc file path
+
     def __init__(self, parent=None):
         # init
         super().__init__(
             id='0601',
             parent=parent,
             title='OFR File Name Generator',
-            shortcut_Return=self.copy_file_name
+            shortcut_Return=self.copy_file_name,
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)

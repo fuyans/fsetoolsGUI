@@ -1,8 +1,11 @@
+from os.path import join
+
 from PySide2 import QtWidgets, QtGui, QtCore
 from fsetools.libstd.bs_9999_2017 import (
     clause_15_6_6_e_merging_flow_1, clause_15_6_6_e_merging_flow_2, clause_15_6_6_e_merging_flow_3
 )
 
+import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import dialog_0103_bs9999_mergine_flow_figure_1 as image_figure_1
 from fsetoolsGUI.gui.images_base64 import dialog_0103_bs9999_mergine_flow_figure_2 as image_figure_2
 from fsetoolsGUI.gui.images_base64 import dialog_0103_bs9999_mergine_flow_figure_3 as image_figure_3
@@ -14,16 +17,7 @@ from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 class Dialog0103(QMainWindow):
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
-
-    qa_data: list = [
-        ['Date', 'Author', 'Reviewer', 'Note'],
-        [
-            '20200311',  # date
-            'Ian Fu',  # latest author
-            'Alex Todd',  # QA & Technical Review
-            '-'
-        ]
-    ]
+    fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0103.md')
 
     def __init__(self, parent=None):
         # instantiation
@@ -32,11 +26,11 @@ class Dialog0103(QMainWindow):
             parent=parent,
             title='Means of Escape Merging Flow',
             shortcut_Return=self.calculate,
-            quality_assurance_content=self.qa_data,
+            about_fp_or_md=self.fp_doc,
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init()
+        self.init(self)
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(

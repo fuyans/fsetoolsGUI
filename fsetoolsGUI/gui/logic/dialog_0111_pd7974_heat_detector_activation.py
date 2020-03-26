@@ -1,8 +1,12 @@
+import os
+
 import numpy as np
-from PySide2 import QtGui, QtCore, QtWidgets
+from PySide2 import QtGui, QtCore
+from PySide2.QtWidgets import QLineEdit
 from fsetools.lib.fse_activation_hd import heat_detector_temperature_pd7974
 from fsetools.libstd.pd_7974_1_2019 import eq_22_t_squared_fire_growth
 
+import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import dialog_0111_context_1 as image_context_1
 from fsetoolsGUI.gui.images_base64 import dialog_0111_context_2 as image_context_2
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_1 as image_figure_1
@@ -12,10 +16,9 @@ from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.custom_tableview import TableWindow
 
-QtWidgets = QtWidgets
-
 
 class Dialog0111(QMainWindow):
+
     _numerical_results: dict = None
 
     def __init__(self, parent=None):
@@ -24,11 +27,12 @@ class Dialog0111(QMainWindow):
             id='0111',
             parent=parent,
             title='PD 7974-1:2019 Heat Detecting Element Activation Time',
-            shortcut_Return=self.calculate
+            shortcut_Return=self.calculate,
+            about_fp_or_md=os.path.join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0111.md')
         )
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
-        self.init()
+        self.init(self)
 
         # containers, variables etc
         self.__table_header: list = None
@@ -47,7 +51,7 @@ class Dialog0111(QMainWindow):
             self.dict_images_pixmap[k].loadFromData(ba)
 
         # set output items readonly
-        for i in filter_objects_by_name(self.ui.groupBox_control, object_types=[QtWidgets.QLineEdit], names=['_out_']):
+        for i in filter_objects_by_name(self.ui.groupBox_control, object_types=[QLineEdit], names=['_out_']):
             try:
                 i.setReadOnly(True)
             except AttributeError:

@@ -1,5 +1,8 @@
+from os.path import join
+
 from fsetools.lib.fse_thermal_radiation import phi_perpendicular_any_br187, linear_solver
 
+import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import dialog_0404_figure as image_figure
 from fsetoolsGUI.gui.images_base64 import dialog_0404_page as image_page
 from fsetoolsGUI.gui.layout.dialog_0403_br187_parallel_complex import Ui_MainWindow
@@ -8,17 +11,19 @@ from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 class Dialog0404(QMainWindow):
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
+    fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0404.md')  # doc file path
 
     def __init__(self, parent=None):
         super().__init__(
             id='0404',
             parent=parent,
             title='BR 187 Thermal Radiation Calculator (Rectangular and Perpendicular)',
-            shortcut_Return=self.calculate
+            shortcut_Return=self.calculate,
+            about_fp_or_md=self.fp_doc
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init()
+        self.init(self)
 
         # set up radiation figure
         self.ui.label_image_figure.setPixmap(self.make_pixmap_from_base64(image_figure))
