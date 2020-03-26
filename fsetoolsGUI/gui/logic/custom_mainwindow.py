@@ -16,6 +16,8 @@ try:
 except FileNotFoundError:
     style_css = None
 
+AppInfo = fsetoolsGUI.AppInfo
+
 
 def list2htmltable(table_list: list, compact: bool = False):
     # css style generated using https://divtable.com/table-styler/
@@ -84,8 +86,8 @@ class QMainWindow(QtWidgets.QMainWindow):
     def __init__(
             self,
             id: str,
-            title: str,
             icon: typing.Union[bytes, QtCore.QByteArray] = OFR_LOGO_1_PNG,
+            title: str = None,
             parent=None,
             shortcut_Return: typing.Callable = None,
             freeze_window_size: bool = False,
@@ -116,7 +118,12 @@ class QMainWindow(QtWidgets.QMainWindow):
 
         # window properties
         self.setWindowIcon(self.make_pixmap_from_base64(self.__icon))
-        self.setWindowTitle(self.__title)
+
+        # set window title
+        if self.__title:
+            self.setWindowTitle(self.__title)
+        else:
+            self.setWindowTitle(AppInfo(int(self.__id)).long_name)
 
         self.setStyleSheet(style_css)
         self.statusBar().setSizeGripEnabled(False)
@@ -189,6 +196,10 @@ class QMainWindow(QtWidgets.QMainWindow):
         pix_map = QtGui.QPixmap()
         pix_map.loadFromData(ba)
         return pix_map
+
+    @staticmethod
+    def make_pixmap_from_fp(fp: str):
+        return QtGui.QPixmap(fp)
 
 
 if __name__ == '__main__':
