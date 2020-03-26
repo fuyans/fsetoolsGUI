@@ -11,6 +11,79 @@ elif os.path.exists(os.path.dirname(os.path.dirname(__file__))):
     # instead, the parent folder of the project dir will be used.
     __root_dir__ = os.path.dirname(os.path.dirname(__file__))
 
+
+class AppInfo:
+    __data = {
+        'code': {
+            "short name": 'a short name to be used as button name etc',
+            'long name': 'a long name to be used as window title, tip text etc',
+        },
+        '0101': dict(
+            short_name='ADB\ndata sheet\n1',
+            long_name='ADB vol. 2 data sheet no. 1 - means of escape',
+        ),
+        '0102': dict(
+            short_name='BS 9999\ndata sheet\n1',
+            long_name='BS 9999 data sheet no. 1 - means of escape',
+        ),
+        '0103': dict(
+            short_name='BS 9999\nmerging\nflow',
+            long_name='BS 9999 merging flow exit capacity at final exit level',
+        ),
+        '0111': dict(
+            short_name='PD 7974\nheat\ndetector\nactivation',
+            long_name='PD 7974 heat detector device activation time calculator',
+        ),
+        '0401': dict(
+            short_name='BR 187\nparallel',
+            long_name='BR 187 parallel oriented rectangle emitter and receiver',
+        ),
+        '0402': dict(
+            short_name='BR 187\nperp.',
+            long_name='BR 187 perpendicular oriented rectangle emitter and receiver',
+        ),
+        '0403': dict(
+            short_name='BR 187\nparallel\neccentric',
+            long_name='BR 187 parallel oriented rectangle emitter and receiver (non-centered)',
+        ),
+        '0404': dict(
+            short_name='BR 187\nperp.\neccentric',
+            long_name='BR 187 perpendicular oriented rectangle emitter and receiver (non-centered)',
+        ),
+        '0405': dict(
+            short_name='TRA\n3D',
+            long_name='TRA 3D polygon emitter and a single point',
+        ),
+        '0406': dict(
+            short_name='TRA\n2D\nparallel',
+            long_name='TRA 2D parallel orientated contour plot',
+        ),
+        '0601': dict(
+            short_name='OFR\nfile naming\nconvention',
+            long_name='OFR file name generator',
+        ),
+        '0602': dict(
+            short_name='PD 7974\nflame height',
+            long_name='PD 7974 flame height calculator',
+        ),
+    }
+
+    def __init__(self, code: int = None):
+        self.__code = f'{code:04d}'
+
+    @property
+    def long_name(self):
+        return self.__data[str(self.__code)]['long_name']
+
+    @property
+    def short_name(self):
+        return self.__data[str(self.__code)]['short_name']
+
+    @property
+    def short_and_long_names(self):
+        return self.__data[str(self.__code)]['short_name'], self.__data[str(self.__code)]['long_name']
+
+
 """
 VERSION IDENTIFICATION RULES DOCUMENTED IN PEP 440.
 
@@ -49,7 +122,7 @@ Public version identifiers are separated into up to five segments:
 
 import datetime
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __date_released__ = datetime.datetime(2020, 3, 4)
 __expiry_period_days__ = 180
 __remote_version_url__ = r'hsrmo5)(jXw-efpco[mjeqaljo_gl%cnk,bpsZfj/ucoodigk&m`qqam)_k\tnmioBOBWFFQ,gojh'

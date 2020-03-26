@@ -108,7 +108,7 @@ class MainWindow(QMainWindow):
             btncls.setToolTip(tip)
             btncls.setStatusTip(tip)
 
-        module_info = fsetoolsGUI.module_info
+        module_info = fsetoolsGUI.AppInfo
 
         set_action_name_and_tip(self.ui.pushButton_0101_adb2_datasheet_1, Dialog0101,
                                 *module_info(int('0101')).short_and_long_names)
