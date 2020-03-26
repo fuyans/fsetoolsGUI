@@ -165,17 +165,17 @@ QComboBox::drop-down
 }
 QComboBox::down-arrow
 {
-    image: url(gui/images/down.png);
+    image: url(gui/icons/down.png);
     margin-right: 10px;
 }
 QComboBox::down-arrow:hover
 {
-    image: url(gui/images/down-sky.png);
+    image: url(gui/icons/down-sky.png);
     margin-right: 10px;
 }
 QComboBox::down-arrow:on
 {
-    image: url(gui/images/down-ocean.png);
+    image: url(gui/icons/down-ocean.png);
     margin-right: 10px;
 }
 /*QComboBox::down-arrow:on, QComboBox::down-arrow:hover,*/
@@ -214,33 +214,33 @@ QDoubleSpinBox::down-button {
 
 QDoubleSpinBox::down-arrow
 {
-    image: url(gui/images/down.png);
+    image: url(gui/icons/down.png);
     margin-right: 5px;
 }
 QDoubleSpinBox::down-arrow:hover
 {
-    image: url(gui/images/down-sky.png);
+    image: url(gui/icons/down-sky.png);
     margin-right: 5px;
 }
 QDoubleSpinBox::down-arrow:pressed
 {
-    image: url(gui/images/down-ocean.png);
+    image: url(gui/icons/down-ocean.png);
     margin-right: 5px;
 }
 
 QDoubleSpinBox::up-arrow
 {
-    image: url(gui/images/up.png);
+    image: url(gui/icons/up.png);
     margin-right: 5px;
 }
 QDoubleSpinBox::up-arrow:hover
 {
-    image: url(gui/images/up-sky.png);
+    image: url(gui/icons/up-sky.png);
     margin-right: 5px;
 }
 QDoubleSpinBox::up-arrow:pressed
 {
-    image: url(gui/images/up-ocean.png);
+    image: url(gui/icons/up-ocean.png);
     margin-right: 5px;
 }
 
