@@ -102,20 +102,39 @@ class MainWindow(QMainWindow):
         To assign Signal for all buttons
         """
 
-        self.ui.pushButton_0101_adb2_datasheet_1.clicked.connect(lambda: self.activate_app(Dialog0101))
-        self.ui.pushButton_0102_bs9999_datasheet_1.clicked.connect(lambda: self.activate_app(Dialog0102))
-        self.ui.pushButton_0103_merging_flow.clicked.connect(lambda: self.activate_app(Dialog0103))
-        self.ui.pushButton_0111_heat_detector_activation.clicked.connect(lambda: self.activate_app(Dialog0111))
+        def set_action_name_and_tip(btncls, action: callable = None, name: str = '', tip: str = None):
+            btncls.clicked.connect(lambda: self.activate_app(action))
+            btncls.setText(name)
+            btncls.setToolTip(tip)
+            btncls.setStatusTip(tip)
 
-        self.ui.pushButton_0401_br187_parallel_simple.clicked.connect(lambda: self.activate_app(Dialog0401))
-        self.ui.pushButton_0402_br187_perpendicular_simple.clicked.connect(lambda: self.activate_app(Dialog0402))
-        self.ui.pushButton_0403_br187_parallel_complex.clicked.connect(lambda: self.activate_app(Dialog0403))
-        self.ui.pushButton_0404_br187_perpendicular_complex.clicked.connect(lambda: self.activate_app(Dialog0404))
+        module_info = fsetoolsGUI.module_info
+
+        set_action_name_and_tip(self.ui.pushButton_0101_adb2_datasheet_1, Dialog0101,
+                                *module_info(int('0101')).short_and_long_names)
+        set_action_name_and_tip(self.ui.pushButton_0102_bs9999_datasheet_1, Dialog0102,
+                                *module_info(int('0102')).short_and_long_names)
+        set_action_name_and_tip(self.ui.pushButton_0103_merging_flow, Dialog0103,
+                                *module_info(int('0103')).short_and_long_names)
+        set_action_name_and_tip(self.ui.pushButton_0111_heat_detector_activation, Dialog0111,
+                                *module_info(int('0111')).short_and_long_names)
+        set_action_name_and_tip(self.ui.pushButton_0401_br187_parallel_simple, Dialog0401,
+                                *module_info(int('0401')).short_and_long_names)
+
+        set_action_name_and_tip(self.ui.pushButton_0402_br187_perpendicular_simple, Dialog0402,
+                                *module_info(int('0402')).short_and_long_names)
+        set_action_name_and_tip(self.ui.pushButton_0403_br187_parallel_complex, Dialog0403,
+                                *module_info(int('0403')).short_and_long_names)
+        set_action_name_and_tip(self.ui.pushButton_0404_br187_perpendicular_complex, Dialog0404,
+                                *module_info(int('0404')).short_and_long_names)
         # self.ui.pushButton_0405_thermal_radiation_extreme.clicked.connect(lambda: self.activate_app(Dialog0405))
-        self.ui.pushButton_0406_thermal_radiation_analysis_2d.clicked.connect(lambda: self.activate_app(Dialog0406))
+        set_action_name_and_tip(self.ui.pushButton_0406_thermal_radiation_analysis_2d, Dialog0406,
+                                *module_info(int('0406')).short_and_long_names)
 
-        self.ui.pushButton_0601_naming_convention.clicked.connect(lambda: self.activate_app(Dialog0601))
-        self.ui.pushButton_0602_pd7974_flame_height.clicked.connect(lambda: self.activate_app(Dialog0602))
+        set_action_name_and_tip(self.ui.pushButton_0601_naming_convention, Dialog0601,
+                                *module_info(int('0601')).short_and_long_names)
+        set_action_name_and_tip(self.ui.pushButton_0602_pd7974_flame_height, Dialog0602,
+                                *module_info(int('0602')).short_and_long_names)
 
     def activate_app(self, app_):
         app_ = app_()
