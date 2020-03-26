@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>518</width>
-    <height>666</height>
+    <width>504</width>
+    <height>658</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -204,10 +204,7 @@
             <string>File name generator in accordance with OFR file naming protocal.</string>
            </property>
            <property name="text">
-            <string>File
-             Naming
-             Protocol
-            </string>
+            <string>0601</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -243,9 +240,7 @@
             <string>To estimate optimal mesh resolution.</string>
            </property>
            <property name="text">
-            <string>CFD
-             Mesh Size
-            </string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -272,10 +267,7 @@
             </font>
            </property>
            <property name="text">
-            <string>CFD
-             Required
-             Vent. Size
-            </string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -305,10 +297,7 @@
             <string>Flame height in accordance with PD 7974-1:2019.</string>
            </property>
            <property name="text">
-            <string>PD 7974
-             Flame
-             Height
-            </string>
+            <string>0602</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -386,10 +375,7 @@
             <string>Data sheet 1 for BS 9999:2017, for B1.</string>
            </property>
            <property name="text">
-            <string>BS 9999
-             Datasheet
-             No. 1
-            </string>
+            <string>0102</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -425,10 +411,7 @@
             <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
            </property>
            <property name="text">
-            <string>PD 7974
-             Kitchen
-             hob
-            </string>
+            <string/>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -464,10 +447,7 @@
             <string>Merging flow calculation in accordance with BS 9999:2017.</string>
            </property>
            <property name="text">
-            <string>BS 9999
-             Merging
-             Flow
-            </string>
+            <string>0103</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -500,11 +480,7 @@
             <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
            </property>
            <property name="text">
-            <string>PD 7974
-             HD
-             Activation
-             Time
-            </string>
+            <string>0111</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -537,10 +513,7 @@
             <string>Data sheet 1 for Approved Document B (2019) Vol. 2, for B1.</string>
            </property>
            <property name="text">
-            <string>ADB 2
-             Datasheet
-             No. 1
-            </string>
+            <string>0101</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -605,9 +578,7 @@
             <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
            </property>
            <property name="text">
-            <string>BR 187
-             Parallel
-            </string>
+            <string>0401</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -640,9 +611,7 @@
             <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
            </property>
            <property name="text">
-            <string>BR 187
-             Perp.
-            </string>
+            <string>0402</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -675,10 +644,7 @@
             <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
            </property>
            <property name="text">
-            <string>BR 187
-             Paral. Non
-             Centered
-            </string>
+            <string>0403</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -711,10 +677,7 @@
             <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
            </property>
            <property name="text">
-            <string>BR 187
-             Perp. Non
-             Centered
-            </string>
+            <string>0404</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -750,9 +713,7 @@
             <string>General purpose thermal radiation calculator.</string>
            </property>
            <property name="text">
-            <string>TRA 2D
-             Contour
-            </string>
+            <string>0406</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -823,7 +784,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>518</width>
+     <width>504</width>
      <height>22</height>
     </rect>
    </property>

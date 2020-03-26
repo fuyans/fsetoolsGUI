@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>873</width>
-    <height>650</height>
+    <height>656</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,7 +58,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>791</width>
+         <width>801</width>
          <height>601</height>
         </rect>
        </property>
@@ -99,14 +99,14 @@
            <widget class="QWidget" name="widget" native="true">
             <property name="minimumSize">
              <size>
-              <width>791</width>
-              <height>51</height>
+              <width>790</width>
+              <height>50</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>791</width>
-              <height>51</height>
+              <width>790</width>
+              <height>50</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -137,7 +137,7 @@
               <string notr="true">QLabel{border: 0px solid black;}</string>
              </property>
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Header (optional) Frame/Widget&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;&lt;br/&gt;Width: 791 px&lt;br/&gt;Height: 51 px&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Header (optional) Frame/Widget&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;&lt;br/&gt;Width: 790 px&lt;br/&gt;Height: 50 px&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -185,13 +185,13 @@
               <widget class="QFrame" name="frame">
                <property name="minimumSize">
                 <size>
-                 <width>385</width>
+                 <width>390</width>
                  <height>540</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>385</width>
+                 <width>390</width>
                  <height>540</height>
                 </size>
                </property>
@@ -209,7 +209,7 @@
                  <rect>
                   <x>5</x>
                   <y>170</y>
-                  <width>375</width>
+                  <width>380</width>
                   <height>241</height>
                  </rect>
                 </property>
@@ -232,7 +232,7 @@
                   </rect>
                  </property>
                  <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;UserIO Frame/GroupBox/Widget&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Width: 375 px&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;UserIO Frame/GroupBox/Widget&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Width: 380 px&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                 </widget>
                </widget>
@@ -255,13 +255,13 @@
               <widget class="QFrame" name="frame_2">
                <property name="minimumSize">
                 <size>
-                 <width>385</width>
+                 <width>390</width>
                  <height>540</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>385</width>
+                 <width>390</width>
                  <height>540</height>
                 </size>
                </property>
@@ -297,7 +297,7 @@
                  </rect>
                 </property>
                 <property name="text">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Page Frame/Widget&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Width: 385 px&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Page Frame/Widget&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Width: 390 px&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                </widget>
                <widget class="QLabel" name="label_3">
@@ -310,7 +310,7 @@
                  </rect>
                 </property>
                 <property name="text">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Padding between columns: 21 px&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Padding between columns: 10 px&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                </widget>
                <widget class="QLabel" name="label_6">
