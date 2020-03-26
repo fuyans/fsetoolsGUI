@@ -28,7 +28,11 @@ class AppInfo:
         ),
         '0103': dict(
             short_name='BS 9999\nmerging\nflow',
-            long_name='BS 9999 merging flow exit capacity at final exit level',
+            long_name='BS 9999 merging flow at final exit level',
+        ),
+        '0104': dict(
+            short_name='ADB\nmerging\nflow',
+            long_name='ADB merging flow at final exit level',
         ),
         '0111': dict(
             short_name='PD 7974\nheat\ndetector\nactivation',
@@ -73,15 +77,24 @@ class AppInfo:
 
     @property
     def long_name(self):
-        return self.__data[str(self.__code)]['long_name']
+        try:
+            return self.__data[str(self.__code)]['long_name']
+        except KeyError:
+            return None
 
     @property
     def short_name(self):
-        return self.__data[str(self.__code)]['short_name']
+        try:
+            return self.__data[str(self.__code)]['short_name']
+        except KeyError:
+            return None
 
     @property
     def short_and_long_names(self):
-        return self.__data[str(self.__code)]['short_name'], self.__data[str(self.__code)]['long_name']
+        try:
+            return self.__data[str(self.__code)]['short_name'], self.__data[str(self.__code)]['long_name']
+        except KeyError:
+            return None
 
 
 """
