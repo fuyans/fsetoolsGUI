@@ -10,7 +10,6 @@ import fsetoolsGUI
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats, md2html
 from fsetoolsGUI.gui import md_css
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
-from fsetoolsGUI.gui.logic.custom_tableview import TableWindow as TableWindow
 
 try:
     style_css = open(join(fsetoolsGUI.__root_dir__, 'gui', 'style.css'), "r").read()
@@ -46,19 +45,14 @@ def list2htmltable(table_list: list, compact: bool = False):
     return table_html
 
 
-def _test_list2htmltable():
-    table_list = [
-        ['11', '12'],
-        ['21', '22'],
-    ]
-
-    print(list2htmltable(table_list, compact=True))
-
-
 class AboutDialog(QtWidgets.QDialog):
+    """todo: docstring"""
 
     def __init__(self, fp_or_md: str = None, parent=None):
         super().__init__(parent=parent)
+
+        self.setWindowTitle('About this app')
+        self.setWindowIcon(QMainWindow.make_pixmap_from_base64(OFR_LOGO_1_PNG))
 
         self.resize(731, 593)
         self.gridLayout = QtWidgets.QGridLayout(self)
@@ -78,12 +72,12 @@ class AboutDialog(QtWidgets.QDialog):
         css = f"<style type='text/css'>{md_css}</style>"
         md = md2html(fp_or_md)
 
-        print(md)
-
         self.textBrowser_content.setText(css + md)
 
 
 class QMainWindow(QtWidgets.QMainWindow):
+    """todo: docstring"""
+
     activated_dialogs: list = list()
     __AboutForm = None  # About form object (QDialog)
 
@@ -95,18 +89,10 @@ class QMainWindow(QtWidgets.QMainWindow):
             parent=None,
             shortcut_Return: typing.Callable = None,
             freeze_window_size: bool = False,
-            quality_assurance_content: list = None,
             about_fp_or_md: str = None
-
     ):
         """
-        todo: finalise docstr
-        :param quality_assurance_content:
-            Quality assurance review log data complies format [[{date}, {author}, {reviewer}], [{date}, ...], ...].
-            Where:
-                date        YYYYMMDD is the date of the check.
-                author      name of the author who made latest changes to the module.
-                reviewer    name of the person who checked the module.
+        todo: docstring
         """
 
         super().__init__(parent=parent)
@@ -126,16 +112,10 @@ class QMainWindow(QtWidgets.QMainWindow):
         self._validator_unsigned_float = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]*\.{0,1}[0-9]*!'))
         self._validator_signed_float = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[\+\-]*[0-9]*\.{0,1}[0-9]*!'))
 
-    def __init_subclass__(cls, **kwargs):
-        print(hasattr(cls, 'ui'))
-
-    def init(self, pushButton_about=None):
+    def init(self, cls=None):
 
         # window properties
-        ba = QtCore.QByteArray.fromBase64(self.__icon)
-        pix_map = QtGui.QPixmap()
-        pix_map.loadFromData(ba)
-        self.setWindowIcon(pix_map)
+        self.setWindowIcon(self.make_pixmap_from_base64(self.__icon))
         self.setWindowTitle(self.__title)
 
         self.setStyleSheet(style_css)
@@ -148,19 +128,24 @@ class QMainWindow(QtWidgets.QMainWindow):
             self.statusBar().setSizeGripEnabled(False)
             self.setFixedSize(self.width(), self.height())
 
-        # quality assurance data
-        # self.__AboutForm = AboutDialog(
-        #     fp_or_md=self.__about_fp_or_md,
-        #     parent=self
-        # )
-        # self.__AboutForm.setWindowTitle(f'About `{self.__title}`')
-
         check_update = threading.Timer(1, self.user_usage_stats)
         check_update.start()  # after 1 second, 'callback' will be called
 
         # assign signal to standard layout items
-        if pushButton_about:
-            pushButton_about.clicked.connect(self.show_about)  # `About` button
+        if cls:
+            def set_action_name_and_tip(btncls, action: callable = None, name: str = '', tooltip: str = '',
+                                        statustip: str = None):
+                if action:
+                    btncls.clicked.connect(action)
+                btncls.setText(name)
+                btncls.setToolTip(tooltip)
+                btncls.setStatusTip(statustip)
+
+            set_action_name_and_tip(cls.ui.pushButton_about, self.show_about, 'About',
+                                    'Click to show info about this app and quality management')
+            set_action_name_and_tip(cls.ui.pushButton_ok, None, 'OK', 'Click to calculate')
+            set_action_name_and_tip(cls.ui.pushButton_example, None, 'Example',
+                                    'Click to show example input parameters')
 
     def show_about(self):
         """"""
@@ -169,23 +154,6 @@ class QMainWindow(QtWidgets.QMainWindow):
         else:
             self.__AboutForm = AboutDialog(fp_or_md=self.__about_fp_or_md)
             self.__AboutForm.show()
-
-    def show_quality_assurance_info_backedup(self):
-
-        app_ = TableWindow(
-            parent=self,
-            data_list=self.__quality_assurance_content,
-            header=self.__quality_assurance_header,
-            window_title='Quality Assurance Log',
-            window_geometry=(300, 200, 570, 450)
-        )
-
-        app_.TableModel.sort(0, QtCore.Qt.AscendingOrder)
-        app_.TableView.resizeColumnsToContents()
-
-        app_.show()
-
-        self.activated_dialogs.append(app_)
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
@@ -224,4 +192,4 @@ class QMainWindow(QtWidgets.QMainWindow):
 
 
 if __name__ == '__main__':
-    _test_list2htmltable()
+    pass
