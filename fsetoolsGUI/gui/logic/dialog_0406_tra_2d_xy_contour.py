@@ -1,9 +1,11 @@
 import sys
+import threading
 from os.path import join
 
 import matplotlib.pyplot as plt
 import numpy as np
 from PySide2 import QtWidgets, QtCore
+from PySide2.QtCore import Slot
 from fsetools.lib.fse_thermal_radiation_2d_v2 import main as tra_main
 from matplotlib import cm
 
@@ -99,6 +101,19 @@ def tra_main_plot(
     return fig, ax
 
 
+class Signals(QtCore.QObject):
+    __update_progress_bar_signal = QtCore.Signal(int)
+    __calculation_complete = QtCore.Signal(bool)
+
+    @property
+    def update_progress_bar_signal(self):
+        return self.__update_progress_bar_signal
+
+    @property
+    def calculation_complete(self):
+        return self.__calculation_complete
+
+
 class Dialog0406(QMainWindow):
     fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0406.md')  # doc file path
 
@@ -115,17 +130,20 @@ class Dialog0406(QMainWindow):
         # instantiate objects
         self.figure = plt.figure()
         self.figure.patch.set_facecolor('None')
+        self.Signals = Signals()
+        self.calculation_thread = None
 
         self.ax = self.figure.subplots()
         self.ax.set_xticks([])
         self.ax.set_yticks([])
         self.figure_canvas = FigureCanvas(self.figure)
-        self.figure_canvas.setStyleSheet("background-color:transparent;")  # set the plt widget background from white to transparent.
+        self.figure_canvas.setStyleSheet(
+            "background-color:transparent;")  # set the plt widget background from white to transparent.
         self.ui.verticalLayout_plot.addWidget(self.figure_canvas)
         # self.addToolBar(NavigationToolbar(self.figure_canvas, self))  # add plt default toolbar.
 
         # instantiate variables
-        self.Solver = ThreadTRA(self)
+        # self.Solver = ThreadTRA(self)
 
         # instantiate tables
         self.init_table()
@@ -135,15 +153,23 @@ class Dialog0406(QMainWindow):
         self.ui.pushButton_refresh.clicked.connect(self.update_plot)
         self.ui.pushButton_save_figure.clicked.connect(self.save_figure)
         self.ui.pushButton_example.clicked.connect(self.example)
-        self.ui.pushButton_emitter_list_append.clicked.connect(lambda x=self.TableModel_emitters, y=self.ui.tableView_emitters: self.table_insert(x, y))
-        self.ui.pushButton_emitter_list_remove.clicked.connect(lambda x=self.TableModel_emitters, y=self.ui.tableView_emitters: self.table_remove(x, y))
-        self.ui.pushButton_receiver_list_append.clicked.connect(lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_insert(x, y))
-        self.ui.pushButton_receiver_list_remove.clicked.connect(lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_remove(x, y))
-        self.ui.horizontalSlider_graphic_line_thickness.valueChanged.connect(lambda: self.update_label(self.ui.label_graphic_line_thickness, f'{self.ui.horizontalSlider_graphic_line_thickness.value():d} pt'))
-        self.ui.horizontalSlider_graphic_contour_font_size.valueChanged.connect(lambda: self.update_label(self.ui.label_graphic_contour_label_font_size, f'{self.ui.horizontalSlider_graphic_contour_font_size.value():d} pt'))
+        self.ui.pushButton_emitter_list_append.clicked.connect(
+            lambda x=self.TableModel_emitters, y=self.ui.tableView_emitters: self.table_insert(x, y))
+        self.ui.pushButton_emitter_list_remove.clicked.connect(
+            lambda x=self.TableModel_emitters, y=self.ui.tableView_emitters: self.table_remove(x, y))
+        self.ui.pushButton_receiver_list_append.clicked.connect(
+            lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_insert(x, y))
+        self.ui.pushButton_receiver_list_remove.clicked.connect(
+            lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_remove(x, y))
+        self.ui.horizontalSlider_graphic_line_thickness.valueChanged.connect(
+            lambda: self.update_label(self.ui.label_graphic_line_thickness,
+                                      f'{self.ui.horizontalSlider_graphic_line_thickness.value():d} pt'))
+        self.ui.horizontalSlider_graphic_contour_font_size.valueChanged.connect(
+            lambda: self.update_label(self.ui.label_graphic_contour_label_font_size,
+                                      f'{self.ui.horizontalSlider_graphic_contour_font_size.value():d} pt'))
         self.ui.doubleSpinBox_graphic_z.valueChanged.connect(self.update_graphic_z_plane)
-        self.ui.progressBar.valueChanged.connect(self.update_plot)
-        self.Solver.updateProgress.connect(self.ui.progressBar.setValue)
+        self.Signals.update_progress_bar_signal.connect(self.ui.progressBar.setValue)
+        self.Signals.calculation_complete.connect(self.update_plot)
         self.ui.checkBox_max_heat_flux.stateChanged.connect(self.graphics_max_heat_flux_check)
 
         # containers
@@ -153,22 +179,100 @@ class Dialog0406(QMainWindow):
 
         self.init(self)
 
+    def example(self):
+
+        param_dict = dict(
+            emitter_list=[
+                dict(
+                    name='facade 1',
+                    x=[0, 5],
+                    y=[0, 0],
+                    z=[0, 3],
+                    heat_flux=168
+                ),
+                dict(
+                    name='facade 2',
+                    x=[5, 10],
+                    y=[0, 0],
+                    z=[0, 3],
+                    heat_flux=84
+                ),
+            ],
+            receiver_list=[
+                dict(
+                    name='wall 1',
+                    x=[0, 10],
+                    y=[10, 10]
+                )
+            ],
+            solver_domain=dict(
+                x=(-5, 15),
+                y=(0, 15),
+                z=''
+            ),
+            solver_delta=.5
+        )
+
+        self.solver_parameters = param_dict
+        self.repaint()
+
+    def calculate(self):
+
+        # check if there are live threads
+        # do not start new threads if there
+        try:
+            if self.calculation_thread.is_alive():
+                return
+        except AttributeError:
+            pass
+
+        del self.calculation_thread
+
+        self.ui.checkBox_max_heat_flux.setChecked(True)
+        self.ui.doubleSpinBox_graphic_z.setEnabled(False)
+
+        t = threading.Thread(target=self.calculate_worker)
+        self.calculation_thread = t
+        t.start()
+
+    def calculate_worker(self):
+        self.solver_results = tra_main(self.solver_parameters,
+                                       QtCore_ProgressSignal=self.Signals.update_progress_bar_signal)
+        self.Signals.calculation_complete.emit(True)
+
     def graphics_max_heat_flux_check(self):
         if self.ui.checkBox_max_heat_flux.isChecked():
             self.ui.doubleSpinBox_graphic_z.setEnabled(False)
-            if len(self.Solver.results) == 0:
+            if len(self.solver_results) == 0:
                 return 0  # skip if calculation not yet carried out.
-            heat_flux = np.max(np.array([i for i in self.Solver.results['heat_flux_dict'].values()]), axis=0)
+            heat_flux = np.max(np.array([i for i in self.solver_results['heat_flux_dict'].values()]), axis=0)
             heat_flux[heat_flux == 0] = -1
-            self.Solver.results['heat_flux'] = heat_flux
+            self.solver_results['heat_flux'] = heat_flux
             self.update_plot()
         else:
             self.ui.doubleSpinBox_graphic_z.setEnabled(True)
             self.update_graphic_z_plane()
 
-    @staticmethod
-    def update_label(QLabel: QtWidgets.QLabel, v: str):
-        QLabel.setText(v)
+    @Slot(bool)
+    def update_plot(self, v: bool = True):
+        if v:
+            z_values = [float(i) for i in self.solver_results['heat_flux_dict'].keys()]
+            z_max, z_min = max(z_values), min(z_values)
+            self.ui.doubleSpinBox_graphic_z.setRange(z_min, z_max)
+            self.ui.doubleSpinBox_graphic_z.setSingleStep((z_max - z_min) / (len(z_values) - 1))
+
+            if self.is_first_plot:
+                # tra_main_plot(self.solver_results, ax=self.ax, fig=self.figure, **self.graphic_parameters)
+                tra_main_plot(self.solver_results, ax=self.ax, **self.graphic_parameters)
+                self.is_first_plot = False
+            else:
+                self.ax.clear()
+                tra_main_plot(self.solver_results, ax=self.ax, **self.graphic_parameters)
+
+            # self._update_label_contour_font_size()
+            self.figure.tight_layout()
+            self.figure_canvas.draw()
+            self.repaint()
 
     def update_graphic_z_plane(self):
         """when z-plane value changes, set heat_flux accordingly and perform plot"""
@@ -183,35 +287,14 @@ class Dialog0406(QMainWindow):
                 self.update_plot()
                 break
 
-    def table_insert(self, TableModel:TableModel, TableView:QtWidgets.QTableView):
-        print('Inserting a row into table.')
-        # get selected row index
-        selected_indexes = TableView.selectionModel().selectedIndexes()
-        selected_row_index = selected_indexes[-1].row()
-        print(f'row index {selected_row_index}.')
-        # insert
-        TableModel.insertRow(selected_row_index)
+    def save_figure(self):
+        path_to_file, _ = QtWidgets.QFileDialog.getSaveFileName(
+            parent=self,
+            caption='Save Figure',
+            dir='image.png'
+        )
 
-        print(TableView == self.ui.tableView_emitters)
-        TableView.model().layoutChanged.emit()
-        TableView.resizeRowsToContents()
-        self.repaint()
-
-    def table_remove(self, TableModel:TableModel, TableView:QtWidgets.QTableView):
-        if TableModel.rowCount(TableView) <= 1:
-            raise ValueError('Not enough rows to delete.')
-
-        # get selected row index
-        selected_indexes = TableView.selectionModel().selectedIndexes()
-        if len(selected_indexes) > 1:
-            selected_row_index = selected_indexes[-1].row()
-        else:
-            selected_row_index = selected_indexes[0].row()
-        # remove
-        TableModel.removeRow(selected_row_index)
-        TableView.model().layoutChanged.emit()
-        TableView.resizeRowsToContents()
-        self.repaint()
+        self.figure.savefig(path_to_file, dpi=96, transparent=True)
 
     def init_table(self):
 
@@ -254,79 +337,35 @@ class Dialog0406(QMainWindow):
         self.ui.tableView_receivers.verticalHeader().setVisible(False)
         self.ui.tableView_receivers.resizeRowsToContents()
 
-    def calculate(self):
-        self.ui.checkBox_max_heat_flux.setChecked(True)
-        self.ui.doubleSpinBox_graphic_z.setEnabled(False)
+    def table_insert(self, TableModel: TableModel, TableView: QtWidgets.QTableView):
+        print('Inserting a row into table.')
+        # get selected row index
+        selected_indexes = TableView.selectionModel().selectedIndexes()
+        selected_row_index = selected_indexes[-1].row()
+        print(f'row index {selected_row_index}.')
+        # insert
+        TableModel.insertRow(selected_row_index)
 
-        self.Solver.inputs = self.solver_parameters
-        self.Solver.start()
-
-    def example(self):
-
-        param_dict = dict(
-            emitter_list=[
-                dict(
-                    name='facade 1',
-                    x=[0, 5],
-                    y=[0, 0],
-                    z=[0, 3],
-                    heat_flux=168
-                ),
-                dict(
-                    name='facade 1',
-                    x=[5, 10],
-                    y=[0, 0],
-                    z=[0, 3],
-                    heat_flux=84
-                ),
-            ],
-            receiver_list=[
-                dict(
-                    name='wall 1',
-                    x=[0, 10],
-                    y=[10, 10]
-                )
-            ],
-            solver_domain=dict(
-                x=(-5, 15),
-                y=(0, 15),
-                z=''
-            ),
-            solver_delta=.5
-        )
-
-        self.solver_parameters = param_dict
+        print(TableView == self.ui.tableView_emitters)
+        TableView.model().layoutChanged.emit()
+        TableView.resizeRowsToContents()
         self.repaint()
 
-    def update_plot(self):
-        if self.ui.progressBar.value() == 100:
+    def table_remove(self, TableModel: TableModel, TableView: QtWidgets.QTableView):
+        if TableModel.rowCount(TableView) <= 1:
+            raise ValueError('Not enough rows to delete.')
 
-            z_values = [float(i) for i in self.Solver.results['heat_flux_dict'].keys()]
-            z_max, z_min = max(z_values), min(z_values)
-            self.ui.doubleSpinBox_graphic_z.setRange(z_min, z_max)
-            self.ui.doubleSpinBox_graphic_z.setSingleStep((z_max-z_min)/(len(z_values)-1))
-
-            if self.is_first_plot:
-                # tra_main_plot(self.Solver.results, ax=self.ax, fig=self.figure, **self.graphic_parameters)
-                tra_main_plot(self.Solver.results, ax=self.ax, **self.graphic_parameters)
-                self.is_first_plot = False
-            else:
-                self.ax.clear()
-                tra_main_plot(self.Solver.results, ax=self.ax, **self.graphic_parameters)
-
-            # self._update_label_contour_font_size()
-            self.figure.tight_layout()
-            self.figure_canvas.draw()
-            self.repaint()
-
-    def save_figure(self):
-        path_to_file, _ = QtWidgets.QFileDialog.getSaveFileName(
-            parent=self,
-            caption='Save Figure',
-            dir='image.png'
-        )
-
-        self.figure.savefig(path_to_file, dpi=96, transparent=True)
+        # get selected row index
+        selected_indexes = TableView.selectionModel().selectedIndexes()
+        if len(selected_indexes) > 1:
+            selected_row_index = selected_indexes[-1].row()
+        else:
+            selected_row_index = selected_indexes[0].row()
+        # remove
+        TableModel.removeRow(selected_row_index)
+        TableView.model().layoutChanged.emit()
+        TableView.resizeRowsToContents()
+        self.repaint()
 
     @property
     def solver_parameters(self) -> dict:
@@ -387,6 +426,14 @@ class Dialog0406(QMainWindow):
         self.solver_parameter_receivers = solver_parameter_dict['receiver_list']
 
         self.repaint()
+
+    @property
+    def solver_results(self) -> dict:
+        return self.__solver_results
+
+    @solver_results.setter
+    def solver_results(self, v: dict):
+        self.__solver_results = v
 
     @property
     def solver_parameter_emitters(self) -> list:
@@ -497,50 +544,9 @@ class Dialog0406(QMainWindow):
     def is_first_plot(self, v: bool):
         self.__is_first_submit = v
 
-
-#Inherit from QThread
-class ThreadTRA(QtCore.QThread):
-
-    #This is the signal that will be emitted during the processing.
-    #By including int as an argument, it lets the signal know to expect
-    #an integer argument when emitting.
-    updateProgress = QtCore.Signal(int)
-
-    #You can do any extra things in this init you need, but for this example
-    #nothing else needs to be done expect call the super's init
-    def __init__(
-            self,
-            # MasterWidget: Dialog0406,
-            parent=None,
-    ):
-        super().__init__(parent=parent)
-        self.__solver_results: dict = dict()
-        self.__solver_parameters: dict = dict()
-
-    @property
-    def inputs(self):
-        return self.__solver_parameters
-
-    @inputs.setter
-    def inputs(self, v):
-        self.__solver_parameters = v
-
-    @property
-    def results(self):
-        return self.__solver_results
-
-    @results.setter
-    def results(self, v):
-        self.__solver_results = v
-
-    #A QThread is run by calling it's start() function, which calls this run()
-    #function in it's own "thread".
-    def run(self):
-        #Notice this is the same thing you were doing in your progress() function
-
-        if len(self.__solver_parameters) > 0:
-            self.__solver_results = tra_main(self.__solver_parameters, QtCore_ProgressSignal=self.updateProgress)
-            self.updateProgress.emit(100)
+    @staticmethod
+    def update_label(QLabel: QtWidgets.QLabel, v: str):
+        QLabel.setText(v)
 
 
 if __name__ == "__main__":
