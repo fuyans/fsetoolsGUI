@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>504</width>
-    <height>658</height>
+    <width>518</width>
+    <height>663</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -349,7 +349,76 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="1" column="1">
+         <item row="0" column="3">
+          <widget class="QPushButton" name="pushButton_0104_merging_flow">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>76</width>
+             <height>76</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>76</width>
+             <height>76</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
+           </property>
+           <property name="statusTip">
+            <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
+           </property>
+           <property name="text">
+            <string>0104</string>
+           </property>
+           <property name="autoDefault">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="pushButton_0101_adb2_datasheet_1">
+           <property name="minimumSize">
+            <size>
+             <width>76</width>
+             <height>76</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>76</width>
+             <height>76</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string>Data sheet 1 for Approved Document B (2019) Vol. 2, for B1.</string>
+           </property>
+           <property name="statusTip">
+            <string>Data sheet 1 for Approved Document B (2019) Vol. 2, for B1.</string>
+           </property>
+           <property name="text">
+            <string>0101</string>
+           </property>
+           <property name="autoDefault">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
           <widget class="QPushButton" name="pushButton_0102_bs9999_datasheet_1">
            <property name="minimumSize">
             <size>
@@ -382,79 +451,7 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="4">
-          <widget class="QPushButton" name="pushButton_0111_heat_detector_activation_2">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>76</width>
-             <height>76</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>76</width>
-             <height>76</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
-           </property>
-           <property name="statusTip">
-            <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="autoDefault">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="pushButton_0103_merging_flow">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>76</width>
-             <height>76</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>76</width>
-             <height>76</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Merging flow calculation in accordance with BS 9999:2017.</string>
-           </property>
-           <property name="statusTip">
-            <string>Merging flow calculation in accordance with BS 9999:2017.</string>
-           </property>
-           <property name="text">
-            <string>0103</string>
-           </property>
-           <property name="autoDefault">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
+         <item row="0" column="4">
           <widget class="QPushButton" name="pushButton_0111_heat_detector_activation">
            <property name="minimumSize">
             <size>
@@ -487,8 +484,11 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
-          <widget class="QPushButton" name="pushButton_0101_adb2_datasheet_1">
+         <item row="0" column="2">
+          <widget class="QPushButton" name="pushButton_0103_merging_flow">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="minimumSize">
             <size>
              <width>76</width>
@@ -507,13 +507,13 @@
             </font>
            </property>
            <property name="toolTip">
-            <string>Data sheet 1 for Approved Document B (2019) Vol. 2, for B1.</string>
+            <string>Merging flow calculation in accordance with BS 9999:2017.</string>
            </property>
            <property name="statusTip">
-            <string>Data sheet 1 for Approved Document B (2019) Vol. 2, for B1.</string>
+            <string>Merging flow calculation in accordance with BS 9999:2017.</string>
            </property>
            <property name="text">
-            <string>0101</string>
+            <string>0103</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -784,7 +784,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>504</width>
+     <width>518</width>
      <height>22</height>
     </rect>
    </property>
@@ -849,7 +849,6 @@
   <tabstop>pushButton_0101_adb2_datasheet_1</tabstop>
   <tabstop>pushButton_0102_bs9999_datasheet_1</tabstop>
   <tabstop>pushButton_0103_merging_flow</tabstop>
-  <tabstop>pushButton_0111_heat_detector_activation</tabstop>
   <tabstop>pushButton_0401_br187_parallel_simple</tabstop>
   <tabstop>pushButton_0402_br187_perpendicular_simple</tabstop>
   <tabstop>pushButton_0403_br187_parallel_complex</tabstop>

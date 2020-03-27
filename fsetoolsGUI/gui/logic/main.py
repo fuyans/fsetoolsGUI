@@ -21,7 +21,7 @@ from fsetoolsGUI.gui.logic.dialog_0404_br187_perpendicular_complex import Dialog
 from fsetoolsGUI.gui.logic.dialog_0406_tra_2d_xy_contour import Dialog0406 as Dialog0406
 from fsetoolsGUI.gui.logic.dialog_0601_naming_convention import Dialog0601 as Dialog0601
 from fsetoolsGUI.gui.logic.dialog_0602_pd7974_flame_height import Dialog0602 as Dialog0602
-
+from fsetoolsGUI.gui.logic.dialog_0104_adb_merging_flow import Dialog0104 as Dialog0104
 
 class Signals(QtCore.QObject):
     """
@@ -116,18 +116,19 @@ class MainWindow(QMainWindow):
                                 *module_info(int('0102')).short_and_long_names)
         set_action_name_and_tip(self.ui.pushButton_0103_merging_flow, Dialog0103,
                                 *module_info(int('0103')).short_and_long_names)
+        set_action_name_and_tip(self.ui.pushButton_0104_merging_flow, Dialog0104,
+                                *module_info(int('0104')).short_and_long_names)
         set_action_name_and_tip(self.ui.pushButton_0111_heat_detector_activation, Dialog0111,
                                 *module_info(int('0111')).short_and_long_names)
+
         set_action_name_and_tip(self.ui.pushButton_0401_br187_parallel_simple, Dialog0401,
                                 *module_info(int('0401')).short_and_long_names)
-
         set_action_name_and_tip(self.ui.pushButton_0402_br187_perpendicular_simple, Dialog0402,
                                 *module_info(int('0402')).short_and_long_names)
         set_action_name_and_tip(self.ui.pushButton_0403_br187_parallel_complex, Dialog0403,
                                 *module_info(int('0403')).short_and_long_names)
         set_action_name_and_tip(self.ui.pushButton_0404_br187_perpendicular_complex, Dialog0404,
                                 *module_info(int('0404')).short_and_long_names)
-        # self.ui.pushButton_0405_thermal_radiation_extreme.clicked.connect(lambda: self.activate_app(Dialog0405))
         set_action_name_and_tip(self.ui.pushButton_0406_thermal_radiation_analysis_2d, Dialog0406,
                                 *module_info(int('0406')).short_and_long_names)
 
