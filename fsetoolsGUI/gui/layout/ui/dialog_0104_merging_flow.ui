@@ -707,7 +707,7 @@
                  <string>This indicates whether the condition True (ticked) or False.</string>
                 </property>
                 <property name="text">
-                 <string>Are 'D&gt;2m' and 'N&gt;60' true?</string>
+                 <string>Are conditions 'D&gt;2 m' and 'N&gt;60 persons' all true?</string>
                 </property>
                </widget>
               </item>
