@@ -7,6 +7,7 @@ def ui2py():
     list_ui_file_names = [
         'main.ui',
         'dialog_0103_merging_flow.ui',
+        'dialog_0104_merging_flow.ui',
         'dialog_0111_heat_detector_activation.ui',
         'dialog_0401_br187_parallel_simple.ui',
         'dialog_0403_br187_parallel_complex.ui',
