@@ -31,7 +31,7 @@ class Dialog0404(QMainWindow):
         # set up validators
         self.ui.lineEdit_in_W.setValidator(self._validator_unsigned_float)
         self.ui.lineEdit_in_H.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_w.setValidator(self._validator_signed_float)
+        self.ui.lineEdit_in_w.setValidator(self._validator_unsigned_float)
         self.ui.lineEdit_in_h.setValidator(self._validator_unsigned_float)
         self.ui.lineEdit_in_Q.setValidator(self._validator_unsigned_float)
         self.ui.lineEdit_in_S.setValidator(self._validator_unsigned_float)

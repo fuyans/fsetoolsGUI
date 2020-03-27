@@ -17,15 +17,24 @@ class Dialog0601(QMainWindow):
             id='0601',
             parent=parent,
             shortcut_Return=self.copy_file_name,
+            about_fp_or_md=self.fp_doc
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init()
+        self.init(self)
 
         # default values
-        self.ui.lineEdit_1_date.setText(datetime.today().strftime('%Y%m%d')[2:])
         self.ui.comboBox_6_type.setCurrentIndex(4)
         self.ui.checkBox_replace_spaces.setChecked(True)
+        self.ui.lineEdit_1_date.setText(datetime.today().strftime('%Y%m%d')[2:])
+        self.ui.lineEdit_3_project_no.setText(None)
+        self.ui.lineEdit_4_project_stage.setText(None)
+        self.ui.lineEdit_5_title.setText(None)
+
+        # placeholder texts
+        self.ui.lineEdit_3_project_no.setPlaceholderText('XX00001')
+        self.ui.lineEdit_4_project_stage.setPlaceholderText('ITT')
+        self.ui.lineEdit_5_title.setPlaceholderText('Outline fire strategy')
 
         # validators
         self.ui.lineEdit_1_date.setValidator((QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]{6,8}'))))

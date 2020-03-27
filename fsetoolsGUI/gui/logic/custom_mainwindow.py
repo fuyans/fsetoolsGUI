@@ -7,44 +7,16 @@ from os.path import join
 from PySide2 import QtCore, QtWidgets, QtGui
 
 import fsetoolsGUI
+from fsetoolsGUI import AppInfo
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats, md2html
 from fsetoolsGUI.gui import md_css
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
 
+# parse css for Qt GUI
 try:
-    style_css = open(join(fsetoolsGUI.__root_dir__, 'gui', 'style.css'), "r").read()
+    qt_css = open(join(fsetoolsGUI.__root_dir__, 'gui', 'style.css'), "r").read()
 except FileNotFoundError:
-    style_css = None
-
-AppInfo = fsetoolsGUI.AppInfo
-
-
-def list2htmltable(table_list: list, compact: bool = False):
-    # css style generated using https://divtable.com/table-styler/
-    table_css = '<style type="text/css">table.minimalistBlack{border:3px solid ' \
-                '#000;width:100%;text-align:left;border-collapse:collapse}table.minimalistBlack td,' \
-                'table.minimalistBlack th{border:1px solid #000;padding:5px 4px}table.minimalistBlack thead{' \
-                'border-bottom:3px solid black}table.minimalistBlack thead th{' \
-                'font-weight:400;text-align:left}table.minimalistBlack tfoot td{font-size:14px}</style>'
-
-    # generate table
-    is_header = True
-    table_html = list()
-    table_html_append = table_html.append
-    for row in table_list:
-        row = '\n'.join([f'<td>{i.strip()}&nbsp;&nbsp;</td>' for i in row])
-        table_html_append(f'<tr>\n{row}\n</tr>')
-
-    table_html = f'<thead>{"".join(table_html[0]).replace("td>", "th>")}</thead><tbody>{"".join(table_html[1:])}</tbody>'
-
-    # table_html = '\n'.join(table_html)
-    table_html = f'<table class="minimalistBlack">\n{table_html}\n</table>'
-    if compact:
-        table_html = table_html.replace('\n', '')
-
-    table_html = table_css + table_html
-
-    return table_html
+    qt_css = None
 
 
 class AboutDialog(QtWidgets.QDialog):
@@ -60,7 +32,8 @@ class AboutDialog(QtWidgets.QDialog):
         self.gridLayout = QtWidgets.QGridLayout(self)
         self.groupBox = QtWidgets.QGroupBox(self)
         self.verticalLayout = QtWidgets.QVBoxLayout(self.groupBox)
-        self.verticalLayout.setContentsMargins(35, 35, 35, 35)
+        self.verticalLayout.setContentsMargins(15, 15, 15, 15)
+
         self.textBrowser_content = QtWidgets.QTextBrowser(self.groupBox)
         self.textBrowser_content.setMinimumSize(QtCore.QSize(641, 0))
         self.textBrowser_content.setMaximumSize(QtCore.QSize(641, 16777215))
@@ -69,7 +42,7 @@ class AboutDialog(QtWidgets.QDialog):
 
         self.gridLayout.addWidget(self.groupBox, 0, 0, 1, 1)
 
-        self.setStyleSheet(style_css)
+        self.setStyleSheet(qt_css)
 
         css = f"<style type='text/css'>{md_css}</style>"
         md = md2html(fp_or_md)
@@ -125,7 +98,7 @@ class QMainWindow(QtWidgets.QMainWindow):
         else:
             self.setWindowTitle(AppInfo(int(self.__id)).long_name)
 
-        self.setStyleSheet(style_css)
+        self.setStyleSheet(qt_css)
         self.statusBar().setSizeGripEnabled(False)
 
         self.centralWidget().adjustSize()
@@ -148,11 +121,14 @@ class QMainWindow(QtWidgets.QMainWindow):
                 btncls.setToolTip(tooltip)
                 btncls.setStatusTip(statustip)
 
-            set_action_name_and_tip(cls.ui.pushButton_about, self.show_about, 'About',
-                                    'Click to show info about this app and quality management')
-            set_action_name_and_tip(cls.ui.pushButton_ok, None, 'OK', 'Click to calculate')
-            set_action_name_and_tip(cls.ui.pushButton_example, None, 'Example',
-                                    'Click to show example input parameters')
+            if hasattr(cls.ui, 'pushButton_about'):
+                set_action_name_and_tip(cls.ui.pushButton_about, self.show_about, 'About',
+                                        'Click to show info about this app and quality management')
+            if hasattr(cls.ui, 'pushButton_ok'):
+                set_action_name_and_tip(cls.ui.pushButton_ok, None, 'OK', 'Click to calculate')
+            if hasattr(cls.ui, 'pushButton_example'):
+                set_action_name_and_tip(cls.ui.pushButton_example, None, 'Example',
+                                        'Click to show example input parameters')
 
     def show_about(self):
         """"""

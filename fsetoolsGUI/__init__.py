@@ -48,11 +48,11 @@ class AppInfo:
         ),
         '0403': dict(
             short_name='BR 187\nparallel\neccentric',
-            long_name='BR 187 parallel oriented rectangle emitter and receiver (non-centered)',
+            long_name='BR 187 parallel oriented rectangle emitter and eccentric receiver',
         ),
         '0404': dict(
             short_name='BR 187\nperp.\neccentric',
-            long_name='BR 187 perpendicular oriented rectangle emitter and receiver (non-centered)',
+            long_name='BR 187 perpendicular oriented rectangle emitter and eccentric receiver',
         ),
         '0405': dict(
             short_name='TRA\n3D',
