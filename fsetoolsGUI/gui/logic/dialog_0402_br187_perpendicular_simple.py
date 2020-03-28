@@ -3,8 +3,6 @@ from os.path import join
 from fsetools.lib.fse_thermal_radiation import phi_perpendicular_any_br187, linear_solver
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.images_base64 import dialog_0402_figure as image_figure
-from fsetoolsGUI.gui.images_base64 import dialog_0402_page as image_page
 from fsetoolsGUI.gui.layout.dialog_0401_br187_parallel_simple import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
@@ -36,8 +34,8 @@ class Dialog0402(QMainWindow):
         self.init(self)
 
         # set up radiation figure
-        self.ui.label_image_page.setPixmap(self.make_pixmap_from_base64(image_page))
-        self.ui.label_image_figure.setPixmap(self.make_pixmap_from_base64(image_figure))
+        self.ui.label_image_page.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0402-0.png'))
+        self.ui.label_image_figure.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0402-1.png'))
 
         # set up validators
         self.ui.lineEdit_in_W.setValidator(self._validator_unsigned_float)

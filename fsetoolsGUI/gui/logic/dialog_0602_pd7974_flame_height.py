@@ -46,8 +46,10 @@ class Dialog0602(QMainWindow):
                 i.setEnabled(False)
 
         # set up figures
-        self.ui.label_image_context.setPixmap(self.dict_images_pixmap['image_context'])
-        self.ui.label_image_figure.setPixmap(self.dict_images_pixmap['image_figure'])
+        self.ui.label_image_context.setPixmap(
+            self.make_pixmap_from_fp(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0602-0.png')))
+        self.ui.label_image_figure.setPixmap(
+            self.make_pixmap_from_fp(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0602-1.png')))
 
         # set default values
         # todo

@@ -1,7 +1,7 @@
 import threading
 
 import requests
-from PySide2 import QtWidgets, QtGui, QtCore
+from PySide2 import QtGui, QtCore
 from PySide2.QtCore import Slot
 from packaging import version
 
@@ -13,6 +13,7 @@ from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.dialog_0101_adb_datasheet_1 import Dialog as Dialog0101
 from fsetoolsGUI.gui.logic.dialog_0102_bs9999_datasheet_1 import Dialog as Dialog0102
 from fsetoolsGUI.gui.logic.dialog_0103_bs9999_merging_flow import Dialog0103 as Dialog0103
+from fsetoolsGUI.gui.logic.dialog_0104_adb_merging_flow import Dialog0104 as Dialog0104
 from fsetoolsGUI.gui.logic.dialog_0111_pd7974_heat_detector_activation import Dialog0111 as Dialog0111
 from fsetoolsGUI.gui.logic.dialog_0401_br187_parallel_simple import Dialog0401 as Dialog0401
 from fsetoolsGUI.gui.logic.dialog_0402_br187_perpendicular_simple import Dialog0402 as Dialog0402
@@ -21,7 +22,7 @@ from fsetoolsGUI.gui.logic.dialog_0404_br187_perpendicular_complex import Dialog
 from fsetoolsGUI.gui.logic.dialog_0406_tra_2d_xy_contour import Dialog0406 as Dialog0406
 from fsetoolsGUI.gui.logic.dialog_0601_naming_convention import Dialog0601 as Dialog0601
 from fsetoolsGUI.gui.logic.dialog_0602_pd7974_flame_height import Dialog0602 as Dialog0602
-from fsetoolsGUI.gui.logic.dialog_0104_adb_merging_flow import Dialog0104 as Dialog0104
+
 
 class Signals(QtCore.QObject):
     """
@@ -76,7 +77,7 @@ class MainWindow(QMainWindow):
         self.ui.label_logo.setStatusTip('Click to go to ofrconsultants.com')
 
         # signals
-        self.ui.label_logo.mousePressEvent = self.label_logo_mousePressEvent
+        # self.ui.label_logo.mousePressEvent = self.label_logo_mousePressEvent  # removed hyperlink to OFR logo
         self.ui.label_version.mousePressEvent = self.label_version_mousePressEvent
 
     @Slot(bool)
@@ -271,3 +272,13 @@ class MainWindow(QMainWindow):
         for i in self.__dialog_opened:
             i.close()
         QMainWindow.closeEvent(self, *args, **kwargs)
+
+
+if __name__ == "__main__":
+    import sys
+    from PySide2 import QtWidgets
+
+    qapp = QtWidgets.QApplication(sys.argv)
+    app = MainWindow()
+    app.show()
+    qapp.exec_()
