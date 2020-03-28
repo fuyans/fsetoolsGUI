@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>873</width>
-    <height>781</height>
+    <height>716</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,13 +32,13 @@
       <property name="minimumSize">
        <size>
         <width>803</width>
-        <height>626</height>
+        <height>551</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
         <width>803</width>
-        <height>626</height>
+        <height>551</height>
        </size>
       </property>
       <property name="widgetResizable">
@@ -50,7 +50,7 @@
          <x>0</x>
          <y>0</y>
          <width>801</width>
-         <height>624</height>
+         <height>549</height>
         </rect>
        </property>
        <widget class="QWidget" name="widget" native="true">
@@ -59,19 +59,19 @@
           <x>0</x>
           <y>0</y>
           <width>796</width>
-          <height>626</height>
+          <height>551</height>
          </rect>
         </property>
         <property name="minimumSize">
          <size>
           <width>796</width>
-          <height>626</height>
+          <height>551</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>796</width>
-          <height>626</height>
+          <height>551</height>
          </size>
         </property>
         <widget class="QLabel" name="label_image_page">
@@ -80,21 +80,21 @@
            <x>0</x>
            <y>0</y>
            <width>796</width>
-           <height>566</height>
+           <height>643</height>
           </rect>
          </property>
          <property name="text">
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../../../../../../../Library/Mobile Documents/6LVTQB9699~com~seriflabs~affinitydesigner/Documents/FSEUTIL/png/0404_page_794_560.png</pixmap>
+          <pixmap>../../images/0403-0.png</pixmap>
          </property>
         </widget>
         <widget class="QLabel" name="label_image_figure">
          <property name="geometry">
           <rect>
-           <x>15</x>
-           <y>0</y>
+           <x>25</x>
+           <y>75</y>
            <width>342</width>
            <height>284</height>
           </rect>
@@ -103,17 +103,29 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../../../../../../../Library/Mobile Documents/6LVTQB9699~com~seriflabs~affinitydesigner/Documents/FSEUTIL/png/0404_figure_342_284.png</pixmap>
+          <pixmap>../../images/0403-1.png</pixmap>
          </property>
         </widget>
-        <widget class="QWidget" name="widget_userio" native="true">
+        <widget class="QGroupBox" name="groupBox_userio">
          <property name="geometry">
           <rect>
-           <x>415</x>
-           <y>215</y>
-           <width>376</width>
-           <height>400</height>
+           <x>400</x>
+           <y>130</y>
+           <width>390</width>
+           <height>410</height>
           </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>390</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>390</width>
+           <height>16777215</height>
+          </size>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <property name="spacing">
@@ -189,54 +201,6 @@
               <property name="verticalSpacing">
                <number>5</number>
               </property>
-              <item row="5" column="0">
-               <widget class="QRadioButton" name="radioButton_in_S">
-                <property name="minimumSize">
-                 <size>
-                  <width>181</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>181</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>½S, emitter to boundary</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="2">
-               <widget class="QLabel" name="label_in_UA_unit">
-                <property name="minimumSize">
-                 <size>
-                  <width>51</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>51</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>%</string>
-                </property>
-               </widget>
-              </item>
               <item row="3" column="1">
                <widget class="QLineEdit" name="lineEdit_in_h">
                 <property name="sizePolicy">
@@ -276,53 +240,17 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_in_w">
-                <property name="minimumSize">
-                 <size>
-                  <width>181</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>99999</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string>Receiver location 1.</string>
-                </property>
-                <property name="statusTip">
-                 <string>Receiver location 1.</string>
-                </property>
-                <property name="text">
-                 <string>Receiver location, w</string>
-                </property>
-               </widget>
-              </item>
               <item row="4" column="0">
-               <widget class="QLabel" name="label_in_Q">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
+               <widget class="QRadioButton" name="radioButton_in_S">
                 <property name="minimumSize">
                  <size>
                   <width>181</width>
-                  <height>26</height>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>99999</width>
+                  <width>181</width>
                   <height>26</height>
                  </size>
                 </property>
@@ -331,19 +259,13 @@
                   <pointsize>10</pointsize>
                  </font>
                 </property>
-                <property name="toolTip">
-                 <string>Heat flux of emitter.</string>
-                </property>
-                <property name="statusTip">
-                 <string>Heat flux of emitter.</string>
-                </property>
                 <property name="text">
-                 <string>Emitter heat flux</string>
+                 <string>½S, emitter to boundary</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="2">
-               <widget class="QLabel" name="label_in_H_unit">
+              <item row="2" column="2">
+               <widget class="QLabel" name="label_in_w_unit">
                 <property name="minimumSize">
                  <size>
                   <width>51</width>
@@ -366,37 +288,7 @@
                 </property>
                </widget>
               </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_in_h">
-                <property name="minimumSize">
-                 <size>
-                  <width>181</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>99999</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string>Receiver location 2.</string>
-                </property>
-                <property name="statusTip">
-                 <string>Receiver location 2.</string>
-                </property>
-                <property name="text">
-                 <string>Receiver location, h</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="1">
+              <item row="6" column="1">
                <widget class="QLineEdit" name="lineEdit_in_Q">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -435,8 +327,197 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="2">
-               <widget class="QLabel" name="label_in_W_unit">
+              <item row="5" column="2">
+               <widget class="QLabel" name="label_in_UA_unit">
+                <property name="minimumSize">
+                 <size>
+                  <width>51</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>51</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>%</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="lineEdit_in_UA">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>51</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>99999</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="baseSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="toolTip">
+                 <string>Positive float.</string>
+                </property>
+                <property name="statusTip">
+                 <string>Positive float.</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_in_h">
+                <property name="minimumSize">
+                 <size>
+                  <width>181</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>99999</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="toolTip">
+                 <string>Receiver location 2.</string>
+                </property>
+                <property name="statusTip">
+                 <string>Receiver location 2.</string>
+                </property>
+                <property name="text">
+                 <string>Receiver location, h</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_in_w">
+                <property name="minimumSize">
+                 <size>
+                  <width>181</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>99999</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="toolTip">
+                 <string>Receiver location 1.</string>
+                </property>
+                <property name="statusTip">
+                 <string>Receiver location 1.</string>
+                </property>
+                <property name="text">
+                 <string>Receiver location, w</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_in_W">
+                <property name="minimumSize">
+                 <size>
+                  <width>181</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>99999</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="toolTip">
+                 <string>Width of emitter.</string>
+                </property>
+                <property name="statusTip">
+                 <string>Width of emitter.</string>
+                </property>
+                <property name="text">
+                 <string>Emitter width</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_in_H">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>181</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>99999</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="toolTip">
+                 <string>Height of emitter.</string>
+                </property>
+                <property name="statusTip">
+                 <string>Height of emitter.</string>
+                </property>
+                <property name="text">
+                 <string>Emitter height</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QLabel" name="label_in_h_unit">
                 <property name="minimumSize">
                  <size>
                   <width>51</width>
@@ -459,8 +540,44 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="lineEdit_in_H">
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_in_Q">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>181</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>99999</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="toolTip">
+                 <string>Heat flux of emitter.</string>
+                </property>
+                <property name="statusTip">
+                 <string>Heat flux of emitter.</string>
+                </property>
+                <property name="text">
+                 <string>Emitter heat flux</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="lineEdit_in_W">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -537,82 +654,7 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_in_H">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>181</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>99999</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string>Height of emitter.</string>
-                </property>
-                <property name="statusTip">
-                 <string>Height of emitter.</string>
-                </property>
-                <property name="text">
-                 <string>Emitter height</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="lineEdit_in_W">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>51</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>99999</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="baseSize">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string>Positive float.</string>
-                </property>
-                <property name="statusTip">
-                 <string>Positive float.</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="1">
+              <item row="4" column="1">
                <widget class="QLineEdit" name="lineEdit_in_S">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -651,62 +693,8 @@
                 </property>
                </widget>
               </item>
-              <item row="5" column="2">
-               <widget class="QLabel" name="label_in_S_unit">
-                <property name="minimumSize">
-                 <size>
-                  <width>51</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>51</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>m</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_in_W">
-                <property name="minimumSize">
-                 <size>
-                  <width>181</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>99999</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string>Width of emitter.</string>
-                </property>
-                <property name="statusTip">
-                 <string>Width of emitter.</string>
-                </property>
-                <property name="text">
-                 <string>Emitter width</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="2">
-               <widget class="QLabel" name="label_in_h_unit">
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_in_W_unit">
                 <property name="minimumSize">
                  <size>
                   <width>51</width>
@@ -729,17 +717,17 @@
                 </property>
                </widget>
               </item>
-              <item row="6" column="0">
-               <widget class="QRadioButton" name="radioButton_in_UA">
+              <item row="6" column="2">
+               <widget class="QLabel" name="label_in_Q_unit">
                 <property name="minimumSize">
                  <size>
-                  <width>181</width>
-                  <height>25</height>
+                  <width>51</width>
+                  <height>26</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>181</width>
+                  <width>16777215</width>
                   <height>26</height>
                  </size>
                 </property>
@@ -749,12 +737,12 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Unprotected area</string>
+                 <string>kW/m²</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="1">
-               <widget class="QLineEdit" name="lineEdit_in_UA">
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="lineEdit_in_H">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -793,7 +781,7 @@
                </widget>
               </item>
               <item row="4" column="2">
-               <widget class="QLabel" name="label_in_Q_unit">
+               <widget class="QLabel" name="label_in_S_unit">
                 <property name="minimumSize">
                  <size>
                   <width>51</width>
@@ -802,7 +790,7 @@
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>16777215</width>
+                  <width>51</width>
                   <height>26</height>
                  </size>
                 </property>
@@ -812,12 +800,12 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>kW/m²</string>
+                 <string>m</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="2">
-               <widget class="QLabel" name="label_in_w_unit">
+              <item row="1" column="2">
+               <widget class="QLabel" name="label_in_H_unit">
                 <property name="minimumSize">
                  <size>
                   <width>51</width>
@@ -837,6 +825,30 @@
                 </property>
                 <property name="text">
                  <string>m</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QRadioButton" name="radioButton_in_UA">
+                <property name="minimumSize">
+                 <size>
+                  <width>181</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>181</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Unprotected area</string>
                 </property>
                </widget>
               </item>
@@ -1184,88 +1196,152 @@
      <widget class="QWidget" name="widget_2" native="true">
       <property name="minimumSize">
        <size>
-        <width>791</width>
+        <width>790</width>
         <height>36</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>791</width>
+        <width>790</width>
         <height>36</height>
        </size>
       </property>
-      <widget class="QPushButton" name="pushButton_example">
-       <property name="geometry">
-        <rect>
-         <x>105</x>
-         <y>5</y>
-         <width>96</width>
-         <height>26</height>
-        </rect>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>0</number>
        </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
+       <property name="leftMargin">
+        <number>0</number>
        </property>
-       <property name="toolTip">
-        <string>Click to generate example input parameters.</string>
+       <property name="topMargin">
+        <number>0</number>
        </property>
-       <property name="statusTip">
-        <string>Click to generate example input parameters.</string>
+       <property name="rightMargin">
+        <number>0</number>
        </property>
-       <property name="text">
-        <string>Example</string>
+       <property name="bottomMargin">
+        <number>0</number>
        </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_ok">
-       <property name="geometry">
-        <rect>
-         <x>695</x>
-         <y>5</y>
-         <width>96</width>
-         <height>26</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>Click (or press Enter) to calculate.</string>
-       </property>
-       <property name="statusTip">
-        <string>Click (or press Enter) to calculate.</string>
-       </property>
-       <property name="text">
-        <string>Calculate</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_about">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>5</y>
-         <width>96</width>
-         <height>26</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>Click to generate example input parameters.</string>
-       </property>
-       <property name="statusTip">
-        <string>Click to generate example input parameters.</string>
-       </property>
-       <property name="text">
-        <string>About</string>
-       </property>
-      </widget>
+       <item>
+        <widget class="QPushButton" name="pushButton_about">
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>90</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>Click to generate example input parameters.</string>
+         </property>
+         <property name="statusTip">
+          <string>Click to generate example input parameters.</string>
+         </property>
+         <property name="text">
+          <string>About</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>15</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_example">
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>90</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>Click to generate example input parameters.</string>
+         </property>
+         <property name="statusTip">
+          <string>Click to generate example input parameters.</string>
+         </property>
+         <property name="text">
+          <string>Example</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_ok">
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>90</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>Click (or press Enter) to calculate.</string>
+         </property>
+         <property name="statusTip">
+          <string>Click (or press Enter) to calculate.</string>
+         </property>
+         <property name="text">
+          <string>Calculate</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
@@ -1287,12 +1363,18 @@
   <tabstop>lineEdit_in_H</tabstop>
   <tabstop>lineEdit_in_w</tabstop>
   <tabstop>lineEdit_in_h</tabstop>
+  <tabstop>radioButton_in_S</tabstop>
+  <tabstop>lineEdit_in_S</tabstop>
+  <tabstop>radioButton_in_UA</tabstop>
+  <tabstop>lineEdit_in_UA</tabstop>
   <tabstop>lineEdit_in_Q</tabstop>
   <tabstop>lineEdit_out_Phi</tabstop>
   <tabstop>lineEdit_out_q</tabstop>
   <tabstop>lineEdit_out_S_or_UA</tabstop>
   <tabstop>pushButton_ok</tabstop>
+  <tabstop>pushButton_about</tabstop>
   <tabstop>pushButton_example</tabstop>
+  <tabstop>scrollArea</tabstop>
  </tabstops>
  <resources/>
  <connections/>
