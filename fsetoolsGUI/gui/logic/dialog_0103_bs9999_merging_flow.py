@@ -17,7 +17,7 @@ from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 class Dialog0103(QMainWindow):
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
-    fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0103.md')
+    fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0103')
 
     def __init__(self, parent=None):
         # instantiation

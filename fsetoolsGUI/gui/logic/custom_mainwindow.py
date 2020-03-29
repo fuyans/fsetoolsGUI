@@ -8,8 +8,7 @@ from PySide2 import QtCore, QtWidgets, QtGui
 
 import fsetoolsGUI
 from fsetoolsGUI import AppInfo
-from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats, md2html
-from fsetoolsGUI.gui import md_css
+from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
 
 # parse css for Qt GUI
@@ -22,7 +21,7 @@ except FileNotFoundError:
 class AboutDialog(QtWidgets.QDialog):
     """todo: docstring"""
 
-    def __init__(self, fp_or_md: str = None, parent=None):
+    def __init__(self, fp_or_html: str = None, parent=None):
         super().__init__(parent=parent)
 
         self.setWindowTitle('About this app')
@@ -44,10 +43,11 @@ class AboutDialog(QtWidgets.QDialog):
 
         self.setStyleSheet(qt_css)
 
-        css = f"<style type='text/css'>{md_css}</style>"
-        md = md2html(fp_or_md)
-
-        self.textBrowser_content.setText(css + md)
+        if isfile(fp_or_html):
+            with open(fp_or_html, 'r') as f:
+                self.textBrowser_content.setText(f.read())
+        else:
+            self.textBrowser_content.setText(fp_or_html)
 
 
 class QMainWindow(QtWidgets.QMainWindow):
@@ -71,6 +71,8 @@ class QMainWindow(QtWidgets.QMainWindow):
         """
 
         super().__init__(parent=parent)
+
+        self.AppInfo = AppInfo(int(id))
 
         # window properties
         self.__id: str = module_id
@@ -96,7 +98,7 @@ class QMainWindow(QtWidgets.QMainWindow):
         if self.__title:
             self.setWindowTitle(self.__title)
         else:
-            self.setWindowTitle(AppInfo(int(self.__id)).long_name)
+            self.setWindowTitle(self.AppInfo.long_name)
 
         self.setStyleSheet(qt_css)
         self.statusBar().setSizeGripEnabled(False)
@@ -136,7 +138,7 @@ class QMainWindow(QtWidgets.QMainWindow):
         if self.__AboutForm:
             self.__AboutForm.show()
         else:
-            self.__AboutForm = AboutDialog(fp_or_md=self.__about_fp_or_md)
+            self.__AboutForm = AboutDialog(fp_or_html=self.AppInfo.doc_html)
             self.__AboutForm.show()
 
     def keyPressEvent(self, event):

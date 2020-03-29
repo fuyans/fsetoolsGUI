@@ -1,34 +1,28 @@
+import os
 import subprocess
-from os.path import join, realpath, dirname
+from os.path import join, dirname
+
+import fsetoolsGUI
 
 
 def ui2py():
 
-    list_ui_file_names = [
-        'main.ui',
-        'dialog_0101.ui',
-        'dialog_0103_merging_flow.ui',
-        'dialog_0104_merging_flow.ui',
-        'dialog_0111_heat_detector_activation.ui',
-        'dialog_0401_br187_parallel_simple.ui',
-        'dialog_0403_br187_parallel_complex.ui',
-        'dialog_0405_tra_3d_point.ui',
-        'dialog_0406_tra_2d_xy_contour.ui',
-        'dialog_0601_naming_convention.ui',
-        'dialog_0602_pd_7974_flame_height.ui',
-        'standard_qmainwindow.ui',
-        'standard_qmainwindow_content.ui',
-    ]
+    dir_ui = join(fsetoolsGUI.__root_dir__, 'gui', 'layout', 'ui')
+    list_ui_file_names = list()
+
+    for dirpath, dirnames, filenames in os.walk(dir_ui):
+        for fn in filenames:
+            if fn.endswith('.ui'):
+                list_ui_file_names.append(fn)
     
-    cwd = join(dirname(realpath(__file__)), 'layout', 'ui')
-    destination_dir = join(dirname(realpath(__file__)), 'layout')
+    destination_dir = dirname(dir_ui)
 
     cmd_list = list()
     for ui_file_name in list_ui_file_names:
         cmd = [
             'pyside2-uic',
             '--output', f'{join(destination_dir, ui_file_name.replace(".ui", ".py"))}',
-            f'{join(cwd, ui_file_name)}'
+            f'{join(dir_ui, ui_file_name)}'
         ]
         cmd_list.append(cmd)
     procs_list = [subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE) for cmd in cmd_list]

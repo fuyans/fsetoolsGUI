@@ -5,6 +5,7 @@ from PySide2 import QtGui, QtCore
 from PySide2.QtWidgets import QErrorMessage
 from PySide2.QtCore import Slot
 from packaging import version
+from PySide2.QtWidgets import QErrorMessage
 
 import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_2_PNG
