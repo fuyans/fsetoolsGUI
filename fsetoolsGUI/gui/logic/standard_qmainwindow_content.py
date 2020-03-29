@@ -22,7 +22,7 @@ class App(QMainWindow):
             parent=parent,
             title='Standard Layout MainWindow Content',
             shortcut_Return=self.calculate,
-            id='null'
+            module_id='null'
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)

@@ -14,7 +14,7 @@ class Dialog0601(QMainWindow):
     def __init__(self, parent=None):
         # init
         super().__init__(
-            id='0601',
+            module_id='0601',
             parent=parent,
             shortcut_Return=self.copy_file_name,
             about_fp_or_md=self.fp_doc

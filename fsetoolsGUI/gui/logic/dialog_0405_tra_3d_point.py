@@ -16,7 +16,7 @@ class Dialog0405(QMainWindow):
 
     def __init__(self, parent=None):
         super().__init__(
-            id='0405',
+            module_id='0405',
             parent=parent,
             shortcut_Return=self.calculate
         )

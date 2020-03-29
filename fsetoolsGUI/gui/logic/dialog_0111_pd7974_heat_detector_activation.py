@@ -24,7 +24,7 @@ class Dialog0111(QMainWindow):
     def __init__(self, parent=None):
         # instantiate ui
         super().__init__(
-            id='0111',
+            module_id='0111',
             parent=parent,
             shortcut_Return=self.calculate,
             about_fp_or_md=os.path.join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0111.md')

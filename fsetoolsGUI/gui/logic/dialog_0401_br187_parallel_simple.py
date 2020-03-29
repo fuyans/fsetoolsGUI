@@ -24,7 +24,7 @@ class Dialog0401(QMainWindow):
     def __init__(self, parent=None):
         # ui instantiation
         super().__init__(
-            id='0401',
+            module_id='0401',
             parent=parent,
             shortcut_Return=self.calculate,
             about_fp_or_md=self.fp_doc
