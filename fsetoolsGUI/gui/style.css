@@ -248,8 +248,21 @@ QDoubleSpinBox::up-arrow:pressed
 /* ================================================= QRadioButton =================================================== */
 
 QRadioButton{
-    background-color: rgba(255, 255, 241, 0);
+    background-color: rgba(255, 255, 255, 0);
+    margin: 1.5px;
     /*font: 11px;*/
+}
+QRadioButton:hover{
+    background-color: rgba(255, 255, 255, 0);
+    border: 1.5px solid #56aafb;
+    border-radius: 3px;
+    margin: 0;
+}
+QRadioButton:focus{
+    background-color: rgba(255, 255, 255, 0);
+    border: 1.5px solid #106bfd;
+    border-radius: 3px;
+    margin: 0;
 }
 
 /* ================================================== QTableView ==================================================== */
@@ -319,6 +332,39 @@ QScrollBar::sub-line:vertical {
     subcontrol-origin: margin;
 }
 
+/* horizontal */
+
+QScrollBar:horizontal {
+    border: 0px solid #999999;
+    background: rgba(0, 0, 0, 0);
+    height:12px;
+    margin: 1px 1px 1px 1px;
+    padding-right:12px;
+}
+
+QScrollBar::handle:horizontal {
+    min-width: 50px;
+    border-radius: 5px;
+    background-color: #d2d1d2;
+}
+QScrollBar::handle:horizontal:hover {
+    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
+}
+QScrollBar::handle:horizontal:pressed {
+    background-color: #106bfd;
+}
+QScrollBar::add-line:horizontal {
+    height: 0px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+QScrollBar::sub-line:horizontal {
+    height: 0px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+
 /* ================================================= QProgressBar =================================================== */
 
 QProgressBar {
@@ -339,7 +385,14 @@ QProgressBar::chunk {
 QSlider:horizontal {
     border: 0px solid #d2d1d2;
     background: rgba(0, 0, 0, 0);
+    margin:1.5px;
     height: 2px;
+}
+QSlider:horizontal:focus {
+    /*background: #56aafb;*/
+    border: 1.5px solid #56aafb;
+    margin:0px;
+    border-radius: 3px;
 }
 QSlider::groove:horizontal {
     border: 0px solid #d2d1d2;

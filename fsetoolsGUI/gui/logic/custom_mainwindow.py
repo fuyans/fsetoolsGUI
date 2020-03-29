@@ -58,7 +58,7 @@ class QMainWindow(QtWidgets.QMainWindow):
 
     def __init__(
             self,
-            id: str,
+            module_id: str,
             icon: typing.Union[bytes, QtCore.QByteArray] = OFR_LOGO_1_PNG,
             title: str = None,
             parent=None,
@@ -73,7 +73,7 @@ class QMainWindow(QtWidgets.QMainWindow):
         super().__init__(parent=parent)
 
         # window properties
-        self.__id: str = id
+        self.__id: str = module_id
         self.__title: str = title
         self.__icon: bytes = icon
         self.__shortcut_Return: typing.Callable = shortcut_Return
@@ -101,7 +101,8 @@ class QMainWindow(QtWidgets.QMainWindow):
         self.setStyleSheet(qt_css)
         self.statusBar().setSizeGripEnabled(False)
 
-        self.centralWidget().adjustSize()
+        if self.centralWidget():
+            self.centralWidget().adjustSize()
         self.adjustSize()
 
         if self.__is_freeze_window_size:
@@ -165,6 +166,26 @@ class QMainWindow(QtWidgets.QMainWindow):
         )
 
         print(f'STATS POST STATUS: {rp} {rp.text}')
+
+    @staticmethod
+    def validate(var, type, err_msg: str):
+        try:
+            assert isinstance(var, type)
+        except AssertionError:
+            raise TypeError(err_msg)
+
+    def validate_show_statusBar_msg(self, var, type, err_msg: str):
+        if type == 'unsigned float':
+            try:
+                assert isinstance(var, float)
+                assert var >= 0
+            except AssertionError:
+                self.statusBar().showMessage(err_msg)
+        else:
+            try:
+                assert isinstance(var, type)
+            except AssertionError:
+                self.statusBar().showMessage(err_msg)
 
     @staticmethod
     def make_pixmap_from_base64(image_base64: bytes):

@@ -22,7 +22,7 @@ class Dialog0602(QMainWindow):
 
         # instantiate ui
         super().__init__(
-            id='0602',
+            module_id='0602',
             parent=parent,
             shortcut_Return=self.calculate,
             about_fp_or_md=self.fp_doc

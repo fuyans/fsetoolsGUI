@@ -2,6 +2,7 @@ import threading
 
 import requests
 from PySide2 import QtGui, QtCore
+from PySide2.QtWidgets import QErrorMessage
 from PySide2.QtCore import Slot
 from packaging import version
 
@@ -10,8 +11,8 @@ from fsetoolsGUI.gui.images_base64 import OFR_LOGO_2_PNG
 from fsetoolsGUI.gui.layout.main import Ui_MainWindow
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
-from fsetoolsGUI.gui.logic.dialog_0101_adb_datasheet_1 import Dialog as Dialog0101
-from fsetoolsGUI.gui.logic.dialog_0102_bs9999_datasheet_1 import Dialog as Dialog0102
+from fsetoolsGUI.gui.logic.dialog_0101_adb_datasheet_1 import Dialog0101 as Dialog0101
+from fsetoolsGUI.gui.logic.dialog_0102_bs9999_datasheet_1 import Dialog0102 as Dialog0102
 from fsetoolsGUI.gui.logic.dialog_0103_bs9999_merging_flow import Dialog0103 as Dialog0103
 from fsetoolsGUI.gui.logic.dialog_0104_adb_merging_flow import Dialog0104 as Dialog0104
 from fsetoolsGUI.gui.logic.dialog_0111_pd7974_heat_detector_activation import Dialog0111 as Dialog0111
@@ -39,7 +40,7 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         # ui setup
-        super().__init__(id='0000', title='Fire Safety Engineering Tools')
+        super().__init__(module_id='0000', title='Fire Safety Engineering Tools')
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.init()
@@ -65,7 +66,7 @@ class MainWindow(QMainWindow):
         self.ui.label_big_name.setText('')
         self.ui.label_copy_right.setText('')
         self.init_logos()  # logo
-        self.ui.dialog_error = QtWidgets.QErrorMessage(self)
+        self.ui.dialog_error = QErrorMessage(self)
         self.ui.dialog_error.setWindowTitle('Message')
         self.__new_version_update_url = None
         self.__dialog_opened = list()

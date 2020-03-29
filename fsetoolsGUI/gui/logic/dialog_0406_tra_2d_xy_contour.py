@@ -119,7 +119,7 @@ class Dialog0406(QMainWindow):
 
     def __init__(self, parent=None):
         super().__init__(
-            id='0406',
+            module_id='0406',
             parent=parent,
             shortcut_Return=self.calculate,
             about_fp_or_md=self.fp_doc
@@ -141,9 +141,6 @@ class Dialog0406(QMainWindow):
             "background-color:transparent;")  # set the plt widget background from white to transparent.
         self.ui.verticalLayout_plot.addWidget(self.figure_canvas)
         # self.addToolBar(NavigationToolbar(self.figure_canvas, self))  # add plt default toolbar.
-
-        # instantiate variables
-        # self.Solver = ThreadTRA(self)
 
         # instantiate tables
         self.init_table()
@@ -276,21 +273,21 @@ class Dialog0406(QMainWindow):
 
     def update_graphic_z_plane(self):
         """when z-plane value changes, set heat_flux accordingly and perform plot"""
-        if len(self.Solver.results) == 0:
+        if len(self.solver_results) == 0:
             return 0  # skip if calculation not yet carried out.
 
         z = self.ui.doubleSpinBox_graphic_z.value()
 
-        for i, v in self.Solver.results['heat_flux_dict'].items():
+        for i, v in self.solver_results['heat_flux_dict'].items():
             if abs(float(i) - z) < 1e-5:
-                self.Solver.results['heat_flux'] = v
+                self.solver_results['heat_flux'] = v
                 self.update_plot()
                 break
 
     def save_figure(self):
         path_to_file, _ = QtWidgets.QFileDialog.getSaveFileName(
             parent=self,
-            caption='Save Figure',
+            caption='Save figure',
             dir='image.png'
         )
 
