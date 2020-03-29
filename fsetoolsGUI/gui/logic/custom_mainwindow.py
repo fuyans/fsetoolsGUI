@@ -2,7 +2,7 @@ import threading
 import typing
 from datetime import datetime
 from os import getlogin
-from os.path import join
+import os.path as path
 
 from PySide2 import QtCore, QtWidgets, QtGui
 
@@ -13,7 +13,7 @@ from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
 
 # parse css for Qt GUI
 try:
-    qt_css = open(join(fsetoolsGUI.__root_dir__, 'gui', 'style.css'), "r").read()
+    qt_css = open(path.join(fsetoolsGUI.__root_dir__, 'gui', 'style.css'), "r").read()
 except FileNotFoundError:
     qt_css = None
 
@@ -43,7 +43,7 @@ class AboutDialog(QtWidgets.QDialog):
 
         self.setStyleSheet(qt_css)
 
-        if isfile(fp_or_html):
+        if path.isfile(fp_or_html):
             with open(fp_or_html, 'r') as f:
                 self.textBrowser_content.setText(f.read())
         else:
@@ -72,7 +72,7 @@ class QMainWindow(QtWidgets.QMainWindow):
 
         super().__init__(parent=parent)
 
-        self.AppInfo = AppInfo(int(id))
+        self.AppInfo = AppInfo(int(module_id))
 
         # window properties
         self.__id: str = module_id
