@@ -156,3 +156,4 @@ fsetoolsGUI/gui/docs/*
 !fsetoolsGUI/gui/images/*.png
 fsetoolsGUI/gui/images/._*.png
 !docs/
+!docs/*/*.png
