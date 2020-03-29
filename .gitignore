@@ -149,8 +149,10 @@ buildscript/*.nsi
 
 # Temporary UI files
 fsetoolsGUI/gui/layout/*.py
+fsetoolsGUI/gui/docs/*
 
 # Include project files
 !fsetoolsGUI/lib/
 !fsetoolsGUI/gui/images/*.png
 fsetoolsGUI/gui/images/._*.png
+!docs/
