@@ -1,38 +1,106 @@
+import os.path as path
+
 from PySide2 import QtWidgets, QtGui, QtCore
 
-from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
-from fsetoolsGUI.gui.images_base64 import dialog_0101_adb2_datasheet_1
+import fsetoolsGUI
+from fsetoolsGUI.gui.layout.dialog_0101 import Ui_MainWindow
+from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
-class Dialog(QtWidgets.QDialog):
-    def __init__(self, parent=None):
-        super().__init__(parent)
+class DialogPageDisplay(QMainWindow):
 
-        self.setWindowFlag(QtCore.Qt.WindowMinimizeButtonHint, True)
-        self.setWindowFlag(QtCore.Qt.WindowMaximizeButtonHint, True)
+    mscroll_last_move_y = 0
+    mscroll_last_move_x = 0
 
-        self.resize(800, 600)
+    def __init__(self, module_id: str, fp_image: str, parent=None):
 
-        self.label = QtWidgets.QLabel()
-        ba = QtCore.QByteArray.fromBase64(dialog_0101_adb2_datasheet_1)
-        pix_map = QtGui.QPixmap()
-        pix_map.loadFromData(ba)
-        self.label.setPixmap(pix_map)
+        super().__init__(
+            module_id=module_id,
+            parent=parent,
+            about_fp_or_md=path.join(fsetoolsGUI.__root_dir__, 'gui', 'doc', f'{module_id}.md')
+        )
 
-        self.scrollArea = QtWidgets.QScrollArea()
-        self.scrollArea.setBackgroundRole(QtGui.QPalette.Dark)
-        self.scrollArea.setWidget(self.label)
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        self.init(self)
 
-        # layout
-        layout = QtWidgets.QVBoxLayout()
-        layout.addWidget(self.scrollArea)
-        self.setLayout(layout)
+        self.ui.label.setPixmap(QtGui.QPixmap(fp_image))
 
-        # window properties
-        ba = QtCore.QByteArray.fromBase64(OFR_LOGO_1_PNG)
-        pix_map = QtGui.QPixmap()
-        pix_map.loadFromData(ba)
-        self.setWindowIcon(pix_map)
-        self.setWindowTitle('Approved Document B 2019 Vol. 2 Data Sheet 1')
+        self.scroll_geo = self.ui.scrollArea.geometry
+        self.scroll_vbar = self.ui.scrollArea.verticalScrollBar()
+        self.scroll_hbar = self.ui.scrollArea.horizontalScrollBar()
 
-        self.repaint()
+    def mouseMoveEvent(self, event):
+
+        geo = self.scroll_geo
+        x = event.pos().x()
+        y = event.pos().y()
+        left, right, top, bottom = geo().left(), geo().right(), geo().top(), geo().bottom()
+
+        if left < x < right and top < y < bottom:
+
+            if self.mscroll_last_move_x == 0:
+                self.mscroll_last_move_x = x
+            if self.mscroll_last_move_y == 0:
+                self.mscroll_last_move_y = y
+
+            dx = self.mscroll_last_move_x - x
+            dy = self.mscroll_last_move_y - y
+
+            self.scroll_hbar.setValue(self.scroll_hbar.value() + dx)
+            self.scroll_vbar.setValue(self.scroll_vbar.value() + dy)
+
+            self.mscroll_last_move_x = x
+            self.mscroll_last_move_y = y
+
+    def mouseReleaseEvent(self, event):
+        self.mscroll_last_move_x = 0
+        self.mscroll_last_move_y = 0
+
+    def eventFilter(self, source, event):
+
+        x = event.pos().x()
+        y = event.pos().y()
+
+        print(x, y)
+
+
+        if event.type() == QtCore.QEvent.MouseMove:
+            print(x, y)
+
+            if self.mscroll_last_move_x == 0:
+                self.mscroll_last_move_x = x
+            if self.mscroll_last_move_y == 0:
+                self.mscroll_last_move_y = y
+
+            dx = self.mscroll_last_move_x - x
+            dy = self.mscroll_last_move_y - y
+
+            self.scroll_hbar.setValue(self.scroll_hbar.value() + dx)
+            self.scroll_vbar.setValue(self.scroll_vbar.value() + dy)
+
+            self.mscroll_last_move_x = x
+            self.mscroll_last_move_y = y
+
+        elif event.type() == QtCore.QEvent.MouseButtonRelease:
+            self.mscroll_last_move_y = 0
+            self.mscroll_last_move_x = 0
+
+        return QtWidgets.QWidget.eventFilter(self, source, event)
+
+
+class Dialog0101(DialogPageDisplay):
+    def __init__(self):
+        super().__init__(
+            module_id='0101',
+            fp_image=path.join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0101-0.png')
+        )
+        self.resize(1000, 600)
+
+
+if __name__ == '__main__':
+    import sys
+    qapp = QtWidgets.QApplication(sys.argv)
+    app = Dialog0101()
+    app.show()
+    qapp.exec_()

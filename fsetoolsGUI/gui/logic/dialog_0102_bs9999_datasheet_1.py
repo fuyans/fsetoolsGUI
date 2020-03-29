@@ -1,38 +1,23 @@
-from PySide2 import QtWidgets, QtGui, QtCore
+import os.path as path
+from PySide2 import QtCore
+import fsetoolsGUI
+from fsetoolsGUI.gui.logic.dialog_0101_adb_datasheet_1 import DialogPageDisplay
 
-from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
-from fsetoolsGUI.gui.images_base64 import dialog_0102_bs9999_datasheet_1
+
+class Dialog0102(DialogPageDisplay):
+    def __init__(self):
+        super().__init__(
+            module_id='0102',
+            fp_image=path.join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0102-0.png')
+        )
+        self.resize(1000, 600)
 
 
-class Dialog(QtWidgets.QDialog):
-    def __init__(self, parent=None):
-        super().__init__(parent)
+if __name__ == '__main__':
+    from PySide2 import QtWidgets
+    import sys
 
-        self.setWindowFlag(QtCore.Qt.WindowMinimizeButtonHint, True)
-        self.setWindowFlag(QtCore.Qt.WindowMaximizeButtonHint, True)
-
-        self.resize(800, 600)
-
-        self.label = QtWidgets.QLabel()
-        ba = QtCore.QByteArray.fromBase64(dialog_0102_bs9999_datasheet_1)
-        pix_map = QtGui.QPixmap()
-        pix_map.loadFromData(ba)
-        self.label.setPixmap(pix_map)
-
-        self.scrollArea = QtWidgets.QScrollArea()
-        self.scrollArea.setBackgroundRole(QtGui.QPalette.Dark)
-        self.scrollArea.setWidget(self.label)
-
-        # layout
-        layout = QtWidgets.QVBoxLayout()
-        layout.addWidget(self.scrollArea)
-        self.setLayout(layout)
-
-        # window properties
-        ba = QtCore.QByteArray.fromBase64(OFR_LOGO_1_PNG)
-        pix_map = QtGui.QPixmap()
-        pix_map.loadFromData(ba)
-        self.setWindowIcon(pix_map)
-        self.setWindowTitle('BS 9999:2017 Data Sheet 1')
-
-        self.repaint()
+    qapp = QtWidgets.QApplication(sys.argv)
+    app = Dialog0102()
+    app.show()
+    qapp.exec_()
