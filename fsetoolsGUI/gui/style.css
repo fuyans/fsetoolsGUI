@@ -248,8 +248,21 @@ QDoubleSpinBox::up-arrow:pressed
 /* ================================================= QRadioButton =================================================== */
 
 QRadioButton{
-    background-color: rgba(255, 255, 241, 0);
+    background-color: rgba(255, 255, 255, 0);
+    margin: 1.5px;
     /*font: 11px;*/
+}
+QRadioButton:hover{
+    background-color: rgba(255, 255, 255, 0);
+    border: 1.5px solid #56aafb;
+    border-radius: 3px;
+    margin: 0;
+}
+QRadioButton:focus{
+    background-color: rgba(255, 255, 255, 0);
+    border: 1.5px solid #106bfd;
+    border-radius: 3px;
+    margin: 0;
 }
 
 /* ================================================== QTableView ==================================================== */
@@ -372,7 +385,14 @@ QProgressBar::chunk {
 QSlider:horizontal {
     border: 0px solid #d2d1d2;
     background: rgba(0, 0, 0, 0);
+    margin:1.5px;
     height: 2px;
+}
+QSlider:horizontal:focus {
+    /*background: #56aafb;*/
+    border: 1.5px solid #56aafb;
+    margin:0px;
+    border-radius: 3px;
 }
 QSlider::groove:horizontal {
     border: 0px solid #d2d1d2;
