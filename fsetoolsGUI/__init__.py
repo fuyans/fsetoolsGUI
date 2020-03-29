@@ -17,6 +17,7 @@ class AppInfo:
         'code': {
             "short name": 'a short name to be used as button name etc',
             'long name': 'a long name to be used as window title, tip text etc',
+            'doc file path': 'documentation file path, in html format, used in gui About dialog'
         },
         '0101': dict(
             short_name='ADB\ndata sheet\n1',
@@ -95,6 +96,15 @@ class AppInfo:
             return self.__data[str(self.__code)]['short_name'], self.__data[str(self.__code)]['long_name']
         except KeyError:
             return None
+
+    @property
+    def doc_file_path(self):
+        return os.path.join(__root_dir__, 'gui', 'docs', self.__code)
+
+    @property
+    def doc_html(self):
+        with open(self.doc_file_path, 'r') as f:
+            return f.read()
 
 
 """
