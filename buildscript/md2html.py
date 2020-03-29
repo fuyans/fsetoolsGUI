@@ -22,7 +22,7 @@ def md2md_embedded_img(fp_md: str):
             img_base64 = base64.b64encode(f.read()).decode('utf-8')
 
         # make embedded image url
-        img_html_embedded = f"<img src='data:image/png;base64,{img_base64}'>"
+        img_html_embedded = f"<img src='data:image/png;base64,{img_base64}' width=790>"
 
         # replace ref img with embedded img
         md = md.replace(ref_img, img_html_embedded)
