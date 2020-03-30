@@ -3,7 +3,7 @@ import typing
 from datetime import datetime
 from os import getlogin
 import os.path as path
-
+from fsetoolsGUI.gui.layout.dialog_0001_text_browser import Ui_MainWindow
 from PySide2 import QtCore, QtWidgets, QtGui
 
 import fsetoolsGUI
@@ -18,43 +18,38 @@ except FileNotFoundError:
     qt_css = None
 
 
-class AboutDialog(QtWidgets.QDialog):
+class AboutDialog(QtWidgets.QMainWindow):
     """todo: docstring"""
 
     def __init__(self, fp_or_html: str = None, parent=None):
+
         super().__init__(parent=parent)
+
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
 
         self.setWindowTitle('About this app')
         self.setWindowIcon(QMainWindow.make_pixmap_from_base64(OFR_LOGO_1_PNG))
 
-        self.resize(731, 593)
-        self.gridLayout = QtWidgets.QGridLayout(self)
-        self.groupBox = QtWidgets.QGroupBox(self)
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.groupBox)
-        self.verticalLayout.setContentsMargins(15, 15, 15, 15)
-
-        self.textBrowser_content = QtWidgets.QTextBrowser(self.groupBox)
-        self.textBrowser_content.setMinimumSize(QtCore.QSize(641, 0))
-        self.textBrowser_content.setMaximumSize(QtCore.QSize(641, 16777215))
-
-        self.verticalLayout.addWidget(self.textBrowser_content)
-
-        self.gridLayout.addWidget(self.groupBox, 0, 0, 1, 1)
-
         self.setStyleSheet(qt_css)
 
-        if path.isfile(fp_or_html):
+        try:
             with open(fp_or_html, 'r') as f:
-                self.textBrowser_content.setText(f.read())
-        else:
-            self.textBrowser_content.setText(fp_or_html)
+                self.ui.textBrowser.setText(f.read())
+        except Exception:
+            self.ui.textBrowser.setText(fp_or_html)
+
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+            self.close()
+            return
 
 
 class QMainWindow(QtWidgets.QMainWindow):
     """todo: docstring"""
 
     activated_dialogs: list = list()
-    __AboutForm = None  # About form object (QDialog)
+    __AboutForm = None  # About ui
 
     def __init__(
             self,
