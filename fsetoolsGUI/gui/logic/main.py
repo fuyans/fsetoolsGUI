@@ -89,12 +89,15 @@ class MainWindow(QMainWindow):
         Used as Slot to disable all buttons depend on remote version data `is_executable`.
         """
         if not self.is_executable:
-            for pushButton in filter_objects_by_name(self.ui.groupBox_buttons, object_types=[QtWidgets.QPushButton]):
+            for pushButton in filter_objects_by_name(self.ui.verticalGroupBox, object_types=[QtWidgets.QPushButton]):
                 pushButton.setEnabled(v)
 
     def label_logo_mousePressEvent(self, event=None):
-        if event:
-            QtGui.QDesktopServices.openUrl(QtCore.QUrl("https://ofrconsultants.com/"))
+        # DEPRECIATED
+        # it's annoying to pop up a web browser for no good reason
+        # if event:
+        #     QtGui.QDesktopServices.openUrl(QtCore.QUrl("https://ofrconsultants.com/"))
+        pass
 
     def label_version_mousePressEvent(self, event=None):
         if event:
