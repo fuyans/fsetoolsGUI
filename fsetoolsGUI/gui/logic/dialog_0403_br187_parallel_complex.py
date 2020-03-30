@@ -32,15 +32,6 @@ class Dialog04(QMainWindow):
         self.ui.label_image_page.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{module_id}-0.png'))
         self.ui.label_image_figure.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{module_id}-1.png'))
 
-        # set up validators
-        self.ui.lineEdit_in_W.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_H.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_w.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_h.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_Q.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_S.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_UA.setValidator(self._validator_unsigned_float)
-
         # set default values
         self.ui.radioButton_in_S.setChecked(True)
         self.change_mode_S_and_UA()
@@ -241,6 +232,10 @@ class Dialog04(QMainWindow):
         # S_solved, solved separation distance, surface to surface
         # UA_solved, solved permissible unprotected area
         # msg, a message to indicate calculation status if successful.
+
+        w, h = -w, -h
+        # ui convention is that w is the horizontal separation between the receiver and emitter
+        # but the calculation function treats w as the x value and emitter has a positive x
 
         # calculate
 
