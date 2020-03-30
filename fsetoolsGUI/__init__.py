@@ -99,7 +99,7 @@ class AppInfo:
 
     @property
     def doc_file_path(self):
-        return os.path.join(__root_dir__, 'gui', 'docs', self.__code)
+        return os.path.join(__root_dir__, 'gui', 'docs', f'{self.__code}.html')
 
     @property
     def doc_html(self):

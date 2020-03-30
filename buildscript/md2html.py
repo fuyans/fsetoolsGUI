@@ -76,6 +76,6 @@ if __name__ == '__main__':
     for fp_md in fp_md_list:
         html = md2html(md2md_embedded_img(fp_md))
         css = f"<style type='text/css'>{fsetoolsGUI.gui.md_css}</style>"
-        with open(path.join(fsetoolsGUI.__root_dir__, 'gui', 'docs', path.basename(fp_md).replace('.md', '')),
+        with open(path.join(fsetoolsGUI.__root_dir__, 'gui', 'docs', path.basename(fp_md).replace('.md', '.html')),
                   'w+') as f:
             f.write(css + html)

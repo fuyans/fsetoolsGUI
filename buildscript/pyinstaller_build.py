@@ -59,7 +59,7 @@ def make_fp_images() -> list:
     for dirpath, dirnames, filenames in os.walk(join(fsetoolsGUI.__root_dir__, 'gui')):
 
         for fn in filenames:
-            if fn.endswith('.png') or fn.endswith('.md') or fn.endswith('.css'):
+            if fn.endswith('.png') or fn.endswith('.ico') or fn.endswith('.html') or fn.endswith('.css'):
                 list_fp_append(join(dirpath, fn))
 
     return list_fp
@@ -74,6 +74,10 @@ def main():
     ]
 
     # include fsetoolsGUI/gui/*
+    options.extend([f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=fsetoolsGUI.__root_dir__)}' for fp in
+                    make_fp_images()])
+
+    # include fsetoolsGUI/gui/docs
     options.extend([f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=fsetoolsGUI.__root_dir__)}' for fp in
                     make_fp_images()])
 
