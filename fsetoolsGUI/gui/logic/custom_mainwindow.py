@@ -133,8 +133,11 @@ class QMainWindow(QtWidgets.QMainWindow):
         if self.__AboutForm:
             self.__AboutForm.show()
         else:
-            self.__AboutForm = AboutDialog(fp_or_html=self.AppInfo.doc_html)
-            self.__AboutForm.show()
+            try:
+                self.__AboutForm = AboutDialog(fp_or_html=self.AppInfo.doc_html)
+                self.__AboutForm.show()
+            except Exception as e:
+                self.statusBar().showMessage(str(e))
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:

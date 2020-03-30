@@ -1,6 +1,6 @@
 from os.path import join
 
-from fsetools.lib.fse_thermal_radiation import phi_parallel_any_br187, phi_perpendicular_any_br187, linear_solver
+from fsetools.lib.fse_thermal_radiation import phi_parallel_any_br187, linear_solver
 
 import fsetoolsGUI
 from fsetoolsGUI.gui.layout.dialog_0403_br187_parallel_complex import Ui_MainWindow
@@ -8,8 +8,6 @@ from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
 class Dialog04(QMainWindow):
-
-    __phi_func = None
 
     def __init__(self, module_id:str, parent=None):
 
@@ -22,11 +20,6 @@ class Dialog04(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.init(self)
-
-        if module_id == '0403':
-            self.__phi_func = self.__phi_parallel_any_br187
-        elif module_id == '0404':
-            self.__phi_func = self.__phi_perpendicular_any_br187
 
         # set up radiation figure
         self.ui.label_image_page.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{module_id}-0.png'))
@@ -164,6 +157,21 @@ class Dialog04(QMainWindow):
     def output_parameters(self) -> dict:
         return dict()  # currently not used
 
+    @staticmethod
+    def phi_solver(W: float, H: float, w: float, h: float, Q: float, Q_a: float, S=None, UA=None):
+        """
+        :param W: Emitter width
+        :param H: Emitter height
+        :param w: Receiver loc 1 (along width axis)
+        :param h: Receiver loc 2 (along height axis)
+        :param Q: Emitter heat flux
+        :param Q_a: Receiver acceptable heat flux
+        :param S: Separation distance between emitter and receiver
+        :param UA: Unprotected area
+        :return:
+        """
+        return 0
+
     @output_parameters.setter
     def output_parameters(self, v: dict):
         try:
@@ -174,10 +182,11 @@ class Dialog04(QMainWindow):
 
         self.ui.lineEdit_out_Phi.setText(f'{phi:.4f}')
         self.ui.lineEdit_out_q.setText(f'{q:.2f}')
+
         if S:
-            self.ui.lineEdit_out_S_or_UA.setText(f'{S:.2f}')
+            self.ui.lineEdit_out_S_or_UA.setText(f'{S / 2:.2f}')
         elif UA:
-            self.ui.lineEdit_out_S_or_UA.setText(f'{UA / 2:.2f}')
+            self.ui.lineEdit_out_S_or_UA.setText(f'{UA:.2f}')
 
     def calculate(self):
 
@@ -200,7 +209,7 @@ class Dialog04(QMainWindow):
         # Calculation
 
         try:
-            phi, q, S, UA, msg = self.__phi_func(**input_parameters)
+            phi, q, S, UA, msg = self.phi_solver(**input_parameters)
             self.statusBar().showMessage(msg)
             # if calculation is successful: assign to output parameters for later use and show a message to user.
         except Exception as e:
@@ -219,73 +228,14 @@ class Dialog04(QMainWindow):
 
         self. repaint()
 
-    @staticmethod
-    def __phi_perpendicular_any_br187(W:float, H:float, w:float, h:float, Q:float, Q_a:float, S=None, UA=None):
-        """A wrapper to `phi_perpendicular_any_br187` with error handling and customised IO"""
 
-        # default values
+class Dialog0403(Dialog04):
+    def __init__(self):
+        super().__init__(module_id='0403')
 
-        phi_solved, q_solved, S_solved, UA_solved = [None] * 4
-        msg = 'Calculation complete.'
-        # phi_solved, solved configuration factor
-        # q_solved, solved receiver heat flux
-        # S_solved, solved separation distance, surface to surface
-        # UA_solved, solved permissible unprotected area
-        # msg, a message to indicate calculation status if successful.
-
-        w, h = -w, -h
-        # ui convention is that w is the horizontal separation between the receiver and emitter
-        # but the calculation function treats w as the x value and emitter has a positive x
-
-        # calculate
-
-        if S:  # to calculate maximum unprotected area
-            try:
-                phi_solved = phi_perpendicular_any_br187(W_m=W, H_m=H, w_m=w, h_m=h, S_m=S)
-            except Exception as e:
-                raise ValueError(f'Calculation incomplete. {e}')
-
-            if Q:
-                # if Q is provided, proceed to calculate q and UA
-                q_solved = Q * phi_solved
-                if q_solved == 0:
-                    UA_solved = 100
-                else:
-                    UA_solved = max([min([Q_a / q_solved * 100, 100]), 0])
-
-        # to calculate minimum separation distance to boundary
-        elif UA:
-
-            phi_target = Q_a / (Q * UA)
-
-            try:
-                S_solved = linear_solver(
-                    func=phi_perpendicular_any_br187,
-                    dict_params=dict(W_m=W, H_m=H, w_m=w, h_m=h, S_m=0),
-                    x_name='S_m',
-                    y_target=phi_target,
-                    x_upper=1000,
-                    x_lower=0.01,
-                    y_tol=0.001,
-                    iter_max=500,
-                    func_multiplier=-1
-                )
-            except ValueError as e:
-                raise ValueError(f'Calculation failed. {e}')
-            if S_solved is None:
-                raise ValueError('Calculation failed. Maximum iteration reached.')
-
-            phi_solved = phi_perpendicular_any_br187(W_m=W, H_m=H, w_m=w, h_m=h, S_m=S_solved)
-            q_solved = Q * phi_solved
-
-            if S_solved < 2:
-                msg = (f'Calculation complete. Forced boundary separation to 1 from {S_solved:.3f} m.')
-                S_solved = 2
-
-        return phi_solved, q_solved, S_solved, UA_solved, msg
 
     @staticmethod
-    def __phi_parallel_any_br187(W:float, H:float, w:float, h:float, Q:float, Q_a:float, S=None, UA=None):
+    def phi_solver(W: float, H: float, w: float, h: float, Q: float, Q_a: float, S=None, UA=None):
         """A wrapper to `phi_parallel_any_br187` with error handling and customised IO"""
 
         # default values
@@ -343,10 +293,6 @@ class Dialog04(QMainWindow):
 
         return phi_solved, q_solved, S_solved, UA_solved, msg
 
-
-class Dialog0403(Dialog04):
-    def __init__(self):
-        super().__init__(module_id='0403')
 
 
 if __name__ == "__main__":

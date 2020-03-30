@@ -56,7 +56,7 @@ class AppInfo:
             long_name='BR 187 perpendicular oriented rectangle emitter and eccentric receiver',
         ),
         '0405': dict(
-            short_name='TRA\n3D',
+            short_name='TRA\n3D single point',
             long_name='TRA 3D polygon emitter and a single point',
         ),
         '0406': dict(
