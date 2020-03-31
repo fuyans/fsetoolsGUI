@@ -3,7 +3,6 @@ import hashlib
 import json
 from os.path import isfile
 
-import markdown2
 import requests
 
 
@@ -43,29 +42,5 @@ def post_to_knack_user_usage_stats(
     return rp
 
 
-def md2html(fp_or_md: str):
-    """Converts markdown file or string to html.
-
-    :param fp_or_md: file path or markdown raw string.
-    :return:
-    """
-
-    # parse markdown raw from file or `fp_or_md`
-    if isfile(fp_or_md):
-        with open(fp_or_md, 'r') as f:
-            doc_md = f.read()
-    else:
-        doc_md = fp_or_md
-
-    # conversion using `markdown2`
-    return markdown2.markdown(doc_md, extras=['tables', 'fenced-code-blocks'])
-
-
-def _test_md2html():
-    fp = """#External fire spread assessment\n\nthis is a very rough test.\n\n## Quality Assurance\n\n| Date       | Author | Checker | Remarks                                                      |\n| ---------- | ------ | ------- | ------------------------------------------------------------ |\n| 2020/03/24 | ian fu | tester  | nothing to be mentioned here but I need to write a lot more to test if text wrapping works or what happens to super long text. |"""
-
-    print(md2html(fp))
-
-
 if __name__ == '__main__':
-    _test_md2html()
+    pass
