@@ -6,7 +6,7 @@ from os.path import join, realpath, dirname
 import fsetoolsGUI
 from buildscript import nsis_build_nsi
 from buildscript.pyinstaller_build import main as main_pyinstaller
-from fsetoolsGUI.gui.ui2py import ui2py
+from buildscript.ui2py import ui2py
 
 
 def find_all_dist_files(dir_build: str, include_root_name: bool = True):
@@ -54,7 +54,7 @@ def make_nsi_file():
     except IndexError:
         dict_var['version_build'] = 0
 
-    dict_var['fn_installer'] = f'FSETOOLS {".".join(fsetoolsGUI.__version__.split(".")[:3])}.exe'
+    dict_var['fn_installer'] = f'FSETOOLS {".".join(fsetoolsGUI.__version__.split("."))}.exe'
 
     with open(join(dirname(realpath(__file__)), 'nsis_build.nsi'), 'w+') as f:
         f.write(nsis_build_nsi.nsi_script.format(**dict_var))
