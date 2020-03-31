@@ -6,26 +6,21 @@ from fsetools.libstd.bs_9999_2017 import (
 )
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.images_base64 import dialog_0103_bs9999_mergine_flow_figure_1 as image_figure_1
-from fsetoolsGUI.gui.images_base64 import dialog_0103_bs9999_mergine_flow_figure_2 as image_figure_2
-from fsetoolsGUI.gui.images_base64 import dialog_0103_bs9999_mergine_flow_figure_3 as image_figure_3
-from fsetoolsGUI.gui.images_base64 import dialog_0103_bs9999_merging_flow_context as image_context
 from fsetoolsGUI.gui.layout.dialog_0103_merging_flow import Ui_MainWindow
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
 class Dialog0103(QMainWindow):
-    maximum_acceptable_thermal_radiation_heat_flux = 12.6
-    fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0103')
 
     def __init__(self, parent=None):
+        module_id = '0103'
+
         # instantiation
         super().__init__(
-            module_id='0103',
+            module_id=module_id,
             parent=parent,
             shortcut_Return=self.calculate,
-            about_fp_or_md=self.fp_doc,
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -33,15 +28,15 @@ class Dialog0103(QMainWindow):
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(
-            image_context=image_context,
-            image_figure_1=image_figure_1,
-            image_figure_2=image_figure_2,
-            image_figure_3=image_figure_3,
+            image_context=join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{module_id}-0.png'),
+            image_figure_1=join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{module_id}-1-1.png'),
+            image_figure_2=join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{module_id}-1-2.png'),
+            image_figure_3=join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{module_id}-1-3.png'),
         )
         for k, v in self.dict_images_pixmap.items():
-            ba = QtCore.QByteArray.fromBase64(v)
-            self.dict_images_pixmap[k] = QtGui.QPixmap()
-            self.dict_images_pixmap[k].loadFromData(ba)
+            # ba = QtCore.QByteArray.fromBase64(v)
+            self.dict_images_pixmap[k] = QtGui.QPixmap(v)
+            # self.dict_images_pixmap[k].loadFromData(ba)
 
         # set all outputs lineedit to readonly
         for i in filter_objects_by_name(
