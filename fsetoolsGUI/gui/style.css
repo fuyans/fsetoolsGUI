@@ -39,14 +39,11 @@ QGroupBox {
 
 /* =================================================== QFrame ======================================================= */
 
-/*QFrame#frame_io {*/
-/*    background-color: #dcdcdc;*/
-/*    border: 1px solid #d2d1d2;*/
-/*    border-radius: 5px;*/
-/*}*/
-/*QFrame {*/
-/*    background-color: rgba(255, 255, 255, 0);*/
-/*}*/
+QFrame#frame_userio, QFrame#frame_userio1, QFrame#frame_userio2, QFrame#frame_userio3, QFrame#frame_userio4 {
+    background-color: #dcdcdc;
+    border: 1px solid #d2d1d2;
+    border-radius: 5px;
+}
 
 /* =================================================== QLabel ======================================================= */
 

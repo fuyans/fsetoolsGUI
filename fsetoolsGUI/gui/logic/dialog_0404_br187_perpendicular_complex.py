@@ -56,9 +56,11 @@ class Dialog0404(Dialog04):
                 # if Q is provided, proceed to calculate q and UA
                 q_solved = Q * phi_solved
                 if q_solved == 0:
-                    UA_solved = 100
+                    UA_solved = 1
                 else:
-                    UA_solved = max([min([Q_a / q_solved * 100, 100]), 0])
+                    UA_solved = max([min([Q_a / q_solved, 1]), 0])
+
+            q_solved *= UA_solved
 
         # to calculate minimum separation distance to boundary
         elif UA:
@@ -70,7 +72,7 @@ class Dialog0404(Dialog04):
                     func=phi_perpendicular_any_br187,
                     dict_params=dict(W_m=W, H_m=H, w_m=w, h_m=h, S_m=0),
                     x_name='S_m',
-                    y_target=phi_target,
+                    y_target=phi_target - 0.0005,
                     x_upper=1000,
                     x_lower=0.01,
                     y_tol=0.001,
@@ -83,7 +85,7 @@ class Dialog0404(Dialog04):
                 raise ValueError('Calculation failed. Maximum iteration reached.')
 
             phi_solved = phi_perpendicular_any_br187(W_m=W, H_m=H, w_m=w, h_m=h, S_m=S_solved)
-            q_solved = Q * phi_solved
+            q_solved = Q * phi_solved * UA
 
             if S_solved < 2:
                 msg = (f'Calculation complete. Forced boundary separation to 1 from {S_solved:.3f} m.')

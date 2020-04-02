@@ -1,15 +1,16 @@
+import os.path as path
 import threading
 import typing
 from datetime import datetime
 from os import getlogin
-import os.path as path
-from fsetoolsGUI.gui.layout.dialog_0001_text_browser import Ui_MainWindow
+
 from PySide2 import QtCore, QtWidgets, QtGui
 
 import fsetoolsGUI
 from fsetoolsGUI import AppInfo
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
+from fsetoolsGUI.gui.layout.dialog_0001_text_browser import Ui_MainWindow
 
 # parse css for Qt GUI
 try:
@@ -169,23 +170,23 @@ class QMainWindow(QtWidgets.QMainWindow):
 
     @staticmethod
     def validate(var, type, err_msg: str):
-        try:
-            assert isinstance(var, type)
-        except AssertionError:
-            raise TypeError(err_msg)
-
-    def validate_show_statusBar_msg(self, var, type, err_msg: str):
         if type == 'unsigned float':
             try:
                 assert isinstance(var, float)
                 assert var >= 0
             except AssertionError:
-                self.statusBar().showMessage(err_msg)
+                raise ValueError(err_msg)
         else:
             try:
                 assert isinstance(var, type)
             except AssertionError:
-                self.statusBar().showMessage(err_msg)
+                raise ValueError(err_msg)
+
+    def validate_show_statusBar_msg(self, var, type, err_msg: str):
+        try:
+            self.validate(var, type, err_msg)
+        except Exception as e:
+            self.statusBar().showMessage(f'{e}')
 
     @staticmethod
     def make_pixmap_from_base64(image_base64: bytes):

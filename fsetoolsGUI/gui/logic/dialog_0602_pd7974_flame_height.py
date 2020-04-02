@@ -9,15 +9,12 @@ from fsetools.libstd.pd_7974_1_2019 import eq_5_dimensionless_hrr
 import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import dialog_0602_context as image_context
 from fsetoolsGUI.gui.images_base64 import dialog_0602_figure as image_figure
-from fsetoolsGUI.gui.layout.dialog_0602_pd_7974_flame_height import Ui_MainWindow
+from fsetoolsGUI.gui.layout.ui0602 import Ui_MainWindow
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
 class Dialog0602(QMainWindow):
-    maximum_acceptable_thermal_radiation_heat_flux = 12.6
-    fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0602.md')  # doc file path
-
     def __init__(self, parent=None):
 
         # instantiate ui
@@ -25,8 +22,9 @@ class Dialog0602(QMainWindow):
             module_id='0602',
             parent=parent,
             shortcut_Return=self.calculate,
-            about_fp_or_md=self.fp_doc
+            # freeze_window_size=True,
         )
+
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.init(self)
@@ -39,7 +37,7 @@ class Dialog0602(QMainWindow):
             self.dict_images_pixmap[k] = QtGui.QPixmap()
             self.dict_images_pixmap[k].loadFromData(ba)
 
-        for i in filter_objects_by_name(self.ui.groupBox_io, object_types=[QtWidgets.QLineEdit], names=['_out_']):
+        for i in filter_objects_by_name(self.ui.frame_userio, object_types=[QtWidgets.QLineEdit], names=['_out_']):
             try:
                 i.setReadOnly(True)
             except AttributeError:
@@ -60,39 +58,30 @@ class Dialog0602(QMainWindow):
         self.ui.pushButton_example.clicked.connect(self.example)
         self.ui.pushButton_ok.clicked.connect(self.calculate)
 
-        # try:
-        #     self.ui.frame_io.setProperties("cssClass", "io")
-        #     print('hello')
-        # except AttributeError:
-        #     pass
-
     def change_fire_shape(self):
         if self.ui.comboBox_fire_shape.currentIndex() == 0:  # circular fire source
-            self.ui.label_Q_dot_or_Q_dot_l.setText('Q`, fire total HRR')
+            self.ui.label_Q_dot_or_Q_dot_l.setText('Fire total HRR')
             self.ui.label_Q_dot_or_Q_dot_l_unit.setText('kW')
-            self.ui.label_L_A_or_D.setText('D, fire diameter')
+            self.ui.label_L_A_or_D.setText("Fire diameter")
             self.ui.label_L_B.setDisabled(True)
             self.ui.lineEdit_L_B.setDisabled(True)
             self.ui.label_L_B_unit.setDisabled(True)
         elif self.ui.comboBox_fire_shape.currentIndex() == 1:  # rectangular fire source
-            self.ui.label_Q_dot_or_Q_dot_l.setText('Q`, total fire HRR')
+            self.ui.label_Q_dot_or_Q_dot_l.setText('Fire total HRR')
             self.ui.label_Q_dot_or_Q_dot_l_unit.setText('kW')
-            self.ui.label_L_A_or_D.setText(r'<html><head/><body><p>L<span style=" vertical-align:sub;">A</span>, fire longer dimension</p></body></html>')
+            self.ui.label_L_A_or_D.setText(r"Fire's longer dimension")
             self.ui.label_L_B.setDisabled(False)
             self.ui.lineEdit_L_B.setDisabled(False)
             self.ui.label_L_B_unit.setDisabled(False)
         elif self.ui.comboBox_fire_shape.currentIndex() == 2:  # line fire source
-            self.ui.label_Q_dot_or_Q_dot_l.setText(r'<html><head/><body><p>Q`<span style=" vertical-align:sub;">l</span>, fire length</p></body></html>')
+            self.ui.label_Q_dot_or_Q_dot_l.setText(r'Fire total HRR per unit length')
             self.ui.label_Q_dot_or_Q_dot_l_unit.setText('kW/m')
-            self.ui.label_L_A_or_D.setText(r'<html><head/><body><p>L<span style=" vertical-align:sub;">A</span>, fire length</p></body></html>')
+            self.ui.label_L_A_or_D.setText(r'Fire length')
             self.ui.label_L_B.setDisabled(True)
             self.ui.lineEdit_L_B.setDisabled(True)
             self.ui.label_L_B_unit.setDisabled(True)
         else:
-            raise ValueError('Unknown fire shape.')
-
-    def change_fuel_type(self):
-        pass
+            self.statusBar().showMessage('Unknown fire shape')
 
     def example(self):
         self.ui.comboBox_fire_shape.setCurrentIndex(0)
@@ -108,25 +97,81 @@ class Dialog0602(QMainWindow):
 
     def calculate(self):
 
+        # clear ui outputs
+        self.output_parameters = dict(Q_dot_star=None, flame_height=None)
+
+        # parse inputs from ui
+        try:
+            input_parameters = self.input_parameters
+        except Exception as e:
+            self.statusBar().showMessage(f'{str(e)}')
+            return
+
+        # perform calculation
+        try:
+            output_parameters = self.__flame_height_func(**input_parameters)
+        except Exception as e:
+            self.statusBar().showMessage(f'{str(e)}')
+            return
+
+        # cast outputs to ui
+        try:
+            self.output_parameters = output_parameters
+        except Exception as e:
+            self.statusBar().showMessage(f'{str(e)}')
+            return
+
+    @property
+    def input_parameters(self):
+        """Parse inputs from the UI."""
+
+        # parse compulsory parameters
         try:
             Q_dot_or_Q_dot_l = float(self.ui.lineEdit_Q_dot_or_Q_dot_l.text())
             L_A_or_D = float(self.ui.lineEdit_L_A_or_D.text())
-            try:
-                L_B = float(self.ui.lineEdit_L_B.text())
-            except ValueError:
-                L_B = None
             rho_0 = float(self.ui.lineEdit_rho_0.text())
             c_p_0 = float(self.ui.lineEdit_c_p_0.text())
             T_0 = float(self.ui.lineEdit_T_0.text())
             g = float(self.ui.lineEdit_g.text())
+            fire_shape = self.ui.comboBox_fire_shape.currentIndex()
             fuel_type = int(self.ui.comboBox_fuel_type.currentIndex())
         except Exception as e:
-            self.statusBar().showMessage(f'Failed to parse input parameters. Error: {e}.')
-            self.repaint()
-            raise ValueError
+            raise ValueError(f'Failed to parse input parameters. Error: {e}')
+
+        # parse optional input parameters
+        try:
+            L_B = float(self.ui.lineEdit_L_B.text())
+        except Exception as e:
+            L_B = None
+
+        # validation, error will be raised
+        self.validate(Q_dot_or_Q_dot_l, 'unsigned float', 'Heat release rate should be greater than 0')
+        self.validate(L_A_or_D, 'unsigned float', 'Fire dimension should be greater than 0')
+        self.validate(rho_0, 'unsigned float', 'Ambient air density should be greater than 0')
+        self.validate(c_p_0, 'unsigned float', 'Ambient air heat capacity should be greater than 0')
+        self.validate(T_0, 'unsigned float', 'Ambient temperature should be greater than 0')
+        self.validate(g, 'unsigned float', 'Gravity should be greater than 0')
+        if L_B:
+            self.validate(L_B, 'unsigned float', 'Fire dimension should be greater than 0')
+
+        return dict(
+            Q_dot_or_Q_dot_l=Q_dot_or_Q_dot_l,
+            L_A_or_D=L_A_or_D,
+            rho_0=rho_0,
+            c_p_0=c_p_0,
+            T_0=T_0,
+            g=g,
+            fire_shape=fire_shape,
+            fuel_type=fuel_type,
+            L_B=L_B
+        )
+
+    @staticmethod
+    def __flame_height_func(Q_dot_or_Q_dot_l, L_A_or_D, rho_0, c_p_0, T_0, g, fire_shape, fuel_type, L_B):
+        """A wrapper to the core calculation function with additional options and error handling"""
 
         try:
-            if self.ui.comboBox_fire_shape.currentIndex() == 0:  # circular fire source
+            if fire_shape == 0:  # circular fire source
                 Q_dot_star = eq_5_dimensionless_hrr(
                     Q_dot_kW=Q_dot_or_Q_dot_l,
                     rho_0=rho_0,
@@ -135,8 +180,9 @@ class Dialog0602(QMainWindow):
                     g=g,
                     D=L_A_or_D,
                 )
-                flame_height = mean_flame_height_pd_7974(Q_dot_star=Q_dot_star, fuel_type=fuel_type, fire_diameter=L_A_or_D)
-            elif self.ui.comboBox_fire_shape.currentIndex() == 1:  # rectangular fire source
+                flame_height = mean_flame_height_pd_7974(Q_dot_star=Q_dot_star, fuel_type=fuel_type,
+                                                         fire_diameter=L_A_or_D)
+            elif fire_shape == 1:  # rectangular fire source
                 Q_dot_star = eq_11_dimensionless_hrr_rectangular(
                     Q_dot_kW=Q_dot_or_Q_dot_l,
                     rho_0=rho_0,
@@ -149,7 +195,7 @@ class Dialog0602(QMainWindow):
                 flame_height = mean_flame_height_pd_7974(
                     Q_dot_star=Q_dot_star, fuel_type=fuel_type, fire_diameter=(L_A_or_D + L_B) / 2.
                 )
-            elif self.ui.comboBox_fire_shape.currentIndex() == 2:  # line fire source
+            elif fire_shape == 2:  # line fire source
                 Q_dot_star = eq_12_dimensionless_hrr_line(
                     Q_dot_l_kW_m=Q_dot_or_Q_dot_l,
                     rho_0=rho_0,
@@ -163,13 +209,44 @@ class Dialog0602(QMainWindow):
                 )
             else:
                 raise ValueError('Unknown fire shape')
+
+            if flame_height <= 0:
+                raise ValueError(
+                    'Calculation failed due to unreasonable input parameters, make sure the inputs make a physical sense')
         except Exception as e:
-            self.statusBar().showMessage(f'Calculation incomplete. Error: {e}.')
-            self.repaint()
-            raise ValueError
+            raise ValueError(f'Calculation incomplete. Error: {e}.')
 
-        self.ui.lineEdit_out_Q_dot_star.setText(f'{Q_dot_star:.2f}')
-        self.ui.lineEdit_out_Z_f.setText(f'{flame_height:.2f}')
+        return dict(Q_dot_star=Q_dot_star, flame_height=flame_height)
 
-        self.statusBar().showMessage('Calculation complete.')
-        self.repaint()
+    @property
+    def output_parameters(self):
+        return  # not implemented
+
+    @output_parameters.setter
+    def output_parameters(self, v: dict):
+        """cast values to ui line edits"""
+
+        try:
+            Q_dot_star = v['Q_dot_star']
+            flame_height = v['flame_height']
+        except Exception as e:
+            raise KeyError(f'Missing output parameters. Error {str(e)}')
+
+        if Q_dot_star:
+            self.ui.lineEdit_out_Q_dot_star.setText(f'{Q_dot_star:.2f}')
+        else:
+            self.ui.lineEdit_out_Q_dot_star.clear()
+
+        if flame_height:
+            self.ui.lineEdit_out_Z_f.setText(f'{flame_height:.2f}')
+        else:
+            self.ui.lineEdit_out_Z_f.clear()
+
+
+if __name__ == '__main__':
+    import sys
+
+    qapp = QtWidgets.QApplication(sys.argv)
+    app = Dialog0602()
+    app.show()
+    qapp.exec_()

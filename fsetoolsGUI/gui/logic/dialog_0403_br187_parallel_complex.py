@@ -3,13 +3,14 @@ from os.path import join
 from fsetools.lib.fse_thermal_radiation import phi_parallel_any_br187, linear_solver
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.layout.dialog_0403_br187_parallel_complex import Ui_MainWindow
+from fsetoolsGUI.gui.layout.dialog_0401_br187_parallel_simple import Ui_MainWindow as Ui_0401
+from fsetoolsGUI.gui.layout.dialog_0403_br187_parallel_complex import Ui_MainWindow as Ui_0403
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
 class Dialog04(QMainWindow):
 
-    def __init__(self, module_id:str, parent=None):
+    def __init__(self, module_id: str, parent=None):
 
         super().__init__(
             module_id=module_id,
@@ -17,9 +18,15 @@ class Dialog04(QMainWindow):
             shortcut_Return=self.calculate,
             about_fp_or_md=join(fsetoolsGUI.__root_dir__, 'gui', 'doc', f'{module_id}.md')
         )
-        self.ui = Ui_MainWindow()
+
+        if module_id == '0401' or module_id == '0402':
+            self.ui = Ui_0401()
+        elif module_id == '0403' or module_id == '0404':
+            self.ui = Ui_0403()
         self.ui.setupUi(self)
         self.init(self)
+
+        self.__id = module_id
 
         # set up radiation figure
         self.ui.label_image_page.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{module_id}-0.png'))
@@ -33,8 +40,11 @@ class Dialog04(QMainWindow):
 
         self.ui.lineEdit_in_W.textChanged.connect(self.calculate)
         self.ui.lineEdit_in_H.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_w.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_h.textChanged.connect(self.calculate)
+        try:
+            self.ui.lineEdit_in_w.textChanged.connect(self.calculate)
+            self.ui.lineEdit_in_h.textChanged.connect(self.calculate)
+        except AttributeError:
+            pass
         self.ui.lineEdit_in_Q.textChanged.connect(self.calculate)
         self.ui.lineEdit_in_S.textChanged.connect(self.calculate)
         self.ui.lineEdit_in_UA.textChanged.connect(self.calculate)
@@ -49,8 +59,11 @@ class Dialog04(QMainWindow):
         self.ui.radioButton_in_S.setChecked(True)
         self.ui.lineEdit_in_W.setText('50')
         self.ui.lineEdit_in_H.setText('50')
-        self.ui.lineEdit_in_w.setText('0')
-        self.ui.lineEdit_in_h.setText('0')
+        try:
+            self.ui.lineEdit_in_w.setText('0')
+            self.ui.lineEdit_in_h.setText('0')
+        except AttributeError:
+            pass
         self.ui.lineEdit_in_Q.setText('84')
         self.ui.lineEdit_in_S.setText('2')
         self.change_mode_S_and_UA()
@@ -61,23 +74,21 @@ class Dialog04(QMainWindow):
         """update ui to align with whether to calculate boundary distance or unprotected area %"""
 
         # change input and output labels and units
-        if self.ui.radioButton_in_S.isChecked():  # to calculate separation to boundary
+        if self.ui.radioButton_in_S.isChecked():  # to calculate unprotected area percentage
             self.ui.lineEdit_in_UA.setEnabled(False)  # disable UA related inputs
             self.ui.label_in_UA_unit.setEnabled(False)  # disable UA related inputs
             self.ui.lineEdit_in_S.setEnabled(True)  # enable S related inputs
             self.ui.label_in_S_unit.setEnabled(True)  # enable S related inputs
-            self.ui.label_out_S_or_UA.setText('Unprotected area')
+            self.ui.label_out_S_or_UA.setText('Allowable unprotected area')
             self.ui.label_out_S_or_UA_unit.setText('%')
-            self.ui.label_out_S_or_UA.setStatusTip('Solved maximum permitted unprotected area')
             self.ui.label_out_S_or_UA.setToolTip('Solved maximum permitted unprotected area')
-        elif self.ui.radioButton_in_UA.isChecked():  # to calculate unprotected area percentage
+        elif self.ui.radioButton_in_UA.isChecked():  # to calculate separation to boundary
             self.ui.lineEdit_in_S.setEnabled(False)  # disable S related inputs
             self.ui.label_in_S_unit.setEnabled(False)  # disable S related inputs
             self.ui.lineEdit_in_UA.setEnabled(True)  # enable UA related inputs
             self.ui.label_in_UA_unit.setEnabled(True)  # enable UA related inputs
-            self.ui.label_out_S_or_UA.setText('½S, emitter to boundary')
+            self.ui.label_out_S_or_UA.setText('½S, minimum separation distance')
             self.ui.label_out_S_or_UA_unit.setText('m')
-            self.ui.label_out_S_or_UA.setStatusTip('Solved minimum separation distance.')
             self.ui.label_out_S_or_UA.setToolTip('Solved minimum separation distance.')
         else:
             raise ValueError('Unknown value for input UA or S.')
@@ -107,8 +118,11 @@ class Dialog04(QMainWindow):
         # parse input parameters from ui
         W = str2float(self.ui.lineEdit_in_W.text())
         H = str2float(self.ui.lineEdit_in_H.text())
-        w = str2float(self.ui.lineEdit_in_w.text())
-        h = str2float(self.ui.lineEdit_in_h.text())
+        try:
+            w = str2float(self.ui.lineEdit_in_w.text())
+            h = str2float(self.ui.lineEdit_in_h.text())
+        except:
+            pass
         if self.ui.radioButton_in_S.isChecked():
             S = str2float(self.ui.lineEdit_in_S.text())
             if S:
@@ -122,10 +136,11 @@ class Dialog04(QMainWindow):
         Q = str2float(self.ui.lineEdit_in_Q.text())
 
         # validate input values
-        self.validate_show_statusBar_msg(W, 'unsigned float', 'W should be greater than 0')
-        self.validate_show_statusBar_msg(H, 'unsigned float', 'H should be greater than 0')
-        self.validate_show_statusBar_msg(w, 'unsigned float', 'w should be greater than 0')
-        self.validate_show_statusBar_msg(h, 'unsigned float', 'h should be greater than 0')
+        self.validate(W, 'unsigned float', 'W should be greater than 0')
+        self.validate(H, 'unsigned float', 'H should be greater than 0')
+        if self.__id == '0403' or self.__id == '0404':
+            self.validate(w, 'unsigned float', 'w should be greater than 0')
+            self.validate(h, 'unsigned float', 'h should be greater than 0')
         if S:
             try:
                 # check if S provided is greater than S (1 m to the relevant boundary)
@@ -137,12 +152,14 @@ class Dialog04(QMainWindow):
                 assert all((UA > 0, UA < 1))
             except AssertionError:
                 raise ValueError('Unprotected area should be greater than 0 and less than 100 %')
-        self.validate_show_statusBar_msg(Q, 'unsigned float', 'Q should be greater than 0')
+        self.validate(Q, 'unsigned float', 'Q should be greater than 0')
 
+        # check if enough inputs are provided for any calculation options
         try:
-            # check if enough inputs are provided for any calculation options
-            assert all(i is not None for i in (W, H, w, h))
-            # check crucial parameters for any calculation
+            if self.__id == '0403' or self.__id == '0404':
+                assert all(i is not None for i in (W, H, w, h))
+            else:
+                assert all(i is not None for i in (W, H))
 
             if UA:
                 # if to calculate the required separation S for a given UA,
@@ -158,7 +175,7 @@ class Dialog04(QMainWindow):
         return dict()  # currently not used
 
     @staticmethod
-    def phi_solver(W: float, H: float, w: float, h: float, Q: float, Q_a: float, S=None, UA=None):
+    def phi_solver(W: float, H: float, w: float, h: float, Q: float, Q_a: float, S=None, UA=None) -> tuple:
         """
         :param W: Emitter width
         :param H: Emitter height
@@ -170,7 +187,7 @@ class Dialog04(QMainWindow):
         :param UA: Unprotected area
         :return:
         """
-        return 0
+        return tuple()
 
     @output_parameters.setter
     def output_parameters(self, v: dict):
@@ -186,7 +203,7 @@ class Dialog04(QMainWindow):
         if S:
             self.ui.lineEdit_out_S_or_UA.setText(f'{S / 2:.2f}')
         elif UA:
-            self.ui.lineEdit_out_S_or_UA.setText(f'{UA:.2f}')
+            self.ui.lineEdit_out_S_or_UA.setText(f'{UA * 100:.2f}')
 
     def calculate(self):
 
@@ -258,10 +275,11 @@ class Dialog0403(Dialog04):
                 # if Q is provided, proceed to calculate q and UA
                 q_solved = Q * phi_solved
                 if q_solved == 0:
-                    UA_solved = 100
+                    UA_solved = 1
                 else:
-                    UA_solved = max([min([Q_a / q_solved * 100, 100]), 0])
+                    UA_solved = max([min([Q_a / q_solved, 1]), 0])
 
+                q_solved *= UA_solved
         # to calculate minimum separation distance to boundary
         elif UA:
 
@@ -284,8 +302,8 @@ class Dialog0403(Dialog04):
             if S_solved is None:
                 raise ValueError('Calculation failed. Maximum iteration reached.')
 
-            phi_solved = phi_parallel_any_br187(W_m=W, H_m=H, w_m=0.5*W+w, h_m=0.5*H+h, S_m=S_solved)
-            q_solved = Q * phi_solved
+            phi_solved = phi_parallel_any_br187(W_m=W, H_m=H, w_m=0.5 * W + w, h_m=0.5 * H + h, S_m=S_solved)
+            q_solved = Q * phi_solved * UA
 
             if S_solved < 2:
                 msg = (f'Calculation complete. Forced boundary separation to 1 from {S_solved:.3f} m.')

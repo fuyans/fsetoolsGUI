@@ -33,8 +33,8 @@ class Dialog0601(QMainWindow):
 
         # placeholder texts
         self.ui.lineEdit_3_project_no.setPlaceholderText('XX00001')
-        self.ui.lineEdit_4_project_stage.setPlaceholderText('ITT')
-        self.ui.lineEdit_5_title.setPlaceholderText('Outline fire strategy')
+        self.ui.lineEdit_4_project_stage.setPlaceholderText('Stage 3')
+        self.ui.lineEdit_5_title.setPlaceholderText('Fire safety strategy')
 
         # validators
         self.ui.lineEdit_1_date.setValidator((QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]{6,8}'))))
@@ -55,6 +55,8 @@ class Dialog0601(QMainWindow):
 
         # clean up
         self.make_file_name()  # make file name, do not leave the output slot empty
+        self.ui.pushButton_ok.setText('Copy')
+        self.ui.pushButton_ok.setToolTip('Click (or press Enter) to copy the generated file name')
         self.repaint()
 
     def make_file_name(self):
