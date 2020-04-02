@@ -155,6 +155,8 @@ fsetoolsGUI/gui/docs/*
 !fsetoolsGUI/lib/
 !fsetoolsGUI/gui/images/*.png
 fsetoolsGUI/gui/images/._*.png
-!docs/
-!docs/*/*.png
+!fsetoolsGUI/gui/docs/
+!fsetoolsGUI/gui/docs/*/*.png
 fsetoolsGUI/gui/docs/__init__.py
+!fsetoolsGUI/gui/icons/*.png
+fsetoolsGUI/gui/icons/._*.png
