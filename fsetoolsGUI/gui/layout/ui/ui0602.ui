@@ -1,1529 +1,1465 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-    <class>MainWindow</class>
-    <widget class="QMainWindow" name="MainWindow">
-        <property name="geometry">
-            <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>833</width>
-                <height>699</height>
-            </rect>
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>833</width>
+    <height>559</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>10</number>
+    </property>
+    <property name="leftMargin">
+     <number>15</number>
+    </property>
+    <property name="topMargin">
+     <number>15</number>
+    </property>
+    <property name="rightMargin">
+     <number>15</number>
+    </property>
+    <property name="bottomMargin">
+     <number>15</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>803</width>
+        <height>440</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>803</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>790</width>
+         <height>440</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <property name="spacing">
+         <number>0</number>
         </property>
-        <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-            </sizepolicy>
+        <property name="leftMargin">
+         <number>0</number>
         </property>
-        <property name="windowTitle">
-            <string>MainWindow</string>
+        <property name="topMargin">
+         <number>0</number>
         </property>
-        <widget class="QWidget" name="centralwidget">
-            <layout class="QVBoxLayout" name="verticalLayout">
-                <property name="spacing">
-                    <number>10</number>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QWidget" name="widget_content" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>440</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>440</height>
+           </size>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <property name="spacing">
+            <number>10</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="widget_page_1" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>390</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>390</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_description">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
-                <property name="leftMargin">
-                    <number>15</number>
+                <property name="minimumSize">
+                 <size>
+                  <width>390</width>
+                  <height>0</height>
+                 </size>
                 </property>
-                <property name="topMargin">
-                    <number>15</number>
+                <property name="maximumSize">
+                 <size>
+                  <width>390</width>
+                  <height>16777215</height>
+                 </size>
                 </property>
-                <property name="rightMargin">
-                    <number>15</number>
+                <property name="text">
+                 <string>This sheet calculates the mean flame height for a given fuel type and fire shape.
+
+Calculation coded in this application follows &quot;PD 7974-1:2019 Application of fire safety engineering principles to the design of buildings. Part 1: Initiation and development of fire within the enclosure of origin (Sub-system 1)&quot;.</string>
                 </property>
-                <property name="bottomMargin">
-                    <number>15</number>
+                <property name="wordWrap">
+                 <bool>true</bool>
                 </property>
-                <item>
-                    <widget class="QScrollArea" name="scrollArea">
-                        <property name="sizePolicy">
-                            <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                            </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                            <size>
-                                <width>803</width>
-                                <height>590</height>
-                            </size>
-                        </property>
-                        <property name="widgetResizable">
-                            <bool>true</bool>
-                        </property>
-                        <widget class="QWidget" name="scrollAreaWidgetContents">
-                            <property name="geometry">
-                                <rect>
-                                    <x>0</x>
-                                    <y>0</y>
-                                    <width>790</width>
-                                    <height>590</height>
-                                </rect>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="minimumSize">
-                                <size>
-                                    <width>790</width>
-                                    <height>590</height>
-                                </size>
-                            </property>
-                            <property name="maximumSize">
-                                <size>
-                                    <width>790</width>
-                                    <height>590</height>
-                                </size>
-                            </property>
-                            <layout class="QHBoxLayout" name="horizontalLayout_5">
-                                <property name="spacing">
-                                    <number>0</number>
-                                </property>
-                                <property name="leftMargin">
-                                    <number>0</number>
-                                </property>
-                                <property name="topMargin">
-                                    <number>0</number>
-                                </property>
-                                <property name="rightMargin">
-                                    <number>0</number>
-                                </property>
-                                <property name="bottomMargin">
-                                    <number>0</number>
-                                </property>
-                                <item>
-                                    <widget class="QWidget" name="widget_content" native="true">
-                                        <property name="sizePolicy">
-                                            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                                                <horstretch>0</horstretch>
-                                                <verstretch>0</verstretch>
-                                            </sizepolicy>
-                                        </property>
-                                        <property name="minimumSize">
-                                            <size>
-                                                <width>790</width>
-                                                <height>500</height>
-                                            </size>
-                                        </property>
-                                        <widget class="QLabel" name="label_image_context">
-                                            <property name="geometry">
-                                                <rect>
-                                                    <x>0</x>
-                                                    <y>0</y>
-                                                    <width>796</width>
-                                                    <height>681</height>
-                                                </rect>
-                                            </property>
-                                            <property name="sizePolicy">
-                                                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                                                    <horstretch>0</horstretch>
-                                                    <verstretch>0</verstretch>
-                                                </sizepolicy>
-                                            </property>
-                                            <property name="font">
-                                                <font>
-                                                    <pointsize>10</pointsize>
-                                                </font>
-                                            </property>
-                                            <property name="text">
-                                                <string/>
-                                            </property>
-                                            <property name="pixmap">
-                                                <pixmap>../../images/0602-0.png</pixmap>
-                                            </property>
-                                            <property name="alignment">
-                                                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                                            </property>
-                                        </widget>
-                                        <widget class="QLabel" name="label_image_figure">
-                                            <property name="geometry">
-                                                <rect>
-                                                    <x>25</x>
-                                                    <y>90</y>
-                                                    <width>341</width>
-                                                    <height>281</height>
-                                                </rect>
-                                            </property>
-                                            <property name="sizePolicy">
-                                                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                                                    <horstretch>0</horstretch>
-                                                    <verstretch>0</verstretch>
-                                                </sizepolicy>
-                                            </property>
-                                            <property name="text">
-                                                <string>TextLabel</string>
-                                            </property>
-                                        </widget>
-                                        <widget class="QFrame" name="frame_userio">
-                                            <property name="geometry">
-                                                <rect>
-                                                    <x>400</x>
-                                                    <y>155</y>
-                                                    <width>380</width>
-                                                    <height>434</height>
-                                                </rect>
-                                            </property>
-                                            <property name="sizePolicy">
-                                                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                                    <horstretch>0</horstretch>
-                                                    <verstretch>0</verstretch>
-                                                </sizepolicy>
-                                            </property>
-                                            <property name="minimumSize">
-                                                <size>
-                                                    <width>380</width>
-                                                    <height>0</height>
-                                                </size>
-                                            </property>
-                                            <layout class="QVBoxLayout" name="verticalLayout_3">
-                                                <property name="spacing">
-                                                    <number>0</number>
-                                                </property>
-                                                <property name="leftMargin">
-                                                    <number>15</number>
-                                                </property>
-                                                <property name="topMargin">
-                                                    <number>15</number>
-                                                </property>
-                                                <property name="rightMargin">
-                                                    <number>15</number>
-                                                </property>
-                                                <property name="bottomMargin">
-                                                    <number>15</number>
-                                                </property>
-                                                <item>
-                                                    <widget class="QLabel" name="label_input_parameters">
-                                                        <property name="sizePolicy">
-                                                            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                                                                <horstretch>0</horstretch>
-                                                                <verstretch>0</verstretch>
-                                                            </sizepolicy>
-                                                        </property>
-                                                        <property name="minimumSize">
-                                                            <size>
-                                                                <width>0</width>
-                                                                <height>25</height>
-                                                            </size>
-                                                        </property>
-                                                        <property name="maximumSize">
-                                                            <size>
-                                                                <width>16777215</width>
-                                                                <height>25</height>
-                                                            </size>
-                                                        </property>
-                                                        <property name="font">
-                                                            <font>
-                                                                <pointsize>10</pointsize>
-                                                            </font>
-                                                        </property>
-                                                        <property name="toolTip">
-                                                            <string>Solved dimensionless heat release rate.</string>
-                                                        </property>
-                                                        <property name="statusTip">
-                                                            <string>Solved dimensionless heat release rate.</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span
-                                                                style=&quot; font-weight:600;&quot;&gt;Input parameters&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-                                                            </string>
-                                                        </property>
-                                                    </widget>
-                                                </item>
-                                                <item>
-                                                    <spacer name="verticalSpacer_5">
-                                                        <property name="orientation">
-                                                            <enum>Qt::Vertical</enum>
-                                                        </property>
-                                                        <property name="sizeType">
-                                                            <enum>QSizePolicy::Fixed</enum>
-                                                        </property>
-                                                        <property name="sizeHint" stdset="0">
-                                                            <size>
-                                                                <width>20</width>
-                                                                <height>5</height>
-                                                            </size>
-                                                        </property>
-                                                    </spacer>
-                                                </item>
-                                                <item>
-                                                    <layout class="QHBoxLayout" name="horizontalLayout_2">
-                                                        <property name="spacing">
-                                                            <number>0</number>
-                                                        </property>
-                                                        <item>
-                                                            <spacer name="horizontalSpacer_2">
-                                                                <property name="orientation">
-                                                                    <enum>Qt::Horizontal</enum>
-                                                                </property>
-                                                                <property name="sizeType">
-                                                                    <enum>QSizePolicy::Fixed</enum>
-                                                                </property>
-                                                                <property name="sizeHint" stdset="0">
-                                                                    <size>
-                                                                        <width>10</width>
-                                                                        <height>20</height>
-                                                                    </size>
-                                                                </property>
-                                                            </spacer>
-                                                        </item>
-                                                        <item>
-                                                            <layout class="QVBoxLayout" name="verticalLayout_2">
-                                                                <property name="spacing">
-                                                                    <number>0</number>
-                                                                </property>
-                                                                <item>
-                                                                    <layout class="QGridLayout" name="gridLayout_2">
-                                                                        <property name="horizontalSpacing">
-                                                                            <number>10</number>
-                                                                        </property>
-                                                                        <property name="verticalSpacing">
-                                                                            <number>5</number>
-                                                                        </property>
-                                                                        <item row="4" column="0">
-                                                                            <widget class="QLabel" name="label_23">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>180</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="toolTip">
-                                                                                    <string>Ambient are thermal
-                                                                                        capacity.
-                                                                                    </string>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ambient
-                                                                                        air heat capacity&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-                                                                                    </string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="6" column="1">
-                                                                            <widget class="QLineEdit" name="lineEdit_g">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>0</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="baseSize">
-                                                                                    <size>
-                                                                                        <width>0</width>
-                                                                                        <height>0</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="toolTip">
-                                                                                    <string>Positive float.</string>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>9.81</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="6" column="0">
-                                                                            <widget class="QLabel" name="label_28">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>180</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="toolTip">
-                                                                                    <string>Gravity.</string>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>Gravity</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="0" column="0">
-                                                                            <widget class="QLabel"
-                                                                                    name="label_Q_dot_or_Q_dot_l">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>180</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="toolTip">
-                                                                                    <string>Fire total heat release
-                                                                                        rate.
-                                                                                    </string>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Total
-                                                                                        heat release rate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-                                                                                    </string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="5" column="2">
-                                                                            <widget class="QLabel"
-                                                                                    name="label_unit_S_or_UA">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>50</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>K</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="3" column="1">
-                                                                            <widget class="QLineEdit"
-                                                                                    name="lineEdit_rho_0">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>0</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="baseSize">
-                                                                                    <size>
-                                                                                        <width>0</width>
-                                                                                        <height>0</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="toolTip">
-                                                                                    <string>Positive float.</string>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>1.2</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="3" column="0">
-                                                                            <widget class="QLabel" name="label_35">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>180</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="toolTip">
-                                                                                    <string>Ambient air density.
-                                                                                    </string>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ambient
-                                                                                        air density&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-                                                                                    </string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="3" column="2">
-                                                                            <widget class="QLabel" name="label_37">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>50</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>
-                                                                                        kg/m&lt;sup&gt;3&lt;sup&gt;
-                                                                                    </string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="0" column="1">
-                                                                            <widget class="QLineEdit"
-                                                                                    name="lineEdit_Q_dot_or_Q_dot_l">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>0</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="baseSize">
-                                                                                    <size>
-                                                                                        <width>0</width>
-                                                                                        <height>0</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="toolTip">
-                                                                                    <string>Positive float.</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="0" column="2">
-                                                                            <widget class="QLabel"
-                                                                                    name="label_Q_dot_or_Q_dot_l_unit">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>50</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>kW</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="6" column="2">
-                                                                            <widget class="QLabel"
-                                                                                    name="label_unit_S_or_UA_2">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>50</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>m/s&lt;sup&gt;2&lt;sup&gt;
-                                                                                    </string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="5" column="1">
-                                                                            <widget class="QLineEdit"
-                                                                                    name="lineEdit_T_0">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>0</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="baseSize">
-                                                                                    <size>
-                                                                                        <width>0</width>
-                                                                                        <height>0</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="toolTip">
-                                                                                    <string>Positive float.</string>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>293.15</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="1" column="0">
-                                                                            <widget class="QLabel"
-                                                                                    name="label_L_A_or_D">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>180</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="toolTip">
-                                                                                    <string>Fire dimension 1.</string>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fire's
-                                                                                        longer dimension&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-                                                                                    </string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="5" column="0">
-                                                                            <widget class="QLabel" name="label_27">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>180</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="toolTip">
-                                                                                    <string>Ambient air temperature.
-                                                                                    </string>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ambient
-                                                                                        air temperature&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-                                                                                    </string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="1" column="1">
-                                                                            <widget class="QLineEdit"
-                                                                                    name="lineEdit_L_A_or_D">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>0</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="baseSize">
-                                                                                    <size>
-                                                                                        <width>0</width>
-                                                                                        <height>0</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="toolTip">
-                                                                                    <string>Positive float.</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="2" column="1">
-                                                                            <widget class="QLineEdit"
-                                                                                    name="lineEdit_L_B">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>0</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="baseSize">
-                                                                                    <size>
-                                                                                        <width>0</width>
-                                                                                        <height>0</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="toolTip">
-                                                                                    <string>Positive float.</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="4" column="2">
-                                                                            <widget class="QLabel" name="label_34">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>50</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>kJ/kg/K</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="4" column="1">
-                                                                            <widget class="QLineEdit"
-                                                                                    name="lineEdit_c_p_0">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>0</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="baseSize">
-                                                                                    <size>
-                                                                                        <width>0</width>
-                                                                                        <height>0</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="toolTip">
-                                                                                    <string>Positive float.</string>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>1.0</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="2" column="2">
-                                                                            <widget class="QLabel"
-                                                                                    name="label_L_B_unit">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>50</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>m</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="1" column="2">
-                                                                            <widget class="QLabel" name="label_33">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>50</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>m</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                        <item row="2" column="0">
-                                                                            <widget class="QLabel" name="label_L_B">
-                                                                                <property name="sizePolicy">
-                                                                                    <sizepolicy hsizetype="Minimum"
-                                                                                                vsizetype="Fixed">
-                                                                                        <horstretch>0</horstretch>
-                                                                                        <verstretch>0</verstretch>
-                                                                                    </sizepolicy>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>180</width>
-                                                                                        <height>25</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="toolTip">
-                                                                                    <string>Fire dimension 2.</string>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fire's
-                                                                                        shorter dimension&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-                                                                                    </string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </item>
-                                                                    </layout>
-                                                                </item>
-                                                                <item>
-                                                                    <layout class="QHBoxLayout" name="horizontalLayout">
-                                                                        <property name="spacing">
-                                                                            <number>0</number>
-                                                                        </property>
-                                                                        <item>
-                                                                            <layout class="QFormLayout"
-                                                                                    name="formLayout">
-                                                                                <property name="horizontalSpacing">
-                                                                                    <number>10</number>
-                                                                                </property>
-                                                                                <property name="verticalSpacing">
-                                                                                    <number>0</number>
-                                                                                </property>
-                                                                                <item row="1" column="0">
-                                                                                    <widget class="QLabel"
-                                                                                            name="label_29">
-                                                                                        <property name="sizePolicy">
-                                                                                            <sizepolicy
-                                                                                                    hsizetype="Minimum"
-                                                                                                    vsizetype="Fixed">
-                                                                                                <horstretch>0
-                                                                                                </horstretch>
-                                                                                                <verstretch>0
-                                                                                                </verstretch>
-                                                                                            </sizepolicy>
-                                                                                        </property>
-                                                                                        <property name="minimumSize">
-                                                                                            <size>
-                                                                                                <width>0</width>
-                                                                                                <height>25</height>
-                                                                                            </size>
-                                                                                        </property>
-                                                                                        <property name="maximumSize">
-                                                                                            <size>
-                                                                                                <width>16777215</width>
-                                                                                                <height>25</height>
-                                                                                            </size>
-                                                                                        </property>
-                                                                                        <property name="toolTip">
-                                                                                            <string>Fire shape.</string>
-                                                                                        </property>
-                                                                                        <property name="text">
-                                                                                            <string>Fire shape</string>
-                                                                                        </property>
-                                                                                    </widget>
-                                                                                </item>
-                                                                                <item row="1" column="1">
-                                                                                    <widget class="QComboBox"
-                                                                                            name="comboBox_fire_shape">
-                                                                                        <property name="sizePolicy">
-                                                                                            <sizepolicy
-                                                                                                    hsizetype="Minimum"
-                                                                                                    vsizetype="Fixed">
-                                                                                                <horstretch>0
-                                                                                                </horstretch>
-                                                                                                <verstretch>0
-                                                                                                </verstretch>
-                                                                                            </sizepolicy>
-                                                                                        </property>
-                                                                                        <property name="minimumSize">
-                                                                                            <size>
-                                                                                                <width>0</width>
-                                                                                                <height>25</height>
-                                                                                            </size>
-                                                                                        </property>
-                                                                                        <property name="maximumSize">
-                                                                                            <size>
-                                                                                                <width>16777215</width>
-                                                                                                <height>25</height>
-                                                                                            </size>
-                                                                                        </property>
-                                                                                        <item>
-                                                                                            <property name="text">
-                                                                                                <string>Circular
-                                                                                                </string>
-                                                                                            </property>
-                                                                                        </item>
-                                                                                        <item>
-                                                                                            <property name="text">
-                                                                                                <string>Rectangular
-                                                                                                </string>
-                                                                                            </property>
-                                                                                        </item>
-                                                                                        <item>
-                                                                                            <property name="text">
-                                                                                                <string>Line</string>
-                                                                                            </property>
-                                                                                        </item>
-                                                                                    </widget>
-                                                                                </item>
-                                                                                <item row="3" column="0">
-                                                                                    <widget class="QLabel"
-                                                                                            name="label_24">
-                                                                                        <property name="sizePolicy">
-                                                                                            <sizepolicy
-                                                                                                    hsizetype="Minimum"
-                                                                                                    vsizetype="Fixed">
-                                                                                                <horstretch>0
-                                                                                                </horstretch>
-                                                                                                <verstretch>0
-                                                                                                </verstretch>
-                                                                                            </sizepolicy>
-                                                                                        </property>
-                                                                                        <property name="minimumSize">
-                                                                                            <size>
-                                                                                                <width>0</width>
-                                                                                                <height>25</height>
-                                                                                            </size>
-                                                                                        </property>
-                                                                                        <property name="maximumSize">
-                                                                                            <size>
-                                                                                                <width>16777215</width>
-                                                                                                <height>25</height>
-                                                                                            </size>
-                                                                                        </property>
-                                                                                        <property name="toolTip">
-                                                                                            <string>Fuel type, this
-                                                                                                dictates the correlation
-                                                                                                that will be used for
-                                                                                                the calculation.
-                                                                                            </string>
-                                                                                        </property>
-                                                                                        <property name="text">
-                                                                                            <string>Fuel type</string>
-                                                                                        </property>
-                                                                                    </widget>
-                                                                                </item>
-                                                                                <item row="3" column="1">
-                                                                                    <widget class="QComboBox"
-                                                                                            name="comboBox_fuel_type">
-                                                                                        <property name="sizePolicy">
-                                                                                            <sizepolicy
-                                                                                                    hsizetype="Minimum"
-                                                                                                    vsizetype="Fixed">
-                                                                                                <horstretch>0
-                                                                                                </horstretch>
-                                                                                                <verstretch>0
-                                                                                                </verstretch>
-                                                                                            </sizepolicy>
-                                                                                        </property>
-                                                                                        <property name="minimumSize">
-                                                                                            <size>
-                                                                                                <width>0</width>
-                                                                                                <height>25</height>
-                                                                                            </size>
-                                                                                        </property>
-                                                                                        <property name="maximumSize">
-                                                                                            <size>
-                                                                                                <width>16777215</width>
-                                                                                                <height>25</height>
-                                                                                            </size>
-                                                                                        </property>
-                                                                                        <item>
-                                                                                            <property name="text">
-                                                                                                <string>Natural gas
-                                                                                                    (Zukoski)
-                                                                                                </string>
-                                                                                            </property>
-                                                                                        </item>
-                                                                                        <item>
-                                                                                            <property name="text">
-                                                                                                <string>Wood cribs
-                                                                                                    (Thomas)
-                                                                                                </string>
-                                                                                            </property>
-                                                                                        </item>
-                                                                                        <item>
-                                                                                            <property name="text">
-                                                                                                <string>Gas, liquids and
-                                                                                                    solids (Heskestad)
-                                                                                                </string>
-                                                                                            </property>
-                                                                                        </item>
-                                                                                    </widget>
-                                                                                </item>
-                                                                                <item row="0" column="1">
-                                                                                    <spacer name="verticalSpacer">
-                                                                                        <property name="orientation">
-                                                                                            <enum>Qt::Vertical</enum>
-                                                                                        </property>
-                                                                                        <property name="sizeType">
-                                                                                            <enum>QSizePolicy::Fixed
-                                                                                            </enum>
-                                                                                        </property>
-                                                                                        <property name="sizeHint"
-                                                                                                  stdset="0">
-                                                                                            <size>
-                                                                                                <width>20</width>
-                                                                                                <height>5</height>
-                                                                                            </size>
-                                                                                        </property>
-                                                                                    </spacer>
-                                                                                </item>
-                                                                                <item row="2" column="1">
-                                                                                    <spacer name="verticalSpacer_2">
-                                                                                        <property name="orientation">
-                                                                                            <enum>Qt::Vertical</enum>
-                                                                                        </property>
-                                                                                        <property name="sizeType">
-                                                                                            <enum>QSizePolicy::Fixed
-                                                                                            </enum>
-                                                                                        </property>
-                                                                                        <property name="sizeHint"
-                                                                                                  stdset="0">
-                                                                                            <size>
-                                                                                                <width>20</width>
-                                                                                                <height>5</height>
-                                                                                            </size>
-                                                                                        </property>
-                                                                                    </spacer>
-                                                                                </item>
-                                                                            </layout>
-                                                                        </item>
-                                                                        <item>
-                                                                            <spacer name="horizontalSpacer">
-                                                                                <property name="orientation">
-                                                                                    <enum>Qt::Horizontal</enum>
-                                                                                </property>
-                                                                                <property name="sizeType">
-                                                                                    <enum>QSizePolicy::Fixed</enum>
-                                                                                </property>
-                                                                                <property name="sizeHint" stdset="0">
-                                                                                    <size>
-                                                                                        <width>60</width>
-                                                                                        <height>20</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                            </spacer>
-                                                                        </item>
-                                                                    </layout>
-                                                                </item>
-                                                            </layout>
-                                                        </item>
-                                                    </layout>
-                                                </item>
-                                                <item>
-                                                    <spacer name="verticalSpacer_3">
-                                                        <property name="orientation">
-                                                            <enum>Qt::Vertical</enum>
-                                                        </property>
-                                                        <property name="sizeType">
-                                                            <enum>QSizePolicy::Fixed</enum>
-                                                        </property>
-                                                        <property name="sizeHint" stdset="0">
-                                                            <size>
-                                                                <width>20</width>
-                                                                <height>10</height>
-                                                            </size>
-                                                        </property>
-                                                    </spacer>
-                                                </item>
-                                                <item>
-                                                    <widget class="QLabel" name="label_output_parameters">
-                                                        <property name="sizePolicy">
-                                                            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                                                                <horstretch>0</horstretch>
-                                                                <verstretch>0</verstretch>
-                                                            </sizepolicy>
-                                                        </property>
-                                                        <property name="minimumSize">
-                                                            <size>
-                                                                <width>0</width>
-                                                                <height>25</height>
-                                                            </size>
-                                                        </property>
-                                                        <property name="maximumSize">
-                                                            <size>
-                                                                <width>16777215</width>
-                                                                <height>25</height>
-                                                            </size>
-                                                        </property>
-                                                        <property name="font">
-                                                            <font>
-                                                                <pointsize>10</pointsize>
-                                                            </font>
-                                                        </property>
-                                                        <property name="toolTip">
-                                                            <string>Solved dimensionless heat release rate.</string>
-                                                        </property>
-                                                        <property name="statusTip">
-                                                            <string>Solved dimensionless heat release rate.</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span
-                                                                style=&quot; font-weight:600;&quot;&gt;Output parameters&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-                                                            </string>
-                                                        </property>
-                                                    </widget>
-                                                </item>
-                                                <item>
-                                                    <spacer name="verticalSpacer_4">
-                                                        <property name="orientation">
-                                                            <enum>Qt::Vertical</enum>
-                                                        </property>
-                                                        <property name="sizeType">
-                                                            <enum>QSizePolicy::Fixed</enum>
-                                                        </property>
-                                                        <property name="sizeHint" stdset="0">
-                                                            <size>
-                                                                <width>20</width>
-                                                                <height>5</height>
-                                                            </size>
-                                                        </property>
-                                                    </spacer>
-                                                </item>
-                                                <item>
-                                                    <layout class="QHBoxLayout" name="horizontalLayout_3">
-                                                        <property name="spacing">
-                                                            <number>0</number>
-                                                        </property>
-                                                        <item>
-                                                            <spacer name="horizontalSpacer_3">
-                                                                <property name="orientation">
-                                                                    <enum>Qt::Horizontal</enum>
-                                                                </property>
-                                                                <property name="sizeType">
-                                                                    <enum>QSizePolicy::Fixed</enum>
-                                                                </property>
-                                                                <property name="sizeHint" stdset="0">
-                                                                    <size>
-                                                                        <width>10</width>
-                                                                        <height>20</height>
-                                                                    </size>
-                                                                </property>
-                                                            </spacer>
-                                                        </item>
-                                                        <item>
-                                                            <layout class="QGridLayout" name="gridLayout_3">
-                                                                <property name="horizontalSpacing">
-                                                                    <number>10</number>
-                                                                </property>
-                                                                <property name="verticalSpacing">
-                                                                    <number>5</number>
-                                                                </property>
-                                                                <item row="0" column="0">
-                                                                    <widget class="QLabel" name="label_out_Q_dot_star">
-                                                                        <property name="sizePolicy">
-                                                                            <sizepolicy hsizetype="Minimum"
-                                                                                        vsizetype="Fixed">
-                                                                                <horstretch>0</horstretch>
-                                                                                <verstretch>0</verstretch>
-                                                                            </sizepolicy>
-                                                                        </property>
-                                                                        <property name="minimumSize">
-                                                                            <size>
-                                                                                <width>180</width>
-                                                                                <height>25</height>
-                                                                            </size>
-                                                                        </property>
-                                                                        <property name="maximumSize">
-                                                                            <size>
-                                                                                <width>16777215</width>
-                                                                                <height>25</height>
-                                                                            </size>
-                                                                        </property>
-                                                                        <property name="toolTip">
-                                                                            <string>Solved dimensionless heat release
-                                                                                rate.
-                                                                            </string>
-                                                                        </property>
-                                                                        <property name="text">
-                                                                            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensionless
-                                                                                HRR&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-                                                                            </string>
-                                                                        </property>
-                                                                    </widget>
-                                                                </item>
-                                                                <item row="0" column="1">
-                                                                    <widget class="QLineEdit"
-                                                                            name="lineEdit_out_Q_dot_star">
-                                                                        <property name="sizePolicy">
-                                                                            <sizepolicy hsizetype="Minimum"
-                                                                                        vsizetype="Fixed">
-                                                                                <horstretch>0</horstretch>
-                                                                                <verstretch>0</verstretch>
-                                                                            </sizepolicy>
-                                                                        </property>
-                                                                        <property name="minimumSize">
-                                                                            <size>
-                                                                                <width>0</width>
-                                                                                <height>25</height>
-                                                                            </size>
-                                                                        </property>
-                                                                        <property name="maximumSize">
-                                                                            <size>
-                                                                                <width>16777215</width>
-                                                                                <height>25</height>
-                                                                            </size>
-                                                                        </property>
-                                                                        <property name="toolTip">
-                                                                            <string>Solved dimensionless heat release
-                                                                                rate. Double click to select the value.
-                                                                            </string>
-                                                                        </property>
-                                                                    </widget>
-                                                                </item>
-                                                                <item row="1" column="0">
-                                                                    <widget class="QLabel" name="label_out_Z_f">
-                                                                        <property name="sizePolicy">
-                                                                            <sizepolicy hsizetype="Minimum"
-                                                                                        vsizetype="Fixed">
-                                                                                <horstretch>0</horstretch>
-                                                                                <verstretch>0</verstretch>
-                                                                            </sizepolicy>
-                                                                        </property>
-                                                                        <property name="minimumSize">
-                                                                            <size>
-                                                                                <width>180</width>
-                                                                                <height>25</height>
-                                                                            </size>
-                                                                        </property>
-                                                                        <property name="maximumSize">
-                                                                            <size>
-                                                                                <width>16777215</width>
-                                                                                <height>25</height>
-                                                                            </size>
-                                                                        </property>
-                                                                        <property name="toolTip">
-                                                                            <string>Solved flame height.</string>
-                                                                        </property>
-                                                                        <property name="text">
-                                                                            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Flame
-                                                                                height&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-                                                                            </string>
-                                                                        </property>
-                                                                    </widget>
-                                                                </item>
-                                                                <item row="1" column="1">
-                                                                    <widget class="QLineEdit" name="lineEdit_out_Z_f">
-                                                                        <property name="sizePolicy">
-                                                                            <sizepolicy hsizetype="Minimum"
-                                                                                        vsizetype="Fixed">
-                                                                                <horstretch>0</horstretch>
-                                                                                <verstretch>0</verstretch>
-                                                                            </sizepolicy>
-                                                                        </property>
-                                                                        <property name="minimumSize">
-                                                                            <size>
-                                                                                <width>0</width>
-                                                                                <height>25</height>
-                                                                            </size>
-                                                                        </property>
-                                                                        <property name="maximumSize">
-                                                                            <size>
-                                                                                <width>16777215</width>
-                                                                                <height>25</height>
-                                                                            </size>
-                                                                        </property>
-                                                                        <property name="toolTip">
-                                                                            <string>Solved flame height. Double click to
-                                                                                select the value.
-                                                                            </string>
-                                                                        </property>
-                                                                    </widget>
-                                                                </item>
-                                                                <item row="1" column="2">
-                                                                    <widget class="QLabel" name="label_out_Z_f_unit">
-                                                                        <property name="sizePolicy">
-                                                                            <sizepolicy hsizetype="Minimum"
-                                                                                        vsizetype="Fixed">
-                                                                                <horstretch>0</horstretch>
-                                                                                <verstretch>0</verstretch>
-                                                                            </sizepolicy>
-                                                                        </property>
-                                                                        <property name="minimumSize">
-                                                                            <size>
-                                                                                <width>50</width>
-                                                                                <height>25</height>
-                                                                            </size>
-                                                                        </property>
-                                                                        <property name="maximumSize">
-                                                                            <size>
-                                                                                <width>16777215</width>
-                                                                                <height>25</height>
-                                                                            </size>
-                                                                        </property>
-                                                                        <property name="text">
-                                                                            <string>m</string>
-                                                                        </property>
-                                                                    </widget>
-                                                                </item>
-                                                            </layout>
-                                                        </item>
-                                                    </layout>
-                                                </item>
-                                            </layout>
-                                        </widget>
-                                    </widget>
-                                </item>
-                            </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_image_figure">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>341</width>
+                  <height>285</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="widget_page_2" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>390</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>390</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QFrame" name="frame_userio">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>390</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>390</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_3">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>15</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>15</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>15</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>15</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="label_input_parameters">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>Solved dimensionless heat release rate.</string>
+                   </property>
+                   <property name="statusTip">
+                    <string>Solved dimensionless heat release rate.</string>
+                   </property>
+                   <property name="text">
+                    <string>&lt;b&gt;Input parameters&lt;\b&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_5">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>5</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_2">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <spacer name="horizontalSpacer_2">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeType">
+                      <enum>QSizePolicy::Fixed</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>10</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout_2">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <layout class="QGridLayout" name="gridLayout_2">
+                       <property name="horizontalSpacing">
+                        <number>10</number>
+                       </property>
+                       <property name="verticalSpacing">
+                        <number>5</number>
+                       </property>
+                       <item row="4" column="0">
+                        <widget class="QLabel" name="label_23">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>180</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Ambient are thermal capacity.</string>
+                         </property>
+                         <property name="text">
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ambient air heat capacity&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         </property>
                         </widget>
-                    </widget>
-                </item>
-                <item>
-                    <widget class="QFrame" name="frame">
-                        <property name="sizePolicy">
+                       </item>
+                       <item row="6" column="1">
+                        <widget class="QLineEdit" name="lineEdit_g">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="baseSize">
+                          <size>
+                           <width>0</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Positive float.</string>
+                         </property>
+                         <property name="text">
+                          <string>9.81</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="6" column="0">
+                        <widget class="QLabel" name="label_28">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>180</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Gravity.</string>
+                         </property>
+                         <property name="text">
+                          <string>Gravity</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="0">
+                        <widget class="QLabel" name="label_Q_dot_or_Q_dot_l">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>180</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Fire total heat release rate.</string>
+                         </property>
+                         <property name="text">
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Total heat release rate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="5" column="2">
+                        <widget class="QLabel" name="label_unit_S_or_UA">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>K</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="3" column="1">
+                        <widget class="QLineEdit" name="lineEdit_rho_0">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="baseSize">
+                          <size>
+                           <width>0</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Positive float.</string>
+                         </property>
+                         <property name="text">
+                          <string>1.2</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="3" column="0">
+                        <widget class="QLabel" name="label_35">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>180</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Ambient air density.</string>
+                         </property>
+                         <property name="text">
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ambient air density&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="3" column="2">
+                        <widget class="QLabel" name="label_37">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>kg/m&lt;sup&gt;3&lt;sup&gt;</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="1">
+                        <widget class="QLineEdit" name="lineEdit_Q_dot_or_Q_dot_l">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="baseSize">
+                          <size>
+                           <width>0</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Positive float.</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="2">
+                        <widget class="QLabel" name="label_Q_dot_or_Q_dot_l_unit">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>kW</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="6" column="2">
+                        <widget class="QLabel" name="label_unit_S_or_UA_2">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>m/s&lt;sup&gt;2&lt;sup&gt;</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="5" column="1">
+                        <widget class="QLineEdit" name="lineEdit_T_0">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="baseSize">
+                          <size>
+                           <width>0</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Positive float.</string>
+                         </property>
+                         <property name="text">
+                          <string>293.15</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="0">
+                        <widget class="QLabel" name="label_L_A_or_D">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>180</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Fire dimension 1.</string>
+                         </property>
+                         <property name="text">
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fire's longer dimension&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="5" column="0">
+                        <widget class="QLabel" name="label_27">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>180</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Ambient air temperature.</string>
+                         </property>
+                         <property name="text">
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ambient air temperature&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="1">
+                        <widget class="QLineEdit" name="lineEdit_L_A_or_D">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="baseSize">
+                          <size>
+                           <width>0</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Positive float.</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="2" column="1">
+                        <widget class="QLineEdit" name="lineEdit_L_B">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="baseSize">
+                          <size>
+                           <width>0</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Positive float.</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="4" column="2">
+                        <widget class="QLabel" name="label_34">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>kJ/kg/K</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="4" column="1">
+                        <widget class="QLineEdit" name="lineEdit_c_p_0">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="baseSize">
+                          <size>
+                           <width>0</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Positive float.</string>
+                         </property>
+                         <property name="text">
+                          <string>1.0</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="2" column="2">
+                        <widget class="QLabel" name="label_L_B_unit">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>m</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="2">
+                        <widget class="QLabel" name="label_33">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>m</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="2" column="0">
+                        <widget class="QLabel" name="label_L_B">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>180</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Fire dimension 2.</string>
+                         </property>
+                         <property name="text">
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fire's shorter dimension&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <layout class="QFormLayout" name="formLayout">
+                         <property name="horizontalSpacing">
+                          <number>10</number>
+                         </property>
+                         <property name="verticalSpacing">
+                          <number>0</number>
+                         </property>
+                         <item row="1" column="0">
+                          <widget class="QLabel" name="label_29">
+                           <property name="sizePolicy">
                             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
                             </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
+                           </property>
+                           <property name="minimumSize">
                             <size>
-                                <width>790</width>
-                                <height>36</height>
+                             <width>0</width>
+                             <height>25</height>
                             </size>
-                        </property>
-                        <property name="maximumSize">
+                           </property>
+                           <property name="maximumSize">
                             <size>
-                                <width>790</width>
-                                <height>16777215</height>
+                             <width>16777215</width>
+                             <height>25</height>
                             </size>
-                        </property>
-                        <property name="frameShape">
-                            <enum>QFrame::StyledPanel</enum>
-                        </property>
-                        <property name="frameShadow">
-                            <enum>QFrame::Raised</enum>
-                        </property>
-                        <layout class="QHBoxLayout" name="horizontalLayout_4">
-                            <property name="spacing">
-                                <number>0</number>
+                           </property>
+                           <property name="toolTip">
+                            <string>Fire shape.</string>
+                           </property>
+                           <property name="text">
+                            <string>Fire shape</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="1" column="1">
+                          <widget class="QComboBox" name="comboBox_fire_shape">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="minimumSize">
+                            <size>
+                             <width>0</width>
+                             <height>25</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>16777215</width>
+                             <height>25</height>
+                            </size>
+                           </property>
+                           <item>
+                            <property name="text">
+                             <string>Circular</string>
                             </property>
-                            <property name="leftMargin">
-                                <number>0</number>
+                           </item>
+                           <item>
+                            <property name="text">
+                             <string>Rectangular</string>
                             </property>
-                            <property name="topMargin">
-                                <number>0</number>
+                           </item>
+                           <item>
+                            <property name="text">
+                             <string>Line</string>
                             </property>
-                            <property name="rightMargin">
-                                <number>0</number>
+                           </item>
+                          </widget>
+                         </item>
+                         <item row="3" column="0">
+                          <widget class="QLabel" name="label_24">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="minimumSize">
+                            <size>
+                             <width>0</width>
+                             <height>25</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>16777215</width>
+                             <height>25</height>
+                            </size>
+                           </property>
+                           <property name="toolTip">
+                            <string>Fuel type, this dictates the correlation that will be used for the calculation.</string>
+                           </property>
+                           <property name="text">
+                            <string>Fuel type</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="3" column="1">
+                          <widget class="QComboBox" name="comboBox_fuel_type">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="minimumSize">
+                            <size>
+                             <width>0</width>
+                             <height>25</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>16777215</width>
+                             <height>25</height>
+                            </size>
+                           </property>
+                           <item>
+                            <property name="text">
+                             <string>Natural gas (Zukoski)</string>
                             </property>
-                            <property name="bottomMargin">
-                                <number>0</number>
+                           </item>
+                           <item>
+                            <property name="text">
+                             <string>Wood cribs (Thomas)</string>
                             </property>
-                            <item>
-                                <spacer name="horizontalSpacer_7">
-                                    <property name="orientation">
-                                        <enum>Qt::Horizontal</enum>
-                                    </property>
-                                    <property name="sizeType">
-                                        <enum>QSizePolicy::Fixed</enum>
-                                    </property>
-                                    <property name="sizeHint" stdset="0">
-                                        <size>
-                                            <width>5</width>
-                                            <height>20</height>
-                                        </size>
-                                    </property>
-                                </spacer>
-                            </item>
-                            <item>
-                                <widget class="QPushButton" name="pushButton_about">
-                                    <property name="minimumSize">
-                                        <size>
-                                            <width>96</width>
-                                            <height>26</height>
-                                        </size>
-                                    </property>
-                                    <property name="maximumSize">
-                                        <size>
-                                            <width>16777215</width>
-                                            <height>16777215</height>
-                                        </size>
-                                    </property>
-                                    <property name="font">
-                                        <font>
-                                            <pointsize>10</pointsize>
-                                        </font>
-                                    </property>
-                                    <property name="toolTip">
-                                        <string>Click to generate example input parameters.</string>
-                                    </property>
-                                    <property name="text">
-                                        <string>About</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <spacer name="horizontalSpacer_5">
-                                    <property name="orientation">
-                                        <enum>Qt::Horizontal</enum>
-                                    </property>
-                                    <property name="sizeType">
-                                        <enum>QSizePolicy::Fixed</enum>
-                                    </property>
-                                    <property name="sizeHint" stdset="0">
-                                        <size>
-                                            <width>15</width>
-                                            <height>20</height>
-                                        </size>
-                                    </property>
-                                </spacer>
-                            </item>
-                            <item>
-                                <widget class="QPushButton" name="pushButton_example">
-                                    <property name="minimumSize">
-                                        <size>
-                                            <width>96</width>
-                                            <height>26</height>
-                                        </size>
-                                    </property>
-                                    <property name="maximumSize">
-                                        <size>
-                                            <width>16777215</width>
-                                            <height>16777215</height>
-                                        </size>
-                                    </property>
-                                    <property name="font">
-                                        <font>
-                                            <pointsize>10</pointsize>
-                                        </font>
-                                    </property>
-                                    <property name="toolTip">
-                                        <string>Click to generate example input parameters.</string>
-                                    </property>
-                                    <property name="text">
-                                        <string>Example</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <spacer name="horizontalSpacer_4">
-                                    <property name="orientation">
-                                        <enum>Qt::Horizontal</enum>
-                                    </property>
-                                    <property name="sizeHint" stdset="0">
-                                        <size>
-                                            <width>40</width>
-                                            <height>20</height>
-                                        </size>
-                                    </property>
-                                </spacer>
-                            </item>
-                            <item>
-                                <widget class="QPushButton" name="pushButton_ok">
-                                    <property name="minimumSize">
-                                        <size>
-                                            <width>96</width>
-                                            <height>26</height>
-                                        </size>
-                                    </property>
-                                    <property name="maximumSize">
-                                        <size>
-                                            <width>16777215</width>
-                                            <height>16777215</height>
-                                        </size>
-                                    </property>
-                                    <property name="font">
-                                        <font>
-                                            <pointsize>10</pointsize>
-                                        </font>
-                                    </property>
-                                    <property name="toolTip">
-                                        <string>Click (or press Enter) to calculate.</string>
-                                    </property>
-                                    <property name="text">
-                                        <string>OK</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <spacer name="horizontalSpacer_6">
-                                    <property name="orientation">
-                                        <enum>Qt::Horizontal</enum>
-                                    </property>
-                                    <property name="sizeType">
-                                        <enum>QSizePolicy::Fixed</enum>
-                                    </property>
-                                    <property name="sizeHint" stdset="0">
-                                        <size>
-                                            <width>5</width>
-                                            <height>20</height>
-                                        </size>
-                                    </property>
-                                </spacer>
-                            </item>
+                           </item>
+                           <item>
+                            <property name="text">
+                             <string>Gas, liquids and solids (Heskestad)</string>
+                            </property>
+                           </item>
+                          </widget>
+                         </item>
+                         <item row="0" column="1">
+                          <spacer name="verticalSpacer">
+                           <property name="orientation">
+                            <enum>Qt::Vertical</enum>
+                           </property>
+                           <property name="sizeType">
+                            <enum>QSizePolicy::Fixed</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>20</width>
+                             <height>5</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                         <item row="2" column="1">
+                          <spacer name="verticalSpacer_2">
+                           <property name="orientation">
+                            <enum>Qt::Vertical</enum>
+                           </property>
+                           <property name="sizeType">
+                            <enum>QSizePolicy::Fixed</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>20</width>
+                             <height>5</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
                         </layout>
-                    </widget>
-                </item>
-            </layout>
+                       </item>
+                       <item>
+                        <spacer name="horizontalSpacer">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeType">
+                          <enum>QSizePolicy::Fixed</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>60</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>10</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_output_parameters">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>Solved dimensionless heat release rate.</string>
+                   </property>
+                   <property name="statusTip">
+                    <string>Solved dimensionless heat release rate.</string>
+                   </property>
+                   <property name="text">
+                    <string>&lt;b&gt;Output parameters&lt;/b&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>5</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_3">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <spacer name="horizontalSpacer_3">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeType">
+                      <enum>QSizePolicy::Fixed</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>10</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <layout class="QGridLayout" name="gridLayout_3">
+                     <property name="horizontalSpacing">
+                      <number>10</number>
+                     </property>
+                     <property name="verticalSpacing">
+                      <number>5</number>
+                     </property>
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_out_Q_dot_star">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>180</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="toolTip">
+                        <string>Solved dimensionless heat release rate.</string>
+                       </property>
+                       <property name="text">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensionless HRR&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLineEdit" name="lineEdit_out_Q_dot_star">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>50</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="toolTip">
+                        <string>Solved dimensionless heat release rate. Double click to select the value.</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QLabel" name="label_out_Z_f">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>180</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="toolTip">
+                        <string>Solved flame height.</string>
+                       </property>
+                       <property name="text">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Flame height&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QLineEdit" name="lineEdit_out_Z_f">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>50</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="toolTip">
+                        <string>Solved flame height. Double click to select the value.</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="2">
+                      <widget class="QLabel" name="label_out_Z_f_unit">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>50</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>m</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="frame_bottom_bar">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>790</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>790</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="pushButton_about">
+         <property name="minimumSize">
+          <size>
+           <width>96</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>Click to generate example input parameters.</string>
+         </property>
+         <property name="text">
+          <string>About</string>
+         </property>
         </widget>
-        <widget class="QMenuBar" name="menubar">
-            <property name="geometry">
-                <rect>
-                    <x>0</x>
-                    <y>0</y>
-                    <width>833</width>
-                    <height>21</height>
-                </rect>
-            </property>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>15</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_example">
+         <property name="minimumSize">
+          <size>
+           <width>96</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>Click to generate example input parameters.</string>
+         </property>
+         <property name="text">
+          <string>Example</string>
+         </property>
         </widget>
-        <widget class="QStatusBar" name="statusbar"/>
-    </widget>
-    <tabstops>
-        <tabstop>lineEdit_Q_dot_or_Q_dot_l</tabstop>
-        <tabstop>lineEdit_L_A_or_D</tabstop>
-        <tabstop>lineEdit_L_B</tabstop>
-        <tabstop>lineEdit_rho_0</tabstop>
-        <tabstop>lineEdit_c_p_0</tabstop>
-        <tabstop>lineEdit_T_0</tabstop>
-        <tabstop>lineEdit_g</tabstop>
-        <tabstop>comboBox_fire_shape</tabstop>
-        <tabstop>comboBox_fuel_type</tabstop>
-        <tabstop>lineEdit_out_Q_dot_star</tabstop>
-        <tabstop>lineEdit_out_Z_f</tabstop>
-        <tabstop>pushButton_ok</tabstop>
-        <tabstop>pushButton_example</tabstop>
-    </tabstops>
-    <resources/>
-    <connections/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_ok">
+         <property name="minimumSize">
+          <size>
+           <width>96</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>Click (or press Enter) to calculate.</string>
+         </property>
+         <property name="text">
+          <string>OK</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>833</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <tabstops>
+  <tabstop>lineEdit_Q_dot_or_Q_dot_l</tabstop>
+  <tabstop>lineEdit_L_A_or_D</tabstop>
+  <tabstop>lineEdit_L_B</tabstop>
+  <tabstop>lineEdit_rho_0</tabstop>
+  <tabstop>lineEdit_c_p_0</tabstop>
+  <tabstop>lineEdit_T_0</tabstop>
+  <tabstop>lineEdit_g</tabstop>
+  <tabstop>comboBox_fire_shape</tabstop>
+  <tabstop>comboBox_fuel_type</tabstop>
+  <tabstop>lineEdit_out_Q_dot_star</tabstop>
+  <tabstop>lineEdit_out_Z_f</tabstop>
+  <tabstop>pushButton_ok</tabstop>
+  <tabstop>pushButton_example</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
 </ui>

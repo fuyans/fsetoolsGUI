@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>536</width>
-    <height>516</height>
+    <width>494</width>
+    <height>522</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,33 +36,7 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <item row="1" column="2">
-     <spacer name="horizontalSpacer_5">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>0</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="1">
-     <spacer name="verticalSpacer_3">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>0</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="1">
+    <item row="0" column="0">
      <widget class="QWidget" name="widget_2" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -87,7 +61,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QFrame" name="frame_userio">
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <property name="spacing">
            <number>0</number>
@@ -118,13 +92,6 @@
               <height>26</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
             <property name="toolTip">
              <string>Date in YYMMDD (i.e. 201231) or YYYYMMDD (i.e. 20201231) format.</string>
             </property>
@@ -132,15 +99,28 @@
              <string>Date in YYMMDD (i.e. 201231) or YYYYMMDD (i.e. 20201231) format.</string>
             </property>
             <property name="text">
-             <string>Input parameters</string>
+             <string>&lt;b&gt;Input parameters&lt;b&gt;</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
             </property>
-            <property name="buddy">
-             <cstring>widget_2</cstring>
-            </property>
            </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>5</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout">
@@ -185,13 +165,6 @@
                   <height>26</height>
                  </size>
                 </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <weight>50</weight>
-                  <bold>false</bold>
-                 </font>
-                </property>
                 <property name="toolTip">
                  <string>Date in YYMMDD (i.e. 201231) or YYYYMMDD (i.e. 20201231) format.</string>
                 </property>
@@ -220,13 +193,8 @@
                   <height>26</height>
                  </size>
                 </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
                 <property name="text">
-                 <string>20151021</string>
+                 <string/>
                 </property>
                </widget>
               </item>
@@ -243,13 +211,6 @@
                   <width>121</width>
                   <height>26</height>
                  </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <weight>50</weight>
-                  <bold>false</bold>
-                 </font>
                 </property>
                 <property name="toolTip">
                  <string>Revision indicator.</string>
@@ -278,11 +239,6 @@
                   <width>16777215</width>
                   <height>26</height>
                  </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
                 </property>
                 <item>
                  <property name="text">
@@ -335,13 +291,6 @@
                   <height>26</height>
                  </size>
                 </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <weight>50</weight>
-                  <bold>false</bold>
-                 </font>
-                </property>
                 <property name="toolTip">
                  <string>Project number.</string>
                 </property>
@@ -370,13 +319,8 @@
                   <height>26</height>
                  </size>
                 </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
                 <property name="text">
-                 <string>OX20001</string>
+                 <string/>
                 </property>
                </widget>
               </item>
@@ -393,13 +337,6 @@
                   <width>121</width>
                   <height>26</height>
                  </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <weight>50</weight>
-                  <bold>false</bold>
-                 </font>
                 </property>
                 <property name="toolTip">
                  <string>Project stage.</string>
@@ -429,13 +366,8 @@
                   <height>26</height>
                  </size>
                 </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
                 <property name="text">
-                 <string>WP1</string>
+                 <string/>
                 </property>
                </widget>
               </item>
@@ -452,13 +384,6 @@
                   <width>121</width>
                   <height>26</height>
                  </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <weight>50</weight>
-                  <bold>false</bold>
-                 </font>
                 </property>
                 <property name="toolTip">
                  <string>File title in plain English.</string>
@@ -488,13 +413,8 @@
                   <height>26</height>
                  </size>
                 </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
                 <property name="text">
-                 <string>Outline fire strategy report</string>
+                 <string/>
                 </property>
                </widget>
               </item>
@@ -511,13 +431,6 @@
                   <width>121</width>
                   <height>26</height>
                  </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <weight>50</weight>
-                  <bold>false</bold>
-                 </font>
                 </property>
                 <property name="toolTip">
                  <string>Document type.</string>
@@ -546,11 +459,6 @@
                   <width>16777215</width>
                   <height>26</height>
                  </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
                 </property>
                 <item>
                  <property name="text">
@@ -648,13 +556,6 @@
                   <height>26</height>
                  </size>
                 </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <weight>50</weight>
-                  <bold>false</bold>
-                 </font>
-                </property>
                 <property name="toolTip">
                  <string>Security status.</string>
                 </property>
@@ -682,11 +583,6 @@
                   <width>16777215</width>
                   <height>26</height>
                  </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
                 </property>
                 <item>
                  <property name="text">
@@ -744,13 +640,6 @@
               <height>26</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
             <property name="toolTip">
              <string>Date in YYMMDD (i.e. 201231) or YYYYMMDD (i.e. 20201231) format.</string>
             </property>
@@ -758,12 +647,28 @@
              <string>Date in YYMMDD (i.e. 201231) or YYYYMMDD (i.e. 20201231) format.</string>
             </property>
             <property name="text">
-             <string>Output parameters</string>
+             <string>&lt;b&gt;Output parameters&lt;/b&gt;</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
             </property>
            </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>5</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -808,11 +713,6 @@
                   <height>26</height>
                  </size>
                 </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
                 <property name="toolTip">
                  <string>Composed file name.</string>
                 </property>
@@ -834,13 +734,6 @@
                   <width>121</width>
                   <height>26</height>
                  </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <weight>50</weight>
-                  <bold>false</bold>
-                 </font>
                 </property>
                 <property name="toolTip">
                  <string>Security status.</string>
@@ -864,11 +757,6 @@
                   <height>26</height>
                  </size>
                 </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
                 <property name="toolTip">
                  <string>Replace all spaces in the file name with underscore `_`.</string>
                 </property>
@@ -876,7 +764,7 @@
                  <string>Replace all spaces in the file name with underscore `_`.</string>
                 </property>
                 <property name="text">
-                 <string>Replace Spaces with Underscore</string>
+                 <string>Replace spaces with underscore</string>
                 </property>
                </widget>
               </item>
@@ -905,6 +793,9 @@
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <item>
           <widget class="QPushButton" name="pushButton_about">
            <property name="sizePolicy">
@@ -924,11 +815,6 @@
              <width>96</width>
              <height>26</height>
             </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
            </property>
            <property name="toolTip">
             <string>Click (or press Enter) to copy the generated file name.</string>
@@ -979,11 +865,6 @@
              <height>26</height>
             </size>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
            <property name="toolTip">
             <string>Click (or press Enter) to copy the generated file name.</string>
            </property>
@@ -1000,32 +881,6 @@
       </layout>
      </widget>
     </item>
-    <item row="2" column="1">
-     <spacer name="verticalSpacer_4">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>0</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="0">
-     <spacer name="horizontalSpacer_4">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>0</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -1033,7 +888,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>536</width>
+     <width>494</width>
      <height>22</height>
     </rect>
    </property>

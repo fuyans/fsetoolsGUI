@@ -192,11 +192,6 @@
              <height>76</height>
             </size>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
            <property name="toolTip">
             <string>File name generator in accordance with OFR file naming protocal.</string>
            </property>
@@ -228,11 +223,6 @@
              <height>76</height>
             </size>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
            <property name="toolTip">
             <string>To estimate optimal mesh resolution.</string>
            </property>
@@ -261,11 +251,6 @@
              <height>76</height>
             </size>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
            <property name="text">
             <string/>
            </property>
@@ -284,11 +269,6 @@
              <width>76</width>
              <height>76</height>
             </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
            </property>
            <property name="toolTip">
             <string>Flame height in accordance with PD 7974-1:2019.</string>
@@ -366,11 +346,6 @@
              <height>76</height>
             </size>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
            <property name="toolTip">
             <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
            </property>
@@ -398,11 +373,6 @@
              <width>76</width>
              <height>76</height>
             </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
            </property>
            <property name="toolTip">
             <string>Data sheet 1 for Approved Document B (2019) Vol. 2, for B1.</string>
@@ -432,11 +402,6 @@
              <height>76</height>
             </size>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
            <property name="toolTip">
             <string>Data sheet 1 for BS 9999:2017, for B1.</string>
            </property>
@@ -464,11 +429,6 @@
              <width>76</width>
              <height>76</height>
             </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
            </property>
            <property name="toolTip">
             <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
@@ -500,11 +460,6 @@
              <width>76</width>
              <height>76</height>
             </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
            </property>
            <property name="toolTip">
             <string>Merging flow calculation in accordance with BS 9999:2017.</string>
@@ -566,11 +521,6 @@
              <height>76</height>
             </size>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
            <property name="toolTip">
             <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
            </property>
@@ -598,11 +548,6 @@
              <width>76</width>
              <height>76</height>
             </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
            </property>
            <property name="toolTip">
             <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
@@ -632,11 +577,6 @@
              <height>76</height>
             </size>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
            <property name="toolTip">
             <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
            </property>
@@ -664,11 +604,6 @@
              <width>76</width>
              <height>76</height>
             </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
            </property>
            <property name="toolTip">
             <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
@@ -700,11 +635,6 @@
              <width>76</width>
              <height>76</height>
             </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
            </property>
            <property name="toolTip">
             <string>General purpose thermal radiation calculator.</string>
