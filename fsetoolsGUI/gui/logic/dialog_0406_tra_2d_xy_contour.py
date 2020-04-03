@@ -1,6 +1,5 @@
 import sys
 import threading
-from os.path import join
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -9,7 +8,6 @@ from PySide2.QtCore import Slot
 from fsetools.lib.fse_thermal_radiation_2d_v2 import main as tra_main
 from matplotlib import cm
 
-import fsetoolsGUI
 from fsetoolsGUI.gui.layout.dialog_0406_tra_2d_xy_contour import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.custom_tableview import TableModel
@@ -115,14 +113,13 @@ class Signals(QtCore.QObject):
 
 
 class Dialog0406(QMainWindow):
-    fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0406.md')  # doc file path
 
     def __init__(self, parent=None):
         super().__init__(
             module_id='0406',
             parent=parent,
             shortcut_Return=self.calculate,
-            about_fp_or_md=self.fp_doc
+            freeze_window_size=True,
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)

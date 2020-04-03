@@ -1,6 +1,6 @@
 from os.path import join
 
-from PySide2 import QtWidgets, QtGui, QtCore
+from PySide2 import QtWidgets
 
 import fsetoolsGUI
 from fsetoolsGUI.gui.layout.dialog_0104_merging_flow import Ui_MainWindow
@@ -38,7 +38,7 @@ class Dialog0104(QMainWindow):
 
         # set all outputs lineedit to readonly
         for i in filter_objects_by_name(
-                self.ui.groupBox_control,
+                self.ui.frame_userio,
                 object_types=[QtWidgets.QLineEdit, QtWidgets.QCheckBox],
                 names=['_out_']
         ):
@@ -48,7 +48,6 @@ class Dialog0104(QMainWindow):
                 i.setEnabled(False)
 
         # set up context image
-        self.ui.label_image_context.setPixmap(self.make_pixmap_from_fp(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0104-0.png')))
         self.ui.label_image_figure.setPixmap(self.make_pixmap_from_fp(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0104-1.png')))
 
         # placeholder texts

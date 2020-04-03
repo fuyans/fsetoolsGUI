@@ -9,6 +9,11 @@ class Dialog0404(Dialog04):
             module_id='0404',
             parent=parent,
         )
+        self.ui.label_description.setWordWrap(True)
+        self.ui.label_description.setText(
+            'This sheet calculates the thermal radiation intensity at a receiver that is perpendicular to '
+            'a rectangular emitter. Calculation coded in this sheet follows "BR 187 External fire spread" 2nd edition.'
+        )
 
     @property
     def input_parameters(self) -> dict:

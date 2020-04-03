@@ -1,12 +1,9 @@
-import os
-
 import numpy as np
 from PySide2 import QtGui, QtCore
 from PySide2.QtWidgets import QLineEdit
 from fsetools.lib.fse_activation_hd import heat_detector_temperature_pd7974
 from fsetools.libstd.pd_7974_1_2019 import eq_22_t_squared_fire_growth
 
-import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import dialog_0111_context_1 as image_context_1
 from fsetoolsGUI.gui.images_base64 import dialog_0111_context_2 as image_context_2
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_1 as image_figure_1
@@ -27,7 +24,7 @@ class Dialog0111(QMainWindow):
             module_id='0111',
             parent=parent,
             shortcut_Return=self.calculate,
-            about_fp_or_md=os.path.join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0111.md')
+            freeze_window_size=True,
         )
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
@@ -50,7 +47,7 @@ class Dialog0111(QMainWindow):
             self.dict_images_pixmap[k].loadFromData(ba)
 
         # set output items readonly
-        for i in filter_objects_by_name(self.ui.groupBox_control, object_types=[QLineEdit], names=['_out_']):
+        for i in filter_objects_by_name(self.ui.frame_userio, object_types=[QLineEdit], names=['_out_']):
             try:
                 i.setReadOnly(True)
             except AttributeError:
@@ -91,14 +88,14 @@ class Dialog0111(QMainWindow):
         # clear output
         self.ui.lineEdit_out_t_act.setText('')
         self.ui.pushButton_show_results_in_table.setEnabled(False)
-        self._numerical_results = []
+        self._numerical_results = dict()
 
         """Set figures, disable and enable UI items accordingly."""
         if self.ui.radioButton_fire_plume.isChecked():  # plume temperature and velocity
             self.ui.lineEdit_in_R.setEnabled(False)
             self.ui.label_in_R_label.setEnabled(False)
             self.ui.label_in_R_unit.setEnabled(False)
-            self.ui.label_image_context.setPixmap(self.dict_images_pixmap['image_context_2'])
+            # self.ui.label_image_context.setPixmap(self.dict_images_pixmap['image_context_2'])
             self.ui.label_image_figure.setPixmap(self.dict_images_pixmap['image_figure_2'])
             self.__table_header = [
                 'Time [s]', 'HRR [kW]', 'V. Origin [m]', 'Plume T. [°C]', 'Plume Vel. [m/s]', 'Detector T. [°C]'
@@ -107,7 +104,7 @@ class Dialog0111(QMainWindow):
             self.ui.lineEdit_in_R.setEnabled(True)
             self.ui.label_in_R_label.setEnabled(True)
             self.ui.label_in_R_unit.setEnabled(True)
-            self.ui.label_image_context.setPixmap(self.dict_images_pixmap['image_context_1'])
+            # self.ui.label_image_context.setPixmap(self.dict_images_pixmap['image_context_1'])
             self.ui.label_image_figure.setPixmap(self.dict_images_pixmap['image_figure_1'])
             self.__table_header = [
                 'Time [s]', 'HRR [kW]', 'V. Origin [m]', 'Jet T. [°C]', 'Jet Vel. [m/s]', 'Detector T. [°C]'

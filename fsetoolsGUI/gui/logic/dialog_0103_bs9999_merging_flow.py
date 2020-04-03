@@ -1,6 +1,6 @@
 from os.path import join
 
-from PySide2 import QtWidgets, QtGui, QtCore
+from PySide2 import QtWidgets, QtGui
 from fsetools.libstd.bs_9999_2017 import (
     clause_15_6_6_e_merging_flow_1, clause_15_6_6_e_merging_flow_2, clause_15_6_6_e_merging_flow_3
 )
@@ -40,7 +40,7 @@ class Dialog0103(QMainWindow):
 
         # set all outputs lineedit to readonly
         for i in filter_objects_by_name(
-                self.ui.groupBox_control,
+                self.ui.frame_userio,
                 object_types=[QtWidgets.QLineEdit, QtWidgets.QCheckBox],
                 names=['_out_']
         ):
@@ -50,7 +50,7 @@ class Dialog0103(QMainWindow):
                 i.setEnabled(False)
 
         # set up context image
-        self.ui.label_image_context.setPixmap(self.dict_images_pixmap['image_context'])
+        # self.ui.frame_userio.setPixmap(self.dict_images_pixmap['image_context'])
 
         # entry default values
         self.ui.radioButton_opt_scenario_1.setChecked(True)
@@ -82,7 +82,7 @@ class Dialog0103(QMainWindow):
         # enable everything in input group to start with.
         # ui items will be disabled for scenario 1 or 2 (if applicable) below.
         list_obj = filter_objects_by_name(
-            self.ui.groupBox_control, [QtWidgets.QLabel, QtWidgets.QLineEdit],
+            self.ui.frame_userio, [QtWidgets.QLabel, QtWidgets.QLineEdit],
             ['_in_S_dn', '_in_W_SE', '_in_B', '_in_N']
         )
         for i in list_obj:
@@ -95,7 +95,7 @@ class Dialog0103(QMainWindow):
         if self.ui.radioButton_opt_scenario_1.isChecked():  # scenario 1, flow from upper levels + ground floor
             # get items that to be processed
             list_obj = filter_objects_by_name(
-                self.ui.groupBox_control, [QtWidgets.QLabel, QtWidgets.QLineEdit], ['_in_S_dn', '_in_B']
+                self.ui.frame_userio, [QtWidgets.QLabel, QtWidgets.QLineEdit], ['_in_S_dn', '_in_B']
             )
             # disable items that are not required in scenario 1
             for i in list_obj:
@@ -107,7 +107,7 @@ class Dialog0103(QMainWindow):
 
         elif self.ui.radioButton_opt_scenario_2.isChecked():  # scenario 2, flow from upper levels + basement
             list_obj = filter_objects_by_name(
-                self.ui.groupBox_control, [QtWidgets.QLabel, QtWidgets.QLineEdit], ['_in_W_SE', '_in_N']
+                self.ui.frame_userio, [QtWidgets.QLabel, QtWidgets.QLineEdit], ['_in_W_SE', '_in_N']
             )
             for i in list_obj:
                 i.setEnabled(False)

@@ -16,11 +16,15 @@ class Dialog0401(Dialog04):
 
     def __init__(self):
         super().__init__(module_id='0401')
+        self.ui.label_description.setWordWrap(True)
+        self.ui.label_description.setText(
+            'This sheet calculates the thermal radiation intensity at a receiver that is parallel to a rectangular '
+            'emitter. Calculation coded in this sheet follows "BR 187 External fire spread" 2nd edition.'
+        )
 
     @staticmethod
     def phi_solver(W: float, H: float, w: float, h: float, Q: float, Q_a: float, S=None, UA=None) -> tuple:
         """A wrapper to `phi_parallel_any_br187` with error handling and customised IO"""
-
         return Dialog0403.phi_solver(W=W, H=H, w=0, h=0, Q=Q, Q_a=Q_a, S=S, UA=UA)
 
 

@@ -16,7 +16,7 @@ class Dialog04(QMainWindow):
             module_id=module_id,
             parent=parent,
             shortcut_Return=self.calculate,
-            about_fp_or_md=join(fsetoolsGUI.__root_dir__, 'gui', 'doc', f'{module_id}.md')
+            freeze_window_size=True,
         )
 
         if module_id == '0401' or module_id == '0402':
@@ -29,7 +29,7 @@ class Dialog04(QMainWindow):
         self.__id = module_id
 
         # set up radiation figure
-        self.ui.label_image_page.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{module_id}-0.png'))
+        # self.ui.label_image_page.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{module_id}-0.png'))
         self.ui.label_image_figure.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{module_id}-1.png'))
 
         # set default values
@@ -57,16 +57,16 @@ class Dialog04(QMainWindow):
     def example(self):
 
         self.ui.radioButton_in_S.setChecked(True)
-        self.ui.lineEdit_in_W.setText('50')
-        self.ui.lineEdit_in_H.setText('50')
+        self.change_mode_S_and_UA()
+        self.ui.lineEdit_in_W.setText('10')
+        self.ui.lineEdit_in_H.setText('6')
         try:
             self.ui.lineEdit_in_w.setText('0')
             self.ui.lineEdit_in_h.setText('0')
         except AttributeError:
             pass
         self.ui.lineEdit_in_Q.setText('84')
-        self.ui.lineEdit_in_S.setText('2')
-        self.change_mode_S_and_UA()
+        self.ui.lineEdit_in_S.setText('1')
 
         self.repaint()
 
@@ -130,29 +130,32 @@ class Dialog04(QMainWindow):
                 S *= 2.
         elif self.ui.radioButton_in_UA.isChecked():
             UA = str2float(self.ui.lineEdit_in_UA.text())
-            if UA:
+            if UA is not None:
                 # convert % to absolute i.e. 98% -> 0.98
                 UA /= 100.
+            else:
+                raise ValueError('Unknown format, unprotected area input parameter should be a positive float')
+
         Q = str2float(self.ui.lineEdit_in_Q.text())
 
         # validate input values
-        self.validate(W, 'unsigned float', 'W should be greater than 0')
-        self.validate(H, 'unsigned float', 'H should be greater than 0')
+        self.validate(W, 'unsigned float', 'Emitter width should be greater than 0')
+        self.validate(H, 'unsigned float', 'Emitter height should be greater than 0')
         if self.__id == '0403' or self.__id == '0404':
-            self.validate(w, 'unsigned float', 'w should be greater than 0')
-            self.validate(h, 'unsigned float', 'h should be greater than 0')
+            self.validate(w, 'unsigned float', 'Receiver offset "w" should be greater than 0')
+            self.validate(h, 'unsigned float', 'Receiver offset "h" should be greater than 0')
         if S:
             try:
                 # check if S provided is greater than S (1 m to the relevant boundary)
                 assert S >= 2
             except AssertionError:
                 raise ValueError('Separation to relevant boundary should be greater than 1 m')
-        if UA:
+        if UA is not None:
             try:
-                assert all((UA > 0, UA < 1))
+                assert all((UA > 0, UA <= 1))
             except AssertionError:
                 raise ValueError('Unprotected area should be greater than 0 and less than 100 %')
-        self.validate(Q, 'unsigned float', 'Q should be greater than 0')
+        self.validate(Q, 'unsigned float', 'Emitter heat flux should be greater than 0')
 
         # check if enough inputs are provided for any calculation options
         try:
@@ -161,7 +164,9 @@ class Dialog04(QMainWindow):
             else:
                 assert all(i is not None for i in (W, H))
 
-            if UA:
+            assert UA is not None or S is not None
+
+            if UA is not None:
                 # if to calculate the required separation S for a given UA,
                 # then Q is also required
                 assert Q
@@ -227,7 +232,6 @@ class Dialog04(QMainWindow):
 
         try:
             phi, q, S, UA, msg = self.phi_solver(**input_parameters)
-            self.statusBar().showMessage(msg)
             # if calculation is successful: assign to output parameters for later use and show a message to user.
         except Exception as e:
             self.statusBar().showMessage(str(e))
@@ -238,6 +242,7 @@ class Dialog04(QMainWindow):
 
         try:
             self.output_parameters = dict(phi=phi, q=q, S=S, UA=UA)
+            self.statusBar().showMessage(msg)
         except Exception as e:
             self.statusBar().showMessage(str(e))
             self.repaint()
@@ -250,6 +255,11 @@ class Dialog0403(Dialog04):
     def __init__(self):
         super().__init__(module_id='0403')
 
+        self.ui.label_description.setWordWrap(True)
+        self.ui.label_description.setText(
+            'This sheet calculates the thermal radiation intensity at a receiver that is parallel to a rectangular '
+            'emitter. Calculation coded in this sheet follows "BR 187 External fire spread" 2nd edition.'
+        )
 
     @staticmethod
     def phi_solver(W: float, H: float, w: float, h: float, Q: float, Q_a: float, S=None, UA=None):
@@ -310,7 +320,6 @@ class Dialog0403(Dialog04):
                 S_solved = 2
 
         return phi_solved, q_solved, S_solved, UA_solved, msg
-
 
 
 if __name__ == "__main__":

@@ -16,6 +16,10 @@ class Dialog0402(Dialog04):
 
     def __init__(self):
         super().__init__(module_id='0402')
+        self.ui.label_description.setText(
+            'This sheet calculates the thermal radiation intensity at a receiver that is perpendicular to '
+            'an rectangular emitter. Calculation coded in this sheet follows "BR 187 External fire spread" 2nd edition.'
+        )
 
     @staticmethod
     def phi_solver(W: float, H: float, w: float, h: float, Q: float, Q_a: float, S=None, UA=None) -> tuple:

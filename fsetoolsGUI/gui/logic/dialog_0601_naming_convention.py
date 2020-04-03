@@ -17,7 +17,7 @@ class Dialog0601(QMainWindow):
             module_id='0601',
             parent=parent,
             shortcut_Return=self.copy_file_name,
-            about_fp_or_md=self.fp_doc
+            freeze_window_size=True,
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)

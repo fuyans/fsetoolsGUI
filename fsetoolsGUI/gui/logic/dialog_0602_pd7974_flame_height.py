@@ -22,7 +22,7 @@ class Dialog0602(QMainWindow):
             module_id='0602',
             parent=parent,
             shortcut_Return=self.calculate,
-            # freeze_window_size=True,
+            freeze_window_size=True,
         )
 
         self.ui = Ui_MainWindow()
@@ -44,8 +44,8 @@ class Dialog0602(QMainWindow):
                 i.setEnabled(False)
 
         # set up figures
-        self.ui.label_image_context.setPixmap(
-            self.make_pixmap_from_fp(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0602-0.png')))
+        # self.ui.label_image_context.setPixmap(
+        #     self.make_pixmap_from_fp(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0602-0.png')))
         self.ui.label_image_figure.setPixmap(
             self.make_pixmap_from_fp(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0602-1.png')))
 
