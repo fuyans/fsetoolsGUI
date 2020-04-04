@@ -1,10 +1,11 @@
 import base64
+import io
 import os
 import os.path as path
 import re
-from PIL import Image
+
 import markdown2
-import io
+from PIL import Image
 
 import fsetoolsGUI.gui
 
@@ -18,21 +19,18 @@ def md2md_embedded_img(fp_md: str):
         fp_img = re.search(r'\((.+)\)', ref_img).group(1)
         fp_img = path.realpath(path.join(path.dirname(fp_md), *path.split(fp_img)))
 
-        img = Image.open(fp_img)
+        try:
+            img = Image.open(fp_img)
+        except FileNotFoundError:
+            continue
         img_width, img_height = img.size
-        img_width, img_height = 500, (img_height*500/img_width)
+        img_width, img_height = 700, (img_height * 700 / img_width)
         img = img.resize((img_width, int(img_height)), resample=Image.LANCZOS)
 
         img_buffer = io.BytesIO()
         img.save(img_buffer, format='png')
 
         img_base64 = base64.b64encode(img_buffer.getvalue()).decode('utf-8')
-        # read image and encode to base64
-        # try:
-        #     with open(fp_img, 'rb') as f:
-        #         img_base64 = base64.b64encode(f.read()).decode('utf-8')
-        # except FileNotFoundError:
-        #     continue
 
         # make embedded image url
         img_html_embedded = f"<img src='data:image/png;base64,{img_base64}'>"
