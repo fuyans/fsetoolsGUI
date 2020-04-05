@@ -1524,9 +1524,6 @@
          <property name="toolTip">
           <string>Click to show quanlity assurance log.</string>
          </property>
-         <property name="statusTip">
-          <string>Click to show quanlity assurance log.</string>
-         </property>
          <property name="text">
           <string>About</string>
          </property>
@@ -1565,9 +1562,6 @@
          <property name="toolTip">
           <string>Click to generate example input parameters.</string>
          </property>
-         <property name="statusTip">
-          <string>Click to generate example input parameters.</string>
-         </property>
          <property name="text">
           <string>Example</string>
          </property>
@@ -1601,9 +1595,6 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>Click (or press Enter) to calculate.</string>
-         </property>
-         <property name="statusTip">
           <string>Click (or press Enter) to calculate.</string>
          </property>
          <property name="text">

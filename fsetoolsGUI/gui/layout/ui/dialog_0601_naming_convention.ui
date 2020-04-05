@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>494</width>
-    <height>522</height>
+    <width>551</width>
+    <height>527</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -95,9 +95,6 @@
             <property name="toolTip">
              <string>Date in YYMMDD (i.e. 201231) or YYYYMMDD (i.e. 20201231) format.</string>
             </property>
-            <property name="statusTip">
-             <string>Date in YYMMDD (i.e. 201231) or YYYYMMDD (i.e. 20201231) format.</string>
-            </property>
             <property name="text">
              <string>&lt;b&gt;Input parameters&lt;b&gt;</string>
             </property>
@@ -153,23 +150,23 @@
               </property>
               <item row="0" column="0">
                <widget class="QLabel" name="label_16">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
-                </property>
-                <property name="toolTip">
-                 <string>Date in YYMMDD (i.e. 201231) or YYYYMMDD (i.e. 20201231) format.</string>
-                </property>
-                <property name="statusTip">
-                 <string>Date in YYMMDD (i.e. 201231) or YYYYMMDD (i.e. 20201231) format.</string>
                 </property>
                 <property name="text">
                  <string>Date</string>
@@ -181,17 +178,26 @@
               </item>
               <item row="0" column="1">
                <widget class="QLineEdit" name="lineEdit_1_date">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
-                  <height>26</height>
+                  <width>50</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>70</width>
-                  <height>26</height>
+                  <width>16777215</width>
+                  <height>25</height>
                  </size>
+                </property>
+                <property name="toolTip">
+                 <string>Date in YYMMDD or YYYYMMDD format</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -200,23 +206,23 @@
               </item>
               <item row="1" column="0">
                <widget class="QLabel" name="label_15">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
-                </property>
-                <property name="toolTip">
-                 <string>Revision indicator.</string>
-                </property>
-                <property name="statusTip">
-                 <string>Revision indicator.</string>
                 </property>
                 <property name="text">
                  <string>Revision</string>
@@ -228,16 +234,22 @@
               </item>
               <item row="1" column="1">
                <widget class="QComboBox" name="comboBox_2_revision">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
-                  <height>26</height>
+                  <width>50</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>26</height>
+                  <height>25</height>
                  </size>
                 </property>
                 <item>
@@ -279,23 +291,23 @@
               </item>
               <item row="2" column="0">
                <widget class="QLabel" name="label_14">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
-                </property>
-                <property name="toolTip">
-                 <string>Project number.</string>
-                </property>
-                <property name="statusTip">
-                 <string>Project number.</string>
                 </property>
                 <property name="text">
                  <string>Project no.</string>
@@ -307,17 +319,26 @@
               </item>
               <item row="2" column="1">
                <widget class="QLineEdit" name="lineEdit_3_project_no">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
-                  <height>26</height>
+                  <width>50</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>90</width>
-                  <height>26</height>
+                  <width>16777215</width>
+                  <height>25</height>
                  </size>
+                </property>
+                <property name="toolTip">
+                 <string>Project number in XX##### format</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -326,23 +347,23 @@
               </item>
               <item row="3" column="0">
                <widget class="QLabel" name="label_17">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
-                </property>
-                <property name="toolTip">
-                 <string>Project stage.</string>
-                </property>
-                <property name="statusTip">
-                 <string>Project stage.</string>
                 </property>
                 <property name="text">
                  <string>Project stage</string>
@@ -354,17 +375,26 @@
               </item>
               <item row="3" column="1">
                <widget class="QLineEdit" name="lineEdit_4_project_stage">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
-                  <height>26</height>
+                  <width>50</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>90</width>
-                  <height>26</height>
+                  <width>16777215</width>
+                  <height>25</height>
                  </size>
+                </property>
+                <property name="toolTip">
+                 <string>Project stage (e.g. RIBA)</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -373,23 +403,23 @@
               </item>
               <item row="4" column="0">
                <widget class="QLabel" name="label_18">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
-                </property>
-                <property name="toolTip">
-                 <string>File title in plain English.</string>
-                </property>
-                <property name="statusTip">
-                 <string>File title in plain English.</string>
                 </property>
                 <property name="text">
                  <string>File title</string>
@@ -401,17 +431,26 @@
               </item>
               <item row="4" column="1">
                <widget class="QLineEdit" name="lineEdit_5_title">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>200</width>
-                  <height>26</height>
+                  <width>50</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>26</height>
+                  <height>25</height>
                  </size>
+                </property>
+                <property name="toolTip">
+                 <string>File title in plain English</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -420,23 +459,23 @@
               </item>
               <item row="5" column="0">
                <widget class="QLabel" name="label_19">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
-                </property>
-                <property name="toolTip">
-                 <string>Document type.</string>
-                </property>
-                <property name="statusTip">
-                 <string>Document type.</string>
                 </property>
                 <property name="text">
                  <string>Document type</string>
@@ -448,16 +487,22 @@
               </item>
               <item row="5" column="1">
                <widget class="QComboBox" name="comboBox_6_type">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
-                  <height>26</height>
+                  <width>50</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>26</height>
+                  <height>25</height>
                  </size>
                 </property>
                 <item>
@@ -544,23 +589,23 @@
               </item>
               <item row="6" column="0">
                <widget class="QLabel" name="label_20">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
-                </property>
-                <property name="toolTip">
-                 <string>Security status.</string>
-                </property>
-                <property name="statusTip">
-                 <string>Security status.</string>
                 </property>
                 <property name="text">
                  <string>Security status</string>
@@ -572,16 +617,22 @@
               </item>
               <item row="6" column="1">
                <widget class="QComboBox" name="comboBox_7_security_status">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
-                  <height>26</height>
+                  <width>50</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>26</height>
+                  <height>25</height>
                  </size>
                 </property>
                 <item>
@@ -643,9 +694,6 @@
             <property name="toolTip">
              <string>Date in YYMMDD (i.e. 201231) or YYYYMMDD (i.e. 20201231) format.</string>
             </property>
-            <property name="statusTip">
-             <string>Date in YYMMDD (i.e. 201231) or YYYYMMDD (i.e. 20201231) format.</string>
-            </property>
             <property name="text">
              <string>&lt;b&gt;Output parameters&lt;/b&gt;</string>
             </property>
@@ -701,48 +749,51 @@
               </property>
               <item row="0" column="1">
                <widget class="QLineEdit" name="lineEdit_out_result">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
-                  <height>26</height>
+                  <width>50</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>26</height>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="toolTip">
-                 <string>Composed file name.</string>
-                </property>
-                <property name="statusTip">
                  <string>Composed file name.</string>
                 </property>
                </widget>
               </item>
               <item row="0" column="0">
                <widget class="QLabel" name="label_23">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>121</width>
-                  <height>26</height>
+                  <width>120</width>
+                  <height>25</height>
                  </size>
                 </property>
-                <property name="toolTip">
-                 <string>Security status.</string>
-                </property>
-                <property name="statusTip">
-                 <string>Security status.</string>
-                </property>
                 <property name="text">
-                 <string>Resolved file name</string>
+                 <string>File name</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -751,16 +802,19 @@
               </item>
               <item row="1" column="1">
                <widget class="QCheckBox" name="checkBox_replace_spaces">
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>26</height>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="toolTip">
-                 <string>Replace all spaces in the file name with underscore `_`.</string>
-                </property>
-                <property name="statusTip">
                  <string>Replace all spaces in the file name with underscore `_`.</string>
                 </property>
                 <property name="text">
@@ -819,9 +873,6 @@
            <property name="toolTip">
             <string>Click (or press Enter) to copy the generated file name.</string>
            </property>
-           <property name="statusTip">
-            <string>Click (or press Enter) to copy the generated file name.</string>
-           </property>
            <property name="text">
             <string>About</string>
            </property>
@@ -868,9 +919,6 @@
            <property name="toolTip">
             <string>Click (or press Enter) to copy the generated file name.</string>
            </property>
-           <property name="statusTip">
-            <string>Click (or press Enter) to copy the generated file name.</string>
-           </property>
            <property name="text">
             <string>OK</string>
            </property>
@@ -888,7 +936,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>494</width>
+     <width>551</width>
      <height>22</height>
     </rect>
    </property>

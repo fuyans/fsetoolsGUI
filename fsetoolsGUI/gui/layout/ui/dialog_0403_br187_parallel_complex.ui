@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>833</width>
-    <height>515</height>
+    <height>525</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -307,7 +307,7 @@
                   </size>
                  </property>
                  <property name="text">
-                  <string>Input parameters</string>
+                  <string>&lt;b&gt;Input parameters&lt;/b&gt;</string>
                  </property>
                 </widget>
                </item>
@@ -924,7 +924,7 @@
                   </size>
                  </property>
                  <property name="text">
-                  <string>Output parameters</string>
+                  <string>&lt;b&gt;Output parameters&lt;/b&gt;</string>
                  </property>
                 </widget>
                </item>
@@ -1330,6 +1330,18 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <tabstops>
+  <tabstop>lineEdit_in_W</tabstop>
+  <tabstop>lineEdit_in_H</tabstop>
+  <tabstop>lineEdit_in_w</tabstop>
+  <tabstop>lineEdit_in_h</tabstop>
+  <tabstop>radioButton_in_S</tabstop>
+  <tabstop>lineEdit_in_S</tabstop>
+  <tabstop>radioButton_in_UA</tabstop>
+  <tabstop>lineEdit_in_UA</tabstop>
+  <tabstop>lineEdit_in_Q</tabstop>
+  <tabstop>lineEdit_out_Phi</tabstop>
+  <tabstop>lineEdit_out_q</tabstop>
+  <tabstop>lineEdit_out_S_or_UA</tabstop>
   <tabstop>pushButton_ok</tabstop>
   <tabstop>pushButton_about</tabstop>
   <tabstop>pushButton_example</tabstop>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>833</width>
-    <height>559</height>
+    <height>565</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -64,7 +64,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>790</width>
+         <width>801</width>
          <height>440</height>
         </rect>
        </property>
@@ -301,9 +301,6 @@ Calculation coded in this application follows &quot;PD 7974-1:2019 Application o
                     </size>
                    </property>
                    <property name="toolTip">
-                    <string>Solved dimensionless heat release rate.</string>
-                   </property>
-                   <property name="statusTip">
                     <string>Solved dimensionless heat release rate.</string>
                    </property>
                    <property name="text">
@@ -860,13 +857,13 @@ Calculation coded in this application follows &quot;PD 7974-1:2019 Application o
                            </property>
                            <property name="minimumSize">
                             <size>
-                             <width>0</width>
+                             <width>70</width>
                              <height>25</height>
                             </size>
                            </property>
                            <property name="maximumSize">
                             <size>
-                             <width>16777215</width>
+                             <width>70</width>
                              <height>25</height>
                             </size>
                            </property>
@@ -881,7 +878,7 @@ Calculation coded in this application follows &quot;PD 7974-1:2019 Application o
                          <item row="1" column="1">
                           <widget class="QComboBox" name="comboBox_fire_shape">
                            <property name="sizePolicy">
-                            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                              <horstretch>0</horstretch>
                              <verstretch>0</verstretch>
                             </sizepolicy>
@@ -925,13 +922,13 @@ Calculation coded in this application follows &quot;PD 7974-1:2019 Application o
                            </property>
                            <property name="minimumSize">
                             <size>
-                             <width>0</width>
+                             <width>70</width>
                              <height>25</height>
                             </size>
                            </property>
                            <property name="maximumSize">
                             <size>
-                             <width>16777215</width>
+                             <width>70</width>
                              <height>25</height>
                             </size>
                            </property>
@@ -946,7 +943,7 @@ Calculation coded in this application follows &quot;PD 7974-1:2019 Application o
                          <item row="3" column="1">
                           <widget class="QComboBox" name="comboBox_fuel_type">
                            <property name="sizePolicy">
-                            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                              <horstretch>0</horstretch>
                              <verstretch>0</verstretch>
                             </sizepolicy>
@@ -1073,9 +1070,6 @@ Calculation coded in this application follows &quot;PD 7974-1:2019 Application o
                     </size>
                    </property>
                    <property name="toolTip">
-                    <string>Solved dimensionless heat release rate.</string>
-                   </property>
-                   <property name="statusTip">
                     <string>Solved dimensionless heat release rate.</string>
                    </property>
                    <property name="text">
@@ -1332,11 +1326,6 @@ Calculation coded in this application follows &quot;PD 7974-1:2019 Application o
            <height>16777215</height>
           </size>
          </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
          <property name="toolTip">
           <string>Click to generate example input parameters.</string>
          </property>
@@ -1375,11 +1364,6 @@ Calculation coded in this application follows &quot;PD 7974-1:2019 Application o
            <height>16777215</height>
           </size>
          </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
          <property name="toolTip">
           <string>Click to generate example input parameters.</string>
          </property>
@@ -1414,11 +1398,6 @@ Calculation coded in this application follows &quot;PD 7974-1:2019 Application o
            <width>16777215</width>
            <height>16777215</height>
           </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
          </property>
          <property name="toolTip">
           <string>Click (or press Enter) to calculate.</string>

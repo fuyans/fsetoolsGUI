@@ -95,9 +95,6 @@
          <property name="toolTip">
           <string>Critical heat flux countour line will be highlighted in red colour in the figure.</string>
          </property>
-         <property name="statusTip">
-          <string>Critical heat flux countour line will be highlighted in red colour in the figure.</string>
-         </property>
          <property name="text">
           <string>Critical heat flux</string>
          </property>
@@ -112,9 +109,6 @@
           </rect>
          </property>
          <property name="toolTip">
-          <string>Critical heat flux countour line will be highlighted in red colour in the figure.</string>
-         </property>
-         <property name="statusTip">
           <string>Critical heat flux countour line will be highlighted in red colour in the figure.</string>
          </property>
          <property name="text">
@@ -145,9 +139,6 @@
          <property name="toolTip">
           <string>Font size of the contour line text in the figure.</string>
          </property>
-         <property name="statusTip">
-          <string>Font size of the contour line text in the figure.</string>
-         </property>
          <property name="text">
           <string>Contour text font size</string>
          </property>
@@ -164,9 +155,6 @@
          <property name="toolTip">
           <string>Line thickness of the defined emitter and receivers in the figure.</string>
          </property>
-         <property name="statusTip">
-          <string>Line thickness of the defined emitter and receivers in the figure.</string>
-         </property>
          <property name="text">
           <string>Emitter / receiver line thickness</string>
          </property>
@@ -181,9 +169,6 @@
           </rect>
          </property>
          <property name="toolTip">
-          <string>Line thickness of the defined emitter and receivers in the figure.</string>
-         </property>
-         <property name="statusTip">
           <string>Line thickness of the defined emitter and receivers in the figure.</string>
          </property>
          <property name="minimum">
@@ -289,9 +274,6 @@
          <property name="toolTip">
           <string>Font size of the contour line text in the figure.</string>
          </property>
-         <property name="statusTip">
-          <string>Font size of the contour line text in the figure.</string>
-         </property>
          <property name="minimum">
           <number>0</number>
          </property>
@@ -318,9 +300,6 @@
           </rect>
          </property>
          <property name="toolTip">
-          <string>Line thickness of the defined emitter and receivers in the figure.</string>
-         </property>
-         <property name="statusTip">
           <string>Line thickness of the defined emitter and receivers in the figure.</string>
          </property>
          <property name="text">
@@ -358,9 +337,6 @@
          <property name="toolTip">
           <string>Tick to show the maximum heat flux on the graph.</string>
          </property>
-         <property name="statusTip">
-          <string>Tick to show the maximum heat flux on the graph.</string>
-         </property>
          <property name="text">
           <string>Max.</string>
          </property>
@@ -375,7 +351,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>Graphic preference</string>
+          <string>&lt;b&gt;Preferences&lt;/b&gt;</string>
          </property>
         </widget>
         <widget class="QPushButton" name="pushButton_refresh">
@@ -400,9 +376,6 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>Click to refresh the figure with updated graphic settings.</string>
-         </property>
-         <property name="statusTip">
           <string>Click to refresh the figure with updated graphic settings.</string>
          </property>
          <property name="text">
@@ -433,9 +406,6 @@
          <property name="toolTip">
           <string>Click to save figure in image format.</string>
          </property>
-         <property name="statusTip">
-          <string>Click to save figure in image format.</string>
-         </property>
          <property name="text">
           <string>Save Figure</string>
          </property>
@@ -443,16 +413,13 @@
         <widget class="QLabel" name="label_10">
          <property name="geometry">
           <rect>
-           <x>20</x>
+           <x>30</x>
            <y>270</y>
            <width>86</width>
            <height>26</height>
           </rect>
          </property>
          <property name="toolTip">
-          <string>(x_min, x_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
-         </property>
-         <property name="statusTip">
           <string>(x_min, x_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
          </property>
          <property name="text">
@@ -462,9 +429,9 @@
         <widget class="QTableView" name="tableView_receivers">
          <property name="geometry">
           <rect>
-           <x>20</x>
+           <x>30</x>
            <y>545</y>
-           <width>346</width>
+           <width>336</width>
            <height>116</height>
           </rect>
          </property>
@@ -475,9 +442,6 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>This table shows all defined receivers.</string>
-         </property>
-         <property name="statusTip">
           <string>This table shows all defined receivers.</string>
          </property>
          <property name="sortingEnabled">
@@ -496,9 +460,6 @@
          <property name="toolTip">
           <string>This defines the location of the z-plane which heat flux will be solved. Leave this empty to let the tool to work out the worst situation/height.</string>
          </property>
-         <property name="statusTip">
-          <string>This defines the location of the z-plane which heat flux will be solved. Leave this empty to let the tool to work out the worst situation/height.</string>
-         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -509,9 +470,9 @@
         <widget class="QTableView" name="tableView_emitters">
          <property name="geometry">
           <rect>
-           <x>20</x>
+           <x>30</x>
            <y>380</y>
-           <width>346</width>
+           <width>336</width>
            <height>116</height>
           </rect>
          </property>
@@ -522,9 +483,6 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>This table shows all defined emitters. Point 1 (x1, y1) and 2 (x2, y2) define the start and end of the emiter on a z-plane, accordingly.</string>
-         </property>
-         <property name="statusTip">
           <string>This table shows all defined emitters. Point 1 (x1, y1) and 2 (x2, y2) define the start and end of the emiter on a z-plane, accordingly.</string>
          </property>
          <property name="sortingEnabled">
@@ -546,9 +504,6 @@
          <property name="toolTip">
           <string>(y_min, y_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
          </property>
-         <property name="statusTip">
-          <string>(y_min, y_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
-         </property>
          <property name="text">
           <string>Domain Y</string>
          </property>
@@ -563,9 +518,6 @@
           </rect>
          </property>
          <property name="toolTip">
-          <string>(y_min, y_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
-         </property>
-         <property name="statusTip">
           <string>(y_min, y_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
          </property>
          <property name="text">
@@ -584,9 +536,6 @@
          <property name="toolTip">
           <string>Click to remove an emitter in the table below.</string>
          </property>
-         <property name="statusTip">
-          <string>Click to remove an emitter in the table below.</string>
-         </property>
          <property name="text">
           <string>-</string>
          </property>
@@ -601,9 +550,6 @@
           </rect>
          </property>
          <property name="toolTip">
-          <string>This defines the location of the z-plane which heat flux will be solved. Leave this empty to let the tool to work out the worst situation/height.</string>
-         </property>
-         <property name="statusTip">
           <string>This defines the location of the z-plane which heat flux will be solved. Leave this empty to let the tool to work out the worst situation/height.</string>
          </property>
          <property name="text">
@@ -622,9 +568,6 @@
          <property name="toolTip">
           <string>Click to remove an receiver in the table below.</string>
          </property>
-         <property name="statusTip">
-          <string>Click to remove an receiver in the table below.</string>
-         </property>
          <property name="text">
           <string>-</string>
          </property>
@@ -632,16 +575,13 @@
         <widget class="QLabel" name="label_11">
          <property name="geometry">
           <rect>
-           <x>20</x>
+           <x>30</x>
            <y>305</y>
            <width>86</width>
            <height>26</height>
           </rect>
          </property>
          <property name="toolTip">
-          <string>This defines the grid resolution (i.e. dx and dy) that received heat flux will be solved.</string>
-         </property>
-         <property name="statusTip">
           <string>This defines the grid resolution (i.e. dx and dy) that received heat flux will be solved.</string>
          </property>
          <property name="text">
@@ -651,16 +591,13 @@
         <widget class="QLineEdit" name="lineEdit_solver_x">
          <property name="geometry">
           <rect>
-           <x>110</x>
+           <x>120</x>
            <y>270</y>
            <width>61</width>
            <height>26</height>
           </rect>
          </property>
          <property name="toolTip">
-          <string>(x_min, x_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
-         </property>
-         <property name="statusTip">
           <string>(x_min, x_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
          </property>
          <property name="text">
@@ -670,7 +607,7 @@
         <widget class="QLabel" name="label_13">
          <property name="geometry">
           <rect>
-           <x>20</x>
+           <x>30</x>
            <y>345</y>
            <width>86</width>
            <height>26</height>
@@ -692,9 +629,6 @@
          <property name="toolTip">
           <string>Click to insert an receiver in the table below.</string>
          </property>
-         <property name="statusTip">
-          <string>Click to insert an receiver in the table below.</string>
-         </property>
          <property name="text">
           <string>+</string>
          </property>
@@ -711,9 +645,6 @@
          <property name="toolTip">
           <string>Click to insert an emitter in the table below.</string>
          </property>
-         <property name="statusTip">
-          <string>Click to insert an emitter in the table below.</string>
-         </property>
          <property name="text">
           <string>+</string>
          </property>
@@ -721,7 +652,7 @@
         <widget class="QLabel" name="label_14">
          <property name="geometry">
           <rect>
-           <x>20</x>
+           <x>30</x>
            <y>510</y>
            <width>86</width>
            <height>26</height>
@@ -734,16 +665,13 @@
         <widget class="QLineEdit" name="lineEdit_solver_delta">
          <property name="geometry">
           <rect>
-           <x>110</x>
+           <x>120</x>
            <y>305</y>
            <width>61</width>
            <height>26</height>
           </rect>
          </property>
          <property name="toolTip">
-          <string>This defines the grid resolution (i.e. dx and dy) that received heat flux will be solved.</string>
-         </property>
-         <property name="statusTip">
           <string>This defines the grid resolution (i.e. dx and dy) that received heat flux will be solved.</string>
          </property>
          <property name="text">
@@ -760,7 +688,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>Solver input parameters</string>
+          <string>&lt;b&gt;Solver input parameters&lt;/b&gt;</string>
          </property>
         </widget>
         <widget class="QProgressBar" name="progressBar">
@@ -791,9 +719,6 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>Calculation progress.</string>
-         </property>
-         <property name="statusTip">
           <string>Calculation progress.</string>
          </property>
          <property name="value">
@@ -849,9 +774,6 @@
          <property name="toolTip">
           <string>Click (or press Enter) to calculate.</string>
          </property>
-         <property name="statusTip">
-          <string>Click (or press Enter) to calculate.</string>
-         </property>
          <property name="text">
           <string>Calculate</string>
          </property>
@@ -880,9 +802,6 @@
          <property name="toolTip">
           <string>Click to generate example input parameters.</string>
          </property>
-         <property name="statusTip">
-          <string>Click to generate example input parameters.</string>
-         </property>
          <property name="text">
           <string>About</string>
          </property>
@@ -909,9 +828,6 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>Click to generate example input parameters.</string>
-         </property>
-         <property name="statusTip">
           <string>Click to generate example input parameters.</string>
          </property>
          <property name="text">

@@ -178,83 +178,18 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <widget class="QPushButton" name="pushButton_0601_naming_convention">
-           <property name="minimumSize">
-            <size>
-             <width>76</width>
-             <height>76</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>76</width>
-             <height>76</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>File name generator in accordance with OFR file naming protocal.</string>
-           </property>
-           <property name="statusTip">
-            <string>File name generator in accordance with OFR file naming protocal.</string>
-           </property>
-           <property name="text">
-            <string>0601</string>
-           </property>
-           <property name="autoDefault">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QPushButton" name="b4_01_br187_parallel_12">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>76</width>
-             <height>76</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>76</width>
-             <height>76</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>To estimate optimal mesh resolution.</string>
-           </property>
-           <property name="statusTip">
-            <string>To estimate optimal mesh resolution.</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="2">
-          <widget class="QPushButton" name="b4_01_br187_parallel_11">
-           <property name="enabled">
-            <bool>false</bool>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
-           <property name="minimumSize">
+           <property name="sizeHint" stdset="0">
             <size>
-             <width>76</width>
-             <height>76</height>
+             <width>40</width>
+             <height>20</height>
             </size>
            </property>
-           <property name="maximumSize">
-            <size>
-             <width>76</width>
-             <height>76</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
+          </spacer>
          </item>
          <item row="0" column="1">
           <widget class="QPushButton" name="pushButton_0602_pd7974_flame_height">
@@ -284,18 +219,33 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="4">
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
+         <item row="0" column="0">
+          <widget class="QPushButton" name="pushButton_0601_naming_convention">
+           <property name="minimumSize">
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>76</width>
+             <height>76</height>
             </size>
            </property>
-          </spacer>
+           <property name="maximumSize">
+            <size>
+             <width>76</width>
+             <height>76</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>File name generator in accordance with OFR file naming protocal.</string>
+           </property>
+           <property name="statusTip">
+            <string>File name generator in accordance with OFR file naming protocal.</string>
+           </property>
+           <property name="text">
+            <string>0601</string>
+           </property>
+           <property name="autoDefault">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -774,8 +724,6 @@
  <tabstops>
   <tabstop>pushButton_0601_naming_convention</tabstop>
   <tabstop>pushButton_0602_pd7974_flame_height</tabstop>
-  <tabstop>b4_01_br187_parallel_11</tabstop>
-  <tabstop>b4_01_br187_parallel_12</tabstop>
   <tabstop>pushButton_0101_adb2_datasheet_1</tabstop>
   <tabstop>pushButton_0102_bs9999_datasheet_1</tabstop>
   <tabstop>pushButton_0103_merging_flow</tabstop>
