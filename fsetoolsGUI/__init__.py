@@ -72,7 +72,7 @@ class AppInfo:
             long_name='PD 7974 flame height calculator',
         ),
         '0611': dict(
-            short_name='EC 1991\nparametric fire',
+            short_name='EC 1991\nparametric\nfire',
             long_name='EC 1991-1-2 parametric fire generator',
         ),
     }

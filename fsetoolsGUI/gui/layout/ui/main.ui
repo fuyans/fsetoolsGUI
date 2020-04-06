@@ -173,7 +173,32 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="2">
+         <item row="0" column="0">
+          <widget class="QPushButton" name="pushButton_0601_naming_convention">
+           <property name="minimumSize">
+            <size>
+             <width>76</width>
+             <height>76</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>76</width>
+             <height>76</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>File name generator in accordance with OFR file naming protocal.</string>
+           </property>
+           <property name="text">
+            <string>0601</string>
+           </property>
+           <property name="autoDefault">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
           <spacer name="horizontalSpacer_2">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -211,8 +236,14 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QPushButton" name="pushButton_0601_naming_convention">
+         <item row="0" column="2">
+          <widget class="QPushButton" name="pushButton_0611_ec_parametric_fire">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>76</width>
@@ -225,14 +256,8 @@
              <height>76</height>
             </size>
            </property>
-           <property name="toolTip">
-            <string>File name generator in accordance with OFR file naming protocal.</string>
-           </property>
            <property name="text">
-            <string>0601</string>
-           </property>
-           <property name="autoDefault">
-            <bool>true</bool>
+            <string>0611</string>
            </property>
           </widget>
          </item>
@@ -609,7 +634,7 @@
      <x>0</x>
      <y>0</y>
      <width>522</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
