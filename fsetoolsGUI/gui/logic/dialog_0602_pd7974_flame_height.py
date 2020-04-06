@@ -1,6 +1,6 @@
 from os.path import join
 
-from PySide2 import QtWidgets, QtCore, QtGui
+from PySide2 import QtWidgets, QtGui
 from fsetools.lib.fse_flame_height import mean_flame_height_pd_7974
 from fsetools.libstd.pd_7974_1_2019 import eq_11_dimensionless_hrr_rectangular
 from fsetools.libstd.pd_7974_1_2019 import eq_12_dimensionless_hrr_line
@@ -98,7 +98,8 @@ class Dialog0602(QMainWindow):
     def calculate(self):
 
         # clear ui outputs
-        self.output_parameters = dict(Q_dot_star=None, flame_height=None)
+        self.ui.lineEdit_out_Q_dot_star.clear()
+        self.ui.lineEdit_out_Z_f.clear()
 
         # parse inputs from ui
         try:
@@ -136,7 +137,7 @@ class Dialog0602(QMainWindow):
             fire_shape = self.ui.comboBox_fire_shape.currentIndex()
             fuel_type = int(self.ui.comboBox_fuel_type.currentIndex())
         except Exception as e:
-            raise ValueError(f'Failed to parse input parameters. Error: {e}')
+            raise ValueError(f'Unable to parse parameters from UI')
 
         # parse optional input parameters
         try:
@@ -244,7 +245,15 @@ class Dialog0602(QMainWindow):
 
 
 if __name__ == '__main__':
+    from PySide2 import QtWidgets, QtCore
+    import PySide2
     import sys
+
+    if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
+        PySide2.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+
+    if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
+        PySide2.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
     qapp = QtWidgets.QApplication(sys.argv)
     app = Dialog0602()

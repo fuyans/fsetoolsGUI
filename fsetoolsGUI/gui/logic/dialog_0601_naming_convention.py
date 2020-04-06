@@ -156,8 +156,15 @@ class Dialog0601(QMainWindow):
 
 
 if __name__ == "__main__":
-    from PySide2 import QtWidgets
+    from PySide2 import QtWidgets, QtCore
+    import PySide2
     import sys
+
+    if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
+        PySide2.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+
+    if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
+        PySide2.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
     qapp = QtWidgets.QApplication(sys.argv)
     app = Dialog0601()
