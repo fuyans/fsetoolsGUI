@@ -32,13 +32,12 @@ class App0611(QMainWindow):
         # =======================
         # lineEdit default values
         # =======================
-        self.ui.lineEdit_in_initial_temperature.setText('293.15')
+        self.ui.lineEdit_in_initial_temperature.setText('20')
 
         # =================
         # lineEdit tip text
         # =================
-        self.ui.lineEdit_in_duration.setToolTip('Fire duration.\n'
-                                                '1h=3600s, 1.5h=5400s, 2h=7200s, 3h=10800s, 4h=14400s, 5h=18000s')
+        self.ui.lineEdit_in_duration.setToolTip('Fire duration')
         self.ui.lineEdit_in_room_total_surface_area.setToolTip('Room total interior surface area, including opening')
         self.ui.lineEdit_in_room_floor_area.setToolTip('Room floor area')
         self.ui.lineEdit_in_ventilation_area.setToolTip('Room ventilation opening area')

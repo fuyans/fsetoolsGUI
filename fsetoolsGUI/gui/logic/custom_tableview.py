@@ -129,8 +129,11 @@ class TableWindow(QtWidgets.QDialog):
         return
 
     def keyPressEvent(self, event):
-        if QtGui.QKeySequence(event.key() + int(event.modifiers())) == QtGui.QKeySequence('Ctrl+C'):
+        if event.key() == QtCore.Qt.Key_Escape:
+            self.close()
+        elif QtGui.QKeySequence(event.key() + int(event.modifiers())) == QtGui.QKeySequence('Ctrl+C'):
             self.copy_selection()
+        event.accept()
 
 
 class TableModel(QtCore.QAbstractTableModel):

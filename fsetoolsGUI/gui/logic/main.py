@@ -2,10 +2,9 @@ import threading
 
 import requests
 from PySide2 import QtGui, QtCore
-from PySide2.QtWidgets import QErrorMessage
 from PySide2.QtCore import Slot
-from packaging import version
 from PySide2.QtWidgets import QErrorMessage
+from packaging import version
 
 import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_2_PNG
@@ -24,6 +23,7 @@ from fsetoolsGUI.gui.logic.dialog_0404_br187_perpendicular_complex import Dialog
 from fsetoolsGUI.gui.logic.dialog_0406_tra_2d_xy_contour import Dialog0406 as Dialog0406
 from fsetoolsGUI.gui.logic.dialog_0601_naming_convention import Dialog0601 as Dialog0601
 from fsetoolsGUI.gui.logic.dialog_0602_pd7974_flame_height import Dialog0602 as Dialog0602
+from fsetoolsGUI.gui.logic.logic0611 import App0611 as App0611
 
 
 class Signals(QtCore.QObject):
@@ -142,6 +142,8 @@ class MainWindow(QMainWindow):
                                 *module_info(int('0601')).short_and_long_names)
         set_action_name_and_tip(self.ui.pushButton_0602_pd7974_flame_height, Dialog0602,
                                 *module_info(int('0602')).short_and_long_names)
+        set_action_name_and_tip(self.ui.pushButton_0611_ec_parametric_fire, App0611,
+                                *module_info(int('0611')).short_and_long_names)
 
     def activate_app(self, app_):
         app_ = app_()
