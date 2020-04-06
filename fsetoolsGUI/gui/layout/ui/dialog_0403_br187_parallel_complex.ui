@@ -372,9 +372,6 @@
                      <property name="toolTip">
                       <string>Positive float.</string>
                      </property>
-                     <property name="statusTip">
-                      <string>Positive float.</string>
-                     </property>
                     </widget>
                    </item>
                    <item row="4" column="0">
@@ -444,9 +441,6 @@
                      <property name="toolTip">
                       <string>Positive float. {'Reduced fire load': 84, 'Normal fire load': 168}.</string>
                      </property>
-                     <property name="statusTip">
-                      <string>Positive float. {'Reduced fire load': 84, 'Normal fire load': 168}.</string>
-                     </property>
                     </widget>
                    </item>
                    <item row="5" column="2">
@@ -497,9 +491,6 @@
                      <property name="toolTip">
                       <string>Positive float.</string>
                      </property>
-                     <property name="statusTip">
-                      <string>Positive float.</string>
-                     </property>
                     </widget>
                    </item>
                    <item row="3" column="0">
@@ -517,9 +508,6 @@
                       </size>
                      </property>
                      <property name="toolTip">
-                      <string>Receiver location 2.</string>
-                     </property>
-                     <property name="statusTip">
                       <string>Receiver location 2.</string>
                      </property>
                      <property name="text">
@@ -544,9 +532,6 @@
                      <property name="toolTip">
                       <string>Receiver location 1.</string>
                      </property>
-                     <property name="statusTip">
-                      <string>Receiver location 1.</string>
-                     </property>
                      <property name="text">
                       <string>Receiver location, w</string>
                      </property>
@@ -567,9 +552,6 @@
                       </size>
                      </property>
                      <property name="toolTip">
-                      <string>Width of emitter.</string>
-                     </property>
-                     <property name="statusTip">
                       <string>Width of emitter.</string>
                      </property>
                      <property name="text">
@@ -598,9 +580,6 @@
                       </size>
                      </property>
                      <property name="toolTip">
-                      <string>Height of emitter.</string>
-                     </property>
-                     <property name="statusTip">
                       <string>Height of emitter.</string>
                      </property>
                      <property name="text">
@@ -650,9 +629,6 @@
                      <property name="toolTip">
                       <string>Heat flux of emitter.</string>
                      </property>
-                     <property name="statusTip">
-                      <string>Heat flux of emitter.</string>
-                     </property>
                      <property name="text">
                       <string>Emitter heat flux</string>
                      </property>
@@ -687,9 +663,6 @@
                      <property name="toolTip">
                       <string>Positive float.</string>
                      </property>
-                     <property name="statusTip">
-                      <string>Positive float.</string>
-                     </property>
                     </widget>
                    </item>
                    <item row="2" column="1">
@@ -721,9 +694,6 @@
                      <property name="toolTip">
                       <string>Positive float.</string>
                      </property>
-                     <property name="statusTip">
-                      <string>Positive float.</string>
-                     </property>
                     </widget>
                    </item>
                    <item row="4" column="1">
@@ -753,9 +723,6 @@
                       </size>
                      </property>
                      <property name="toolTip">
-                      <string>Positive float.</string>
-                     </property>
-                     <property name="statusTip">
                       <string>Positive float.</string>
                      </property>
                     </widget>
@@ -825,9 +792,6 @@
                       </size>
                      </property>
                      <property name="toolTip">
-                      <string>Positive float.</string>
-                     </property>
-                     <property name="statusTip">
                       <string>Positive float.</string>
                      </property>
                     </widget>
@@ -999,9 +963,6 @@
                      <property name="toolTip">
                       <string>Solved heat flux at receiver surface when 100 % unprotected.</string>
                      </property>
-                     <property name="statusTip">
-                      <string>Solved heat flux at receiver surface when 100 % unprotected.</string>
-                     </property>
                      <property name="text">
                       <string>q, receiver heat flux</string>
                      </property>
@@ -1028,9 +989,6 @@
                       </size>
                      </property>
                      <property name="toolTip">
-                      <string>Positive float.</string>
-                     </property>
-                     <property name="statusTip">
                       <string>Positive float.</string>
                      </property>
                     </widget>
@@ -1077,9 +1035,6 @@
                      <property name="toolTip">
                       <string>Solved maximum permissible unprotected area.</string>
                      </property>
-                     <property name="statusTip">
-                      <string>Solved maximum permissible unprotected area.</string>
-                     </property>
                      <property name="text">
                       <string>Max. unprotected area</string>
                      </property>
@@ -1108,9 +1063,6 @@
                      <property name="toolTip">
                       <string>Positive float.</string>
                      </property>
-                     <property name="statusTip">
-                      <string>Positive float.</string>
-                     </property>
                     </widget>
                    </item>
                    <item row="0" column="1">
@@ -1136,9 +1088,6 @@
                      <property name="toolTip">
                       <string>Positive float.</string>
                      </property>
-                     <property name="statusTip">
-                      <string>Positive float.</string>
-                     </property>
                     </widget>
                    </item>
                    <item row="0" column="0">
@@ -1162,9 +1111,6 @@
                       </size>
                      </property>
                      <property name="toolTip">
-                      <string>Solved view factor.</string>
-                     </property>
-                     <property name="statusTip">
                       <string>Solved view factor.</string>
                      </property>
                      <property name="text">
@@ -1323,7 +1269,7 @@
      <x>0</x>
      <y>0</y>
      <width>833</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>518</width>
-    <height>663</height>
+    <width>522</width>
+    <height>687</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -166,11 +166,6 @@
        </property>
        <item>
         <widget class="QLabel" name="label_3">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
          <property name="text">
           <string>Miscellaneous</string>
          </property>
@@ -208,9 +203,6 @@
            <property name="toolTip">
             <string>Flame height in accordance with PD 7974-1:2019.</string>
            </property>
-           <property name="statusTip">
-            <string>Flame height in accordance with PD 7974-1:2019.</string>
-           </property>
            <property name="text">
             <string>0602</string>
            </property>
@@ -234,9 +226,6 @@
             </size>
            </property>
            <property name="toolTip">
-            <string>File name generator in accordance with OFR file naming protocal.</string>
-           </property>
-           <property name="statusTip">
             <string>File name generator in accordance with OFR file naming protocal.</string>
            </property>
            <property name="text">
@@ -267,11 +256,6 @@
        </item>
        <item>
         <widget class="QLabel" name="label_2">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
          <property name="text">
           <string>B1 Means of escape</string>
          </property>
@@ -279,8 +263,33 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="5">
+          <widget class="QPushButton" name="pushButton_0111_heat_detector_activation">
+           <property name="minimumSize">
+            <size>
+             <width>76</width>
+             <height>76</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>76</width>
+             <height>76</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
+           </property>
+           <property name="text">
+            <string>0111</string>
+           </property>
+           <property name="autoDefault">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="3">
-          <widget class="QPushButton" name="pushButton_0104_merging_flow">
+          <widget class="QPushButton" name="pushButton_0103_merging_flow">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -297,13 +306,10 @@
             </size>
            </property>
            <property name="toolTip">
-            <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
-           </property>
-           <property name="statusTip">
-            <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
+            <string>Merging flow calculation in accordance with BS 9999:2017.</string>
            </property>
            <property name="text">
-            <string>0104</string>
+            <string>0103</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -325,9 +331,6 @@
             </size>
            </property>
            <property name="toolTip">
-            <string>Data sheet 1 for Approved Document B (2019) Vol. 2, for B1.</string>
-           </property>
-           <property name="statusTip">
             <string>Data sheet 1 for Approved Document B (2019) Vol. 2, for B1.</string>
            </property>
            <property name="text">
@@ -355,9 +358,6 @@
            <property name="toolTip">
             <string>Data sheet 1 for BS 9999:2017, for B1.</string>
            </property>
-           <property name="statusTip">
-            <string>Data sheet 1 for BS 9999:2017, for B1.</string>
-           </property>
            <property name="text">
             <string>0102</string>
            </property>
@@ -366,36 +366,8 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="4">
-          <widget class="QPushButton" name="pushButton_0111_heat_detector_activation">
-           <property name="minimumSize">
-            <size>
-             <width>76</width>
-             <height>76</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>76</width>
-             <height>76</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
-           </property>
-           <property name="statusTip">
-            <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
-           </property>
-           <property name="text">
-            <string>0111</string>
-           </property>
-           <property name="autoDefault">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="2">
-          <widget class="QPushButton" name="pushButton_0103_merging_flow">
+          <widget class="QPushButton" name="pushButton_0104_merging_flow">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -412,13 +384,10 @@
             </size>
            </property>
            <property name="toolTip">
-            <string>Merging flow calculation in accordance with BS 9999:2017.</string>
-           </property>
-           <property name="statusTip">
-            <string>Merging flow calculation in accordance with BS 9999:2017.</string>
+            <string>Heat detector activation time (ceiling jet) in accordance with PD 7974-1:2019.</string>
            </property>
            <property name="text">
-            <string>0103</string>
+            <string>0104</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -445,11 +414,6 @@
        </item>
        <item>
         <widget class="QLabel" name="label">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
          <property name="text">
           <string>B4 External fire spread</string>
          </property>
@@ -472,9 +436,6 @@
             </size>
            </property>
            <property name="toolTip">
-            <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
-           </property>
-           <property name="statusTip">
             <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
            </property>
            <property name="text">
@@ -502,9 +463,6 @@
            <property name="toolTip">
             <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
            </property>
-           <property name="statusTip">
-            <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
-           </property>
            <property name="text">
             <string>0402</string>
            </property>
@@ -530,9 +488,6 @@
            <property name="toolTip">
             <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
            </property>
-           <property name="statusTip">
-            <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
-           </property>
            <property name="text">
             <string>0403</string>
            </property>
@@ -556,9 +511,6 @@
             </size>
            </property>
            <property name="toolTip">
-            <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
-           </property>
-           <property name="statusTip">
             <string>Thermal radiation calculation following BR 187 (Perpendicular rectangular orientation).</string>
            </property>
            <property name="text">
@@ -587,9 +539,6 @@
             </size>
            </property>
            <property name="toolTip">
-            <string>General purpose thermal radiation calculator.</string>
-           </property>
-           <property name="statusTip">
             <string>General purpose thermal radiation calculator.</string>
            </property>
            <property name="text">
@@ -641,11 +590,6 @@
         <height>26</height>
        </size>
       </property>
-      <property name="font">
-       <font>
-        <pointsize>8</pointsize>
-       </font>
-      </property>
       <property name="text">
        <string>Version #.#.#</string>
       </property>
@@ -664,8 +608,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>518</width>
-     <height>22</height>
+     <width>522</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
