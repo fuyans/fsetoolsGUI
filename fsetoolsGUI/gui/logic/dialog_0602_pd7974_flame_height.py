@@ -1,6 +1,7 @@
 from os.path import join
 
 from PySide2 import QtWidgets, QtGui
+from PySide2.QtCore import QByteArray
 from fsetools.lib.fse_flame_height import mean_flame_height_pd_7974
 from fsetools.libstd.pd_7974_1_2019 import eq_11_dimensionless_hrr_rectangular
 from fsetools.libstd.pd_7974_1_2019 import eq_12_dimensionless_hrr_line
@@ -33,7 +34,7 @@ class Dialog0602(QMainWindow):
         self.dict_images_pixmap = dict(image_context=image_context,
                                        image_figure=image_figure,)
         for k, v in self.dict_images_pixmap.items():
-            ba = QtCore.QByteArray.fromBase64(v)
+            ba = QByteArray.fromBase64(v)
             self.dict_images_pixmap[k] = QtGui.QPixmap()
             self.dict_images_pixmap[k].loadFromData(ba)
 
