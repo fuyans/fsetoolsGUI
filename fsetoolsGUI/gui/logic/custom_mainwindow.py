@@ -131,7 +131,7 @@ class QMainWindow(QtWidgets.QMainWindow):
 
     def show_about(self):
         """"""
-        if self.__AboutForm:
+        if self.__AboutForm is not None:
             self.__AboutForm.show()
         else:
             try:
@@ -199,6 +199,10 @@ class QMainWindow(QtWidgets.QMainWindow):
     def make_pixmap_from_fp(fp: str):
         return QtGui.QPixmap(fp)
 
+    def closeEvent(self, *args, **kwargs):
+        if self.__AboutForm is not None:
+            self.__AboutForm.close()
+        QMainWindow.closeEvent(self, *args, **kwargs)
 
 if __name__ == '__main__':
     pass
