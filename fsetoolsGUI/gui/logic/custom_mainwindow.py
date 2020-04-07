@@ -199,10 +199,19 @@ class QMainWindow(QtWidgets.QMainWindow):
     def make_pixmap_from_fp(fp: str):
         return QtGui.QPixmap(fp)
 
-    def closeEvent(self, *args, **kwargs):
+    def closeEvent(self, event):
+
         if self.__AboutForm is not None:
             self.__AboutForm.close()
-        QMainWindow.closeEvent(self, *args, **kwargs)
+
+        for i in self.findChildren(QtWidgets.QMainWindow) + self.findChildren(QtWidgets.QDialog):
+            try:
+                i.close()
+            except Exception as e:
+                print(f'{str(e)}')
+
+        event.accept()
+
 
 if __name__ == '__main__':
     pass
