@@ -146,9 +146,8 @@ class MainWindow(QMainWindow):
                                 *module_info(int('0611')).short_and_long_names)
 
     def activate_app(self, app_):
-        app_ = app_()
+        app_ = app_(parent=self)
         app_.show()
-        self.__dialog_opened.append(app_)
 
     def check_update(self):
         """
@@ -274,11 +273,6 @@ class MainWindow(QMainWindow):
     @new_version_update_url.setter
     def new_version_update_url(self, url: str):
         self.__new_version_update_url = url
-
-    def closeEvent(self, *args, **kwargs):
-        for i in self.__dialog_opened:
-            i.close()
-        QMainWindow.closeEvent(self, *args, **kwargs)
 
 
 if __name__ == "__main__":
