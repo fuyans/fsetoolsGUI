@@ -21,7 +21,7 @@ from matplotlib.figure import Figure
 
 class ApplicationWindow(QMainWindow):
     def __init__(self):
-        super().__init__(title='Test Window Title')
+        super().__init__(title='Test Window Title', module_id='0000')
         self.init()
 
         self._main = QtWidgets.QWidget()
