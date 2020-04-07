@@ -289,11 +289,13 @@ QTableView {
     selection-background-color: grey;
     border-radius: 3px;
 }
+/*
 QTableView QTableCornerButton::section {
     background: red;
     border: 2px outset red;
     border-radius: 5px;
 }
+*/
 QTableView::indicator:unchecked {
     background-color: black;
     border-radius: 5px;
