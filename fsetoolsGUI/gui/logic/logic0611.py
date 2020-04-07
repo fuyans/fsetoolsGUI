@@ -5,6 +5,7 @@ from fsetools.libstd.ec_1991_1_2 import appendix_a_parametric_fire
 from fsetoolsGUI.gui.layout.ui0611_parametric_fire import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.custom_tableview import TableWindow
+from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 
 
 class App0611(QMainWindow):
@@ -13,6 +14,8 @@ class App0611(QMainWindow):
         temperature=None
     )
     __Table = None
+    __Figure = None
+    __Figure_ax = None
 
     def __init__(self, parent=None):
         module_id = '0611'
@@ -240,6 +243,7 @@ class App0611(QMainWindow):
             return
 
         self.show_results_in_table()
+        self.show_results_in_figure()
 
         self.repaint()
 
@@ -250,16 +254,15 @@ class App0611(QMainWindow):
         # output_parameters['temperature'] -= 273.15
 
         # print results (for console enabled version only)
-        list_content = list(zip(output_parameters['time'], output_parameters['temperature'] - 273.15))
-        list_content = [[float(i), float(j)] for i, j in list_content]
+        list_content = [[float(i), float(j)] for i, j in zip(output_parameters['time'], output_parameters['temperature'])]
 
         if self.__Table is None:
 
             self.__Table = TableWindow(
                 parent=self,
                 data_list=list_content,
-                header=['time [s]', 'temperature [°C]'],
-                window_title='Results',
+                header=['time [s]', 'temperature [K]'],
+                window_title='Parametric fire numerical results',
                 window_geometry=(300, 200, 250, 300)
             )
 
@@ -270,10 +273,20 @@ class App0611(QMainWindow):
             self.__Table.TableModel.content = list_content
             self.__Table.show()
 
-    def closeEvent(self, *args, **kwargs):
-        if self.__Table is not None:
-            self.__Table.close()
-        QMainWindow.closeEvent(self, *args, **kwargs)
+    def show_results_in_figure(self):
+
+        output_parameters = self.output_parameters
+
+        if self.__Figure is None:
+            self.__Figure = PlotApp(self, title='Parametric fire plot')
+            self.__Figure_ax = self.__Figure.add_subplots()
+
+        self.__Figure_ax.plot(output_parameters['time']/60, output_parameters['temperature'], c='k')
+        self.__Figure_ax.set_xlabel('Time [minute]')
+        self.__Figure_ax.set_ylabel('Temperature [°C]')
+        self.__Figure.figure.tight_layout()
+
+        self.__Figure.show()
 
 
 if __name__ == "__main__":
