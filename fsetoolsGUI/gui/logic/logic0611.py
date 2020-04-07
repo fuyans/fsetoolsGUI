@@ -12,6 +12,7 @@ class App0611(QMainWindow):
         time=None,
         temperature=None
     )
+    __Table = None
 
     def __init__(self, parent=None):
         module_id = '0611'
@@ -251,19 +252,28 @@ class App0611(QMainWindow):
         # print results (for console enabled version only)
         list_content = list(zip(output_parameters['time'], output_parameters['temperature'] - 273.15))
         list_content = [[float(i), float(j)] for i, j in list_content]
-        print(list_content)
 
-        app_ = TableWindow(
-            parent=self,
-            data_list=list_content,
-            header=['time [s]', 'temperature [°C]'],
-            window_title='Numerical Results',
-            window_geometry=(300, 200, 500, 800)
-        )
+        if self.__Table is None:
 
-        app_.TableModel.sort(0, QtCore.Qt.AscendingOrder)
-        app_.TableView.resizeColumnsToContents()
-        app_.show()
+            self.__Table = TableWindow(
+                parent=self,
+                data_list=list_content,
+                header=['time [s]', 'temperature [°C]'],
+                window_title='Results',
+                window_geometry=(300, 200, 250, 300)
+            )
+
+            self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
+            self.__Table.TableView.resizeColumnsToContents()
+            self.__Table.show()
+        else:
+            self.__Table.TableModel.content = list_content
+            self.__Table.show()
+
+    def closeEvent(self, *args, **kwargs):
+        if self.__Table is not None:
+            self.__Table.close()
+        QMainWindow.closeEvent(self, *args, **kwargs)
 
 
 if __name__ == "__main__":
