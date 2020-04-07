@@ -39,7 +39,7 @@ class TableWindow_QMainWindow(QtWidgets.QMainWindow):
 
         self.TableModel = TableModel(self, data_list, header)
         self.TableView.setModel(self.TableModel)
-        self.TableView.setFont(QtGui.QFont("Courier New", 10))
+        # self.TableView.setFont(QtGui.QFont("Courier New", 10))
         self.TableView.resizeColumnsToContents()
         self.TableView.setSortingEnabled(True)
 
@@ -95,8 +95,8 @@ class TableWindow(QtWidgets.QDialog):
         self.TableView.setModel(self.TableModel)
 
         # set font
-        font = QtGui.QFont("Courier New", 10)
-        self.TableView.setFont(font)
+        # font = QtGui.QFont("Courier New", 10)
+        # self.TableView.setFont(font)
 
         # enable sorting
         self.TableView.setSortingEnabled(True)
