@@ -142,8 +142,8 @@ class Dialog04(QMainWindow):
         self.validate(W, 'unsigned float', 'Emitter width should be greater than 0')
         self.validate(H, 'unsigned float', 'Emitter height should be greater than 0')
         if self.__id == '0403' or self.__id == '0404':
-            self.validate(w, 'unsigned float', 'Receiver offset "w" should be greater than 0')
-            self.validate(h, 'unsigned float', 'Receiver offset "h" should be greater than 0')
+            self.validate(w, float, 'Receiver offset "w" should be a number')
+            self.validate(h, float, 'Receiver offset "h" should be a number')
         if S:
             try:
                 # check if S provided is greater than S (1 m to the relevant boundary)
@@ -252,8 +252,8 @@ class Dialog04(QMainWindow):
 
 
 class Dialog0403(Dialog04):
-    def __init__(self):
-        super().__init__(module_id='0403')
+    def __init__(self, parent=None):
+        super().__init__(module_id='0403', parent=parent)
 
         self.ui.label_description.setWordWrap(True)
         self.ui.label_description.setText(
