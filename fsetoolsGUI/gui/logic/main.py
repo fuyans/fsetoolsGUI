@@ -41,10 +41,14 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         # ui setup
-        super().__init__(module_id='0000', title='Fire Safety Engineering Tools')
+        super().__init__(
+            module_id='0000',
+            title='Fire Safety Engineering Tools',
+            freeze_window_size=True,
+        )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init()
+        self.init(self)
 
         self.Signals.check_update_complete.connect(self.setEnabled_all_buttons)
 
@@ -53,8 +57,7 @@ class MainWindow(QMainWindow):
         check_update.start()  # after 1 second, 'callback' will be called
 
         # window properties
-        self.statusBar().setSizeGripEnabled(False)
-        self.setFixedSize(self.width(), self.height())
+        # self.setFixedSize(self.width(), self.height())
         self.ui.label_version.setText(f'Version {fsetoolsGUI.__version__}')
         self.ui.label_version.setStatusTip(f'Version {fsetoolsGUI.__version__}')
         self.ui.label_version.setToolTip(f'Version {fsetoolsGUI.__version__}')
