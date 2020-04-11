@@ -90,10 +90,11 @@ class DialogPageDisplay(QMainWindow):
 
 
 class Dialog0101(DialogPageDisplay):
-    def __init__(self):
+    def __init__(self, parent=None):
         super().__init__(
             module_id='0101',
-            fp_image=path.join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0101-0.png')
+            fp_image=path.join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0101-0.png'),
+            parent=parent
         )
         self.resize(1000, 600)
 
