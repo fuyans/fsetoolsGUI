@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>522</width>
-    <height>687</height>
+    <width>504</width>
+    <height>748</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -446,31 +446,6 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_3">
-         <item row="0" column="0">
-          <widget class="QPushButton" name="pushButton_0401_br187_parallel_simple">
-           <property name="minimumSize">
-            <size>
-             <width>76</width>
-             <height>76</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>76</width>
-             <height>76</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
-           </property>
-           <property name="text">
-            <string>0401</string>
-           </property>
-           <property name="autoDefault">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="1">
           <widget class="QPushButton" name="pushButton_0402_br187_perpendicular_simple">
            <property name="minimumSize">
@@ -515,6 +490,31 @@
            </property>
            <property name="text">
             <string>0403</string>
+           </property>
+           <property name="autoDefault">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="pushButton_0401_br187_parallel_simple">
+           <property name="minimumSize">
+            <size>
+             <width>76</width>
+             <height>76</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>76</width>
+             <height>76</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Thermal radiation calculation following BR 187 (Parallel rectangular orientation).</string>
+           </property>
+           <property name="text">
+            <string>0401</string>
            </property>
            <property name="autoDefault">
             <bool>true</bool>
@@ -571,6 +571,25 @@
            </property>
            <property name="autoDefault">
             <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="pushButton_0407_tra_enclosure">
+           <property name="minimumSize">
+            <size>
+             <width>76</width>
+             <height>76</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>76</width>
+             <height>76</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>0407</string>
            </property>
           </widget>
          </item>
@@ -633,7 +652,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>522</width>
+     <width>504</width>
      <height>22</height>
     </rect>
    </property>

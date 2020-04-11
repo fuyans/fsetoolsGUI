@@ -991,6 +991,22 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_in_duration</tabstop>
+  <tabstop>lineEdit_in_room_total_surface_area</tabstop>
+  <tabstop>lineEdit_in_room_floor_area</tabstop>
+  <tabstop>lineEdit_in_ventilation_area</tabstop>
+  <tabstop>lineEdit_in_ventilation_opening_height</tabstop>
+  <tabstop>lineEdit_in_fuel_density</tabstop>
+  <tabstop>lineEdit_in_lining_thermal_conductivity</tabstop>
+  <tabstop>lineEdit_in_lining_density</tabstop>
+  <tabstop>lineEdit_in_lining_thermal_heat_capacity</tabstop>
+  <tabstop>lineEdit_in_fire_limiting_time</tabstop>
+  <tabstop>lineEdit_in_initial_temperature</tabstop>
+  <tabstop>pushButton_ok</tabstop>
+  <tabstop>pushButton_about</tabstop>
+  <tabstop>pushButton_example</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
