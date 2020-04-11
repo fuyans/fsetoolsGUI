@@ -41,7 +41,7 @@ if __name__ == "__main__":
             fsetoolsGUI.__date_released__ + datetime.timedelta(days=fsetoolsGUI.__expiry_period_days__)):
         app = QtWidgets.QApplication(sys.argv)
         if KEY is not None:
-            from fsetoolsGUI.gui.logic.dialog_0001_pass_code import Dialog0001
+            from fsetoolsGUI.gui.logic.logic_0001_pass_code import Dialog0001
 
             app_ = Dialog0001()
             app_.show()

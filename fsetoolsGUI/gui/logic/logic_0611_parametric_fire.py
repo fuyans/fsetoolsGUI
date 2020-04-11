@@ -4,8 +4,8 @@ from fsetools.libstd.ec_1991_1_2 import appendix_a_parametric_fire
 
 from fsetoolsGUI.gui.layout.ui0611_parametric_fire import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
-from fsetoolsGUI.gui.logic.custom_tableview import TableWindow
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
+from fsetoolsGUI.gui.logic.custom_tableview import TableWindow
 
 
 class App0611(QMainWindow):
@@ -250,8 +250,6 @@ class App0611(QMainWindow):
     def show_results_in_table(self):
 
         output_parameters = self.output_parameters
-        # output_parameters['time'] -= 273.15
-        # output_parameters['temperature'] -= 273.15
 
         # print results (for console enabled version only)
         list_content = [[float(i), float(j)] for i, j in zip(output_parameters['time'], output_parameters['temperature'])]
@@ -261,7 +259,7 @@ class App0611(QMainWindow):
             self.__Table = TableWindow(
                 parent=self,
                 data_list=list_content,
-                header=['time [s]', 'temperature [K]'],
+                header_col=['time [s]', 'temperature [K]'],
                 window_title='Parametric fire numerical results',
                 window_geometry=(300, 200, 250, 300)
             )

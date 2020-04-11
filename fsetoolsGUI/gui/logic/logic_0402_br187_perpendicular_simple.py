@@ -1,5 +1,5 @@
-from fsetoolsGUI.gui.logic.dialog_0403_br187_parallel_complex import Dialog04
-from fsetoolsGUI.gui.logic.dialog_0404_br187_perpendicular_complex import Dialog0404
+from fsetoolsGUI.gui.logic.logic_0403_br187_parallel_complex import Dialog04
+from fsetoolsGUI.gui.logic.logic_0404_br187_perpendicular_complex import Dialog0404
 
 
 class Dialog0402(Dialog04):
@@ -14,8 +14,8 @@ class Dialog0402(Dialog04):
         4.  Calculation failure, no convergence found.
     """
 
-    def __init__(self):
-        super().__init__(module_id='0402')
+    def __init__(self, parent):
+        super().__init__(module_id='0402', parent=parent)
         self.ui.label_description.setText(
             'This sheet calculates the thermal radiation intensity at a receiver that is perpendicular to '
             'an rectangular emitter. Calculation coded in this sheet follows "BR 187 External fire spread" 2nd edition.'

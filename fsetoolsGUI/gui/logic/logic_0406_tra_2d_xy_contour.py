@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtCore import Slot
-from fsetools.lib.fse_thermal_radiation_2d_v2 import main as tra_main
+from fsetools.lib.fse_thermal_radiation_2d_parallel import main as tra_main
 from matplotlib import cm
 
 from fsetoolsGUI.gui.layout.dialog_0406_tra_2d_xy_contour import Ui_MainWindow
@@ -299,7 +299,7 @@ class Dialog0406(QMainWindow):
             'Name', 'Point 1', 'Point 2', 'Height', u'kW/m²'
         ]
 
-        self.TableModel_emitters = TableModel(self, content=emitter_list_default, row_header=emitter_list_header)
+        self.TableModel_emitters = TableModel(self, content=emitter_list_default, header_col=emitter_list_header)
         self.ui.tableView_emitters.setModel(self.TableModel_emitters)
         self.ui.tableView_emitters.resizeColumnsToContents()
 
@@ -319,7 +319,7 @@ class Dialog0406(QMainWindow):
             'Name', 'Point 1', 'Point 2'
         ]
 
-        self.TableModel_receivers = TableModel(self, content=receiver_list_default, row_header=receiver_list_header)
+        self.TableModel_receivers = TableModel(self, content=receiver_list_default, header_row=receiver_list_header)
         self.ui.tableView_receivers.setModel(self.TableModel_receivers)
         self.ui.tableView_receivers.resizeColumnsToContents()
 

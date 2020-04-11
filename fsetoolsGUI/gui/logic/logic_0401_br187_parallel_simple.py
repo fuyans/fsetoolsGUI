@@ -1,5 +1,5 @@
-from fsetoolsGUI.gui.logic.dialog_0403_br187_parallel_complex import Dialog04
-from fsetoolsGUI.gui.logic.dialog_0403_br187_parallel_complex import Dialog0403
+from fsetoolsGUI.gui.logic.logic_0403_br187_parallel_complex import Dialog04
+from fsetoolsGUI.gui.logic.logic_0403_br187_parallel_complex import Dialog0403
 
 
 class Dialog0401(Dialog04):
@@ -14,8 +14,8 @@ class Dialog0401(Dialog04):
         4.  Calculation failure, no convergence found.
     """
 
-    def __init__(self):
-        super().__init__(module_id='0401')
+    def __init__(self, parent=None):
+        super().__init__(module_id='0401', parent=parent)
         self.ui.label_description.setWordWrap(True)
         self.ui.label_description.setText(
             'This sheet calculates the thermal radiation intensity at a receiver that is parallel to a rectangular '

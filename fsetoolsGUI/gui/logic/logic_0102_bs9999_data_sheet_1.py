@@ -1,7 +1,7 @@
 import os.path as path
-from PySide2 import QtCore
+
 import fsetoolsGUI
-from fsetoolsGUI.gui.logic.dialog_0101_adb_datasheet_1 import DialogPageDisplay
+from fsetoolsGUI.gui.logic.logic_0101_adb_data_sheet_1 import DialogPageDisplay
 
 
 class Dialog0102(DialogPageDisplay):

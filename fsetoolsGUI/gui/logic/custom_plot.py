@@ -12,20 +12,14 @@ except FileNotFoundError:
     qt_css = None
 
 try:
-    from matplotlib.backends.backend_qt5agg import (
-        FigureCanvas,
-        NavigationToolbar2QT as NavigationToolbar
-    )
+    from matplotlib.backends.backend_qt5agg import FigureCanvas
+    from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 except ModuleNotFoundError:
-    from matplotlib.backends.backend_qt4agg import (
-        FigureCanvas,
-        NavigationToolbar2QT as NavigationToolbar
-    )
+    from matplotlib.backends.backend_qt4agg import FigureCanvas
+    from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
 
 
 class App(QtWidgets.QMainWindow):
-
-    __fig: plt.Figure = plt.figure()
 
     def __init__(self, parent=None, title:str=None):
         super().__init__(parent=parent)
@@ -36,9 +30,10 @@ class App(QtWidgets.QMainWindow):
             self.setWindowTitle(title)
 
         # instantiate figure and associated objects
+        self.__fig: plt.Figure = plt.figure()
         self.__fig.patch.set_facecolor('None')
 
-        self.figure_canvas = FigureCanvas(self.figure)
+        self.figure_canvas = FigureCanvas(self.__fig)
         self.figure_canvas.setStyleSheet("background-color:transparent;border:0px")  # set background transparent.
         self.ui.frame_layout.addWidget(self.figure_canvas)
         # self.toolbar = NavigationToolbar(self.figure_canvas, self)

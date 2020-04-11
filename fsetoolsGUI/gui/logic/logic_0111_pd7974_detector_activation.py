@@ -219,7 +219,7 @@ class Dialog0111(QMainWindow):
         app_ = TableWindow(
             parent=self,
             data_list=list_content,
-            header=list_title,
+            header_col=list_title,
             window_title='Numerical Results',
             window_geometry=(300, 200, 500, 800)
         )

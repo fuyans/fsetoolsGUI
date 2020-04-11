@@ -10,7 +10,7 @@ from fsetools.libstd.pd_7974_1_2019 import eq_5_dimensionless_hrr
 import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import dialog_0602_context as image_context
 from fsetoolsGUI.gui.images_base64 import dialog_0602_figure as image_figure
-from fsetoolsGUI.gui.layout.ui0602 import Ui_MainWindow
+from fsetoolsGUI.gui.layout.ui0602_flame_height import Ui_MainWindow
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 

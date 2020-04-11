@@ -6,7 +6,7 @@ def main():
     import sys
     import PySide2
     from PySide2 import QtCore, QtWidgets
-    from fsetoolsGUI.gui.logic.main import MainWindow
+    from fsetoolsGUI.gui.logic.logic_main import MainWindow
 
     if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
         PySide2.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
