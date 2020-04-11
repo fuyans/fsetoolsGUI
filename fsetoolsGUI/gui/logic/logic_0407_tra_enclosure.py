@@ -145,8 +145,8 @@ class App(QMainWindow):
             self.__Table = TableWindow(
                 parent=self,
                 data_list=list_content,
-                header_col=yy,
-                header_row=xx,
+                header_col=xx,
+                header_row=yy,
                 window_title='Heat flux numerical results',
                 enable_sorting=False,
             )

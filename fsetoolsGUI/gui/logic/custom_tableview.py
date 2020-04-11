@@ -121,12 +121,12 @@ class TableModel(QtCore.QAbstractTableModel):
         super().__init__(parent=parent, *args)
 
         if not header_col:
-            header_col = list(range(len(content)))
+            header_col = list(range(len(content[0])))
         if not header_row:
-            header_row = list(range(len(content[0])))
+            header_row = list(range(len(content)))
 
-        self.row_header = header_row
-        self.col_header = header_col
+        self.header_row = header_row
+        self.header_col = header_col
         self.content = content
 
     def flags(self, index):
@@ -170,9 +170,9 @@ class TableModel(QtCore.QAbstractTableModel):
 
     def headerData(self, section, orientation, role):
         if orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
-            return self.row_header[section]
+            return self.header_col[section]
         elif orientation == QtCore.Qt.Vertical and role == QtCore.Qt.DisplayRole:
-            return self.col_header[section]
+            return self.header_row[section]
         return None
 
     def sort(self, col, order):
