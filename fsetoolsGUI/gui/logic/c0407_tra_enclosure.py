@@ -31,6 +31,7 @@ class App(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.label_figure.setPixmap(path.join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0407-1.png'))
+        self.ui.lineEdit_in_solver_deltas.setToolTip('Equivalent to mesh resolution, proportionate to results accuracy')
 
         # =======================
         # create local parameters

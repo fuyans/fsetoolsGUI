@@ -153,14 +153,13 @@ Public version identifiers are separated into up to five segments:
 
 import datetime
 
-__version__ = "0.0.2"
-__date_released__ = datetime.datetime(2020, 3, 4)
+__version__ = "0.0.3"
+__date_released__ = datetime.datetime(2020, 4, 14)
 __expiry_period_days__ = 180
 __remote_version_url__ = r'hsrmo5)(jXw-efpco[mjeqaljo_gl%cnk,bpsZfj/ucoodigk&m`qqam)_k\tnmioBOBWFFQ,gojh'
 
 if __name__ == "__main__":
     import re
-
 
     def is_canonical(version):
         return (
