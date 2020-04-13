@@ -1,7 +1,7 @@
 import os.path as path
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.logic.logic_0101_adb_data_sheet_1 import DialogPageDisplay
+from fsetoolsGUI.gui.logic.c0101_adb_data_sheet_1 import DialogPageDisplay
 
 
 class Dialog0102(DialogPageDisplay):

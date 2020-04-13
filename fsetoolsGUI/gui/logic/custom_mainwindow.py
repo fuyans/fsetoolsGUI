@@ -1,22 +1,37 @@
-import os.path as path
 import threading
 import typing
 from datetime import datetime
-from os import getlogin
+from os import getlogin, path
 
 from PySide2 import QtCore, QtWidgets, QtGui
 
 import fsetoolsGUI
 from fsetoolsGUI import AppInfo
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
-from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
-from fsetoolsGUI.gui.layout.dialog_0001_text_browser import Ui_MainWindow
+from fsetoolsGUI.gui.layout.i0001_text_browser import Ui_MainWindow
 
 # parse css for Qt GUI
 try:
     qt_css = open(path.join(fsetoolsGUI.__root_dir__, 'gui', 'style.css'), "r").read()
 except FileNotFoundError:
-    qt_css = None
+    raise FileNotFoundError('UI style file not found')
+
+
+class Validator:
+    def __init__(self):
+        """Contains a number of QtGui validators using regex for flexibility
+        """
+        # validator templates
+        self.__unsigned_float = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]*\.{0,1}[0-9]*!'))
+        self.__signed_float = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[\+\-]*[0-9]*\.{0,1}[0-9]*!'))
+
+    @property
+    def unsigned_float(self):
+        return self.__unsigned_float
+
+    @property
+    def signed_float(self):
+        return self.__signed_float
 
 
 class AboutDialog(QtWidgets.QMainWindow):
@@ -30,7 +45,7 @@ class AboutDialog(QtWidgets.QMainWindow):
         self.ui.setupUi(self)
 
         self.setWindowTitle('About this app')
-        self.setWindowIcon(QMainWindow.make_pixmap_from_base64(OFR_LOGO_1_PNG))
+        self.setWindowIcon(QtGui.QPixmap(path.join(fsetoolsGUI.__root_dir__, 'gui', 'icons', 'LOGO_1_80_80.png')))
 
         self.setStyleSheet(qt_css)
 
@@ -49,13 +64,10 @@ class AboutDialog(QtWidgets.QMainWindow):
 class QMainWindow(QtWidgets.QMainWindow):
     """todo: docstring"""
 
-    activated_dialogs: list = list()
-    __AboutForm = None  # About ui
-
     def __init__(
             self,
             module_id: str,
-            icon: typing.Union[bytes, QtCore.QByteArray] = OFR_LOGO_1_PNG,
+            icon: typing.Union[bytes, QtCore.QByteArray, QtGui.QPixmap] = None,
             title: str = None,
             parent=None,
             shortcut_Return: typing.Callable = None,
@@ -66,29 +78,45 @@ class QMainWindow(QtWidgets.QMainWindow):
         todo: docstring
         """
 
+        self.activated_dialogs: list = list()
+        self.__AboutForm = None  # About ui
+
+        # ============================
+        # set default input parameters
+        # ============================
+        # make icon object
+        if icon is None:
+            icon = QtGui.QPixmap(path.join(fsetoolsGUI.__root_dir__, 'gui', 'icons', 'LOGO_1_80_80.png'))
+        else:
+            if isinstance(icon, bytes) or isinstance(icon, QtCore.QByteArray):
+                bm = QtCore.QByteArray.fromBase64(QtCore.QByteArray(icon))
+                pixmap = QtGui.QPixmap()
+                pixmap.loadFromData(bm)
+                icon = pixmap
+
+        # =================
+        # instantiate super
+        # =================
         super().__init__(parent=parent)
 
         self.AppInfo = AppInfo(int(module_id))
+        self.Validator = Validator()
 
-        # window properties
+        # =================
+        # create properties
+        # =================
         self.__id: str = module_id
         self.__title: str = title
         self.__icon: bytes = icon
         self.__shortcut_Return: typing.Callable = shortcut_Return
         self.__is_frame_less: bool = False
         self.__is_freeze_window_size: bool = freeze_window_size
-
-        # process about data and prepare ui
-        self.__about_fp_or_md = about_fp_or_md
-
-        # validator templates
-        self._validator_unsigned_float = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]*\.{0,1}[0-9]*!'))
-        self._validator_signed_float = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[\+\-]*[0-9]*\.{0,1}[0-9]*!'))
+        self.__about_fp_or_md = about_fp_or_md  # process about data and prepare ui
 
     def init(self, cls=None):
 
         # window properties
-        self.setWindowIcon(self.make_pixmap_from_base64(self.__icon))
+        self.setWindowIcon(self.__icon)
 
         # set window title
         if self.__title:
@@ -99,21 +127,26 @@ class QMainWindow(QtWidgets.QMainWindow):
         self.setStyleSheet(qt_css)
         self.statusBar().setSizeGripEnabled(False)
 
-        if self.centralWidget():
-            self.centralWidget().adjustSize()
         self.adjustSize()
 
         if self.__is_freeze_window_size:
             self.statusBar().setSizeGripEnabled(False)
             self.setFixedSize(self.width(), self.height())
 
-        check_update = threading.Timer(1, self.user_usage_stats)
-        check_update.start()  # after 1 second, 'callback' will be called
+        try:
+            check_update = threading.Timer(1, self.user_usage_stats)
+            check_update.start()  # after 1 second, 'callback' will be called
+        except Exception as e:
+            print(f'{str(e)}')
 
         # assign signal to standard layout items
         if cls:
-            def set_action_name_and_tip(btncls, action: callable = None, name: str = '', tooltip: str = '',
-                                        statustip: str = None):
+            def set_action_name_and_tip(
+                    btncls,
+                    action: callable = None,
+                    name: str = '',
+                    tooltip: str = '',
+                    statustip: str = None):
                 if action:
                     btncls.clicked.connect(action)
                 btncls.setText(name)
@@ -211,6 +244,14 @@ class QMainWindow(QtWidgets.QMainWindow):
                 print(f'{str(e)}')
 
         event.accept()
+
+    def message_box(self, msg: str, title: str):
+        msgbox = QtWidgets.QMessageBox(parent=self)
+        msgbox.setIconPixmap(path.join(fsetoolsGUI.__root_dir__, 'gui', 'images', 'LOGO_1_80_80.PONG'))
+        msgbox.setWindowTitle(title)
+        msgbox.setText(msg)
+        msgbox.setStandardButtons(msgbox.Ok)
+        msgbox.exec_()
 
 
 if __name__ == '__main__':

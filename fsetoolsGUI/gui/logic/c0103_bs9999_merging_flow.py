@@ -6,7 +6,7 @@ from fsetools.libstd.bs_9999_2017 import (
 )
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.layout.dialog_0103_merging_flow import Ui_MainWindow
+from fsetoolsGUI.gui.layout.i0103_merging_flow import Ui_MainWindow
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 

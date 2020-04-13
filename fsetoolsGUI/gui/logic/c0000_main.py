@@ -7,24 +7,23 @@ from PySide2.QtWidgets import QErrorMessage
 from packaging import version
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.images_base64 import OFR_LOGO_2_PNG
-from fsetoolsGUI.gui.layout.main import Ui_MainWindow
+from fsetoolsGUI.gui.layout.i0000_main import Ui_MainWindow
+from fsetoolsGUI.gui.logic.c0101_adb_data_sheet_1 import App as App0101
+from fsetoolsGUI.gui.logic.c0102_bs9999_data_sheet_1 import Dialog0102 as App0102
+from fsetoolsGUI.gui.logic.c0103_bs9999_merging_flow import Dialog0103 as App0103
+from fsetoolsGUI.gui.logic.c0104_adb_merging_flow import Dialog0104 as App0104
+from fsetoolsGUI.gui.logic.c0111_pd7974_detector_activation import Dialog0111 as App0111
+from fsetoolsGUI.gui.logic.c0401_br187_parallel_simple import Dialog0401 as App0401
+from fsetoolsGUI.gui.logic.c0402_br187_perpendicular_simple import Dialog0402 as App0402
+from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import Dialog0403 as App0403
+from fsetoolsGUI.gui.logic.c0404_br187_perpendicular_complex import Dialog0404 as App0404
+from fsetoolsGUI.gui.logic.c0406_tra_2d_xy_contour import Dialog0406 as App0406
+from fsetoolsGUI.gui.logic.c0407_tra_enclosure import App as App0407
+from fsetoolsGUI.gui.logic.c0601_naming_convention import Dialog0601 as App0601
+from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import Dialog0602 as App0602
+from fsetoolsGUI.gui.logic.c0611_parametric_fire import App0611 as App0611
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
-from fsetoolsGUI.gui.logic.logic_0101_adb_data_sheet_1 import Dialog0101 as Dialog0101
-from fsetoolsGUI.gui.logic.logic_0102_bs9999_data_sheet_1 import Dialog0102 as Dialog0102
-from fsetoolsGUI.gui.logic.logic_0103_bs9999_merging_flow import Dialog0103 as Dialog0103
-from fsetoolsGUI.gui.logic.logic_0104_adb_merging_flow import Dialog0104 as Dialog0104
-from fsetoolsGUI.gui.logic.logic_0111_pd7974_detector_activation import Dialog0111 as Dialog0111
-from fsetoolsGUI.gui.logic.logic_0401_br187_parallel_simple import Dialog0401 as Dialog0401
-from fsetoolsGUI.gui.logic.logic_0402_br187_perpendicular_simple import Dialog0402 as Dialog0402
-from fsetoolsGUI.gui.logic.logic_0403_br187_parallel_complex import Dialog0403 as Dialog0403
-from fsetoolsGUI.gui.logic.logic_0404_br187_perpendicular_complex import Dialog0404 as Dialog0404
-from fsetoolsGUI.gui.logic.logic_0406_tra_2d_xy_contour import Dialog0406 as Dialog0406
-from fsetoolsGUI.gui.logic.logic_0407_tra_enclosure import App as App0407
-from fsetoolsGUI.gui.logic.logic_0601_naming_convention import Dialog0601 as Dialog0601
-from fsetoolsGUI.gui.logic.logic_0602_pd7974_flame_height import Dialog0602 as Dialog0602
-from fsetoolsGUI.gui.logic.logic_0611_parametric_fire import App0611 as App0611
 
 
 class Signals(QtCore.QObject):
@@ -68,23 +67,23 @@ class MainWindow(QMainWindow):
         self.init_buttons()
 
         # default values
-        self.ui.label_big_name.setText('')
-        self.ui.label_copy_right.setText('')
-        self.init_logos()  # logo
+        # self.ui.label_big_name.setText('')
+        # self.ui.label_copy_right.setText('')
+        # self.init_logos()  # logo
         self.ui.dialog_error = QErrorMessage(self)
         self.ui.dialog_error.setWindowTitle('Message')
         self.__new_version_update_url = None
         self.__dialog_opened = list()
 
-    def init_logos(self):
-
-        self.ui.label_logo.setPixmap(self.make_pixmap_from_base64(OFR_LOGO_2_PNG))
-        self.ui.label_logo.setToolTip('Click to go to ofrconsultants.com')
-        self.ui.label_logo.setStatusTip('Click to go to ofrconsultants.com')
-
-        # signals
-        # self.ui.label_logo.mousePressEvent = self.label_logo_mousePressEvent  # removed hyperlink to OFR logo
-        self.ui.label_version.mousePressEvent = self.label_version_mousePressEvent
+    # def init_logos(self):
+    #
+    #     self.ui.label_logo.setPixmap(self.make_pixmap_from_base64(OFR_LOGO_2_PNG))
+    #     self.ui.label_logo.setToolTip('Click to go to ofrconsultants.com')
+    #     self.ui.label_logo.setStatusTip('Click to go to ofrconsultants.com')
+    #
+    #     # signals
+    #     # self.ui.label_logo.mousePressEvent = self.label_logo_mousePressEvent  # removed hyperlink to OFR logo
+    #     self.ui.label_version.mousePressEvent = self.label_version_mousePressEvent
 
     @Slot(bool)
     def setEnabled_all_buttons(self, v: bool):
@@ -120,39 +119,40 @@ class MainWindow(QMainWindow):
 
         module_info = fsetoolsGUI.AppInfo
 
-        set_action_name_and_tip(self.ui.pushButton_0101_adb2_datasheet_1, Dialog0101,
+        set_action_name_and_tip(self.ui.pushButton_0101_adb2_datasheet_1, App0101,
                                 *module_info(int('0101')).short_and_long_names)
-        set_action_name_and_tip(self.ui.pushButton_0102_bs9999_datasheet_1, Dialog0102,
+        set_action_name_and_tip(self.ui.pushButton_0102_bs9999_datasheet_1, App0102,
                                 *module_info(int('0102')).short_and_long_names)
-        set_action_name_and_tip(self.ui.pushButton_0103_merging_flow, Dialog0103,
+        set_action_name_and_tip(self.ui.pushButton_0103_merging_flow, App0103,
                                 *module_info(int('0103')).short_and_long_names)
-        set_action_name_and_tip(self.ui.pushButton_0104_merging_flow, Dialog0104,
+        set_action_name_and_tip(self.ui.pushButton_0104_merging_flow, App0104,
                                 *module_info(int('0104')).short_and_long_names)
-        set_action_name_and_tip(self.ui.pushButton_0111_heat_detector_activation, Dialog0111,
+        set_action_name_and_tip(self.ui.pushButton_0111_heat_detector_activation, App0111,
                                 *module_info(int('0111')).short_and_long_names)
 
-        set_action_name_and_tip(self.ui.pushButton_0401_br187_parallel_simple, Dialog0401,
+        set_action_name_and_tip(self.ui.pushButton_0401_br187_parallel_simple, App0401,
                                 *module_info(int('0401')).short_and_long_names)
-        set_action_name_and_tip(self.ui.pushButton_0402_br187_perpendicular_simple, Dialog0402,
+        set_action_name_and_tip(self.ui.pushButton_0402_br187_perpendicular_simple, App0402,
                                 *module_info(int('0402')).short_and_long_names)
-        set_action_name_and_tip(self.ui.pushButton_0403_br187_parallel_complex, Dialog0403,
+        set_action_name_and_tip(self.ui.pushButton_0403_br187_parallel_complex, App0403,
                                 *module_info(int('0403')).short_and_long_names)
-        set_action_name_and_tip(self.ui.pushButton_0404_br187_perpendicular_complex, Dialog0404,
+        set_action_name_and_tip(self.ui.pushButton_0404_br187_perpendicular_complex, App0404,
                                 *module_info(int('0404')).short_and_long_names)
-        set_action_name_and_tip(self.ui.pushButton_0406_thermal_radiation_analysis_2d, Dialog0406,
+        set_action_name_and_tip(self.ui.pushButton_0406_thermal_radiation_analysis_2d, App0406,
                                 *module_info(int('0406')).short_and_long_names)
         set_action_name_and_tip(self.ui.pushButton_0407_tra_enclosure, App0407,
                                 *module_info(int('0407')).short_and_long_names)
 
-        set_action_name_and_tip(self.ui.pushButton_0601_naming_convention, Dialog0601,
+        set_action_name_and_tip(self.ui.pushButton_0601_naming_convention, App0601,
                                 *module_info(int('0601')).short_and_long_names)
-        set_action_name_and_tip(self.ui.pushButton_0602_pd7974_flame_height, Dialog0602,
+        set_action_name_and_tip(self.ui.pushButton_0602_pd7974_flame_height, App0602,
                                 *module_info(int('0602')).short_and_long_names)
         set_action_name_and_tip(self.ui.pushButton_0611_ec_parametric_fire, App0611,
                                 *module_info(int('0611')).short_and_long_names)
 
     def activate_app(self, app_):
-        app_ = app_(parent=self)
+        print(app_)
+        app_ = app_(self)
         app_.show()
 
     def check_update(self):

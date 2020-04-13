@@ -1,6 +1,6 @@
 from fsetools.lib.fse_thermal_radiation import phi_perpendicular_any_br187, linear_solver
 
-from fsetoolsGUI.gui.logic.logic_0403_br187_parallel_complex import Dialog04
+from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import Dialog04
 
 
 class Dialog0404(Dialog04):

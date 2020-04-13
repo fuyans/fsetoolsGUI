@@ -8,7 +8,7 @@ from PySide2.QtCore import Slot
 from fsetools.lib.fse_thermal_radiation_2d_parallel import main as tra_main
 from matplotlib import cm
 
-from fsetoolsGUI.gui.layout.dialog_0406_tra_2d_xy_contour import Ui_MainWindow
+from fsetoolsGUI.gui.layout.i0406_tra_2d_xy_contour import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.custom_tableview import TableModel
 

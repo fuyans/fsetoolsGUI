@@ -8,7 +8,7 @@ from fsetoolsGUI.gui.images_base64 import dialog_0111_context_1 as image_context
 from fsetoolsGUI.gui.images_base64 import dialog_0111_context_2 as image_context_2
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_1 as image_figure_1
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_2 as image_figure_2
-from fsetoolsGUI.gui.layout.dialog_0111_heat_detector_activation import Ui_MainWindow as Ui_Dialog
+from fsetoolsGUI.gui.layout.i0111_pd7974_heat_detector_activation import Ui_MainWindow as Ui_Dialog
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.custom_tableview import TableWindow
@@ -61,15 +61,15 @@ class Dialog0111(QMainWindow):
         self.set_temperature_correlation()
 
         # set validators
-        self.ui.lineEdit_in_t.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_alpha.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_H.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_R.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_RTI.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_C.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_HRRPUA.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_C_conv.setValidator(self._validator_unsigned_float)
-        self.ui.lineEdit_in_T_act.setValidator(self._validator_unsigned_float)
+        self.ui.lineEdit_in_t.setValidator(self.Validator.unsigned_float)
+        self.ui.lineEdit_in_alpha.setValidator(self.Validator.unsigned_float)
+        self.ui.lineEdit_in_H.setValidator(self.Validator.unsigned_float)
+        self.ui.lineEdit_in_R.setValidator(self.Validator.unsigned_float)
+        self.ui.lineEdit_in_RTI.setValidator(self.Validator.unsigned_float)
+        self.ui.lineEdit_in_C.setValidator(self.Validator.unsigned_float)
+        self.ui.lineEdit_in_HRRPUA.setValidator(self.Validator.unsigned_float)
+        self.ui.lineEdit_in_C_conv.setValidator(self.Validator.unsigned_float)
+        self.ui.lineEdit_in_T_act.setValidator(self.Validator.unsigned_float)
 
         # signals
         self.ui.pushButton_ok.clicked.connect(self.calculate)

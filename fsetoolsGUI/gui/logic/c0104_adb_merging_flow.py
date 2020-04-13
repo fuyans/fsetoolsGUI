@@ -3,7 +3,7 @@ from os.path import join
 from PySide2 import QtWidgets
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.layout.dialog_0104_merging_flow import Ui_MainWindow
+from fsetoolsGUI.gui.layout.i0104_merging_flow import Ui_MainWindow
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 

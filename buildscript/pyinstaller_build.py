@@ -69,6 +69,7 @@ def main():
     options = [
         "--onedir",  # output unpacked dist to one directory, including an .exe file
         "--noconfirm",  # replace output directory without asking for confirmation
+        # "--console",
         "--clean",  # clean pyinstaller cache and remove temporary files
         f'--add-data={realpath(join("etc", "ofr_logo_1_80_80.ico"))}{os.pathsep}etc',  # include icon file
     ]

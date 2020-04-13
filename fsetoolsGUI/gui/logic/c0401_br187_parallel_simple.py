@@ -1,5 +1,5 @@
-from fsetoolsGUI.gui.logic.logic_0403_br187_parallel_complex import Dialog04
-from fsetoolsGUI.gui.logic.logic_0403_br187_parallel_complex import Dialog0403
+from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import Dialog04
+from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import Dialog0403
 
 
 class Dialog0401(Dialog04):

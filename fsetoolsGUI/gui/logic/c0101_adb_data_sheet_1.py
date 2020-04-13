@@ -3,32 +3,29 @@ import os.path as path
 from PySide2 import QtWidgets, QtGui, QtCore
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.layout.dialog_0101 import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.layout.i0101_data_sheet import Ui_MainWindow
 
 
-class DialogPageDisplay(QMainWindow):
-
-    mscroll_last_move_y = 0
-    mscroll_last_move_x = 0
-
+class DialogPageDisplay(QtWidgets.QMainWindow):
     def __init__(self, module_id: str, fp_image: str, parent=None):
 
         super().__init__(
-            module_id=module_id,
+            # module_id=module_id,
             parent=parent,
-            about_fp_or_md=path.join(fsetoolsGUI.__root_dir__, 'gui', 'doc', f'{module_id}.md')
         )
+
+        self.mscroll_last_move_y = 0
+        self.mscroll_last_move_x = 0
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init(self)
-
         self.ui.label.setPixmap(QtGui.QPixmap(fp_image))
 
         self.scroll_geo = self.ui.scrollArea.geometry
         self.scroll_vbar = self.ui.scrollArea.verticalScrollBar()
         self.scroll_hbar = self.ui.scrollArea.horizontalScrollBar()
+
+        # self.init(self)
 
     def mouseMoveEvent(self, event):
 
@@ -64,7 +61,6 @@ class DialogPageDisplay(QMainWindow):
 
         print(x, y)
 
-
         if event.type() == QtCore.QEvent.MouseMove:
             print(x, y)
 
@@ -89,7 +85,7 @@ class DialogPageDisplay(QMainWindow):
         return QtWidgets.QWidget.eventFilter(self, source, event)
 
 
-class Dialog0101(DialogPageDisplay):
+class App(DialogPageDisplay):
     def __init__(self, parent=None):
         super().__init__(
             module_id='0101',
@@ -101,7 +97,8 @@ class Dialog0101(DialogPageDisplay):
 
 if __name__ == '__main__':
     import sys
+
     qapp = QtWidgets.QApplication(sys.argv)
-    app = Dialog0101()
+    app = App()
     app.show()
     qapp.exec_()

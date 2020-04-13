@@ -3,8 +3,8 @@ from os.path import join
 from fsetools.lib.fse_thermal_radiation import phi_parallel_any_br187, linear_solver
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.layout.dialog_0401_br187_parallel_simple import Ui_MainWindow as Ui_0401
-from fsetoolsGUI.gui.layout.dialog_0403_br187_parallel_complex import Ui_MainWindow as Ui_0403
+from fsetoolsGUI.gui.layout.i0401_br187_parallel_simple import Ui_MainWindow as Ui_0401
+from fsetoolsGUI.gui.layout.i0403_br187_parallel_complex import Ui_MainWindow as Ui_0403
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
@@ -16,7 +16,7 @@ class Dialog04(QMainWindow):
             module_id=module_id,
             parent=parent,
             shortcut_Return=self.calculate,
-            freeze_window_size=True,
+            freeze_window_size=False,
         )
 
         if module_id == '0401' or module_id == '0402':
@@ -202,7 +202,7 @@ class Dialog04(QMainWindow):
         except KeyError:
             raise KeyError('Not enough output parameters')
 
-        self.ui.lineEdit_out_Phi.setText(f'{phi:.4f}')
+        self.ui.lineEdit_out_Phi.setText(f'{phi * 1000:.2f}')
         self.ui.lineEdit_out_q.setText(f'{q:.2f}')
 
         if S:

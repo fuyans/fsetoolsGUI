@@ -7,7 +7,7 @@ from fsetools.lib.fse_thermal_radiation_2d_ortho import CuboidRoomModel
 from matplotlib import cm
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.layout.ui0407_tra_enclosure import Ui_MainWindow
+from fsetoolsGUI.gui.layout.i0407_tra_enclosure import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_tableview import TableWindow
@@ -125,14 +125,33 @@ class App(QMainWindow):
         self.repaint()
 
     def calculate(self):
-        input_parameters = self.input_parameters
+        try:
+            input_parameters = self.input_parameters
+        except Exception as e:
+            self.statusBar().showMessage(f'Unable to parse inputs. Error {str(e)}')
+            return
 
-        output_parameters = self.__calculate_worker(**input_parameters)
+        self.statusBar().showMessage('Calculation started', 5)
+        self.repaint()
+        try:
+            output_parameters = self.__calculate_worker(**input_parameters)
+        except Exception as e:
+            self.statusBar().showMessage(f'Calculation failed. Error {str(e)}')
+            return
 
-        self.output_parameters = output_parameters
+        self.statusBar().showMessage('Preparing results', 5)
+        self.repaint()
+        try:
+            self.output_parameters = output_parameters
+            self.show_results_in_table()
+            self.show_results_in_figure()
+            self.__Table.show()
+            self.__Figure.show()
+        except Exception as e:
+            self.statusBar().showMessage(f'Unable to show results in table or figure. Error {str(e)}')
 
-        self.show_results_in_figure()
-        self.show_results_in_table()
+        self.statusBar().showMessage('Calculation complete', 5)
+        self.repaint()
 
     def show_results_in_table(self):
 
@@ -156,7 +175,6 @@ class App(QMainWindow):
         else:
             self.__Table.TableModel.content = list_content
             self.__Table.repaint()
-            self.__Table.show()
 
     def show_results_in_figure(self):
         """Show contour plot of the calculated heat flux at the ceiling surface as in a separate dialog.
@@ -222,7 +240,6 @@ class App(QMainWindow):
         # ======================
         self.__Figure.figure.tight_layout()
         self.__Figure.figure_canvas.draw()
-        self.__Figure.show()
 
     @staticmethod
     def __calculate_worker(width, depth, height, deltas, wall_1_heat_flux, wall_2_heat_flux, wall_3_heat_flux,

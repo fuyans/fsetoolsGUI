@@ -10,7 +10,7 @@ from fsetools.libstd.pd_7974_1_2019 import eq_5_dimensionless_hrr
 import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import dialog_0602_context as image_context
 from fsetoolsGUI.gui.images_base64 import dialog_0602_figure as image_figure
-from fsetoolsGUI.gui.layout.ui0602_flame_height import Ui_MainWindow
+from fsetoolsGUI.gui.layout.i0602_flame_height import Ui_MainWindow
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
@@ -18,7 +18,9 @@ from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 class Dialog0602(QMainWindow):
     def __init__(self, parent=None):
 
-        # instantiate ui
+        # =================
+        # instantiate super
+        # =================
         super().__init__(
             module_id='0602',
             parent=parent,
@@ -26,13 +28,22 @@ class Dialog0602(QMainWindow):
             freeze_window_size=True,
         )
 
+        # ==============
+        # instantiate ui
+        # ==============
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.init(self)
+        self.ui.lineEdit_Q_dot_or_Q_dot_l.setToolTip(
+            'Total fire heat release rate (per unit length for line fire shape)')
+        self.ui.lineEdit_L_A_or_D.setToolTip('Fire longer dimension (diameter for circular fire shape)')
+        self.ui.lineEdit_L_B.setToolTip('Fire shorter dimension (only for rectangular fire shape)')
+        self.ui.lineEdit_out_Q_dot_star.setToolTip('Solved dimensionless heat release rate, double click to select')
+        self.ui.lineEdit_out_Z_f.setToolTip('Solved mean flame height, double click to select')
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(image_context=image_context,
-                                       image_figure=image_figure,)
+                                       image_figure=image_figure, )
         for k, v in self.dict_images_pixmap.items():
             ba = QByteArray.fromBase64(v)
             self.dict_images_pixmap[k] = QtGui.QPixmap()
@@ -155,6 +166,13 @@ class Dialog0602(QMainWindow):
         self.validate(g, 'unsigned float', 'Gravity should be greater than 0')
         if L_B:
             self.validate(L_B, 'unsigned float', 'Fire dimension should be greater than 0')
+
+        # warning if input parameters maybe incorrect
+        if 10 > Q_dot_or_Q_dot_l or Q_dot_or_Q_dot_l > 10000:
+            self.message_box(
+                title='Warning',
+                msg='Heat release rate seems too low or too high.\nMake sure the input is in correct unit.'
+            )
 
         return dict(
             Q_dot_or_Q_dot_l=Q_dot_or_Q_dot_l,

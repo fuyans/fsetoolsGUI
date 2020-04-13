@@ -5,7 +5,7 @@ import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
 
 
-class Dialog0001(QtWidgets.QDialog):
+class App(QtWidgets.QDialog):
     _pass_code = None
 
     def __init__(self, parent=None):
@@ -58,3 +58,12 @@ class Dialog0001(QtWidgets.QDialog):
             return '-1'
         else:
             return self._pass_code
+
+
+if __name__ == '__main__':
+    import sys
+
+    qapp = QtWidgets.QApplication(sys.argv)
+    app = App()
+    app.show()
+    qapp.exec_()
