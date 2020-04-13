@@ -81,8 +81,7 @@ class Dialog0601(QMainWindow):
         if self.__re_date.match(date) is None:
             raise ValueError('Date should be in format YYMMDD or YYYYMMDD')
         if self.__re_project_no.match(project_no) is None:
-            raise ValueError('Project number should be in format XX#####, '
-                             'where XX is office designation and # is a project number')
+            raise ValueError('Project number should be in format XX#####')
         if self.__re_project_stage.match(project_stage) is None:
             raise ValueError('Project stage is missing')
         if self.__re_project_title.match(title) is None:

@@ -25,6 +25,8 @@ class Dialog0103(QMainWindow):
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        self.ui.lineEdit_in_X.setToolTip('A1 3.3,\tA2 3.6,\tA3 4.6\nB1 3.6,\tB2 4.1,\tB3 6.0\nC1 3.6,\tC2 4.1,\tC3 6.0')
         self.init(self)
 
         # construct pixmaps that are used in this app

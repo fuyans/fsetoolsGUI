@@ -3,14 +3,15 @@ import os.path as path
 from PySide2 import QtWidgets, QtGui, QtCore
 
 import fsetoolsGUI
+from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.layout.i0101_data_sheet import Ui_MainWindow
 
 
-class DialogPageDisplay(QtWidgets.QMainWindow):
+class DialogPageDisplay(QMainWindow):
     def __init__(self, module_id: str, fp_image: str, parent=None):
 
         super().__init__(
-            # module_id=module_id,
+            module_id=module_id,
             parent=parent,
         )
 
@@ -25,7 +26,7 @@ class DialogPageDisplay(QtWidgets.QMainWindow):
         self.scroll_vbar = self.ui.scrollArea.verticalScrollBar()
         self.scroll_hbar = self.ui.scrollArea.horizontalScrollBar()
 
-        # self.init(self)
+        self.init(self)
 
     def mouseMoveEvent(self, event):
 
