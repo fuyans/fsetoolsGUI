@@ -77,10 +77,10 @@ QPushButton {
 QPushButton:hover {
     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
     color: #ffffff;
-    border: 0px;
+    border: 1.5px solid #56aafb;
 }
 QPushButton:focus {
-    border: 1.5px solid #56aafb;
+    border: 1.5px solid #3295fd;
 }
 QPushButton:pressed {
     background-color: #106bfd;

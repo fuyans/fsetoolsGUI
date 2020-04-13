@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1274</width>
-    <height>885</height>
+    <height>877</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -92,9 +92,6 @@
            <height>16777215</height>
           </size>
          </property>
-         <property name="toolTip">
-          <string>Critical heat flux countour line will be highlighted in red colour in the figure.</string>
-         </property>
          <property name="text">
           <string>Critical heat flux</string>
          </property>
@@ -107,9 +104,6 @@
            <width>91</width>
            <height>26</height>
           </rect>
-         </property>
-         <property name="toolTip">
-          <string>Critical heat flux countour line will be highlighted in red colour in the figure.</string>
          </property>
          <property name="text">
           <string>12.6</string>
@@ -136,9 +130,6 @@
            <height>16777215</height>
           </size>
          </property>
-         <property name="toolTip">
-          <string>Font size of the contour line text in the figure.</string>
-         </property>
          <property name="text">
           <string>Contour text font size</string>
          </property>
@@ -151,9 +142,6 @@
            <width>181</width>
            <height>26</height>
           </rect>
-         </property>
-         <property name="toolTip">
-          <string>Line thickness of the defined emitter and receivers in the figure.</string>
          </property>
          <property name="text">
           <string>Emitter / receiver line thickness</string>
@@ -299,9 +287,6 @@
            <height>26</height>
           </rect>
          </property>
-         <property name="toolTip">
-          <string>Line thickness of the defined emitter and receivers in the figure.</string>
-         </property>
          <property name="text">
           <string>Z-plane to show heat flux results</string>
          </property>
@@ -333,9 +318,6 @@
            <width>51</width>
            <height>26</height>
           </rect>
-         </property>
-         <property name="toolTip">
-          <string>Tick to show the maximum heat flux on the graph.</string>
          </property>
          <property name="text">
           <string>Max.</string>
@@ -375,9 +357,6 @@
            <height>26</height>
           </size>
          </property>
-         <property name="toolTip">
-          <string>Click to refresh the figure with updated graphic settings.</string>
-         </property>
          <property name="text">
           <string>Refresh</string>
          </property>
@@ -403,9 +382,6 @@
            <height>26</height>
           </size>
          </property>
-         <property name="toolTip">
-          <string>Click to save figure in image format.</string>
-         </property>
          <property name="text">
           <string>Save Figure</string>
          </property>
@@ -418,9 +394,6 @@
            <width>86</width>
            <height>26</height>
           </rect>
-         </property>
-         <property name="toolTip">
-          <string>(x_min, x_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
          </property>
          <property name="text">
           <string>Domain X</string>
@@ -441,9 +414,6 @@
            <height>16777215</height>
           </size>
          </property>
-         <property name="toolTip">
-          <string>This table shows all defined receivers.</string>
-         </property>
          <property name="sortingEnabled">
           <bool>true</bool>
          </property>
@@ -456,9 +426,6 @@
            <width>61</width>
            <height>26</height>
           </rect>
-         </property>
-         <property name="toolTip">
-          <string>This defines the location of the z-plane which heat flux will be solved. Leave this empty to let the tool to work out the worst situation/height.</string>
          </property>
          <property name="styleSheet">
           <string notr="true"/>
@@ -482,9 +449,6 @@
            <height>16777215</height>
           </size>
          </property>
-         <property name="toolTip">
-          <string>This table shows all defined emitters. Point 1 (x1, y1) and 2 (x2, y2) define the start and end of the emiter on a z-plane, accordingly.</string>
-         </property>
          <property name="sortingEnabled">
           <bool>true</bool>
          </property>
@@ -501,9 +465,6 @@
            <height>26</height>
           </rect>
          </property>
-         <property name="toolTip">
-          <string>(y_min, y_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
-         </property>
          <property name="text">
           <string>Domain Y</string>
          </property>
@@ -516,9 +477,6 @@
            <width>61</width>
            <height>26</height>
           </rect>
-         </property>
-         <property name="toolTip">
-          <string>(y_min, y_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
          </property>
          <property name="text">
           <string/>
@@ -533,9 +491,6 @@
            <height>26</height>
           </rect>
          </property>
-         <property name="toolTip">
-          <string>Click to remove an emitter in the table below.</string>
-         </property>
          <property name="text">
           <string>-</string>
          </property>
@@ -548,9 +503,6 @@
            <width>86</width>
            <height>26</height>
           </rect>
-         </property>
-         <property name="toolTip">
-          <string>This defines the location of the z-plane which heat flux will be solved. Leave this empty to let the tool to work out the worst situation/height.</string>
          </property>
          <property name="text">
           <string>Domain Z</string>
@@ -565,9 +517,6 @@
            <height>26</height>
           </rect>
          </property>
-         <property name="toolTip">
-          <string>Click to remove an receiver in the table below.</string>
-         </property>
          <property name="text">
           <string>-</string>
          </property>
@@ -581,9 +530,6 @@
            <height>26</height>
           </rect>
          </property>
-         <property name="toolTip">
-          <string>This defines the grid resolution (i.e. dx and dy) that received heat flux will be solved.</string>
-         </property>
          <property name="text">
           <string>Resolution</string>
          </property>
@@ -596,9 +542,6 @@
            <width>61</width>
            <height>26</height>
           </rect>
-         </property>
-         <property name="toolTip">
-          <string>(x_min, x_max), defines the space (on a z-plane) that the received heat flux will solved.</string>
          </property>
          <property name="text">
           <string/>
@@ -626,9 +569,6 @@
            <height>26</height>
           </rect>
          </property>
-         <property name="toolTip">
-          <string>Click to insert an receiver in the table below.</string>
-         </property>
          <property name="text">
           <string>+</string>
          </property>
@@ -641,9 +581,6 @@
            <width>26</width>
            <height>26</height>
           </rect>
-         </property>
-         <property name="toolTip">
-          <string>Click to insert an emitter in the table below.</string>
          </property>
          <property name="text">
           <string>+</string>
@@ -670,9 +607,6 @@
            <width>61</width>
            <height>26</height>
           </rect>
-         </property>
-         <property name="toolTip">
-          <string>This defines the grid resolution (i.e. dx and dy) that received heat flux will be solved.</string>
          </property>
          <property name="text">
           <string>0.5</string>
@@ -717,9 +651,6 @@
            <width>396</width>
            <height>26</height>
           </size>
-         </property>
-         <property name="toolTip">
-          <string>Calculation progress.</string>
          </property>
          <property name="value">
           <number>0</number>
@@ -771,9 +702,6 @@
            <height>26</height>
           </size>
          </property>
-         <property name="toolTip">
-          <string>Click (or press Enter) to calculate.</string>
-         </property>
          <property name="text">
           <string>Calculate</string>
          </property>
@@ -798,9 +726,6 @@
            <width>96</width>
            <height>26</height>
           </size>
-         </property>
-         <property name="toolTip">
-          <string>Click to generate example input parameters.</string>
          </property>
          <property name="text">
           <string>About</string>
@@ -827,9 +752,6 @@
            <height>26</height>
           </size>
          </property>
-         <property name="toolTip">
-          <string>Click to generate example input parameters.</string>
-         </property>
          <property name="text">
           <string>Example</string>
          </property>
@@ -853,7 +775,7 @@
      <x>0</x>
      <y>0</y>
      <width>1274</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

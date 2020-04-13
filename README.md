@@ -100,10 +100,11 @@ Status designation:
 | 0111        | PD 7974 heat detector activation                             | Completed |
 | 0401        | BR 187 parallel oriented rectangle emitter and receiver      | Completed |
 | 0402        | BR 187 perpendicular oriented rectangle emitter and receiver | Completed |
-| 0403        | BR 187 parallel oriented rectangle emitter and receiver (non-centered) | WIP       |
-| 0404        | BR 187 perpendicular oriented rectangle emitter and receiver (non-centered) | WIP       |
+| 0403        | BR 187 parallel oriented rectangle emitter and eccentric receiver | WIP       |
+| 0404        | BR 187 perpendicular oriented rectangle emitter and eccentric receiver | WIP       |
 | 0405        | TRA 3D polygon emitter and a single point                    | Planned   |
 | 0406        | TRA 2D parallel orientated contour plot                      | WIP       |
+| 0407        | TRA cuboid enclosure model                                   | WIP       |
 | 0601        | OFR file naming protocol                                     | Completed |
 | 0602        | PD 7974 flame height                                         | Completed |
 | 0603        | FDS mesh resolution                                          | Planned   |

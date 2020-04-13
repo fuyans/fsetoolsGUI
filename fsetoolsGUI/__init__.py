@@ -64,8 +64,8 @@ class AppInfo:
             long_name='TRA 2D parallel orientated contour plot',
         ),
         '0407': dict(
-            short_name='TRA\nenclosure',
-            long_name='TRA enclosure',
+            short_name='TRA\ncuboid\nenclosure\nmodel',
+            long_name='TRA cuboid enclosure model',
         ),
         '0601': dict(
             short_name='OFR\nfile naming\nconvention',
