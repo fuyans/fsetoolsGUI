@@ -1,6 +1,16 @@
 # !/usr/bin/python
 # coding:utf-8
 
+# THIS SHOULD BE THE ONLY GUI APPLICATION ENTRY POINT
+import logging
+c_handler = logging.StreamHandler()
+c_handler.setFormatter(logging.Formatter('%(name)s - %(levelname)s - %(module)s - %(message)s'))
+logger = logging.getLogger('gui')
+logger.setLevel(logging.DEBUG)
+logger.addHandler(c_handler)
+
+logger.info('Hi')
+
 
 def main():
     import sys

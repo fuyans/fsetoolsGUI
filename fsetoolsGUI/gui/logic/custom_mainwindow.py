@@ -9,6 +9,9 @@ import fsetoolsGUI
 from fsetoolsGUI import AppInfo
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
 from fsetoolsGUI.gui.layout.i0001_text_browser import Ui_MainWindow
+import logging
+
+logger = logging.getLogger('gui')
 
 # parse css for Qt GUI
 try:
@@ -199,7 +202,7 @@ class QMainWindow(QtWidgets.QMainWindow):
             action=self.__id
         )
 
-        print(f'STATS POST STATUS: {rp} {rp.text}')
+        logger.info(f'STATS POST STATUS: {rp} {rp.text}')
 
     @staticmethod
     def validate(var, type, err_msg: str):
