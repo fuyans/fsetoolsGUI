@@ -231,10 +231,12 @@ class App(QMainWindow):
         # ============
         # format plots
         # ============
+        self.__Figure_ax.set_xlabel('Width [m]', fontsize='small')
+        self.__Figure_ax.set_ylabel('Depth [m]', fontsize='small')
         # axis ticks
-        self.__Figure_ax.set_xticks(np.arange(np.amin(xx), np.amax(xx) + .5, 1))
+        self.__Figure_ax.set_xticks(np.arange(0, width + .5, 1))
         self.__Figure_ax.set_xticklabels([f'{i:.0f}' for i in np.arange(0, width + .5, 1)], fontsize='small')
-        self.__Figure_ax.set_yticks(np.arange(np.amin(yy), np.amax(yy) + .5, 1))
+        self.__Figure_ax.set_yticks(np.arange(0, depth + .5, 1))
         self.__Figure_ax.set_yticklabels([f'{i:.0f}' for i in np.arange(0, depth + .5, 1)], fontsize='small')
         self.__Figure_ax.tick_params(axis=u'both', which=u'both', direction='in')
 
