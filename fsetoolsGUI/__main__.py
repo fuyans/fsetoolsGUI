@@ -1,12 +1,7 @@
 def main():
 
-    import warnings
-
-    warnings.filterwarnings("ignore")
-
     from fsetoolsGUI.gui.__main__ import main
 
-    # make_nsh_files program starts
     main()
 
 
