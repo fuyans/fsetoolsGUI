@@ -261,7 +261,6 @@ class App0611(QMainWindow):
                 data_list=list_content,
                 header_col=['time [s]', 'temperature [K]'],
                 window_title='Parametric fire numerical results',
-                window_geometry=(300, 200, 250, 300)
             )
 
             self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
@@ -278,12 +277,15 @@ class App0611(QMainWindow):
         if self.__Figure is None:
             self.__Figure = PlotApp(self, title='Parametric fire plot')
             self.__Figure_ax = self.__Figure.add_subplots()
+        else:
+            self.__Figure_ax.clear()
 
         self.__Figure_ax.plot(output_parameters['time']/60, output_parameters['temperature'], c='k')
         self.__Figure_ax.set_xlabel('Time [minute]')
         self.__Figure_ax.set_ylabel('Temperature [°C]')
         self.__Figure.figure.tight_layout()
 
+        self.__Figure.figure_canvas.draw()
         self.__Figure.show()
 
 
