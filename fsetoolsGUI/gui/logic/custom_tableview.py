@@ -1,6 +1,7 @@
 import csv
 import io
 import operator
+from typing import Union
 
 from PySide2 import QtGui, QtCore, QtWidgets
 
@@ -32,24 +33,27 @@ class TableWindow(QtWidgets.QDialog):
             header_col: list = None,
             header_row: list = None,
             window_title: str = None,
-            window_geometry: tuple = (),
+            window_geometry: Union[tuple, list, QtCore.QRect] = (),
             enable_sorting: bool = True,
             parent=None,
             *args,
     ):
-        # ================
-        # super properties
-        # ================
+        # =================
+        # instantiate super
+        # =================
         super().__init__(parent, *args)
 
-        # =====================
-        # set object properties
-        # =====================
+        # =================
+        # set ui properties
+        # =================
         self.setWindowFlag(QtCore.Qt.WindowCloseButtonHint, True)
         self.setWindowFlag(QtCore.Qt.WindowMinimizeButtonHint, True)
         self.setWindowFlag(QtCore.Qt.WindowMaximizeButtonHint, True)
         if window_geometry:
-            self.setGeometry(*window_geometry)
+            if isinstance(window_geometry, QtCore.QRect):
+                self.setGeometry(window_geometry)
+            elif isinstance(window_geometry, list) or isinstance(window_geometry, tuple):
+                self.setGeometry(*window_geometry)
         if window_title:
             self.setWindowTitle(window_title)
 
@@ -131,6 +135,9 @@ class TableModel(QtCore.QAbstractTableModel):
 
     def flags(self, index):
         return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEditable
+
+    # def setHeaderData(self, section:int, orientation:QtCore.Qt.Orientation, value, role) -> bool:
+    #     print(section, orientation)
 
     def setData(self, index, value, role: QtCore.Qt.EditRole):
         row = index.row()

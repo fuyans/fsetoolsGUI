@@ -2,7 +2,7 @@ import sys
 from os import path
 
 import numpy as np
-from PySide2 import QtWidgets, QtCore
+from PySide2 import QtWidgets
 from fsetools.lib.fse_thermal_radiation_2d_ortho import CuboidRoomModel
 from matplotlib import cm
 
@@ -127,32 +127,34 @@ class App(QMainWindow):
 
     def calculate(self):
         try:
+            self.statusBar().showMessage('Parsing inputs from UI')
+            self.repaint()
             input_parameters = self.input_parameters
         except Exception as e:
             self.statusBar().showMessage(f'Unable to parse inputs. Error {str(e)}')
             return
 
-        self.statusBar().showMessage('Calculation started', 5)
-        self.repaint()
         try:
+            self.statusBar().showMessage('Calculation started', 5)
+            self.repaint()
             output_parameters = self.__calculate_worker(**input_parameters)
         except Exception as e:
             self.statusBar().showMessage(f'Calculation failed. Error {str(e)}')
             return
 
-        self.statusBar().showMessage('Preparing results', 5)
-        self.repaint()
         try:
+            self.statusBar().showMessage('Preparing results', 5)
+            self.repaint()
             self.output_parameters = output_parameters
-            self.show_results_in_table()
+            assert self.show_results_in_table()
             self.show_results_in_figure()
             self.__Table.show()
             self.__Figure.show()
         except Exception as e:
             self.statusBar().showMessage(f'Unable to show results in table or figure. Error {str(e)}')
+            return
 
         self.statusBar().showMessage('Calculation complete', 5)
-        self.repaint()
 
     def show_results_in_table(self):
 
@@ -161,21 +163,27 @@ class App(QMainWindow):
         xx = [f'{i:.3f}' for i in output_parameters['xx'][0, :].astype(float)]
         yy = [f'{i:.3f}' for i in output_parameters['yy'][:, 0].astype(float)]
 
-        if self.__Table is None:
-            self.__Table = TableWindow(
-                parent=self,
-                data_list=list_content,
-                header_col=xx,
-                header_row=yy,
-                window_title='Heat flux numerical results',
-                enable_sorting=False,
-            )
-            self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
-            self.__Table.TableView.resizeColumnsToContents()
-            self.__Table.show()
-        else:
-            self.__Table.TableModel.content = list_content
-            self.__Table.repaint()
+        try:
+            win_geo = self.__Table.geometry()
+            self.__Table.destroy(destroyWindow=True, destroySubWindows=True)
+            del self.__Table
+        except AttributeError as e:
+            win_geo = None
+
+        self.__Table = TableWindow(
+            parent=self,
+            window_geometry=win_geo,
+            data_list=list_content,
+            header_col=xx,
+            header_row=yy,
+            window_title='Heat flux numerical results',
+            enable_sorting=False,
+        )
+        # self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
+        self.__Table.TableView.resizeColumnsToContents()
+        self.__Table.show()
+
+        return True
 
     def show_results_in_figure(self):
         """Show contour plot of the calculated heat flux at the ceiling surface as in a separate dialog.

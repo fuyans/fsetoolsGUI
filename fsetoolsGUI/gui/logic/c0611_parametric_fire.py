@@ -222,29 +222,33 @@ class App0611(QMainWindow):
 
         # parse inputs from ui
         try:
+            self.statusBar().showMessage('Parsing inputs from UI')
+            self.repaint()
             input_parameters = self.input_parameters
         except Exception as e:
-            self.statusBar().showMessage(f'Unable to parse input. {str(e)}.')
+            self.statusBar().showMessage(f'Unable to parse input. {str(e)}')
             return
 
         # calculate
         try:
+            self.statusBar().showMessage('Calculation started')
+            self.repaint()
             output_parameters = self.__calculate_ec_parametric_fire_curve(**input_parameters)
-            self.statusBar().showMessage('Calculation complete.')
         except Exception as e:
-            self.statusBar().showMessage(f'{str(e)}')
+            self.statusBar().showMessage(f'Calculation failed. Error {str(e)}')
             return
 
         # cast outputs to ui
         try:
+            self.statusBar().showMessage('Preparing results')
+            self.repaint()
             self.output_parameters = output_parameters
+            assert self.show_results_in_table()
+            assert self.show_results_in_figure()
         except Exception as e:
-            self.statusBar().showMessage(f'Unable to cast results to UI. Error: {str(e)}')
-            return
+            self.statusBar().showMessage(f'Unable to show results. Error {str(e)}')
 
-        self.show_results_in_table()
-        self.show_results_in_figure()
-
+        self.statusBar().showMessage('Calculation complete')
         self.repaint()
 
     def show_results_in_table(self):
@@ -252,23 +256,29 @@ class App0611(QMainWindow):
         output_parameters = self.output_parameters
 
         # print results (for console enabled version only)
-        list_content = [[float(i), float(j)] for i, j in zip(output_parameters['time'], output_parameters['temperature'])]
+        list_content = [[float(i), float(j)] for i, j in
+                        zip(output_parameters['time'], output_parameters['temperature'])]
 
-        if self.__Table is None:
+        try:
+            win_geo = self.__Table.geometry()
+            self.__Table.destroy(destroyWindow=True, destroySubWindows=True)
+            del self.__Table
+        except AttributeError as e:
+            win_geo = None
 
-            self.__Table = TableWindow(
-                parent=self,
-                data_list=list_content,
-                header_col=['time [s]', 'temperature [K]'],
-                window_title='Parametric fire numerical results',
-            )
+        self.__Table = TableWindow(
+            parent=self,
+            window_geometry=win_geo,
+            data_list=list_content,
+            header_col=['time [s]', 'temperature [K]'],
+            window_title='Parametric fire numerical results',
+        )
 
-            self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
-            self.__Table.TableView.resizeColumnsToContents()
-            self.__Table.show()
-        else:
-            self.__Table.TableModel.content = list_content
-            self.__Table.show()
+        self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
+        self.__Table.TableView.resizeColumnsToContents()
+        self.__Table.show()
+
+        return True
 
     def show_results_in_figure(self):
 
@@ -280,13 +290,15 @@ class App0611(QMainWindow):
         else:
             self.__Figure_ax.clear()
 
-        self.__Figure_ax.plot(output_parameters['time']/60, output_parameters['temperature'], c='k')
+        self.__Figure_ax.plot(output_parameters['time'] / 60, output_parameters['temperature'], c='k')
         self.__Figure_ax.set_xlabel('Time [minute]')
         self.__Figure_ax.set_ylabel('Temperature [°C]')
         self.__Figure.figure.tight_layout()
 
         self.__Figure.figure_canvas.draw()
         self.__Figure.show()
+
+        return True
 
 
 if __name__ == "__main__":
