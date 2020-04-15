@@ -11,7 +11,7 @@ from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_2 as image_figure_2
 from fsetoolsGUI.gui.layout.i0111_pd7974_heat_detector_activation import Ui_MainWindow as Ui_Dialog
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
-from fsetoolsGUI.gui.logic.custom_tableview import TableWindow
+from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 
 class Dialog0111(QMainWindow):

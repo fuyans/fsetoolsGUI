@@ -10,7 +10,7 @@ import fsetoolsGUI
 from fsetoolsGUI.gui.layout.i0407_tra_enclosure import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
-from fsetoolsGUI.gui.logic.custom_tableview import TableWindow
+from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 
 class App(QMainWindow):
@@ -231,6 +231,7 @@ class App(QMainWindow):
         # ============
         # format plots
         # ============
+        # axis labels
         self.__Figure_ax.set_xlabel('Width [m]', fontsize='small')
         self.__Figure_ax.set_ylabel('Depth [m]', fontsize='small')
         # axis ticks

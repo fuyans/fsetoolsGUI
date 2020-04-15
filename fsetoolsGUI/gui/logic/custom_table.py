@@ -60,13 +60,19 @@ class TableWindow(QtWidgets.QDialog):
         # =================
         # create ui objects
         # =================
+        self.label_tip = QtWidgets.QLabel()
+        self.label_tip.setText('Ctrl+A to select all, Ctrl+C to copy selected cells.')
+        self.label_tip.wordWrap()
+
         delegate = MyDelegate()
         self.TableModel = TableModel(self, data_list, header_col=header_col, header_row=header_row)
         self.TableView = QtWidgets.QTableView()
         self.TableView.setModel(self.TableModel)
         self.TableView.setItemDelegate(delegate)
+
         layout = QtWidgets.QVBoxLayout(self)
         layout.addWidget(self.TableView)
+        layout.addWidget(self.label_tip)
         self.setLayout(layout)
 
         # ====================

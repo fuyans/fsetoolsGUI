@@ -10,7 +10,7 @@ from matplotlib import cm
 
 from fsetoolsGUI.gui.layout.i0406_tra_2d_xy_contour import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
-from fsetoolsGUI.gui.logic.custom_tableview import TableModel
+from fsetoolsGUI.gui.logic.custom_table import TableModel
 
 try:
     from matplotlib.backends.backend_qt5agg import (

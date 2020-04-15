@@ -1,11 +1,11 @@
 import numpy as np
 from PySide2 import QtWidgets, QtCore
 from fsetools.libstd.ec_1991_1_2 import appendix_a_parametric_fire
-
 from fsetoolsGUI.gui.layout.ui0611_parametric_fire import Ui_MainWindow
+
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
-from fsetoolsGUI.gui.logic.custom_tableview import TableWindow
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
+from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 
 class App0611(QMainWindow):
