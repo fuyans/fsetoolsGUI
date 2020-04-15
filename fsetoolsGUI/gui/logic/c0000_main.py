@@ -119,7 +119,13 @@ class MainWindow(QMainWindow):
         set_btn(self.ui.pushButton_0611_ec_parametric_fire, App0611, *module_info('0611').short_and_long_names)
 
     def activate_app(self, app_):
-        app_ = app_(self)
+        logger.info(f'EXECUTED MODULE {app_}')
+        if app_ is App0101 or app_ is App0102:
+            # it has been found that these two modules crash when executed without parent
+            # the actual cause has not yet identified
+            app_ = app_(self)
+        else:
+            app_ = app_()
         app_.show()
 
     def check_update(self):

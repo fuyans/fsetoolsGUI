@@ -19,7 +19,14 @@ class Dialog0111(QMainWindow):
     _numerical_results: dict = None
 
     def __init__(self, parent=None):
-        # instantiate ui
+
+        # containers, variables etc
+        self.__table_header: list = None
+        self.__table_content: list = None
+
+        # ========================
+        # instantiate super and ui
+        # ========================
         super().__init__(
             module_id='0111',
             parent=parent,
@@ -28,11 +35,6 @@ class Dialog0111(QMainWindow):
         )
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
-        self.init(self)
-
-        # containers, variables etc
-        self.__table_header: list = None
-        self.__table_content: list = None
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(
@@ -76,6 +78,8 @@ class Dialog0111(QMainWindow):
         self.ui.pushButton_example.clicked.connect(self.example)
         self.ui.radioButton_fire_plume.toggled.connect(self.set_temperature_correlation)
         self.ui.pushButton_show_results_in_table.clicked.connect(self.show_results_in_table)
+
+        self.init(self)
 
     def error(self, msg: str, stop: bool = False):
         self.statusBar().showMessage(msg)

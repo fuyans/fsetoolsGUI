@@ -9,7 +9,6 @@ from fsetoolsGUI.gui.layout.i0101_data_sheet import Ui_MainWindow
 
 class DialogPageDisplay(QMainWindow):
     def __init__(self, module_id: str, fp_image: str, parent=None):
-
         super().__init__(
             module_id=module_id,
             parent=parent,

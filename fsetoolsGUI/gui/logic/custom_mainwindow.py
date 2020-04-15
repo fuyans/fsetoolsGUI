@@ -160,7 +160,7 @@ class QMainWindow(QtWidgets.QMainWindow):
                 set_action_name_and_tip(cls.ui.pushButton_about, self.show_about, 'About',
                                         'Click to show info about this app and quality management')
             if hasattr(cls.ui, 'pushButton_ok'):
-                set_action_name_and_tip(cls.ui.pushButton_ok, None, 'OK', 'Click to calculate')
+                set_action_name_and_tip(cls.ui.pushButton_ok, None, 'OK', 'Click (or press Enter) to calculate')
             if hasattr(cls.ui, 'pushButton_example'):
                 set_action_name_and_tip(cls.ui.pushButton_example, None, 'Example',
                                         'Click to show example input parameters')
@@ -255,6 +255,10 @@ class QMainWindow(QtWidgets.QMainWindow):
         msgbox.setText(msg)
         msgbox.setStandardButtons(msgbox.Ok)
         msgbox.exec_()
+
+    @property
+    def module_id(self) -> str:
+        return self.__id
 
 
 if __name__ == '__main__':

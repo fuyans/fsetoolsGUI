@@ -25,6 +25,11 @@ class Dialog0601(QMainWindow):
         self.ui.setupUi(self)
         self.init(self)
 
+        self.ui.lineEdit_1_date.setToolTip('In format YYMMDD (e.g. 210131) or YYYYMMDD (e.g. 20210131)')
+        self.ui.lineEdit_5_title.setToolTip('In plain English')
+        self.ui.lineEdit_out_result.setReadOnly(True)
+        self.ui.lineEdit_out_result.setToolTip('Double click to select text')
+
         # default values
         self.ui.comboBox_6_type.setCurrentIndex(4)
         self.ui.checkBox_replace_spaces.setChecked(True)
@@ -37,12 +42,6 @@ class Dialog0601(QMainWindow):
         self.ui.lineEdit_3_project_no.setPlaceholderText('XX00001')
         self.ui.lineEdit_4_project_stage.setPlaceholderText('Stage 3')
         self.ui.lineEdit_5_title.setPlaceholderText('Fire safety strategy')
-
-        # validators
-        # self.ui.lineEdit_1_date.setValidator((QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]{6,8}'))))
-        # self.ui.lineEdit_3_project_no.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp(r'^[A-Z]{1,2}[0-9]{1,5}')))
-        # self.ui.lineEdit_4_project_stage.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp(r'^[\w\-. ]+$')))
-        # self.ui.lineEdit_5_title.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp(r'^[\w\-. ]+$')))
 
         # signal and slots
         self.ui.lineEdit_1_date.textChanged.connect(self.calculate)

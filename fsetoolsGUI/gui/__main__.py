@@ -4,7 +4,10 @@
 # THIS SHOULD BE THE ONLY GUI APPLICATION ENTRY POINT
 import logging
 c_handler = logging.StreamHandler()
-c_handler.setFormatter(logging.Formatter('%(name)s - %(levelname)s - %(module)s - %(message)s'))
+c_handler.setFormatter(
+    logging.Formatter('%(asctime)s,%(msecs)d %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s')
+)
+c_handler.set
 logger = logging.getLogger('gui')
 logger.setLevel(logging.DEBUG)
 logger.addHandler(c_handler)
