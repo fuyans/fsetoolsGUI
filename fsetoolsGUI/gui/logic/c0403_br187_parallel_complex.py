@@ -8,7 +8,7 @@ from fsetoolsGUI.gui.layout.i0403_br187_parallel_complex import Ui_MainWindow as
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
-class Dialog04(QMainWindow):
+class AppBase04XX(QMainWindow):
 
     def __init__(self, module_id: str, parent=None):
 
@@ -251,7 +251,7 @@ class Dialog04(QMainWindow):
         self. repaint()
 
 
-class Dialog0403(Dialog04):
+class App(AppBase04XX):
     def __init__(self, parent=None):
         super().__init__(module_id='0403', parent=parent)
 
@@ -325,7 +325,8 @@ class Dialog0403(Dialog04):
 if __name__ == "__main__":
     import sys
     from PySide2 import QtWidgets
+
     qapp = QtWidgets.QApplication(sys.argv)
-    app = Dialog0403()
+    app = App()
     app.show()
     qapp.exec_()

@@ -21,8 +21,7 @@ def clause_2_23_merging_flow(N: float, S: float, D: float, W_SE: float) -> tuple
     return W, condition
 
 
-class Dialog0104(QMainWindow):
-    fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0104.md')
+class App(QMainWindow):
 
     def __init__(self, parent=None):
         # instantiation
@@ -30,7 +29,6 @@ class Dialog0104(QMainWindow):
             module_id='0104',
             parent=parent,
             shortcut_Return=self.calculate,
-            about_fp_or_md=self.fp_doc,
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -192,8 +190,9 @@ class Dialog0104(QMainWindow):
 
 if __name__ == "__main__":
     import sys
+
     qapp = QtWidgets.QApplication(sys.argv)
-    app = Dialog0104()
+    app = App()
     app.show()
     qapp.exec_()
 

@@ -8,7 +8,7 @@ from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 
-class App0611(QMainWindow):
+class App(QMainWindow):
     __output_fire_curve = dict(
         time=None,
         temperature=None
@@ -345,6 +345,6 @@ if __name__ == "__main__":
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App0611()
+    app = App()
     app.show()
     qapp.exec_()

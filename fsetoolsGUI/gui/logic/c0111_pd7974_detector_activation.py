@@ -14,15 +14,15 @@ from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 
-class Dialog0111(QMainWindow):
-
-    _numerical_results: dict = None
+class App(QMainWindow):
 
     def __init__(self, parent=None):
 
         # containers, variables etc
+        self.__Table = None
         self.__table_header: list = None
         self.__table_content: list = None
+        self._numerical_results: dict = None
 
         # ========================
         # instantiate super and ui
@@ -210,7 +210,6 @@ class Dialog0111(QMainWindow):
         res['detector_temperature'] -= 273.15
 
         # print results (for console enabled version only)
-        list_title = self.__table_header
         list_param = ['time', 'gas_hrr_kW', 'virtual_origin', 'jet_temperature', 'jet_velocity', 'detector_temperature']
         list_content = list()
         for i, time_ in enumerate(self._numerical_results['time']):
@@ -220,17 +219,27 @@ class Dialog0111(QMainWindow):
                 list_content_.append(float(v))
             list_content.append(list_content_)
 
-        app_ = TableWindow(
+        try:
+            win_geo = self.__Table.geometry()
+            self.__Table.destroy(destroyWindow=True, destroySubWindows=True)
+            del self.__Table
+        except AttributeError as e:
+            win_geo = None
+
+        self.__Table = TableWindow(
             parent=self,
+            window_geometry=win_geo,
             data_list=list_content,
-            header_col=list_title,
-            window_title='Numerical Results',
-            window_geometry=(300, 200, 500, 800)
+            header_col=['time', 'gas_hrr_kW', 'virtual_origin', 'jet_temperature', 'jet_velocity',
+                        'detector_temperature'],
+            window_title='Parametric fire numerical results',
         )
 
-        app_.TableModel.sort(0, QtCore.Qt.AscendingOrder)
-        app_.TableView.resizeColumnsToContents()
-        app_.show()
+        self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
+        self.__Table.TableView.resizeColumnsToContents()
+        self.__Table.show()
+
+        return True
 
 
 if __name__ == '__main__':

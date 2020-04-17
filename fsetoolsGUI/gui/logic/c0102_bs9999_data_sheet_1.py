@@ -4,7 +4,7 @@ import fsetoolsGUI
 from fsetoolsGUI.gui.logic.c0101_adb_data_sheet_1 import DialogPageDisplay
 
 
-class Dialog0102(DialogPageDisplay):
+class App(DialogPageDisplay):
     def __init__(self, parent=None):
         super().__init__(
             module_id='0102',
@@ -19,6 +19,6 @@ if __name__ == '__main__':
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = Dialog0102()
+    app = App()
     app.show()
     qapp.exec_()

@@ -112,7 +112,7 @@ class Signals(QtCore.QObject):
         return self.__calculation_complete
 
 
-class Dialog0406(QMainWindow):
+class App(QMainWindow):
 
     def __init__(self, parent=None):
         super().__init__(
@@ -545,6 +545,6 @@ class Dialog0406(QMainWindow):
 
 if __name__ == "__main__":
     qapp = QtWidgets.QApplication(sys.argv)
-    app = Dialog0406()
+    app = App()
     app.show()
     qapp.exec_()

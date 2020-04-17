@@ -1,8 +1,8 @@
-from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import Dialog04
+from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import AppBase04XX
 from fsetoolsGUI.gui.logic.c0404_br187_perpendicular_complex import Dialog0404
 
 
-class Dialog0402(Dialog04):
+class App(AppBase04XX):
     """0402, thermal radiation calculation between a rectangular shaped emitter and a perpendicular oriented receiver.
 
     Error handling scenarios:
@@ -31,7 +31,8 @@ class Dialog0402(Dialog04):
 if __name__ == "__main__":
     import sys
     from PySide2 import QtWidgets
+
     qapp = QtWidgets.QApplication(sys.argv)
-    app = Dialog0402()
+    app = App()
     app.show()
     qapp.exec_()

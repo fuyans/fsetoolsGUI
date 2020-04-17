@@ -7,7 +7,7 @@ from fsetoolsGUI.gui.layout.i0601_naming_convention import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
-class Dialog0601(QMainWindow):
+class App(QMainWindow):
     __re_date = re.compile(r'[0-9]{4,6}')
     __re_project_no = re.compile(r'[a-zA-Z]{2}[0-9]{5,6}')
     __re_project_stage = re.compile(r'.+')
@@ -165,6 +165,6 @@ if __name__ == "__main__":
         PySide2.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = Dialog0601()
+    app = App()
     app.show()
     qapp.exec_()

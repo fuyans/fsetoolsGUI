@@ -1,8 +1,8 @@
-from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import Dialog04
-from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import Dialog0403
+from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import App as App0403
+from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import AppBase04XX
 
 
-class Dialog0401(Dialog04):
+class App(AppBase04XX):
     """0401, for analysis thermal radiation between a rectangular shaped emitter and ...
 
     Error handling scenarios:
@@ -25,13 +25,14 @@ class Dialog0401(Dialog04):
     @staticmethod
     def phi_solver(W: float, H: float, w: float, h: float, Q: float, Q_a: float, S=None, UA=None) -> tuple:
         """A wrapper to `phi_parallel_any_br187` with error handling and customised IO"""
-        return Dialog0403.phi_solver(W=W, H=H, w=0, h=0, Q=Q, Q_a=Q_a, S=S, UA=UA)
+        return App0403.phi_solver(W=W, H=H, w=0, h=0, Q=Q, Q_a=Q_a, S=S, UA=UA)
 
 
 if __name__ == "__main__":
     import sys
     from PySide2 import QtWidgets
+
     qapp = QtWidgets.QApplication(sys.argv)
-    app = Dialog0401()
+    app = App()
     app.show()
     qapp.exec_()

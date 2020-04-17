@@ -10,19 +10,19 @@ from packaging import version
 import fsetoolsGUI
 from fsetoolsGUI.gui.layout.i0000_main import Ui_MainWindow
 from fsetoolsGUI.gui.logic.c0101_adb_data_sheet_1 import App as App0101
-from fsetoolsGUI.gui.logic.c0102_bs9999_data_sheet_1 import Dialog0102 as App0102
-from fsetoolsGUI.gui.logic.c0103_bs9999_merging_flow import Dialog0103 as App0103
-from fsetoolsGUI.gui.logic.c0104_adb_merging_flow import Dialog0104 as App0104
-from fsetoolsGUI.gui.logic.c0111_pd7974_detector_activation import Dialog0111 as App0111
-from fsetoolsGUI.gui.logic.c0401_br187_parallel_simple import Dialog0401 as App0401
-from fsetoolsGUI.gui.logic.c0402_br187_perpendicular_simple import Dialog0402 as App0402
-from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import Dialog0403 as App0403
+from fsetoolsGUI.gui.logic.c0102_bs9999_data_sheet_1 import App as App0102
+from fsetoolsGUI.gui.logic.c0103_bs9999_merging_flow import App as App0103
+from fsetoolsGUI.gui.logic.c0104_adb_merging_flow import App as App0104
+from fsetoolsGUI.gui.logic.c0111_pd7974_detector_activation import App as App0111
+from fsetoolsGUI.gui.logic.c0401_br187_parallel_simple import App as App0401
+from fsetoolsGUI.gui.logic.c0402_br187_perpendicular_simple import App as App0402
+from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import App as App0403
 from fsetoolsGUI.gui.logic.c0404_br187_perpendicular_complex import Dialog0404 as App0404
-from fsetoolsGUI.gui.logic.c0406_tra_2d_xy_contour import Dialog0406 as App0406
+from fsetoolsGUI.gui.logic.c0406_tra_2d_xy_contour import App as App0406
 from fsetoolsGUI.gui.logic.c0407_tra_enclosure import App as App0407
-from fsetoolsGUI.gui.logic.c0601_naming_convention import Dialog0601 as App0601
-from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import Dialog0602 as App0602
-from fsetoolsGUI.gui.logic.c0611_parametric_fire import App0611 as App0611
+from fsetoolsGUI.gui.logic.c0601_naming_convention import App as App0601
+from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
+from fsetoolsGUI.gui.logic.c0611_parametric_fire import App as App0611
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
@@ -219,7 +219,8 @@ class MainWindow(QMainWindow):
                     logger.debug(f'{upgrade_executable_url}')
                 if 'latest_executable_download_url' in self.remote_version and upgrade_executable_url is None:
                     upgrade_executable_url = self.remote_version['latest_executable_download_url']
-                    logger.info(f'SUCCESSFULLY PARSED `latest_executable_download_url`. {upgrade_executable_url}')
+                    logger.info('SUCCESSFULLY PARSED `latest_executable_download_url`.')
+                    logger.debug(f'{upgrade_executable_url}')
             except Exception as e:
                 # if both `executable_download_url` and `latest_executable_download_url` not exist, assign None and
                 # print an indicative message.

@@ -11,7 +11,7 @@ from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
-class Dialog0103(QMainWindow):
+class App(QMainWindow):
 
     def __init__(self, parent=None):
         module_id = '0103'
@@ -287,8 +287,9 @@ class Dialog0103(QMainWindow):
 
 if __name__ == "__main__":
     import sys
+
     qapp = QtWidgets.QApplication(sys.argv)
-    app = Dialog0103()
+    app = App()
     app.show()
     qapp.exec_()
 

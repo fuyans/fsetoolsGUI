@@ -15,7 +15,7 @@ from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
-class Dialog0602(QMainWindow):
+class App(QMainWindow):
     def __init__(self, parent=None):
 
         # =================
@@ -275,6 +275,6 @@ if __name__ == '__main__':
         PySide2.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = Dialog0602()
+    app = App()
     app.show()
     qapp.exec_()
