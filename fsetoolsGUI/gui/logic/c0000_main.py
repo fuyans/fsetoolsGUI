@@ -1,3 +1,4 @@
+import logging
 import threading
 
 import requests
@@ -6,7 +7,6 @@ from PySide2.QtCore import Slot
 from PySide2.QtWidgets import QErrorMessage
 from packaging import version
 
-import logging
 import fsetoolsGUI
 from fsetoolsGUI.gui.layout.i0000_main import Ui_MainWindow
 from fsetoolsGUI.gui.logic.c0101_adb_data_sheet_1 import App as App0101
@@ -141,7 +141,8 @@ class MainWindow(QMainWindow):
             version_dict = {}  # assign an empty dict if failed to parse remote version info
             self.statusBar().showMessage(str(e))
         self.remote_version = version_dict  # assign version info to object
-        logger.info(f'PARSED REMOTE VERSION. REMOTE VERSION INFO: {str(version_dict)}.')
+        logger.info(f'PARSED REMOTE VERSION')
+        logger.debug(f'{str(version_dict)}.')
 
         # update gui version label accordingly
         if len(version_dict) == 0:
@@ -181,8 +182,8 @@ class MainWindow(QMainWindow):
                 else:
                     local_version = fsetoolsGUI.__version__
                 specific_remote_version_data = self.remote_version[local_version]
-                logger.info(f'PARSED LOCAL VERSION FROM REMOTE VERSION DATA. '
-                            f'{specific_remote_version_data}')
+                logger.info(f'PARSED LOCAL VERSION FROM REMOTE VERSION DATA')
+                logger.debug(f'{specific_remote_version_data}')
             except Exception as e:
                 logger.warning(f'FAILED TO PARSE LOCAL VERSION FROM REMOTE VERSION DATA. ERROR {str(e)}.')
 
@@ -192,7 +193,8 @@ class MainWindow(QMainWindow):
             try:
                 assert specific_remote_version_data
                 is_local_version_executable = specific_remote_version_data['is_executable']
-                logger.info(f'PARSED `is_executable`. {is_local_version_executable}')
+                logger.info(f'PARSED `is_executable`')
+                logger.debug(f'{is_local_version_executable}')
             except Exception as e:
                 logger.warning(f'FAILED TO PARSE `is_executable`. ERROR {e}.')
 
@@ -202,7 +204,8 @@ class MainWindow(QMainWindow):
             try:
                 assert specific_remote_version_data
                 is_local_version_upgradable = specific_remote_version_data['is_upgradable']
-                logger.info(f'PARSED `is_upgradable`. {is_local_version_upgradable}')
+                logger.info(f'PARSED `is_upgradable`')
+                logger.debug(f'{is_local_version_upgradable}')
             except Exception as e:
                 logger.warning(f'FAILED TO PARSE `is_upgradable`. ERROR {e}.')
 
@@ -212,7 +215,8 @@ class MainWindow(QMainWindow):
             try:
                 if 'executable_download_url' in specific_remote_version_data:
                     upgrade_executable_url = specific_remote_version_data['executable_download_url']
-                    logger.info(f'SUCCESSFULLY PARSED `executable_download_url`. {upgrade_executable_url}')
+                    logger.info(f'SUCCESSFULLY PARSED `executable_download_url`')
+                    logger.debug(f'{upgrade_executable_url}')
                 if 'latest_executable_download_url' in self.remote_version and upgrade_executable_url is None:
                     upgrade_executable_url = self.remote_version['latest_executable_download_url']
                     logger.info(f'SUCCESSFULLY PARSED `latest_executable_download_url`. {upgrade_executable_url}')

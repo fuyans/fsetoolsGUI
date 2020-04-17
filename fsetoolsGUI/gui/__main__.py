@@ -7,12 +7,11 @@ c_handler = logging.StreamHandler()
 c_handler.setFormatter(
     logging.Formatter('%(asctime)s,%(msecs)d %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s')
 )
-c_handler.set
 logger = logging.getLogger('gui')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 logger.addHandler(c_handler)
 
-logger.info('Hi')
+logger.info('Hi from fsetoolsgui')
 
 
 def main():

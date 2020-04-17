@@ -1,3 +1,4 @@
+import logging
 import threading
 import typing
 from datetime import datetime
@@ -9,7 +10,6 @@ import fsetoolsGUI
 from fsetoolsGUI import AppInfo
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
 from fsetoolsGUI.gui.layout.i0001_text_browser import Ui_MainWindow
-import logging
 
 logger = logging.getLogger('gui')
 
@@ -202,7 +202,8 @@ class QMainWindow(QtWidgets.QMainWindow):
             action=self.__id
         )
 
-        logger.info(f'STATS POST STATUS: {rp} {rp.text}')
+        logger.info(f'STATS POST STATUS {rp}')
+        logger.debug(f'{rp.text}')
 
     @staticmethod
     def validate(var, type, err_msg: str):

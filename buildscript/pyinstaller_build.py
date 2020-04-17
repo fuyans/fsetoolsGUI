@@ -8,9 +8,20 @@ import fsetoolsGUI
 
 try:
     from buildscript.__key__ import key as key_
+
     key = key_()
 except ModuleNotFoundError:
     key = None
+
+import logging
+
+c_handler = logging.StreamHandler()
+c_handler.setFormatter(
+    logging.Formatter('%(asctime)s,%(msecs)d %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s')
+)
+logger = logging.getLogger('pyinstaller_build')
+logger.setLevel(logging.DEBUG)
+logger.addHandler(c_handler)
 
 
 def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build_entry.py', options: list = None):
@@ -27,10 +38,10 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
         '--exclude-module=' + 'setuptools',
     ]
     if 'dev' in fsetoolsGUI.__version__:
-        print('Dev. build is enabled.')
+        logger.info('Dev. build is enabled.')
     else:
         cmd_option_list.append('--windowed')
-        print('Dev. build is not enabled.')
+        logger.info('Dev. build is not enabled.')
 
     if options:
         cmd_option_list.extend(options)
@@ -38,12 +49,12 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
     # add encryption to pyz
     if key:
         cmd_option_list.append(f'--key={key}')
-        print('Encryption is enabled.')
+        logger.info('Encryption is enabled.')
     else:
-        print('Encryption is not enabled.')
+        logger.info('Encryption is not enabled.')
 
     cmd = ['pyinstaller'] + cmd_option_list + [fp_target_py]
-    print('COMMAND:', ' '.join(cmd))
+    logger.debug('COMMAND:', ' '.join(cmd))
 
     with open('pyinstaller_build.log', 'wb') as f:
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
