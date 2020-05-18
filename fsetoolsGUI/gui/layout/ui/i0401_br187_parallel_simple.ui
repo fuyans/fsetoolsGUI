@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>680</width>
-    <height>440</height>
+    <height>469</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -155,24 +155,8 @@
        <property name="verticalSpacing">
         <number>5</number>
        </property>
-       <item row="1" column="0">
-        <spacer name="_horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>2</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="9" column="1">
-        <widget class="QLabel" name="label_out_Phi">
+       <item row="1" column="3">
+        <widget class="QLabel" name="label_32">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -181,42 +165,70 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>140</width>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
            <height>25</height>
           </size>
          </property>
          <property name="text">
-          <string>Φ, view factor</string>
-         </property>
-         <property name="margin">
-          <number>0</number>
-         </property>
-         <property name="indent">
-          <number>-1</number>
+          <string>m</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
-        <widget class="QLabel" name="label_in_Q">
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="lineEdit_in_S">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>140</width>
+           <width>50</width>
            <height>25</height>
           </size>
          </property>
-         <property name="text">
-          <string>Q, emitter heat flux</string>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
-        <widget class="QRadioButton" name="radioButton_in_UA">
+       <item row="3" column="3">
+        <widget class="QLabel" name="label_in_S_unit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>m</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="label_in_W">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -230,7 +242,29 @@
           </size>
          </property>
          <property name="text">
-          <string>Unprotected area</string>
+          <string>W, emitter width</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="lineEdit_in_H">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -256,7 +290,7 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="1">
+       <item row="11" column="1">
         <widget class="QLabel" name="label_out_q">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -275,36 +309,17 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="label_in_H">
+       <item row="10" column="2">
+        <widget class="QLineEdit" name="lineEdit_out_Phi">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>140</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>H, emitter height</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="3">
-        <widget class="QLabel" name="label_out_q_unit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
+           <width>50</width>
            <height>25</height>
           </size>
          </property>
@@ -314,8 +329,52 @@
            <height>25</height>
           </size>
          </property>
+        </widget>
+       </item>
+       <item row="9" column="0" colspan="4">
+        <widget class="QLabel" name="label_output_parameters">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="text">
-          <string>kW/m²</string>
+          <string>&lt;b&gt;Output parameters</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="4">
+        <widget class="QLabel" name="label_input_parameters">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&lt;b&gt;Input parameters</string>
+         </property>
+         <property name="indent">
+          <number>-1</number>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse</set>
          </property>
         </widget>
        </item>
@@ -344,10 +403,96 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="0" colspan="4">
-        <widget class="QLabel" name="label_output_parameters">
+       <item row="10" column="3">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;10&lt;span style=&quot; vertical-align:super;&quot;&gt;-3&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="3">
+        <widget class="QLabel" name="label_34">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>kW/m²</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <spacer name="_horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>2</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label_in_H">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>140</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>H, emitter height</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="1">
+        <widget class="QLabel" name="label_out_S_or_UA">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>140</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Max. unprotected area</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="2">
+        <widget class="QLineEdit" name="lineEdit_out_S_or_UA">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -358,15 +503,15 @@
            <height>25</height>
           </size>
          </property>
-         <property name="text">
-          <string>&lt;b&gt;Output parameters</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
          </property>
         </widget>
        </item>
-       <item row="11" column="3">
+       <item row="12" column="3">
         <widget class="QLabel" name="label_out_S_or_UA_unit">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -413,47 +558,22 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
-        <widget class="QLineEdit" name="lineEdit_in_H">
+       <item row="5" column="1">
+        <widget class="QLabel" name="label_in_Q">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>50</width>
+           <width>140</width>
            <height>25</height>
           </size>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>25</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QLineEdit" name="lineEdit_in_S">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>25</height>
-          </size>
+         <property name="text">
+          <string>Emitter heat flux</string>
          </property>
         </widget>
        </item>
@@ -482,8 +602,8 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="3">
-        <widget class="QLabel" name="label_34">
+       <item row="11" column="3">
+        <widget class="QLabel" name="label_out_q_unit">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -507,8 +627,8 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_in_W">
+       <item row="4" column="1">
+        <widget class="QRadioButton" name="radioButton_in_UA">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -522,73 +642,7 @@
           </size>
          </property>
          <property name="text">
-          <string>W, emitter width</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="2">
-        <widget class="QLineEdit" name="lineEdit_out_Phi">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>25</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="3">
-        <widget class="QLabel" name="label_in_S_unit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>m</string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="1">
-        <widget class="QLabel" name="label_out_S_or_UA">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>140</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Max. unprotected area</string>
+          <string>Unprotected area</string>
          </property>
         </widget>
        </item>
@@ -608,53 +662,6 @@
          </property>
          <property name="text">
           <string>½S, emitter to boundary</string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="2">
-        <widget class="QLineEdit" name="lineEdit_out_S_or_UA">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>25</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QLabel" name="label_32">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>m</string>
          </property>
         </widget>
        </item>
@@ -683,7 +690,7 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="2">
+       <item row="11" column="2">
         <widget class="QLineEdit" name="lineEdit_out_q">
          <property name="sizePolicy">
           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -705,7 +712,32 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="10" column="1">
+        <widget class="QLabel" name="label_out_Phi">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>140</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Φ, view factor</string>
+         </property>
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <property name="indent">
+          <number>-1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -721,8 +753,8 @@
          </property>
         </spacer>
        </item>
-       <item row="0" column="0" colspan="4">
-        <widget class="QLabel" name="label_input_parameters">
+       <item row="6" column="2">
+        <widget class="QLineEdit" name="lineEdit_in_Q_crit">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -735,21 +767,19 @@
            <height>25</height>
           </size>
          </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLabel" name="label_in_Q_crit">
          <property name="text">
-          <string>&lt;b&gt;Input parameters</string>
-         </property>
-         <property name="indent">
-          <number>-1</number>
-         </property>
-         <property name="textInteractionFlags">
-          <set>Qt::LinksAccessibleByMouse</set>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Receiver critical heat flux&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="3">
-        <widget class="QLabel" name="label">
+       <item row="6" column="3">
+        <widget class="QLabel" name="label_in_Q_crit_unit">
          <property name="text">
-          <string>10&lt;sup&gt;3&lt;/sup&gt;</string>
+          <string>kW/m²</string>
          </property>
         </widget>
        </item>
@@ -877,7 +907,7 @@
      <x>0</x>
      <y>0</y>
      <width>680</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

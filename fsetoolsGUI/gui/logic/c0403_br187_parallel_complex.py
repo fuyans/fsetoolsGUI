@@ -46,6 +46,7 @@ class AppBase04XX(QMainWindow):
         except AttributeError:
             pass
         self.ui.lineEdit_in_Q.textChanged.connect(self.calculate)
+        self.ui.lineEdit_in_Q_crit.textChanged.connect(self.calculate)
         self.ui.lineEdit_in_S.textChanged.connect(self.calculate)
         self.ui.lineEdit_in_UA.textChanged.connect(self.calculate)
 
@@ -66,6 +67,7 @@ class AppBase04XX(QMainWindow):
         except AttributeError:
             pass
         self.ui.lineEdit_in_Q.setText('84')
+        self.ui.lineEdit_in_Q_crit.setText('12.6')
         self.ui.lineEdit_in_S.setText('1')
 
         self.repaint()
@@ -105,8 +107,15 @@ class AppBase04XX(QMainWindow):
         """parse input parameters from the ui"""
 
         # assign default values
-        Q_a = 12.6  # acceptable heat flux
-        W, H, w, h, S, UA, Q = [None] * 7
+        W, H, w, h, S, UA, Q, Q_a = [None] * 8
+        # W - emitter width
+        # H - emitter height
+        # w - receiver location horizontal
+        # h - receiver location vertical
+        # S - separation distance
+        # UA - unprotected area
+        # Q - emitter heat flux
+        # Q_a - acceptable heat flux or critical heat flux
 
         # a helper function to transform string to float with error handling
         def str2float(str: str):
@@ -137,6 +146,7 @@ class AppBase04XX(QMainWindow):
                 raise ValueError('Unknown format, unprotected area input parameter should be a positive float')
 
         Q = str2float(self.ui.lineEdit_in_Q.text())
+        Q_a = str2float(self.ui.lineEdit_in_Q_crit.text())
 
         # validate input values
         self.validate(W, 'unsigned float', 'Emitter width should be greater than 0')
@@ -155,6 +165,8 @@ class AppBase04XX(QMainWindow):
                 assert all((UA > 0, UA <= 1))
             except AssertionError:
                 raise ValueError('Unprotected area should be greater than 0 and less than 100 %')
+
+        self.validate(Q_a, 'unsigned float', 'Receiver critical heat flux should be greater than 0')
         self.validate(Q, 'unsigned float', 'Emitter heat flux should be greater than 0')
 
         # check if enough inputs are provided for any calculation options
@@ -226,7 +238,6 @@ class AppBase04XX(QMainWindow):
             self.statusBar().showMessage(str(e))
             self.repaint()
             return
-
 
         # Calculation
 
