@@ -16,13 +16,16 @@ class App(QtWidgets.QDialog):
             f'Version {fsetoolsGUI.__version__} released on {fsetoolsGUI.__date_released__.strftime("%Y %B %d")} is expired.\n'
             f'Download the latest version (follow link below) or enter a pass code in the input box below.'
         )
+        self.label.setWordWrap(True)
 
         self.edit = QtWidgets.QLineEdit()
 
         try:
             target = ''.join([chr(ord(v) + i % 10) for i, v in enumerate(fsetoolsGUI.__remote_version_url__)])
+
             version_dict = requests.get(target).json()
-            self.edit.setText(version_dict['executable_download_url'])
+            latest_version_url = version_dict['latest_executable_download_url']
+            self.edit.setText(latest_version_url)
         except Exception as e:
             if isinstance(e, requests.exceptions.ConnectionError):
                 self.edit.setText(f'Connection error, failed to reach {fsetoolsGUI.__remote_version_url__}.')
