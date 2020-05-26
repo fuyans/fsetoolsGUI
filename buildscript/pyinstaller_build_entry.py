@@ -17,7 +17,7 @@ try:
 
     KEY = key()
 except ModuleNotFoundError:
-    KEY = None
+    raise ModuleNotFoundError('fsetoolsGUI.__key__ is missing')
 
 if __name__ == "__main__":
 
