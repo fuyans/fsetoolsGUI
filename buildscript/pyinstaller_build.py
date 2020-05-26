@@ -54,7 +54,7 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
         logger.info('Encryption is not enabled.')
 
     cmd = ['pyinstaller'] + cmd_option_list + [fp_target_py]
-    logger.debug('COMMAND:', ' '.join(cmd))
+    logger.debug(f'COMMAND: {" ".join(cmd)}')
 
     with open('pyinstaller_build.log', 'wb') as f:
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
