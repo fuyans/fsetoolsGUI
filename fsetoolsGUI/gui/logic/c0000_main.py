@@ -5,6 +5,7 @@ import requests
 from PySide2 import QtGui, QtCore
 from PySide2.QtCore import Slot
 from PySide2.QtWidgets import QErrorMessage
+from PySide2.QtWidgets import QPushButton
 from packaging import version
 
 import fsetoolsGUI
@@ -67,6 +68,7 @@ class MainWindow(QMainWindow):
 
         # signals
         self.init_buttons()
+        self.ui.label_version.mousePressEvent = self.label_version_mousePressEvent
 
         # default values
         self.ui.dialog_error = QErrorMessage(self)
@@ -81,7 +83,11 @@ class MainWindow(QMainWindow):
         Used as Slot to disable all buttons depend on remote version data `is_executable`.
         """
         if not self.is_executable:
-            for pushButton in filter_objects_by_name(self.ui.verticalGroupBox, object_types=[QtWidgets.QPushButton]):
+            all_push_buttons = filter_objects_by_name(
+                object_parent_widget=self.ui.frame_userio,
+                object_types=[QPushButton]
+            )
+            for pushButton in all_push_buttons:
                 pushButton.setEnabled(v)
 
     def label_version_mousePressEvent(self, event=None):
