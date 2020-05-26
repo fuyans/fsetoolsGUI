@@ -921,6 +921,7 @@
   <tabstop>radioButton_in_UA</tabstop>
   <tabstop>lineEdit_in_UA</tabstop>
   <tabstop>lineEdit_in_Q</tabstop>
+  <tabstop>lineEdit_in_Q_crit</tabstop>
   <tabstop>lineEdit_out_Phi</tabstop>
   <tabstop>lineEdit_out_q</tabstop>
   <tabstop>lineEdit_out_S_or_UA</tabstop>
