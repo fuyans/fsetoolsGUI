@@ -1,6 +1,6 @@
 # Release
 
-This file documents the release history of `fseutil`.
+This file documents the release history of `fsetools`.
 
 - B1 Means of Escape
     - 0101 Approved Document B Vol. 2 (2019) Data Sheet 1
@@ -23,7 +23,13 @@ This file documents the release history of `fseutil`.
 
 ## Version history
 
-### XX/XX/2020 VERSION: 0.0.1.dev20200214
+### XX/05/2020 VERSION: 0.0.4
+
+- [ ] 0401, 0402, 0403 & 0404 added critical heat flux input parameter. 
+
+### 14/02/2020 VERSION: 0.0.1.dev20200214
+
+Initial version. The following features/modules are implemented.
 
 - [x] 0101 ADB data sheet.
 - [x] 0102 BS 9999 data sheet.

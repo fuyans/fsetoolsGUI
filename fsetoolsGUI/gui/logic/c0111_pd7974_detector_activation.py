@@ -38,8 +38,8 @@ class App(QMainWindow):
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(
-            image_context_1=image_context_1,
-            image_context_2=image_context_2,
+            # image_context_1=image_context_1,
+            # image_context_2=image_context_2,
             image_figure_1=image_figure_1,
             image_figure_2=image_figure_2,
         )
@@ -119,12 +119,12 @@ class App(QMainWindow):
         self.ui.lineEdit_in_t.setText('600')
         self.ui.lineEdit_in_alpha.setText('0.0117')
         self.ui.lineEdit_in_H.setText('2.4')
-        self.ui.lineEdit_in_R.setText('2.75')
+        self.ui.lineEdit_in_R.setText('2.5')
         self.ui.lineEdit_in_RTI.setText('115')
         self.ui.lineEdit_in_C.setText('0.4')
         self.ui.lineEdit_in_HRRPUA.setText('510')
         self.ui.lineEdit_in_C_conv.setText('66.7')
-        self.ui.lineEdit_in_T_act.setText('58')
+        self.ui.lineEdit_in_T_act.setText('68')
 
         self.repaint()
 
@@ -174,13 +174,13 @@ class App(QMainWindow):
         res['time'], res['gas_hrr_kW'] = time, gas_hrr_kW
 
         # work out activation time
-        activation_time = time[
-            np.argmin(np.abs((res['detector_temperature'] - 273.15) - detector_activation_temperature))]
+        activation_time = time[np.argmin(np.abs((res['detector_temperature'] - 273.15) - detector_activation_temperature))]
+        activation_gas_temperature = res['jet_temperature'][np.argmin(np.abs((res['detector_temperature'] - 273.15) - detector_activation_temperature))] - 273.15
 
-        # print results (for console enabled version only)
+        # print results (for console version only)
         list_title = self.__table_header
         list_param = ['time', 'gas_hrr_kW', 'virtual_origin', 'jet_temperature', 'jet_velocity', 'detector_temperature']
-        list_units = ['s', 'kW', 'm', '°C', 'm/s', '°C']
+        list_units = ['s', 'kW', 'm', 'K', 'm/s', 'K']
         for i, time_ in enumerate(time):
             fs1_ = list()
             for i_, param in enumerate(list_param):
@@ -194,6 +194,7 @@ class App(QMainWindow):
 
         # write results to ui
         self.ui.lineEdit_out_t_act.setText(f'{activation_time:.1f}')
+        self.ui.lineEdit_out_T_g_act.setText(f'{activation_gas_temperature:.1f}')
         # store calculated results
         self._numerical_results = res
         # status feedback
@@ -230,8 +231,7 @@ class App(QMainWindow):
             parent=self,
             window_geometry=win_geo,
             data_list=list_content,
-            header_col=['time', 'gas_hrr_kW', 'virtual_origin', 'jet_temperature', 'jet_velocity',
-                        'detector_temperature'],
+            header_col=self.__table_header,
             window_title='Parametric fire numerical results',
         )
 
@@ -246,6 +246,6 @@ if __name__ == '__main__':
     import sys
     from PySide2 import QtWidgets
     qapp = QtWidgets.QApplication(sys.argv)
-    app = Dialog0111()
+    app = App()
     app.show()
     qapp.exec_()
