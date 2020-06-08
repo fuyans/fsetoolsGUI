@@ -1,5 +1,7 @@
+import datetime
 import os
 from typing import Union
+
 
 # make root directory of this app which will be used 1. when running the app; 2. pyinstaller at compiling the app.
 __root_dir__ = None
@@ -154,9 +156,8 @@ Public version identifiers are separated into up to five segments:
 
 """
 
-import datetime
 
-__version__ = "0.0.1"
+__version__ = "0.0.3"
 __date_released__ = datetime.datetime(2020, 4, 14)
 __expiry_period_days__ = 180
 __remote_version_url__ = r'hsrmo5)(jXw-efpco[mjeqaljo_gl%cnk,bpsZfj/ucoodigk&m`qqam)_k\tnmioBOBWFFQ,gojh'
