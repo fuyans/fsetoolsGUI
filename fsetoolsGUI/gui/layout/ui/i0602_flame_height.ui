@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>664</width>
-    <height>515</height>
+    <height>517</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -77,20 +77,18 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>390</width>
+           <width>340</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>390</width>
+           <width>340</width>
            <height>16777215</height>
           </size>
          </property>
          <property name="text">
-          <string>This sheet calculates the mean flame height for a given fuel type and fire shape.
-
-Calculation coded in this application follows &quot;PD 7974-1:2019 Application of fire safety engineering principles to the design of buildings. Part 1: Initiation and development of fire within the enclosure of origin (Sub-system 1)&quot;.</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This tool calculates the mean flame height in accordance with &amp;quot;PD 7974-1:2019 Application of fire safety engineering principles to the design of buildings. Part 1: Initiation and development of fire within the enclosure of origin (Sub-system 1)&amp;quot;.&lt;/p&gt;&lt;p&gt;Key correlations click the &amp;quot;About&amp;quot; button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -1029,7 +1027,7 @@ Calculation coded in this application follows &quot;PD 7974-1:2019 Application o
      <x>0</x>
      <y>0</y>
      <width>664</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
