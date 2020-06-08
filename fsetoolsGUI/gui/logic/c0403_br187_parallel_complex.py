@@ -1,3 +1,4 @@
+import logging
 from os.path import join
 
 from fsetools.lib.fse_thermal_radiation import phi_parallel_any_br187, linear_solver
@@ -7,6 +8,8 @@ from fsetoolsGUI.gui.layout.i0401_br187_parallel_simple import Ui_MainWindow as 
 from fsetoolsGUI.gui.layout.i0403_br187_parallel_complex import Ui_MainWindow as Ui_0403
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
+logger = logging.getLogger('gui')
+
 
 class AppBase04XX(QMainWindow):
 
@@ -15,7 +18,6 @@ class AppBase04XX(QMainWindow):
         super().__init__(
             module_id=module_id,
             parent=parent,
-            shortcut_Return=self.calculate,
             freeze_window_size=False,
         )
 
@@ -38,22 +40,22 @@ class AppBase04XX(QMainWindow):
 
         # signals
 
-        self.ui.lineEdit_in_W.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_H.textChanged.connect(self.calculate)
+        self.ui.lineEdit_in_W.textChanged.connect(self.ok_silent)
+        self.ui.lineEdit_in_H.textChanged.connect(self.ok_silent)
         try:
-            self.ui.lineEdit_in_w.textChanged.connect(self.calculate)
-            self.ui.lineEdit_in_h.textChanged.connect(self.calculate)
+            self.ui.lineEdit_in_w.textChanged.connect(self.ok_silent)
+            self.ui.lineEdit_in_h.textChanged.connect(self.ok_silent)
         except AttributeError:
             pass
-        self.ui.lineEdit_in_Q.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_Q_crit.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_S.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_UA.textChanged.connect(self.calculate)
+        self.ui.lineEdit_in_Q.textChanged.connect(self.ok_silent)
+        self.ui.lineEdit_in_Q_crit.textChanged.connect(self.ok_silent)
+        self.ui.lineEdit_in_S.textChanged.connect(self.ok_silent)
+        self.ui.lineEdit_in_UA.textChanged.connect(self.ok_silent)
 
         self.ui.radioButton_in_S.toggled.connect(self.change_mode_S_and_UA)
         self.ui.radioButton_in_UA.toggled.connect(self.change_mode_S_and_UA)
-        self.ui.pushButton_ok.clicked.connect(self.calculate)
-        self.ui.pushButton_example.clicked.connect(self.example)
+        # self.ui.pushButton_ok.clicked.connect(self.calculate)
+        # self.ui.pushButton_example.clicked.connect(self.example)
 
     def example(self):
 
@@ -154,12 +156,14 @@ class AppBase04XX(QMainWindow):
         if self.__id == '0403' or self.__id == '0404':
             self.validate(w, float, 'Receiver offset "w" should be a number')
             self.validate(h, float, 'Receiver offset "h" should be a number')
-        if S:
-            try:
-                # check if S provided is greater than S (1 m to the relevant boundary)
-                assert S >= 2
-            except AssertionError:
-                raise ValueError('Separation to relevant boundary should be greater than 1 m')
+        # THE BELOW IS REMOVED ON 05/06/2020
+        # THE PURPOSE OF THIS TOOL IS ONLY TO CALCULATION RADIATION HEAT TRANSFER, NOT TO CHECK AGAINST ADB ETC
+        # if S:
+        #     try:
+        #         # check if S provided is greater than S (1 m to the relevant boundary)
+        #         assert S >= 2
+        #     except AssertionError:
+        #         raise ValueError('Separation to relevant boundary should be greater than 1 m')
         if UA is not None:
             try:
                 assert all((UA > 0, UA <= 1))
@@ -234,32 +238,40 @@ class AppBase04XX(QMainWindow):
         # --------------------
         try:
             input_parameters = self.input_parameters
-        except ValueError as e:
-            self.statusBar().showMessage(str(e))
-            self.repaint()
-            return
+        except Exception as e:
+            raise e
 
+        # -----------
         # Calculation
-
+        # -----------
         try:
             phi, q, S, UA, msg = self.phi_solver(**input_parameters)
-            # if calculation is successful: assign to output parameters for later use and show a message to user.
         except Exception as e:
-            self.statusBar().showMessage(str(e))
-            self.repaint()
-            return
+            raise e
 
+        # --------------
         # Assign outputs
-
+        # --------------
         try:
             self.output_parameters = dict(phi=phi, q=q, S=S, UA=UA)
-            self.statusBar().showMessage(msg)
+        except Exception as e:
+            raise e
+
+    def ok_silent(self):
+        try:
+            self.calculate()
+            self.repaint()
+        except Exception as e:
+            logger.debug(e)
+
+    def ok(self):
+        try:
+            self.calculate()
+            self.repaint()
         except Exception as e:
             self.statusBar().showMessage(str(e))
             self.repaint()
             return
-
-        self. repaint()
 
 
 class App(AppBase04XX):
