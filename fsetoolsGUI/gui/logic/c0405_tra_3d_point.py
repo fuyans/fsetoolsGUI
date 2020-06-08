@@ -18,7 +18,6 @@ class Dialog0405(QMainWindow):
         super().__init__(
             module_id='0405',
             parent=parent,
-            shortcut_Return=self.calculate
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)

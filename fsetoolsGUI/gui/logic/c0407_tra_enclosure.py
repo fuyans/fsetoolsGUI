@@ -21,7 +21,6 @@ class App(QMainWindow):
         super().__init__(
             module_id='0407',
             parent=parent,
-            shortcut_Return=self.calculate,
             freeze_window_size=True,
         )
 

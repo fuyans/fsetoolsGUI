@@ -13,12 +13,12 @@ class App(QMainWindow):
         time=None,
         temperature=None
     )
-    __Table = None
-    __Figure = None
-    __Figure_ax = None
 
     def __init__(self, parent=None):
         module_id = '0611'
+        self.__Table = None
+        self.__Figure = None
+        self.__Figure_ax = None
 
         # ================================
         # instantiation super and setup ui
@@ -26,7 +26,6 @@ class App(QMainWindow):
         super().__init__(
             module_id=module_id,
             parent=parent,
-            shortcut_Return=self.calculate,
             freeze_window_size=True,
         )
         self.ui = Ui_MainWindow()

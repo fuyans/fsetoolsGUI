@@ -20,7 +20,6 @@ class App(QMainWindow):
         super().__init__(
             module_id=module_id,
             parent=parent,
-            shortcut_Return=self.calculate,
             freeze_window_size=True,
         )
         self.ui = Ui_MainWindow()
@@ -69,7 +68,7 @@ class App(QMainWindow):
         self.ui.radioButton_opt_scenario_2.toggled.connect(self.change_option_scenarios)
         self.ui.radioButton_opt_scenario_3.toggled.connect(self.change_option_scenarios)
         self.ui.pushButton_example.clicked.connect(self.example)
-        self.ui.pushButton_about.clicked.connect(self.show_about)
+        self.ui.pushButton_about.clicked.connect(self.about)
 
         self.ui.pushButton_ok.clicked.connect(self.calculate)
         self.ui.lineEdit_in_S_up.textChanged.connect(self.calculate)

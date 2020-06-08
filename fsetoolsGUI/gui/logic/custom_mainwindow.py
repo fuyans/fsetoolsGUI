@@ -73,7 +73,6 @@ class QMainWindow(QtWidgets.QMainWindow):
             icon: typing.Union[bytes, QtCore.QByteArray, QtGui.QPixmap] = None,
             title: str = None,
             parent=None,
-            shortcut_Return: typing.Callable = None,
             freeze_window_size: bool = False,
             about_fp_or_md: str = None
     ):
@@ -111,12 +110,11 @@ class QMainWindow(QtWidgets.QMainWindow):
         self.__id: str = module_id
         self.__title: str = title
         self.__icon: bytes = icon
-        self.__shortcut_Return: typing.Callable = shortcut_Return
         self.__is_frame_less: bool = False
         self.__is_freeze_window_size: bool = freeze_window_size
         self.__about_fp_or_md = about_fp_or_md  # process about data and prepare ui
 
-    def init(self, cls=None):
+    def init(self, cls):
 
         # window properties
         self.setWindowIcon(self.__icon)
@@ -137,35 +135,55 @@ class QMainWindow(QtWidgets.QMainWindow):
             self.setFixedSize(self.width(), self.height())
 
         try:
-            check_update = threading.Timer(1, self.user_usage_stats)
+            check_update = threading.Timer(1, self.__user_usage_stats)
             check_update.start()  # after 1 second, 'callback' will be called
         except Exception as e:
-            print(f'{str(e)}')
+            logger.error(f'{str(e)}')
 
         # assign signal to standard layout items
-        if cls:
-            def set_action_name_and_tip(
-                    btncls,
-                    action: callable = None,
-                    name: str = '',
-                    tooltip: str = '',
-                    statustip: str = None):
-                if action:
-                    btncls.clicked.connect(action)
-                btncls.setText(name)
-                btncls.setToolTip(tooltip)
-                btncls.setStatusTip(statustip)
+        def set_action_name_and_tip(
+                btncls,
+                action: callable = None,
+                name: str = '',
+                tooltip: str = '',
+                statustip: str = None):
+            if action:
+                btncls.clicked.connect(action)
+            btncls.setText(name)
+            btncls.setToolTip(tooltip)
+            btncls.setStatusTip(statustip)
 
-            if hasattr(cls.ui, 'pushButton_about'):
-                set_action_name_and_tip(cls.ui.pushButton_about, self.show_about, 'About',
-                                        'Click to show info about this app and quality management')
-            if hasattr(cls.ui, 'pushButton_ok'):
-                set_action_name_and_tip(cls.ui.pushButton_ok, None, 'OK', 'Click (or press Enter) to calculate')
-            if hasattr(cls.ui, 'pushButton_example'):
-                set_action_name_and_tip(cls.ui.pushButton_example, None, 'Example',
+        if hasattr(cls.ui, 'pushButton_about'):
+            set_action_name_and_tip(cls.ui.pushButton_about, self.about, 'About',
+                                    'Click to show info about this app and quality management')
+        if hasattr(cls.ui, 'pushButton_ok'):
+            set_action_name_and_tip(cls.ui.pushButton_ok, self.ok, 'OK', 'Click (or press Enter) to calculate')
+        if hasattr(cls.ui, 'pushButton_example'):
+                set_action_name_and_tip(cls.ui.pushButton_example, self.example, 'Example',
                                         'Click to show example input parameters')
 
-    def show_about(self):
+    def ok(self):
+        """Placeholder method to be overridden by child classes.
+        This method is expected to be triggered upon clicking the 'OK' or 'Calculate' button. The following comments
+        are suggested procedure to be followed. This method is also connected by keyboard shortcut 'Enter'"""
+
+        # Step 1. Get parameters from UI
+        # Step 2. Perform analysis
+        # Step 3. Cast result onto UI
+
+        pass
+
+    def example(self):
+        """Placeholder method to be overriden by child classes.
+        This method is expected to be triggered upon clicking the 'Example' button. The following comments are suggested
+        procedures to be followed."""
+
+        # Step 1. Prepare and cast example input parameters onto the UI
+        # Step 2. Call `self.ok()`
+
+        pass
+
+    def about(self):
         """"""
         if self.__AboutForm is not None:
             self.__AboutForm.show()
@@ -179,14 +197,11 @@ class QMainWindow(QtWidgets.QMainWindow):
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
             self.close()
-        elif (event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter) and self.__shortcut_Return:
-            self.__shortcut_Return()
+        elif event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
+            self.calculate()
         event.accept()
 
-    def update_label_text(self, QLabel:QtWidgets.QLabel, val: str):
-        QLabel.setText(val)
-
-    def user_usage_stats(self):
+    def __user_usage_stats(self):
         rp = post_to_knack_user_usage_stats(
             # user indicator
             user=str(getlogin()),
@@ -205,6 +220,12 @@ class QMainWindow(QtWidgets.QMainWindow):
         logger.info(f'STATS POST STATUS {rp}')
         logger.debug(f'{rp.text}')
 
+    def validate_show_statusBar_msg(self, var, type, err_msg: str):
+        try:
+            self.validate(var, type, err_msg)
+        except Exception as e:
+            self.statusBar().showMessage(f'{e}')
+
     @staticmethod
     def validate(var, type, err_msg: str):
         if type == 'unsigned float':
@@ -219,12 +240,6 @@ class QMainWindow(QtWidgets.QMainWindow):
             except AssertionError:
                 raise ValueError(err_msg)
 
-    def validate_show_statusBar_msg(self, var, type, err_msg: str):
-        try:
-            self.validate(var, type, err_msg)
-        except Exception as e:
-            self.statusBar().showMessage(f'{e}')
-
     @staticmethod
     def make_pixmap_from_base64(image_base64: bytes):
         ba = QtCore.QByteArray.fromBase64(QtCore.QByteArray(image_base64))
@@ -237,16 +252,8 @@ class QMainWindow(QtWidgets.QMainWindow):
         return QtGui.QPixmap(fp)
 
     def closeEvent(self, event):
-
         if self.__AboutForm is not None:
             self.__AboutForm.close()
-
-        for i in self.findChildren(QtWidgets.QMainWindow) + self.findChildren(QtWidgets.QDialog):
-            try:
-                i.close()
-            except Exception as e:
-                print(f'{str(e)}')
-
         event.accept()
 
     def message_box(self, msg: str, title: str):
