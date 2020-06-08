@@ -4,8 +4,7 @@ import threading
 import requests
 from PySide2 import QtGui, QtCore
 from PySide2.QtCore import Slot
-from PySide2.QtWidgets import QErrorMessage
-from PySide2.QtWidgets import QPushButton
+from PySide2.QtWidgets import QErrorMessage, QPushButton, QDialog, QMainWindow
 from packaging import version
 
 import fsetoolsGUI
@@ -39,11 +38,13 @@ class Signals(QtCore.QObject):
 
 
 class MainWindow(QMainWindow):
-    remote_version: dict = None
-    is_executable: bool = True
-    Signals = Signals()
 
     def __init__(self):
+        self.remote_version: dict = None
+        self.is_executable: bool = True
+        self.Signals = Signals()
+        self.activated_dialogs = list()
+
         # ui setup
         super().__init__(
             module_id='0000',
@@ -133,6 +134,7 @@ class MainWindow(QMainWindow):
         else:
             app_ = app_()
         app_.show()
+        self.activated_dialogs.append(app_)
 
     def check_update(self):
         """
@@ -276,6 +278,27 @@ class MainWindow(QMainWindow):
     @new_version_update_url.setter
     def new_version_update_url(self, url: str):
         self.__new_version_update_url = url
+
+    def closeEvent(self, event):
+
+        logger.debug('Terminating children')
+        for i in self.findChildren(QMainWindow) + self.findChildren(QDialog):
+            try:
+                i.close()
+            except Exception as e:
+                logger.error(f'{str(e)}')
+
+        logger.debug('Terminating activated dialogs/mainwindows')
+        if len(self.activated_dialogs) > 0:
+            for i in self.activated_dialogs:
+                try:
+                    i.close()
+                except Exception as e:
+                    logger.error(f'{str(e)}')
+
+        logger.debug('All subroutines terminated')
+
+        event.accept()
 
 
 if __name__ == "__main__":
