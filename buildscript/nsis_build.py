@@ -73,7 +73,6 @@ def main():
 
 if __name__ == '__main__':
     ui2py()
-    main_pyinstaller()
     make_nsi_file()
     make_nsh_files()
     main()
