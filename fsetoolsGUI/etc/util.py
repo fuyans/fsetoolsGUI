@@ -36,7 +36,8 @@ def post_to_knack_user_usage_stats(
         ''.join([chr(ord(v) + i % 10) for i, v in enumerate(target)]),
         data=json.dumps(payload),
         headers={''.join([chr(ord(v) + i % 10) for i, v in enumerate(k)]): ''.join(
-            [chr(ord(v) + i % 10) for i, v in enumerate(v)]) for k, v in headers.items()}
+            [chr(ord(v) + i % 10) for i, v in enumerate(v)]) for k, v in headers.items()},
+        timeout=10
     )
 
     return rp
