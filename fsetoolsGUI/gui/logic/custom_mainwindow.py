@@ -74,7 +74,8 @@ class QMainWindow(QtWidgets.QMainWindow):
             title: str = None,
             parent=None,
             freeze_window_size: bool = False,
-            about_fp_or_md: str = None
+            about_fp_or_md: str = None,
+            mode=None
     ):
         """
         todo: docstring
@@ -113,10 +114,13 @@ class QMainWindow(QtWidgets.QMainWindow):
         self.__is_frame_less: bool = False
         self.__is_freeze_window_size: bool = freeze_window_size
         self.__about_fp_or_md = about_fp_or_md  # process about data and prepare ui
+        self.__mode = mode
 
     def init(self, cls):
 
+        # -----------------
         # window properties
+        # -----------------
         self.setWindowIcon(self.__icon)
 
         # set window title
@@ -134,13 +138,19 @@ class QMainWindow(QtWidgets.QMainWindow):
             self.statusBar().setSizeGripEnabled(False)
             self.setFixedSize(self.width(), self.height())
 
-        try:
-            check_update = threading.Timer(1, self.__user_usage_stats)
-            check_update.start()  # after 1 second, 'callback' will be called
-        except Exception as e:
-            logger.error(f'{str(e)}')
+        # ------------
+        # check update
+        # ------------
+        if self.__mode != -1:
+            try:
+                check_update = threading.Timer(1, self.__user_usage_stats)
+                check_update.start()  # after 1 second, 'callback' will be called
+            except Exception as e:
+                logger.error(f'{str(e)}')
 
+        # --------------------------------------
         # assign signal to standard layout items
+        # --------------------------------------
         def set_action_name_and_tip(
                 btncls,
                 action: callable = None,
@@ -198,7 +208,7 @@ class QMainWindow(QtWidgets.QMainWindow):
         if event.key() == QtCore.Qt.Key_Escape:
             self.close()
         elif event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
-            self.calculate()
+            self.ok()
         event.accept()
 
     def __user_usage_stats(self):

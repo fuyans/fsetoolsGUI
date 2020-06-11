@@ -82,6 +82,10 @@ class AppInfo:
             short_name='EC 1991\nparametric\nfire',
             long_name='EC 1991-1-2 parametric fire generator',
         ),
+        '0620': dict(
+            short_name='Probability\ndistribution\nvisualiser',
+            long_name='Probability distribution visualiser',
+        ),
     }
 
     def __init__(self, code: Union[int, str] = None):
