@@ -5,7 +5,8 @@ nsi_script = r"""
     !include LogicLib.nsh
 ;--------------------------------
 ;General
-
+    BrandingText "OFR Consultants Ltd"
+    
 ;--------------------------------
 ;Interface Settings
     !define FILES_SOURCE_PATH dist\FSETOOLS
@@ -24,7 +25,7 @@ nsi_script = r"""
     !define UPDATEURL "https://github.com/fsepy/fsetools" ;"Product Updates" link
     !define ABOUTURL "https://github.com/fsepy/fsetools" ;"Publisher" link
     ;Size of the program, when installed, in kb.
-    !define INSTALLSIZE 137216
+    !define INSTALLSIZE 173911
 
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
 

@@ -3,29 +3,42 @@
 This file documents the release history of `fsetools`.
 
 - B1 Means of Escape
-    - 0101 Approved Document B Vol. 2 (2019) Data Sheet 1
-    - 0102 BS 9999:2017 Data Sheet 1
-    - 0111 Heat Detecting Element Activation time
-    
-- B3 Internal Fire Spread (Lining)
-    - 03## Heat Transfer 1D
+    - 0101 ADB vol. 2 data sheet no. 1 - means of escape
+    - 0102 BS 9999 data sheet no. 1 - means of escape
+    - 0103 BS 9999 merging flow at final exit level
+    - 0104 ADB merging flow at final exit level
+    - 0111 PD 7974 heat detector device activation time calculator
     
 - B4 External Fire Spread
-    - 0401 BR 187 Parallel
-    - 0402 BR 187 Perpendicular
-    - 0403 BR 187 Parallel Complex
-    - 0404 BR 187 Perpendicular Complex
-    - 0405 Thermal Heat Transfer 3D
+    - 0401 BR 187 BR 187 parallel oriented rectangle emitter and receiver
+    - 0402 BR 187 perpendicular oriented rectangle emitter and receiver
+    - 0403 BR 187 parallel oriented rectangle emitter and eccentric receiver
+    - 0404 BR 187 perpendicular oriented rectangle emitter and eccentric receiver
+    - 0405 TRA 3D polygon emitter and a single point
+    - 0406 TRA 2D parallel orientated contour plot
+    - 0407 TRA cuboid enclosure model
     
 - Miscellaneous
-    - 0601 OFR Naming Convention
-    - 0602 Flame Height
+    - 0601 OFR file name generator
+    - 0602 PD 7974 flame height calculator
+    - 0611 EC 1991-1-2 parametric fire generator
 
 ## Version history
 
 ### XX/05/2020 VERSION: 0.0.4
 
-- [ ] 0401, 0402, 0403 & 0404 added critical heat flux input parameter. 
+New features.
+- [x] 0103 BS 9999 merging flow at final exit level.
+- [x] 0104 ADB merging flow at final exit level.
+- [x] 0407 TRA cuboid enclosure model.
+- [x] 0611 EC 1991-1-2 parametric fire generator.
+
+Fixes.
+- [x] Fixed an issue where the update download url label no responses when clicked.
+
+Improvements.
+- [x] 0401, 0402, 0403 & 0404: Added critical heat flux input parameter.
+- [x] Installer: Interface optimisation.
 
 ### 14/02/2020 VERSION: 0.0.1.dev20200214
 
