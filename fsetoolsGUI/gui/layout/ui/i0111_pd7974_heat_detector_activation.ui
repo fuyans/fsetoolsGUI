@@ -101,7 +101,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>390</width>
+           <width>340</width>
            <height>0</height>
           </size>
          </property>
@@ -144,7 +144,9 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../../../../../../../Library/Mobile Documents/6LVTQB9699~com~seriflabs~affinitydesigner/Documents/FSEUTIL/png/0111_figure_1_342_284.png</pixmap>
+             <pixmap>../../../../../../Library/Mobile
+                 Documents/6LVTQB9699~com~seriflabs~affinitydesigner/Documents/FSEUTIL/png/0111_figure_1_342_284.png
+             </pixmap>
          </property>
         </widget>
        </item>
@@ -1354,7 +1356,7 @@
      <x>0</x>
      <y>0</y>
      <width>720</width>
-     <height>22</height>
+        <height>21</height>
     </rect>
    </property>
   </widget>
