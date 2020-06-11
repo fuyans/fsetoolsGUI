@@ -91,9 +91,9 @@ class AppBase04XX(QMainWindow):
             self.ui.label_in_S_unit.setEnabled(False)  # disable S related inputs
             self.ui.lineEdit_in_UA.setEnabled(True)  # enable UA related inputs
             self.ui.label_in_UA_unit.setEnabled(True)  # enable UA related inputs
-            self.ui.label_out_S_or_UA.setText('½S, minimum separation distance')
+            self.ui.label_out_S_or_UA.setText('½S, min. sep. distance')
             self.ui.label_out_S_or_UA_unit.setText('m')
-            self.ui.label_out_S_or_UA.setToolTip('Solved minimum separation distance.')
+            self.ui.label_out_S_or_UA.setToolTip('Solved minimum separation distance to boundary.')
         else:
             raise ValueError('Unknown value for input UA or S.')
 
