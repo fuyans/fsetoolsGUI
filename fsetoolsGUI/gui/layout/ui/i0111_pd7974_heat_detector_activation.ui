@@ -111,6 +111,9 @@
          <property name="wordWrap">
           <bool>true</bool>
          </property>
+         <property name="margin">
+          <number>5</number>
+         </property>
         </widget>
        </item>
        <item>
@@ -144,9 +147,9 @@
           <string/>
          </property>
          <property name="pixmap">
-             <pixmap>../../../../../../Library/Mobile
+          <pixmap>../../../../../../Library/Mobile
                  Documents/6LVTQB9699~com~seriflabs~affinitydesigner/Documents/FSEUTIL/png/0111_figure_1_342_284.png
-             </pixmap>
+ </pixmap>
          </property>
         </widget>
        </item>
@@ -1356,7 +1359,7 @@
      <x>0</x>
      <y>0</y>
      <width>720</width>
-        <height>21</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
