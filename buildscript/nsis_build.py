@@ -5,8 +5,6 @@ from os.path import join, realpath, dirname
 
 import fsetoolsGUI
 from buildscript import nsis_build_nsi
-from buildscript.pyinstaller_build import main as main_pyinstaller
-from buildscript.ui2py import ui2py
 
 
 def find_all_dist_files(dir_build: str, include_root_name: bool = True):
@@ -72,7 +70,6 @@ def main():
 
 
 if __name__ == '__main__':
-    ui2py()
     make_nsi_file()
     make_nsh_files()
     main()
