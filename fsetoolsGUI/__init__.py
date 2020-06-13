@@ -83,8 +83,8 @@ class AppInfo:
             long_name='EC 1991-1-2 parametric fire generator',
         ),
         '0620': dict(
-            short_name='Probability\ndistribution\nvisualiser',
-            long_name='Probability distribution visualiser',
+            short_name='Probability\ndistribution',
+            long_name='Probability distribution',
         ),
     }
 
