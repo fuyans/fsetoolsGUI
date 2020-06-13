@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>460</width>
-    <height>429</height>
+    <width>448</width>
+    <height>418</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -30,21 +30,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
-    <property name="spacing">
-     <number>10</number>
-    </property>
-    <property name="leftMargin">
-     <number>15</number>
-    </property>
-    <property name="topMargin">
-     <number>15</number>
-    </property>
-    <property name="rightMargin">
-     <number>15</number>
-    </property>
-    <property name="bottomMargin">
-     <number>15</number>
-    </property>
     <item>
      <widget class="QFrame" name="frame_userio">
       <layout class="QGridLayout" name="gridLayout">
@@ -437,6 +422,25 @@
          </property>
         </widget>
        </item>
+       <item row="1" column="4">
+        <widget class="QPushButton" name="pushButton_0620_probability_distribution">
+         <property name="minimumSize">
+          <size>
+           <width>76</width>
+           <height>76</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>76</width>
+           <height>76</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>0620</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
@@ -478,7 +482,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>460</width>
+     <width>448</width>
      <height>21</height>
     </rect>
    </property>
