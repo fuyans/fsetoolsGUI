@@ -1,11 +1,15 @@
+import logging
+
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats as stats
-from PySide2 import QtWidgets, QtCore
+from PySide2 import QtWidgets
 
-from fsetoolsGUI.etc.probability_distribution import solve_loc_scale
+from fsetoolsGUI.etc.probability_distribution import solve_dist_for_mean_std
 from fsetoolsGUI.gui.layout.i0620_probabilistic_distribution import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+
+logger = logging.getLogger('gui')
 
 try:
     from matplotlib.backends.backend_qt5agg import FigureCanvas
@@ -24,6 +28,7 @@ class App0620(QMainWindow):
         self.__fig = None
         self.__ax_pdf = None
         self.__ax_cdf = None
+        self.figure_canvas = None
 
         super().__init__(
             parent=parent,
@@ -37,13 +42,16 @@ class App0620(QMainWindow):
 
         # instantiate figure and associated objects
 
-        self.__fig = plt.figure()
-        self.__fig.set_facecolor('None')
-        self.figure_canvas = FigureCanvas(self.__fig)
+        self.figure = plt.figure()
+        self.figure.set_facecolor('None')
+        self.figure_canvas = FigureCanvas(self.figure)
         self.figure_canvas.setStyleSheet("background-color:transparent;border:0px")  # set background transparent.
         self.ui.frame_layout.addWidget(self.figure_canvas)
+        # self.ui.frame_figure.addWidget(self.figure_canvas)
         # self.toolbar = NavigationToolbar(self.figure_canvas, self)
         # self.ui.frame_layout.addWidget(self.toolbar)
+
+        # self.ui.
 
         self.ui.lineEdit_in_cdf.textChanged.connect(self.__cdf_value_change)
         self.ui.lineEdit_in_sample_value.textChanged.connect(self.__sample_value_change)
@@ -61,14 +69,28 @@ class App0620(QMainWindow):
         are suggested procedure to be followed. This method is also connected by keyboard shortcut 'Enter'"""
 
         # Step 1. Get parameters from UI
-        input_parameters = self.input_parameters
+        try:
+            input_parameters = self.input_parameters
+        except Exception as e:
+            self.statusBar().showMessage(f'Unable to parse inputs. {e}')
+            return e
 
         # Step 2. Perform analysis
         # work out distribution
-        output_parameters = self.solve_dist(**input_parameters)
+        try:
+            assert hasattr(stats, input_parameters['dist_name'])
+            output_parameters = self.solve_dist(**input_parameters)
+        except Exception as e:
+            self.statusBar().showMessage(f'Failed to make distribution. {e}')
+            logger.error(f'{e}')
+            return e
 
         # Step 3. Cast result onto UI
-        self.output_parameters = output_parameters
+        try:
+            self.output_parameters = output_parameters
+        except Exception as e:
+            self.statusBar().showMessage(f'Failed to output results. {e}')
+            return e
 
         if not self.ui.lineEdit_in_sample_value.isEnabled():
             self.ui.lineEdit_in_sample_value.setEnabled(True)
@@ -94,7 +116,7 @@ class App0620(QMainWindow):
         sample_value = dist.ppf(cdf_value)
 
         self.ui.lineEdit_in_sample_value.textChanged.disconnect()
-        self.ui.lineEdit_in_sample_value.setText(f'{sample_value:.5g}'.rstrip('0').rstrip('.'))
+        self.ui.lineEdit_in_sample_value.setText(f'{sample_value:.5g}')
         self.ui.lineEdit_in_sample_value.textChanged.connect(self.__sample_value_change)
 
     def __sample_value_change(self):
@@ -105,7 +127,7 @@ class App0620(QMainWindow):
         cdf_value = dist.cdf(sample_value)
 
         self.ui.lineEdit_in_cdf.textChanged.disconnect()
-        self.ui.lineEdit_in_cdf.setText(f'{cdf_value:.5g}'.rstrip('0').rstrip('.'))
+        self.ui.lineEdit_in_cdf.setText(f'{cdf_value:.5g}')
         self.ui.lineEdit_in_cdf.textChanged.connect(self.__cdf_value_change)
 
     def __distribution_update(self):
@@ -131,6 +153,10 @@ class App0620(QMainWindow):
     def figure(self):
         return self.__fig
 
+    @figure.setter
+    def figure(self, fig):
+        self.__fig = fig
+
     @property
     def input_parameters(self) -> dict:
 
@@ -153,7 +179,7 @@ class App0620(QMainWindow):
     @staticmethod
     def solve_dist(dist_name, mean, sd, sample_value, pdf_value, cdf_value) -> dict:
 
-        result = solve_loc_scale(dist_name, mean, sd)
+        result = solve_dist_for_mean_std(dist_name, mean, sd)
 
         dist = getattr(stats, dist_name)(*result.x)
 
@@ -165,36 +191,55 @@ class App0620(QMainWindow):
 
     @output_parameters.setter
     def output_parameters(self, output_parameters_: dict):
+        """cast outputs onto gui, in this instance, only the pdf and cdf plots"""
 
         dist = output_parameters_['dist']
 
-        # -------------------------
-        # make and cast plots to ui
-        # -------------------------
-        if self.__ax_pdf is None:
+        # ------------------------------------
+        # instantiate axes if not already exit
+        # ------------------------------------
+        if self.ax_pdf is None:
             ax_pdf = self.figure.add_subplot(211)
             ax_pdf.set_xticklabels([])
             ax_pdf.tick_params(axis='both', which='both', labelsize=8)
-            self.__ax_pdf = ax_pdf
+            self.ax_pdf = ax_pdf
 
-        if self.__ax_cdf is None:
+        if self.ax_cdf is None:
             ax_cdf = self.figure.add_subplot(212, sharex=self.__ax_pdf)
             ax_cdf.tick_params(axis='both', which='both', labelsize=8)
-            self.__ax_cdf = ax_cdf
+            self.ax_cdf = ax_cdf
 
-        x = np.linspace(dist.ppf(1e-3), dist.ppf(1 - 1e-3), 100)
+        # --------
+        # plot pdf
+        # --------
+        x = np.linspace(dist.ppf(1e-3), dist.ppf(1 - 1e-3), 50)
         y_pdf = dist.pdf(x)
+        self.ax_pdf.clear()
+        self.ax_pdf.plot(x, y_pdf, c='k')
+        self.ax_pdf.tick_params(axis='both', direction='in', labelbottom=False)
+
+        # --------
+        # plot cdf
+        # --------
         y_cdf = dist.cdf(x)
-        self.__ax_pdf.clear()
-        self.__ax_pdf.plot(x, y_pdf, c='k')
-        self.__ax_pdf.tick_params(axis='both', direction='in', labelbottom=False)
+        self.ax_cdf.clear()
+        self.ax_cdf.plot(x, y_cdf, c='k')
+        self.ax_cdf.set_ylim(0, 1.1)
+        self.ax_cdf.set_yticks([0, 1])
+        self.ax_cdf.tick_params(axis='both', direction='in')
 
-        self.__ax_cdf.clear()
-        self.__ax_cdf.plot(x, y_cdf, c='k')
-        self.__ax_cdf.set_ylim(0, 1.1)
-        self.__ax_cdf.set_yticks([0, 1])
-        self.__ax_cdf.tick_params(axis='both', direction='in')
+        # -------------------------------------------------------------
+        # highlight area under the pdf and cdf if `sample_value` exists
+        # -------------------------------------------------------------
+        if output_parameters_['sample_value'] is not None:
+            x_ = np.linspace(x[0], output_parameters_['sample_value'], 50)
+            y_pdf_, y_cdf_ = dist.pdf(x_), dist.cdf(x_)
+            self.ax_pdf.fill_between(x_, y_pdf_, np.zeros_like(x_), facecolor='grey', interpolate=True)
+            self.ax_cdf.fill_between(x_, y_cdf_, np.zeros_like(x_), facecolor='grey', interpolate=True)
 
+        # ----------------------
+        # finalise/format figure
+        # ----------------------
         self.figure.tight_layout(pad=0.1)
         self.figure_canvas.draw()
 
@@ -202,6 +247,22 @@ class App0620(QMainWindow):
         # assign to object property
         # -------------------------
         self.__output_parameters = output_parameters_
+
+    @property
+    def ax_cdf(self) -> plt.axis:
+        return self.__ax_cdf
+
+    @ax_cdf.setter
+    def ax_cdf(self, ax):
+        self.__ax_cdf = ax
+
+    @property
+    def ax_pdf(self) -> plt.axis:
+        return self.__ax_pdf
+
+    @ax_pdf.setter
+    def ax_pdf(self, ax):
+        self.__ax_pdf = ax
 
 
 if __name__ == '__main__':

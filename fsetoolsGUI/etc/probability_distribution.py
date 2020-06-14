@@ -15,7 +15,7 @@ def general_purpose_dist_func(x0, arg):
     return loss
 
 
-def solve_loc_scale(dist_name, *args, **kwargs):
+def solve_dist_for_mean_std(dist_name, *args, **kwargs):
     if dist_name == 'lognorm':
         if len(args) == 2:
             s = args[-1]
@@ -37,7 +37,7 @@ def solve_loc_scale(dist_name, *args, **kwargs):
     return optimized_result
 
 
-def solve_loc_scale_stats(optimize_result):
+def solve_loc_scale_stats(optimize_result, dist_name):
     if optimize_result.success:
         fitted_params = optimize_result.x
         result_dist = getattr(stats, dist_name)(*optimize_result.x)
@@ -55,75 +55,68 @@ def solve_loc_scale_stats(optimize_result):
         raise ValueError(optimize_result.message)
 
 
-def _test_gumbel_r():
+def test_gumbel_r():
     dist_name = 'gumbel_r'
     mean = 420
     sd = 126
-    result = solve_loc_scale(dist_name, mean, sd)
+    result = solve_dist_for_mean_std(dist_name, mean, sd)
 
-    # result_dist = getattr(stats, dist_name)(*result.x)
-    # for i in zip(np.linspace(0, 1, 5), result_dist.cdf(np.linspace(0, 1, 5))):
-    #     print('{:<10} {:<10}'.format(*i))
+    dist_fitted = getattr(stats, dist_name)(*result.x)
 
-    # sns.lineplot(np.linspace(0,1,100), result_dist.pdf(np.linspace(0,1,100)))
-    # sns.lineplot(np.linspace(0, 1, 100), result_dist.cdf(np.linspace(0, 1, 100)))
+    assert abs(mean - dist_fitted.mean()) < 1e-5
+    assert abs(sd - dist_fitted.std()) < 1e-5
 
 
-def _test_lognorm():
+def test_lognorm():
     dist_name = 'lognorm'
     s = 0.2
     mean = 0.2
     sd = 0.2
 
-    result = solve_loc_scale(dist_name, s, mean, sd, bounds=[[0.00001, np.inf], [0, 0], [0.00001, np.inf]])
-    print(stats.lognorm.cdf(0.2, *result.x))
+    result = solve_dist_for_mean_std(dist_name, s, mean, sd, bounds=[[0.00001, np.inf], [0, 0], [0.00001, np.inf]])
 
-    # result_dist = getattr(stats, dist_name)(*result.x)
-    # for i in zip(np.linspace(0, 1, 5), result_dist.cdf(np.linspace(0, 1, 5))):
-    #     print('{:<10} {:<10}'.format(*i))
+    dist_fitted = getattr(stats, dist_name)(*result.x)
 
-    # sns.lineplot(np.linspace(0,1,100), result_dist.pdf(np.linspace(0,1,100)))
-    # sns.lineplot(np.linspace(0, 1, 100), result_dist.cdf(np.linspace(0, 1, 100)))
+    assert abs(mean - dist_fitted.mean()) < 1e-5
+    assert abs(sd - dist_fitted.std()) < 1e-5
 
 
-def _test_norm():
+def test_norm():
     dist_name = 'norm'
     mean = 5
     sd = 1.2
 
-    result = solve_loc_scale(dist_name, mean, sd)
+    result = solve_dist_for_mean_std(dist_name, mean, sd)
 
-    print(stats.norm.cdf(5, *result.x))
+    dist_fitted = getattr(stats, dist_name)(*result.x)
 
-    # result_dist = getattr(stats, dist_name)(*result.x)
-    # for i in zip(np.linspace(0, 1, 5), result_dist.cdf(np.linspace(0, 1, 5))):
-    #     print('{:<10} {:<10}'.format(*i))
-
-    # sns.lineplot(np.linspace(0,1,100), result_dist.pdf(np.linspace(0,1,100)))
-    # sns.lineplot(np.linspace(0, 1, 100), result_dist.cdf(np.linspace(0, 1, 100)))
+    assert abs(mean - dist_fitted.mean()) < 1e-5
+    assert abs(sd - dist_fitted.std()) < 1e-5
 
 
 if __name__ == '__main__':
-    import matplotlib.pyplot as plt
+    # import matplotlib.pyplot as plt
+    #
+    # dist_name = 'lognorm'
+    #
+    # s = 0.2
+    # mean = 0.2
+    # sd = 0.2
+    #
+    # result_ = solve_loc_scale(dist_name, s, mean, sd, bounds=[[0.00001, np.inf], [0, 0], [0.00001, np.inf]])
+    #
+    # solve_loc_scale_stats(result_)
+    #
+    # dist_ = stats.lognorm(*result_.x)
+    #
+    # print(dist_.ppf(0.2))
+    #
+    # test_gumbel_r()
+    # test_lognorm()
+    # test_norm()
+    #
+    # plt.plot(np.linspace(0, 1, 1000), dist_.cdf(np.linspace(0, 1, 1000)))
+    #
+    # plt.show()
 
-    dist_name = 'lognorm'
-
-    s = 0.2
-    mean = 0.2
-    sd = 0.2
-
-    result_ = solve_loc_scale(dist_name, s, mean, sd, bounds=[[0.00001, np.inf], [0, 0], [0.00001, np.inf]])
-
-    solve_loc_scale_stats(result_)
-
-    dist_ = stats.lognorm(*result_.x)
-
-    print(dist_.ppf(0.2))
-
-    _test_gumbel_r()
-    _test_lognorm()
-    _test_norm()
-
-    plt.plot(np.linspace(0, 1, 1000), dist_.cdf(np.linspace(0, 1, 1000)))
-
-    plt.show()
+    pass
