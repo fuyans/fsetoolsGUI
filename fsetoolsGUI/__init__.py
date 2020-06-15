@@ -161,7 +161,7 @@ Public version identifiers are separated into up to five segments:
 """
 
 
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 __date_released__ = datetime.datetime(2020, 4, 14)
 __expiry_period_days__ = 180
 __remote_version_url__ = r'hsrmo5)(jXw-efpco[mjeqaljo_gl%cnk,bpsZfj/ucoodigk&m`qqam)_k\tnmioBOBWFFQ,gojh'
