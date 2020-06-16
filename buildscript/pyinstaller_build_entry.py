@@ -37,8 +37,10 @@ if __name__ == "__main__":
     print('=' * 80)
 
     # check expiry date and check pass code
-    if datetime.datetime.now() > (
-            fsetoolsGUI.__date_released__ + datetime.timedelta(days=fsetoolsGUI.__expiry_period_days__)):
+    date_current = datetime.datetime.now()
+    date_expiration = fsetoolsGUI.__date_released__ + datetime.timedelta(days=fsetoolsGUI.__expiry_period_days__)
+    if date_current >= date_expiration:
+
         app = QtWidgets.QApplication(sys.argv)
         if KEY is not None:
             from fsetoolsGUI.gui.logic.c0001_pass_code import App

@@ -4,7 +4,6 @@ from typing import Union
 
 
 # make root directory of this app which will be used 1. when running the app; 2. pyinstaller at compiling the app.
-__root_dir__ = None
 if os.path.exists(os.path.dirname(__file__)):
     # this path should be used when running the app as a Python package (non compiled) and/or pyinstaller at compiling
     # stage.
@@ -13,6 +12,8 @@ elif os.path.exists(os.path.dirname(os.path.dirname(__file__))):
     # the path will become invalid when the app run after compiled as the dirname `fsetoolsGUI` will disappear.
     # instead, the parent folder of the project dir will be used.
     __root_dir__ = os.path.dirname(os.path.dirname(__file__))
+else:
+    __root_dir__ = None
 
 
 class AppInfo:
@@ -167,7 +168,7 @@ Public version identifiers are separated into up to five segments:
 
 __version__ = "0.0.4"
 __date_released__ = datetime.datetime(2020, 4, 14)
-__expiry_period_days__ = 180
+__expiry_period_days__ = 360
 __remote_version_url__ = r'hsrmo5)(jXw-efpco[mjeqaljo_gl%cnk,bpsZfj/ucoodigk&m`qqam)_k\tnmioBOBWFFQ,gojh'
 
 if __name__ == "__main__":

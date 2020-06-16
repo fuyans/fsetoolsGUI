@@ -216,6 +216,7 @@ class App0620(QMainWindow):
         y_pdf = dist.pdf(x)
         self.ax_pdf.clear()
         self.ax_pdf.plot(x, y_pdf, c='k')
+        self.ax_pdf.set_ylim(bottom=0)
         self.ax_pdf.tick_params(axis='both', direction='in', labelbottom=False)
 
         # --------
@@ -224,7 +225,7 @@ class App0620(QMainWindow):
         y_cdf = dist.cdf(x)
         self.ax_cdf.clear()
         self.ax_cdf.plot(x, y_cdf, c='k')
-        self.ax_cdf.set_ylim(0, 1.1)
+        self.ax_cdf.set_ylim(bottom=0)
         self.ax_cdf.set_yticks([0, 1])
         self.ax_cdf.tick_params(axis='both', direction='in')
 
@@ -240,7 +241,7 @@ class App0620(QMainWindow):
         # ----------------------
         # finalise/format figure
         # ----------------------
-        self.figure.tight_layout(pad=0.1)
+        self.figure.tight_layout(pad=0.25)
         self.figure_canvas.draw()
 
         # -------------------------
