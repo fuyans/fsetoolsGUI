@@ -86,6 +86,10 @@ class AppInfo:
             short_name='Probability\ndistribution',
             long_name='Probability distribution',
         ),
+        '0630': dict(
+            short_name='Safir\npost\nprocsser',
+            long_name='Safir post processor',
+        ),
     }
 
     def __init__(self, code: Union[int, str] = None):

@@ -423,7 +423,7 @@
         </widget>
        </item>
        <item row="1" column="4">
-        <widget class="QPushButton" name="pushButton_0620_probability_distribution">
+        <widget class="QPushButton" name="pushButton_0630_safir_post_processor">
          <property name="minimumSize">
           <size>
            <width>76</width>
@@ -437,7 +437,7 @@
           </size>
          </property>
          <property name="text">
-          <string>0620</string>
+          <string>0630</string>
          </property>
         </widget>
        </item>
@@ -483,7 +483,7 @@
      <x>0</x>
      <y>0</y>
      <width>448</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
