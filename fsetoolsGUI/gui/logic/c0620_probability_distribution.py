@@ -21,6 +21,13 @@ except ModuleNotFoundError:
 
 class App0620(QMainWindow):
 
+    __dist_available = [
+        ['Normal', 'norm'],
+        ['Log normal', 'lognorm'],
+        ['Gumbel type I', 'gumbel_l'],
+        ['Gumbel type II', 'gumbel_r']
+    ]
+
     def __init__(self, parent=None, mode=None):
 
         self.__input_parameters = None
@@ -39,6 +46,7 @@ class App0620(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.init(self)
+        self.init_comboBox_in_distribution()
 
         # instantiate figure and associated objects
 
@@ -62,6 +70,14 @@ class App0620(QMainWindow):
 
         self.ui.lineEdit_in_sample_value.setEnabled(False)
         self.ui.lineEdit_in_cdf.setEnabled(False)
+
+    def init_comboBox_in_distribution(self):
+        self.ui.comboBox_in_distribution.addItems([i[0] for i in self.__dist_available])
+        self.ui.comboBox_in_distribution.currentIndexChanged.connect(self.__upon_comboBox_in_distribution_update)
+
+    def __upon_comboBox_in_distribution_update(self):
+        dist_str = self.__dist_available[self.ui.comboBox_in_distribution.currentIndex()][1]
+        self.ui.lineEdit_in_distribution.setText(dist_str)
 
     def ok(self):
         """Placeholder method to be overridden by child classes.
