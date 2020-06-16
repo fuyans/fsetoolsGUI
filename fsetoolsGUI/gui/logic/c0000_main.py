@@ -23,6 +23,7 @@ from fsetoolsGUI.gui.logic.c0407_tra_enclosure import App as App0407
 from fsetoolsGUI.gui.logic.c0601_naming_convention import App as App0601
 from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
 from fsetoolsGUI.gui.logic.c0611_parametric_fire import App as App0611
+from fsetoolsGUI.gui.logic.c0620_probability_distribution import App0620
 from fsetoolsGUI.gui.logic.c0630_safir_post_processor import App0630
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
@@ -126,7 +127,7 @@ class MainWindow(QMainWindow):
         set_btn(self.ui.pushButton_0601_naming_convention, App0601, *module_info('0601').short_and_long_names)
         set_btn(self.ui.pushButton_0602_pd7974_flame_height, App0602, *module_info('0602').short_and_long_names)
         set_btn(self.ui.pushButton_0611_ec_parametric_fire, App0611, *module_info('0611').short_and_long_names)
-        # set_btn(self.ui.pushButton_0620_probability_distribution, App0620, *module_info('0620').short_and_long_names)
+        set_btn(self.ui.pushButton_0620_probability_distribution, App0620, *module_info('0620').short_and_long_names)
         set_btn(self.ui.pushButton_0630_safir_post_processor, App0630, *module_info('0630').short_and_long_names)
 
     def activate_app(self, app_):
