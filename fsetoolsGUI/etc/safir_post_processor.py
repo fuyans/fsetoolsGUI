@@ -6,7 +6,7 @@ import numpy as np
 def out2pstrain(fp_out: str, fp_out_p1):
     count = 0
     f_out_p1 = open(fp_out_p1, 'w+')
-    with open(fp_out, 'r') as f:
+    with open(fp_out, 'r') as f, open(fp_out_p1, 'w+') as f_out_p1:
         while True:
             l = f.readline()
             if l:
@@ -18,6 +18,7 @@ def out2pstrain(fp_out: str, fp_out_p1):
                     print(count, end='\r', flush=True)
             else:
                 break
+
     f_out_p1.close()
 
 
@@ -42,7 +43,6 @@ def pstrain2dict(fp: str) -> dict:
         else:
             return None
 
-    count = 0
     time_current = 0
     list_time, list_shell, list_surf, list_rebar, list_strain, list_strain2 = [], [], [], [], [], []
     with open(fp, 'r') as f:
@@ -54,7 +54,7 @@ def pstrain2dict(fp: str) -> dict:
                 time = get_value(l, rp_time_str, rp_time_val)
                 if time:
                     time_current = time
-                elif time_current:
+                elif time_current and 'SHELL' in l:
                     list_time.append(time_current)
                     list_shell.append(get_value(l, rp_shell_str, rp_shell_val))
                     list_surf.append(get_value(l, rp_surf_str, rp_surf_val))
@@ -62,15 +62,21 @@ def pstrain2dict(fp: str) -> dict:
                     list_strain.append(get_value(l, rp_strain_str, rp_strain_val))
                     list_strain2.append(get_value(l, rp_strain_str2, rp_strain_val2))
 
-                count += 1
+    def list2arr(data: list, dtype):
+        data = np.array(data)
+        data[data is None] = -1
+        return np.array(data, dtype=dtype)
+
+    list_time = list2arr(list_time, float)
+    list_shell = list2arr(list_shell, int)
+    list_surf = list2arr(list_surf, int)
+    list_rebar = list2arr(list_rebar, int)
+    list_strain = list2arr(list_strain, float)
+    list_strain2 = list2arr(list_strain2, float)
 
     return dict(
-        list_time=np.asarray(list_time),
-        list_shell=np.asarray(list_shell, dtype=int),
-        list_surf=np.asarray(list_surf, dtype=int),
-        list_rebar=np.asarray(list_rebar, dtype=int),
-        list_strain=np.asarray(list_strain, dtype=float),
-        list_strain2=np.asarray(list_strain2, dtype=float),
+        list_time=list_time, list_shell=list_shell, list_surf=list_surf,
+        list_rebar=list_rebar, list_strain=list_strain, list_strain2=list_strain2,
     )
 
 

@@ -1,12 +1,22 @@
 import os.path as path
+import threading
 
 from PySide2 import QtWidgets, QtCore
+from PySide2.QtCore import Slot
 
 from fsetoolsGUI.etc.safir_post_processor import out2pstrain, pstrain2dict, save_csv, make_strain_lines_for_given_shell
 from fsetoolsGUI.gui.layout.i0630_safir_postprocessor import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
+
+
+class Signals(QtCore.QObject):
+    __process_safir_out_file_complete = QtCore.Signal(bool)
+
+    @property
+    def process_safir_out_file_complete(self) -> QtCore.Signal:
+        return self.__process_safir_out_file_complete
 
 
 class App0630(QMainWindow):
@@ -22,9 +32,10 @@ class App0630(QMainWindow):
         self.__Figure = None
         self.__Figure_ax = None
         self.__fp_out = None
-        self.__dir_work = None
         self.__fp_out_processed = None
+        self.__fp_out_strain_csv = None
         self.__strain_lines = None
+        self.__Signals = Signals()
 
         # ================================
         # instantiation super and setup ui
@@ -43,6 +54,8 @@ class App0630(QMainWindow):
         # lineEdit default values
         # =======================
         self.ui.lineEdit_in_fp_out.setReadOnly(True)
+        self.ui.lineEdit_in_shell.setEnabled(False)
+        self.ui.comboBox_in_shell.setEnabled(False)
         # self.ui.lineEdit_in_initial_temperature.setText('20')
 
         # =================
@@ -52,7 +65,7 @@ class App0630(QMainWindow):
 
         # signals
         # self.ui.pushButton_example.clicked.connect(self.example)
-        self.ui.pushButton_fp_out.clicked.connect(self.upon_output_file_selection)
+        self.ui.pushButton_fp_out.clicked.connect(self.__upon_output_file_selection_step_1)
         self.ui.comboBox_in_shell.currentIndexChanged.connect(self.__upon_shell_combobox_change)
 
     @property
@@ -125,50 +138,147 @@ class App0630(QMainWindow):
         self.__output_fire_curve['time'] = v['time']
         self.__output_fire_curve['temperature'] = v['temperature']
 
-    def upon_output_file_selection(self):
-        self.statusBar().showMessage('Processing...')
+    def __upon_output_file_selection_step_1(self):
+        self.statusBar().showMessage('Processing *.out file ...')
+        self.ui.lineEdit_in_shell.setDisabled(True)
+        self.ui.comboBox_in_shell.setDisabled(True)
+        self.ui.pushButton_ok.setDisabled(True)
+        self.ui.pushButton_fp_out.setDisabled(True)
 
-        fp_out = self.select_file_path()
-        if not fp_out:
+        # -----------------
+        # resolve file path
+        # -----------------
+        fp = self.select_file_path()
+        if not fp:
             self.statusBar().showMessage('Nothing selected.')
+            self.ui.lineEdit_in_shell.setEnabled(True)
+            self.ui.comboBox_in_shell.setEnabled(True)
+            self.ui.pushButton_ok.setEnabled(True)
+            self.ui.pushButton_fp_out.setEnabled(True)
+            return
+        else:
+            self.ui.lineEdit_in_fp_out.setText(fp)
+            self.__fp_out = fp
+            self.__fp_out_strain_csv = path.join(path.dirname(fp), path.basename(fp) + '.strain.csv')
+            self.__fp_out_processed = path.join(path.dirname(fp), path.basename(fp) + '.p')
 
-        self.__fp_out = fp_out
-        self.__dir_work = path.dirname(self.__fp_out)
-        self.__fp_out_processed = path.join(self.__dir_work, path.basename(self.__fp_out) + '.p')
+        # -----------------------------------------------------------
+        # convert *.out to *.out.p, *.out.p contains only strain data
+        # -----------------------------------------------------------
+        t = threading.Thread(target=self.__upon_output_file_selection_step_2)
+        t.start()
 
-        out2pstrain(self.__fp_out, self.__fp_out_processed)
+        self.__Signals.process_safir_out_file_complete.connect(self.__upon_output_file_selection_step_3)
 
-        self.__dict_out = pstrain2dict(self.__fp_out_processed)
+        # ... follow `self.__upon_output_file_selection_step_2` and `__upon_output_file_selection_step_3`
 
-        list_unique_shell = list(set(self.__dict_out['list_shell']))
-        list_unique_shell.sort()
-        list_unique_shell = [f'{i:g}' for i in list_unique_shell]
-        self.ui.comboBox_in_shell.clear()
-        self.ui.comboBox_in_shell.addItems(list_unique_shell)
+    def __upon_output_file_selection_step_2(self):
+        """Upon output file selection, step 2, analysis the `*.out` file (i.e. `fp_out`)."""
+        fp_out = self.__fp_out
+        fp_out_processed = self.__fp_out_processed
+        fp_out_strain_csv = self.__fp_out_strain_csv
 
-        save_csv(path.join(self.__dir_work, path.basename(self.__fp_out) + '.strain.csv'), **self.__dict_out)
+        # -----------------------------------------------------------
+        # convert *.out to *.out.p, *.out.p contains only strain data
+        # -----------------------------------------------------------
+        try:
+            out2pstrain(fp_out, fp_out_processed)
+        except Exception as e:
+            self.__dict_out = ValueError(f'Failed to convert `*.out` to `*.out.p`. {e}')
+            self.__Signals.process_safir_out_file_complete.emit(True)
+            return
 
-        self.statusBar().showMessage('*.out file processed.')
+        # --------------------------------------
+        # convert *.out.p to data in dict format
+        # --------------------------------------
+        # dict format {'list_shell': [...], 'list_surf': [...], 'list_rebar': [...], ...}
+        try:
+            dict_out = pstrain2dict(fp_out_processed)
+        except Exception as e:
+            self.__dict_out = ValueError(f'Failed to convert `*.out.p` to dict. {e}')
+            self.__Signals.process_safir_out_file_complete.emit(True)
+            return
+
+        try:
+            save_csv(fp_out_strain_csv, **dict_out)
+        except Exception as e:
+            self.__dict_out = ValueError(f'Failed to save strain data as *.csv. {e}')
+            self.__Signals.process_safir_out_file_complete.emit(True)
+            return
+
+        self.__dict_out = dict_out
+
+        self.__Signals.process_safir_out_file_complete.emit(True)
+
+    @Slot(bool)
+    def __upon_output_file_selection_step_3(self, v):
+        if v:
+            if isinstance(self.__dict_out, Exception):
+                self.statusBar().showMessage(f'{self.__dict_out}')
+                return
+
+            list_unique_shell = list(set(self.__dict_out['list_shell']))
+            list_unique_shell.sort()
+            list_unique_shell = [f'{i:g}' for i in list_unique_shell]
+
+            self.ui.comboBox_in_shell.setEnabled(True)
+            self.ui.lineEdit_in_shell.setEnabled(True)
+            self.ui.pushButton_ok.setEnabled(True)
+            self.ui.comboBox_in_shell.clear()
+            self.ui.comboBox_in_shell.currentIndexChanged.disconnect()
+            self.ui.comboBox_in_shell.addItems(list_unique_shell)
+            self.ui.comboBox_in_shell.currentIndexChanged.connect(self.__upon_shell_combobox_change)
+
+            self.ui.pushButton_fp_out.setEnabled(True)
+            self.statusBar().showMessage('Successfully processed *.out file.')
+            self.repaint()
 
     def __upon_shell_combobox_change(self):
         self.ui.lineEdit_in_shell.setText(self.ui.comboBox_in_shell.currentText())
+        self.ok_silent()
+
+    def ok_silent(self):
+
+        # --------------------
+        # Parse inputs from UI
+        # --------------------
+        try:
+            input_parameters = self.input_parameters
+        except Exception as e:
+            return ValueError(f'Failed to parse inputs {e}')
+
+        # Check if user defined `unique_shell` exists
+        if not input_parameters['unique_shell'] in self.__dict_out['list_shell']:
+            return ValueError(f'Shell index not found.')
+
+        # -------------------------------------------------------
+        # Make strain evaluation data for selected `unique_shell`
+        # -------------------------------------------------------
+        try:
+            self.__strain_lines = make_strain_lines_for_given_shell(input_parameters['unique_shell'], **self.__dict_out)
+        except Exception as e:
+            return ValueError(f'Failed to make strain lines {e}')
+
+        # ------------------
+        # Cast outputs to UI
+        # ------------------
+        try:
+            self.show_results_in_figure()
+            self.show_results_in_table()
+        except Exception as e:
+            return ValueError(f'Failed to show figure and table {e}')
+
+        self.statusBar().showMessage('Calculation complete')
+        self.repaint()
+
+        return 0
 
     def ok(self):
 
-        # clear ui output fields
-        # none
+        res = self.ok_silent()
 
-        # parse inputs from ui
-        input_parameters = self.input_parameters
-
-        # calculate
-        self.__strain_lines = make_strain_lines_for_given_shell(input_parameters['unique_shell'], **self.__dict_out)
-
-        # cast outputs to ui
-        self.show_results_in_figure()
-        self.show_results_in_table()
-        self.statusBar().showMessage('Calculation complete')
-        self.repaint()
+        if isinstance(res, Exception):
+            self.statusBar().showMessage(f'{res}')
 
     def make_figure_and_table(self, unique_shell: int, **kwargs):
         self.__strain_lines = make_strain_lines_for_given_shell(**kwargs)
@@ -232,7 +342,7 @@ class App0630(QMainWindow):
             window_geometry=win_geo,
             data_list=list_content,
             header_col=['time'] + list_label,
-            window_title='Parametric fire numerical results',
+            window_title='Table',
         )
 
         self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
@@ -246,7 +356,7 @@ class App0630(QMainWindow):
         # output_parameters = self.output_parameters
 
         if self.__Figure is None:
-            self.__Figure = PlotApp(self, title='Parametric fire plot')
+            self.__Figure = PlotApp(self, title='Figure')
             self.__Figure_ax = self.__Figure.add_subplots()
         else:
             self.__Figure_ax.clear()
