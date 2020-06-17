@@ -1,40 +1,22 @@
 from PySide2 import QtWidgets
-from fsetoolsGUI.gui.layout.standard_qmainwindow_content import Ui_MainWindow
+from fsetoolsGUI.gui.layout.std_qmainwindow_content import Ui_MainWindow
 
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 
 class App(QMainWindow):
 
-    # quality assurance log data with following format [[], []]
-    qa_data: list = [
-        [
-            '00000000',  # date
-            'Ian Fu',  # latest author
-            'XXX XXX'  # QA & Technical Review
-        ]
-    ]
-
     def __init__(self, parent=None):
 
         # instantiate ui
         super().__init__(
             parent=parent,
-            title='Standard Layout MainWindow Content',
-            shortcut_Return=self.calculate,
-            module_id='null'
+            module_id='0001',
+            mode=-1
         )
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init()
-
-        self.ui.pushButton_about.clicked.connect(self.show_about)
-
-    def example(self):
-        pass
-
-    def calculate(self):
-        pass
+        self.init(self)
 
 
 if __name__ == "__main__":

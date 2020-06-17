@@ -23,6 +23,14 @@ class AppInfo:
             'long name': 'a long name to be used as window title, tip text etc',
             'doc file path': 'documentation file path, in html format, used in gui About dialog'
         },
+        '0000': dict(
+            short_name='FSETools',
+            long_name='Fire Safety Engineering Tools',
+        ),
+        '0001': dict(
+            short_name='STD TEMPLATE 1',
+            long_name='Standard template for main window',
+        ),
         '0101': dict(
             short_name='ADB\ndata sheet\n1',
             long_name='ADB vol. 2 data sheet no. 1 - means of escape',
