@@ -4,9 +4,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats as stats
 from PySide2 import QtWidgets
+from PySide2.QtCore import Signal, Slot, QObject
 
 from fsetoolsGUI.etc.probability_distribution import solve_dist_for_mean_std
 from fsetoolsGUI.gui.layout.i0620_probabilistic_distribution import Ui_MainWindow
+from fsetoolsGUI.gui.logic.common import GridDialog
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
 logger = logging.getLogger('gui')
@@ -19,13 +21,42 @@ except ModuleNotFoundError:
     from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
 
 
+class Signals(QObject):
+    __upon_distribution_selection = Signal(int)
+
+    @property
+    def upon_distribution_selection(self):
+        return self.__upon_distribution_selection
+
+
 class App0620(QMainWindow):
 
+    # all implemented continuous distributions
+    # https://docs.scipy.org/doc/scipy/reference/tutorial/stats/continuous.html
     __dist_available = [
-        ['Normal', 'norm'],
-        ['Log normal', 'lognorm'],
+        ['Anglit', 'anglit'],
+        ['Arcsine', 'arcsine'],
+        ['Cauchy', 'cauchy'],
+        ['Cosine', 'cosine'],
+        ['Exponential', 'expon'],
+        ['Gilbrat', 'gilbrat'],
         ['Gumbel type I', 'gumbel_l'],
-        ['Gumbel type II', 'gumbel_r']
+        ['Gumbel type II', 'gumbel_r'],
+        ['Half Cauchy', 'halfcauchy'],
+        ['Half Normal', 'halfnorm'],
+        ['Half Logistic', 'halflogistic'],
+        ['Hyperbolic Secant', 'hypsecant'],
+        ['Laplace', 'laplace'],
+        ['Levy', 'levy'],
+        ['Left skewed Levy', 'levy_l'],
+        ['Log normal', 'lognorm'],  # customised
+        ['Logistic', 'logistic'],
+        ['Maxwell', 'maxwell'],
+        ['Normal', 'norm'],
+        ['Rayleigh', 'rayleigh'],
+        ['Semicircular', 'semicircular'],
+        ['Uniform', 'uniform'],
+        ['Wald', 'wald'],
     ]
 
     def __init__(self, parent=None, mode=None):
@@ -36,6 +67,7 @@ class App0620(QMainWindow):
         self.__ax_pdf = None
         self.__ax_cdf = None
         self.figure_canvas = None
+        self.signals = Signals()
 
         super().__init__(
             parent=parent,
@@ -46,7 +78,6 @@ class App0620(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.init(self)
-        self.init_comboBox_in_distribution()
 
         # instantiate figure and associated objects
 
@@ -55,9 +86,6 @@ class App0620(QMainWindow):
         self.figure_canvas = FigureCanvas(self.figure)
         self.figure_canvas.setStyleSheet("background-color:transparent;border:0px")  # set background transparent.
         self.ui.frame_layout.addWidget(self.figure_canvas)
-        # self.ui.frame_figure.addWidget(self.figure_canvas)
-        # self.toolbar = NavigationToolbar(self.figure_canvas, self)
-        # self.ui.frame_layout.addWidget(self.toolbar)
 
         # self.ui.
 
@@ -71,13 +99,19 @@ class App0620(QMainWindow):
         self.ui.lineEdit_in_sample_value.setEnabled(False)
         self.ui.lineEdit_in_cdf.setEnabled(False)
 
-    def init_comboBox_in_distribution(self):
-        self.ui.comboBox_in_distribution.addItems([i[0] for i in self.__dist_available])
-        self.ui.comboBox_in_distribution.currentIndexChanged.connect(self.__upon_comboBox_in_distribution_update)
+        self.signals.upon_distribution_selection.connect(self.upon_distribution_selection)
+        self.distribution_selection_dialog = GridDialog(
+            labels=[i[0] for i in self.__dist_available], grid_shape=(10,3),
+            signal_upon_selection=self.signals.upon_distribution_selection,
+            parent=self
+        )
+        self.ui.pushButton_in_select_distribution.clicked.connect(lambda: self.distribution_selection_dialog.show())
 
-    def __upon_comboBox_in_distribution_update(self):
-        dist_str = self.__dist_available[self.ui.comboBox_in_distribution.currentIndex()][1]
-        self.ui.lineEdit_in_distribution.setText(dist_str)
+    @Slot(int)
+    def upon_distribution_selection(self, distribution_index: int):
+        print(distribution_index)
+        print(self.__dist_available[distribution_index][1])
+        self.ui.lineEdit_in_distribution.setText(self.__dist_available[distribution_index][1])
 
     def ok(self):
         """Placeholder method to be overridden by child classes.
