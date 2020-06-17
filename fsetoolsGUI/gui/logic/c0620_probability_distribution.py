@@ -289,7 +289,4 @@ if __name__ == '__main__':
     app = App0620(mode=-1)
     app.show()
 
-    # ax = app.add_subplots()
-    # ax.plot([0, 1], [0, 1])
-
     qapp.exec_()
