@@ -68,6 +68,8 @@ class App0620(QMainWindow):
         self.__ax_cdf = None
         self.figure_canvas = None
         self.signals = Signals()
+        self.__x = None
+        self.__y = None
 
         super().__init__(
             parent=parent,
@@ -78,6 +80,9 @@ class App0620(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.init(self)
+
+        self.ui.label_in_mean.setToolTip('Mean of the distribution')
+        self.ui.lineEdit_in_mean.setToolTip('Mean of the distribution')
 
         # instantiate figure and associated objects
 
@@ -103,14 +108,16 @@ class App0620(QMainWindow):
         self.distribution_selection_dialog = GridDialog(
             labels=[i[0] for i in self.__dist_available], grid_shape=(10,3),
             signal_upon_selection=self.signals.upon_distribution_selection,
+            window_title='Distributions',
             parent=self
         )
         self.ui.pushButton_in_select_distribution.clicked.connect(lambda: self.distribution_selection_dialog.show())
 
+        self.ui.pushButton_in_select_distribution.adjustSize()
+
     @Slot(int)
     def upon_distribution_selection(self, distribution_index: int):
-        print(distribution_index)
-        print(self.__dist_available[distribution_index][1])
+        self.activateWindow()
         self.ui.lineEdit_in_distribution.setText(self.__dist_available[distribution_index][1])
 
     def ok(self):
@@ -314,6 +321,12 @@ class App0620(QMainWindow):
     @ax_pdf.setter
     def ax_pdf(self, ax):
         self.__ax_pdf = ax
+
+    def moveEvent(self, event):
+        geo = self.distribution_selection_dialog.geometry()
+        geo.setX(self.normalGeometry().x() + self.width())
+        geo.setY(self.normalGeometry().y())
+        self.distribution_selection_dialog.setGeometry(geo)
 
 
 if __name__ == '__main__':

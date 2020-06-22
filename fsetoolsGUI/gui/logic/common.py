@@ -46,8 +46,8 @@ class GridDialog(QDialog):
 
         self.radio_buttons = list()
         loop_count = 0
-        for i in range(grid_shape[0]):
-            for j in range(grid_shape[1]):
+        for j in range(grid_shape[1]):
+            for i in range(grid_shape[0]):
                 # create button
                 self.radio_buttons.append(QRadioButton(labels[loop_count]))
                 self.radio_buttons[-1].released.connect(lambda x=loop_count: self.emit_selected_index(x))
@@ -60,6 +60,10 @@ class GridDialog(QDialog):
 
             if loop_count >= len(labels):
                 break
+
+        self.adjustSize()
+        self.setFixedWidth(self.width())
+        self.setFixedHeight(self.height())
 
     def emit_selected_index(self, selected_index: int):
         if self.signal_upon_selection:

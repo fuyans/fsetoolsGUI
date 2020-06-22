@@ -54,14 +54,8 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_in_select_distribution">
-        <property name="minimumSize">
-         <size>
-          <width>70</width>
-          <height>0</height>
-         </size>
-        </property>
         <property name="text">
-         <string>Select</string>
+         <string> Select </string>
         </property>
        </widget>
       </item>
