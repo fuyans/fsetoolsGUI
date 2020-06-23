@@ -99,6 +99,10 @@ class AppInfo:
             short_name='Safir\npost\nprocsser',
             long_name='Safir post processor',
         ),
+        '0700': dict(
+            short_name='imgur\nUploader',
+            long_name='imgur Uploader',
+        ),
     }
 
     def __init__(self, code: Union[int, str] = None):
