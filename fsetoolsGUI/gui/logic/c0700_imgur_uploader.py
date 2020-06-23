@@ -5,6 +5,7 @@ from imgurpython.client import AuthWrapper
 from fsetoolsGUI.gui.layout.i0700_imgur_uploader import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
+from os import path
 
 
 class App0700(QMainWindow):
@@ -40,7 +41,8 @@ class App0700(QMainWindow):
         # =================
         # Slots and Signals
         # =================
-        self.ui.pushButton_select_img.clicked.connect(self.ok)
+        self.ui.pushButton_select_img.clicked.connect(self.select_image_and_upload)
+        self.ui.pushButton_upload.clicked.connect(self.upload_image)
 
     @property
     def input_parameters(self):
@@ -94,6 +96,36 @@ class App0700(QMainWindow):
     def output_parameters(self, v):
         img_url = v['img_url']
         self.ui.lineEdit_img_url.setText(img_url)
+
+    def select_image_and_upload(self):
+        fp = self.select_file_path()
+
+        if len(fp) == 0:
+            return 0
+
+        self.ui.lineEdit_fp.setText(fp)
+
+        self.upload_image()
+
+    def upload_image(self):
+        fp = self.ui.lineEdit_fp.text()
+
+        try:
+            self.statusBar().showMessage('Uploading image...')
+            self.repaint()
+            img_url = self.__upload_fp_to_imgur(fp=fp)
+        except Exception as e:
+            self.statusBar().showMessage(f'Upload failed {e}')
+            return e
+
+        try:
+            self.ui.lineEdit_img_url.setText(img_url)
+            self.ui.lineEdit_img_url.selectAll()
+            self.copy_str(img_url)
+            self.statusBar().showMessage('url copied to clipboard')
+        except Exception as e:
+            self.statusBar().showMessage(f'Copy url failed {e}')
+            return e
 
     def ok_silent(self):
 
