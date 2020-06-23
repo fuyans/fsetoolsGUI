@@ -4,7 +4,7 @@ import threading
 import requests
 from PySide2 import QtGui, QtCore
 from PySide2.QtCore import Slot
-from PySide2.QtWidgets import QErrorMessage, QPushButton, QDialog, QMainWindow
+from PySide2.QtWidgets import QErrorMessage, QPushButton, QDialog, QMainWindow, QLineEdit, QInputDialog, QShortcut
 from packaging import version
 
 import fsetoolsGUI
@@ -25,6 +25,7 @@ from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
 from fsetoolsGUI.gui.logic.c0611_parametric_fire import App as App0611
 from fsetoolsGUI.gui.logic.c0620_probability_distribution import App0620
 from fsetoolsGUI.gui.logic.c0630_safir_post_processor import App0630
+from fsetoolsGUI.gui.logic.c0700_imgur_uploader import App0700
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 
@@ -130,11 +131,26 @@ class MainWindow(QMainWindow):
         set_btn(self.ui.pushButton_0620_probability_distribution, App0620, *module_info('0620').short_and_long_names)
         set_btn(self.ui.pushButton_0630_safir_post_processor, App0630, *module_info('0630').short_and_long_names)
 
+        QShortcut(QtGui.QKeySequence(QtCore.Qt.SHIFT + QtCore.Qt.Key_D), self).activated.connect(self.activate_app_module_id)
+
     def activate_app(self, app_):
         logger.info(f'EXECUTED MODULE {app_}')
         app_ = app_()
         app_.show()
         self.activated_dialogs.append(app_)
+
+    @QtCore.Slot()
+    def activate_app_module_id(self):
+        txt, ok = QInputDialog.getText(
+            self,
+            "Activate app by Module Code",
+            "Module code:",
+            QLineEdit.Normal,
+            ""
+        )
+        if ok and txt:
+            if txt == '0700':
+                self.activate_app(App0700)
 
     def check_update(self):
         """
@@ -299,6 +315,25 @@ class MainWindow(QMainWindow):
         logger.debug('All subroutines terminated')
 
         event.accept()
+
+    # def keyPressEvent(self, event):
+    #     print(event)
+    #     logger.debug(event)
+    #     # if event.key() == QtGui.QKeySequence(QtCore.Qt.CTRL + QtCore.Qt.Key_D):
+    #     if event.key() == QtCore.Qt.Key_Find:
+    #
+    #         txt, ok = QInputDialog.getText(
+    #             self,
+    #             "QInputDialog().getText()",
+    #             "Module code:",
+    #             QLineEdit.Normal,
+    #             ""
+    #         )
+    #         if ok and txt:
+    #             if txt == '0700':
+    #                 self.activate_app(App0700)
+    #
+    #     event.accept()
 
 
 if __name__ == "__main__":

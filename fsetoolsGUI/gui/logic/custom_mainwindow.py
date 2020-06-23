@@ -278,6 +278,10 @@ class QMainWindow(QtWidgets.QMainWindow):
     def module_id(self) -> str:
         return self.__id
 
+    def copy_str(self, s: str):
+        clipboard = QtGui.QGuiApplication.clipboard()
+        clipboard.setText(s)
+
 
 if __name__ == '__main__':
     pass
