@@ -103,6 +103,10 @@ class AppInfo:
             short_name='imgur\nUploader',
             long_name='imgur Uploader',
         ),
+        '0701': dict(
+            short_name='s3\nUploader',
+            long_name='s3 uploader',
+        ),
     }
 
     def __init__(self, code: Union[int, str] = None):
