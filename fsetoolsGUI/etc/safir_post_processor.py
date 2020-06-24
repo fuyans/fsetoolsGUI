@@ -3,10 +3,10 @@ import re
 import numpy as np
 
 
-def out2pstrain(fp_out: str, fp_out_p1):
+def out2pstrain(fp_out: str, fp_out_strain):
+    """Convert Safir *.out file to a processed output file `fp_out_strain` containing strain data only."""
     count = 0
-    f_out_p1 = open(fp_out_p1, 'w+')
-    with open(fp_out, 'r') as f, open(fp_out_p1, 'w+') as f_out_p1:
+    with open(fp_out, 'r') as f, open(fp_out_strain, 'w+') as f_out_p1:
         while True:
             l = f.readline()
             if l:
@@ -19,10 +19,20 @@ def out2pstrain(fp_out: str, fp_out_p1):
             else:
                 break
 
-    f_out_p1.close()
-
 
 def pstrain2dict(fp: str) -> dict:
+    """Extract strain data from Safir *.out or processed output file containing strain data only and store in a dict.
+    The resulting dict data structure:
+    {
+        list_time: [...],
+        list_shell: [...],
+        list_surf: [...],
+        list_rebar: [...],
+        list_strain: [...],
+        list_strain2: [...],
+    }
+    All elements in the dict have the same length.
+    """
     rp_time_str = re.compile(r'TIME[ ]*=[ ]+[0-9.0-9]+')
     rp_time_val = re.compile(r'[0-9.0-9]+')
     rp_shell_str = re.compile(r'SHELL\:[ ]*[0-9]+')
@@ -89,8 +99,16 @@ def save_csv(fp: str, list_time, list_shell, list_surf, list_rebar, list_strain,
                fmt=['%10d', '%10d', '%10d', '%10d', '%10.7f', '%10.7f'])
 
 
-def make_strain_lines_for_given_shell(unique_shell: int, list_time, list_shell, list_surf, list_rebar, list_strain,
-                                      list_strain2):
+def make_strain_lines_for_given_shell(
+        unique_shell: int,
+        list_time,
+        list_shell,
+        list_surf,
+        list_rebar,
+        list_strain,
+        list_strain2
+):
+    """"""
     list_unique_surf = list(set(list_surf[list_shell == unique_shell]))
     list_unique_surf.sort()
 
@@ -108,10 +126,12 @@ def make_strain_lines_for_given_shell(unique_shell: int, list_time, list_shell, 
             label_ = f'surf {unique_surf:g} rebar {unique_rebar:g}'
 
             if len(strain_) > 0:
-                list_lines.append(dict(
-                    x=time_,
-                    y=strain_,
-                    label=label_
-                ))
+                list_lines.append(
+                    dict(
+                        x=time_,
+                        y=strain_,
+                        label=label_
+                    )
+                )
 
     return list_lines
