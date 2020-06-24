@@ -1,5 +1,5 @@
 from PySide2 import QtWidgets
-from PySide2.QtCore import Signal
+from PySide2.QtCore import Signal, Qt
 from PySide2.QtWidgets import QGridLayout, QDialog, QRadioButton
 
 
@@ -34,6 +34,11 @@ class GridDialog(QDialog):
         self.signal_upon_selection = signal_upon_selection
 
         super().__init__(parent=parent)
+
+        # disable help
+        self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+        # disable resize
+        self.setWindowFlag(Qt.MSWindowsFixedSizeDialogHint, True)
 
         if grid_shape is None:
             grid_shape = (len(labels), 1)
