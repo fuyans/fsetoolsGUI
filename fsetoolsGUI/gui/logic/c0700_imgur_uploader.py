@@ -6,6 +6,20 @@ from fsetoolsGUI.gui.layout.i0700_imgur_uploader import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 from os import path
+import threading
+
+
+class Signals(QtCore.QObject):
+    __upload_progress_bar_signal = QtCore.Signal(int)
+    __upload_complete = QtCore.Signal(bool)
+
+    @property
+    def upload_progress_bar_signal(self):
+        return self.__upload_progress_bar_signal
+
+    @property
+    def upload_complete(self):
+        return self.__upload_complete
 
 
 class App0700(QMainWindow):
@@ -15,11 +29,17 @@ class App0700(QMainWindow):
 
         self.__client_id = '2a5830013bb0f84'
         self.__client_secret = '02e494ed1134c8bfc89502fc22b243c14b92a0af'
-        self.__access_token = '570a314ab63c83adc5f95fa4273b55f6e5681f85'
-        self.__refresh_token = '9ad4c3f8c3c841f270fbcf40b60a91a9402a6bbf'
+        self.__access_token = 'e777696ed606854567533da71300ac153df2f5e1'
+        self.__refresh_token = 'a638e7e8b5c1aad9caa5b50dad505b8e64cc5c95'
 
         self.__imgur_client = ImgurClient(self.__client_id, self.__client_secret)
         self.__imgur_auth = None
+        self.__image_files = None
+        self.__image_urls = None
+
+        self.signals = Signals()
+
+        self.__Table = None
 
         # ================================
         # instantiation super and setup ui
@@ -42,7 +62,7 @@ class App0700(QMainWindow):
         # Slots and Signals
         # =================
         self.ui.pushButton_select_img.clicked.connect(self.select_image_and_upload)
-        self.ui.pushButton_upload.clicked.connect(self.upload_image)
+        self.signals.upload_progress_bar_signal.connect(self.ui.progressBar.setValue)
 
     @property
     def input_parameters(self):
@@ -71,105 +91,24 @@ class App0700(QMainWindow):
 
         return None
 
-    @input_parameters.setter
-    def input_parameters(self, v):
-
-        def num2str(num):
-            if isinstance(num, int):
-                return f'{num:g}'
-            elif isinstance(num, float):
-                return f'{num:.3f}'.rstrip('0').rstrip('.')
-            elif isinstance(num, str):
-                return v
-            elif num is None:
-                return ''
-            else:
-                return str(v)
-
-        pass
-
-    @property
-    def output_parameters(self):
-        return self.__output_fire_curve
-
-    @output_parameters.setter
-    def output_parameters(self, v):
-        img_url = v['img_url']
-        self.ui.lineEdit_img_url.setText(img_url)
-
     def select_image_and_upload(self):
-        fp = self.select_file_path()
-
-        if len(fp) == 0:
-            return 0
-
-        self.ui.lineEdit_fp.setText(fp)
-
-        self.upload_image()
-
-    def upload_image(self):
-        fp = self.ui.lineEdit_fp.text()
+        self.__image_files = self.select_file_paths()
 
         try:
-            self.statusBar().showMessage('Uploading image...')
-            self.repaint()
-            img_url = self.__upload_fp_to_imgur(fp=fp)
+            self.__upload_fp_to_imgur(self.__image_files)
         except Exception as e:
             self.statusBar().showMessage(f'Upload failed {e}')
-            return e
 
-        try:
-            self.ui.lineEdit_img_url.setText(img_url)
-            self.ui.lineEdit_img_url.selectAll()
-            self.copy_str(img_url)
-            self.statusBar().showMessage('url copied to clipboard')
-        except Exception as e:
-            self.statusBar().showMessage(f'Copy url failed {e}')
-            return e
-
-    def ok_silent(self):
-
-        # --------------------
-        # Parse inputs from UI
-        # --------------------
-
-        # -------------------------------------------------------
-        # Make strain evaluation data for selected `unique_shell`
-        # -------------------------------------------------------
-
-        # ------------------
-        # Cast outputs to UI
-        # ------------------
-
-        return 0
+        self.show_results_in_table()
 
     def ok(self):
+        pass
 
-        fp = self.select_file_path()
-
-        try:
-            self.statusBar().showMessage('Uploading image...')
-            self.repaint()
-            img_url = self.__upload_fp_to_imgur(fp=fp)
-        except Exception as e:
-            self.statusBar().showMessage(f'Upload failed {e}')
-            return e
-
-        self.output_parameters = dict(img_url=img_url)
-
-        self.copy_str(img_url)
-        self.ui.lineEdit_img_url.selectAll()
-
-        self.statusBar().showMessage('url copied to clipboard')
-
-        return 0
-
-
-    def select_file_path(self):
+    def select_file_paths(self) -> list:
         """select input file and copy its path to ui object"""
 
         # dialog to select file
-        path_to_file, _ = QtWidgets.QFileDialog.getOpenFileName(
+        path_to_file, _ = QtWidgets.QFileDialog.getOpenFileNames(
             self,
             "Select File",
             "~/",
@@ -182,35 +121,10 @@ class App0700(QMainWindow):
 
         # output_parameters = self.output_parameters
 
-        list_x = [list(i['x']) for i in self.__strain_lines]
-        list_y = [i['y'] for i in self.__strain_lines]
-        list_label = [i['label'] for i in self.__strain_lines]
+        list_content = [[i, path.basename(i), str(j)] for i, j in list(zip(self.__image_files, self.__image_urls))]
 
-        # make a full x values
-        x_all = []
-        for i in self.__strain_lines:
-            x_all += list(i['x'])
-        x_all = list(set(x_all))
-        x_all.sort()
-
-        # fill y values to match len(x_all)
-        for i in range(len(list_x)):
-            x = list_x[i]
-            y = list_y[i]
-            y_ = [0] * len(x_all)
-            for j, v in enumerate(x_all):
-                try:
-                    y_[j] = y[x.index(v)]
-                except ValueError:
-                    pass
-            list_y[i] = y_
-            print(len(y_))
-
-        list_content = [x_all]
-        [list_content.append(i) for i in list_y]
-        list_content = [[float(j) for j in i] for i in zip(*list_content)]
-
-        # print results (for console enabled version only)
+        for i in list_content:
+            print(i)
 
         try:
             win_geo = self.__Table.geometry()
@@ -223,7 +137,7 @@ class App0700(QMainWindow):
             parent=self,
             window_geometry=win_geo,
             data_list=list_content,
-            header_col=['time'] + list_label,
+            header_col=['file path', 'file name', 'url'],
             window_title='Table',
         )
 
@@ -233,7 +147,10 @@ class App0700(QMainWindow):
 
         return True
 
-    def __upload_fp_to_imgur(self, fp: str):
+
+    def __upload_fp_to_imgur(self, file_paths: list):
+
+        # file_paths = self.__image_files
 
         if self.__imgur_auth is None:
             auth_wrapper = AuthWrapper(
@@ -245,14 +162,23 @@ class App0700(QMainWindow):
             auth_wrapper.refresh()
             self.__imgur_auth = auth_wrapper
 
+
+
         self.__imgur_client.set_user_auth(
             access_token=self.__imgur_auth.current_access_token,
             refresh_token=self.__imgur_auth.refresh_token
         )
 
-        uploaded_img_url = self.__imgur_client.upload_from_path(fp)
-
-        return uploaded_img_url['link']
+        self.__image_urls = list()
+        for i, fp in enumerate(file_paths):
+            self.statusBar().showMessage(f'Uploading image {i+1}/{len(file_paths)}...')
+            self.repaint()
+            try:
+                uploaded_img_url = self.__imgur_client.upload_from_path(fp)
+                print(uploaded_img_url)
+                self.__image_urls.append(uploaded_img_url['link'])
+            except Exception as e:
+                self.__image_urls.append(f'{e}')
 
 
 if __name__ == "__main__":
