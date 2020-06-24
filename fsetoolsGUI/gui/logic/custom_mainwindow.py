@@ -212,23 +212,26 @@ class QMainWindow(QtWidgets.QMainWindow):
         event.accept()
 
     def __user_usage_stats(self):
-        rp = post_to_knack_user_usage_stats(
-            # user indicator
-            user=str(getlogin()),
+        try:
+            rp = post_to_knack_user_usage_stats(
+                # user indicator
+                user=str(getlogin()),
 
-            # current app version
-            version=fsetoolsGUI.__version__,
+                # current app version
+                version=fsetoolsGUI.__version__,
 
-            # datetime format following https://www.knack.com/developer-documentation/#type-date-time one line string
-            # example "03/28/2014 10:30pm"
-            date=datetime.now().strftime("%d%m%Y %H:%M%p"),
+                # datetime format following https://www.knack.com/developer-documentation/#type-date-time one line string
+                # example "03/28/2014 10:30pm"
+                date=datetime.now().strftime("%d%m%Y %H:%M%p"),
 
-            # action is the current app id
-            action=self.__id
-        )
+                # action is the current app id
+                action=self.__id
+            )
 
-        logger.info(f'STATS POST STATUS {rp}')
-        logger.debug(f'{rp.text}')
+            logger.info(f'STATS POST STATUS {rp}')
+            logger.debug(f'{rp.text}')
+        except Exception as e:
+            logger.error(f'User stats post failed {e}')
 
     def validate_show_statusBar_msg(self, var, type, err_msg: str):
         try:
