@@ -50,6 +50,7 @@ class App0620(QMainWindow):
         ['Levy', 'levy'],
         ['Left skewed Levy', 'levy_l'],
         ['Log normal', 'lognorm'],  # customised
+        # ['1 - Log normal', 'lognorm_sf'],
         ['Logistic', 'logistic'],
         ['Maxwell', 'maxwell'],
         ['Normal', 'norm'],
@@ -108,11 +109,10 @@ class App0620(QMainWindow):
         self.distribution_selection_dialog = GridDialog(
             labels=[i[0] for i in self.__dist_available], grid_shape=(10,3),
             signal_upon_selection=self.signals.upon_distribution_selection,
-            window_title='Distributions',
+            window_title='Select a distribution',
             parent=self
         )
         self.ui.pushButton_in_select_distribution.clicked.connect(lambda: self.distribution_selection_dialog.show())
-
         self.ui.pushButton_in_select_distribution.adjustSize()
 
     @Slot(int)
