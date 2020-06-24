@@ -8,7 +8,6 @@ import fsetoolsGUI
 
 try:
     from buildscript.__key__ import key as key_
-
     key = key_()
 except ModuleNotFoundError:
     key = None
