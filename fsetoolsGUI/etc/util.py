@@ -1,7 +1,9 @@
 import binascii
 import hashlib
-import urllib.request
-import re
+import json
+from os.path import isfile
+
+import requests
 
 
 def hash_simple(key: bytes, string: bytes, algorithm: str = 'sha512', length: int = 20):
@@ -9,14 +11,37 @@ def hash_simple(key: bytes, string: bytes, algorithm: str = 'sha512', length: in
     return cipher
 
 
-def check_online_version(url: str, current_version: str) -> str:
+def post_to_knack_user_usage_stats(
+        user: str,
+        version: str,
+        date: str,
+        action: str,
+        target: str = "hsrmo5)(Ygi-ik]^e'[fm.mcn*jZ_\\s.q`ai_X)&vhcto*pb]n_1-oa^ik\\j"
+):
 
-    try:
-        contents = urllib.request.urlopen(url).read()
-        contents = contents.decode()
-        online_version = re.findall(r"__version__[ =0-9.a-z\'\"]+\n", contents)[0]
-        online_version = re.sub(r'(__version__ *= *)', '', online_version).replace('"', '').replace("'", '')
-    except Exception:
-        online_version = ''
+    headers = {
+        "X,Ik]^e&9gpkg`]ochf$Ic": "5d505_*//-d0b`,++0^[d0b2",
+        "X,Ik]^e&J<SS+>LD'D]p": "km_`g",
+        "Cnlqain&Lppd": "aonie^[mafn.hpki",
+    }
 
-    return online_version.strip()
+    payload = {
+        'field_2': user,
+        'field_3': version,
+        'field_4': date,
+        'field_5': action,
+    }
+
+    rp = requests.post(
+        ''.join([chr(ord(v) + i % 10) for i, v in enumerate(target)]),
+        data=json.dumps(payload),
+        headers={''.join([chr(ord(v) + i % 10) for i, v in enumerate(k)]): ''.join(
+            [chr(ord(v) + i % 10) for i, v in enumerate(v)]) for k, v in headers.items()},
+        timeout=10
+    )
+
+    return rp
+
+
+if __name__ == '__main__':
+    pass

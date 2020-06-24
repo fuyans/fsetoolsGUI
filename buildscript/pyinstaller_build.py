@@ -2,7 +2,7 @@
 import os
 import subprocess
 import sys
-from os.path import join, realpath, dirname
+from os.path import join, realpath, dirname, relpath
 
 import fsetoolsGUI
 
@@ -11,6 +11,16 @@ try:
     key = key_()
 except ModuleNotFoundError:
     key = None
+
+import logging
+
+c_handler = logging.StreamHandler()
+c_handler.setFormatter(
+    logging.Formatter('%(asctime)s,%(msecs)d %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s')
+)
+logger = logging.getLogger('pyinstaller_build')
+logger.setLevel(logging.DEBUG)
+logger.addHandler(c_handler)
 
 
 def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build_entry.py', options: list = None):
@@ -21,14 +31,16 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
     cmd_option_list = [
         f'-n={app_name}',
         "--icon=" + realpath(join("etc", "ofr_logo_1_80_80.ico")),
+
+        # To exclude modules that not required in compiled GUI app
         '--exclude-module=' + 'docopt',
         '--exclude-module=' + 'setuptools',
     ]
     if 'dev' in fsetoolsGUI.__version__:
-        print('Dev. build is enabled.')
+        logger.info('Dev. build is enabled.')
     else:
         cmd_option_list.append('--windowed')
-        print('Dev. build is not enabled.')
+        logger.info('Dev. build is not enabled.')
 
     if options:
         cmd_option_list.extend(options)
@@ -36,12 +48,12 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
     # add encryption to pyz
     if key:
         cmd_option_list.append(f'--key={key}')
-        print('Encryption is enabled.')
+        logger.info('Encryption is enabled.')
     else:
-        print('Encryption is not enabled.')
+        logger.info('Encryption is not enabled.')
 
     cmd = ['pyinstaller'] + cmd_option_list + [fp_target_py]
-    print('COMMAND:', ' '.join(cmd))
+    logger.debug(f'COMMAND: {" ".join(cmd)}')
 
     with open('pyinstaller_build.log', 'wb') as f:
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -50,21 +62,40 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
             f.write(c)
 
 
+def make_fp_images() -> list:
+    list_fp = list()
+    list_fp_append = list_fp.append
+
+    for dirpath, dirnames, filenames in os.walk(join(fsetoolsGUI.__root_dir__, 'gui')):
+
+        for fn in filenames:
+            if fn.endswith('.png') or fn.endswith('.ico') or fn.endswith('.html') or fn.endswith('.css'):
+                list_fp_append(join(dirpath, fn))
+
+    return list_fp
+
+
 def main():
-    build_gui(
-        options=[
-            "--onedir",  # output unpacked dist to one directory, including an .exe file
-            "--noconfirm",  # replace output directory without asking for confirmation
-            "--clean",  # clean pyinstaller cache and remove temporary files
-            f'--add-data={realpath(join("etc", "ofr_logo_1_80_80.ico"))}{os.pathsep}etc',
-        ]
-    )
-    # build_gui(
-    #     options=[
-    #         "--onefile",  # output one .exe file
-    #         "--noconfirm",  # replace output directory without asking for confirmation
-    #     ]
-    # )
+    options = [
+        "--onedir",  # output unpacked dist to one directory, including an .exe file
+        "--noconfirm",  # replace output directory without asking for confirmation
+        # "--console",
+        "--clean",  # clean pyinstaller cache and remove temporary files
+        f'--add-data={realpath(join("etc", "ofr_logo_1_80_80.ico"))}{os.pathsep}etc',  # include icon file
+    ]
+
+    # include fsetoolsGUI/gui/*
+    options.extend([f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=fsetoolsGUI.__root_dir__)}' for fp in
+                    make_fp_images()])
+
+    # include fsetoolsGUI/gui/docs
+    options.extend([f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=fsetoolsGUI.__root_dir__)}' for fp in
+                    make_fp_images()])
+
+    # include fsetoolsGUI/gui/docs/*.md
+    # options.extend([f'--add-data={fp}{os.pathsep}{join("gui", "docs")}' for fp in make_fp_about_md()])
+
+    build_gui(options=options)
 
 
 if __name__ == "__main__":

@@ -40,10 +40,12 @@ setuptools.setup(
         "fsetoolsGUI.gui",
         "fsetoolsGUI.gui.layout",
         "fsetoolsGUI.gui.logic",
-        "fsetoolsGUI.lib",
-        "fsetoolsGUI.libstd",
     ],
     install_requires=requirements,
     include_package_data=True,
     entry_points={"console_scripts": ["fsetoolsGUI=fsetoolsGUI.cli.__main__:main"]},
+    ext_modules=[
+        setuptools.extension.Extension("fputs", ["fsetoolsGUI/etc/realpythonexample.c"]),
+        # setuptools.extension.Extension("superfastexample", ["fsetoolsGUI/etc/msexample.cpp"])
+    ],
 )

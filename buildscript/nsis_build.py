@@ -3,8 +3,6 @@ import subprocess
 import sys
 from os.path import join, realpath, dirname
 
-from buildscript.pyinstaller_build import main as main_pyinstaller
-from fsetoolsGUI.gui.ui2py import ui2py
 import fsetoolsGUI
 from buildscript import nsis_build_nsi
 
@@ -43,16 +41,18 @@ def make_nsi_file():
         dict_var['version_major'] = v_list[0]
     except IndexError:
         dict_var['version_major'] = 0
+
     try:
         dict_var['version_minor'] = v_list[1]
     except IndexError:
         dict_var['version_minor'] = 0
+
     try:
         dict_var['version_build'] = v_list[2]
     except IndexError:
         dict_var['version_build'] = 0
 
-    dict_var['fn_installer'] = f'FSETOOLS {".".join(fsetoolsGUI.__version__.split(".")[:3])}.exe'
+    dict_var['fn_installer'] = f'FSETOOLS {".".join(fsetoolsGUI.__version__.split("."))}.exe'
 
     with open(join(dirname(realpath(__file__)), 'nsis_build.nsi'), 'w+') as f:
         f.write(nsis_build_nsi.nsi_script.format(**dict_var))
@@ -70,8 +70,6 @@ def main():
 
 
 if __name__ == '__main__':
-    ui2py()
-    main_pyinstaller()
     make_nsi_file()
     make_nsh_files()
     main()

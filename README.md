@@ -1,14 +1,36 @@
-# fseutil
+# fsetoolsGUI
 
 [![Build Status](https://travis-ci.com/fsepy/fsetools.svg?branch=master)](https://travis-ci.com/fsepy/fsetools)
 
-Fire Safety Engineering Tools.
+`fsetoolsGUI` Fire safety Engineering Tools Graphical User Interface, is a GUI wrapper to [`fsetools`](https://github.com/fsepy/fsetools).
 
-## Getting Started
+## Getting started
 
 Documentation is work in progress.
 
-### Installation
+This tool is recommended to be used via three ways:
+
+1. Install the app on your machine. No Python runtime is required (i.e. no programming involved).
+2. Use command line interface implemented in `fsetoolsGUI`. This requires Python runtime and installation of `fsetoolsGUI` as a library.
+3. Use as a library (i.e. to make changes)
+
+As always, `fsetoolsGUI` can be used as a Python library (`import fsetoolsgui as ft`). Uses are documented in docstring.
+
+### Graphical user interface
+
+Compiled GUI executable can be downloaded on the [Releases](https://github.com/fuyans/fsetoolsGUI/releases) page.
+
+GUI components can also accessed from the CLI (see section below).
+
+### Command line interface
+
+Once `fsetoolsGUI` is installed as a Python library, CLI usage can be revealed using the following command:
+
+```shell
+(base) C:\Users\Fu>fsetoolsgui -h
+```
+
+### Install fsetoolsGUI as a library
 
 [Python](https://www.python.org/downloads/) 3.7 or later is required. [Anaconda Distribution](https://www.anaconda.com/distribution/#download-section) is recommended for new starters, it includes Python and few useful packages including a package management tool pip (see below).
 
@@ -17,25 +39,76 @@ Documentation is work in progress.
 1. to use `pip` install from PyPI:
 
     ```sh
-    pip install --upgrade fsetools
+    pip install --upgrade fsetoolsGUI
     ```
 
 2. to use `pip` install from GitHub (requires [git](https://git-scm.com/downloads)):  
 
-    *Note installing `fsetools` via this route will include the latest commits/changes to the library.*  
+    *Note installing `fsetoolsGUI` via this route will include the latest commits/changes to the library.*  
 
     ```sh
-    pip install --upgrade "git+https://github.com/fsepy/fsetools.git@dev"
+    pip install --upgrade "git+https://github.com/fuyans/fsetoolsGUI.git@master"
     ```
 
+Dependencies see [requirements.txt](.\requirements.txt).
 
-### Command line interface
+## Project structure
 
-Once `fsetools` is installed, CLI help can be summoned using the following command:
-
-```shell
-(base) C:\Users\Fu>fsetools -h
 ```
+fsetoolsGUI/
+├── fsetoolsGUI/
+│   ├── cli/
+│   ├── etc/
+│   └── gui/
+│       ├── images/
+│       ├── layout/
+│       └── logic/
+└── buildscript/
+```
+
+The root directory contains two folder, `fsetoolsGUI` and `buildscript` are for source code / data and compile script, respectively.
+
+Within `fsetoolsGUI`:
+
+ - `cli` command line interface modules.
+ - `etc` helper / utility functions that useful to wider project modules.
+ - `gui` graphical user interface modules:
+    - `layout` UI layouts.
+    - `logic` UI logic.
+
+## Summary of available and planned modules
+
+Module code follows the format below:
+
+- 00**. Utility modules that the main application dependent on, e.g. update routine etc.
+- 01**. Means of escape related calculations.
+- 04**. External fire spread related calculations.
+- 06**. Miscellaneous and/or uncategorised tools.
+
+Status designation:
+
+- Planned. Planned but not started.
+- WIP. Work in progress.
+- Completed. Completed and peer reviewed.
+
+| Module code | Module name                                                  | Status    |
+| ----------- | ------------------------------------------------------------ | --------- |
+| 0101        | ADB data sheet no. 1                                         | Completed |
+| 0102        | BS 9999 data sheet no. 1                                     | Completed |
+| 0103        | BS 9999 merging flow                                         | Completed |
+| 0104        | PD 7974 kitchen hob radiation                                | Planned   |
+| 0111        | PD 7974 heat detector activation                             | Completed |
+| 0401        | BR 187 parallel oriented rectangle emitter and receiver      | Completed |
+| 0402        | BR 187 perpendicular oriented rectangle emitter and receiver | Completed |
+| 0403        | BR 187 parallel oriented rectangle emitter and eccentric receiver | WIP       |
+| 0404        | BR 187 perpendicular oriented rectangle emitter and eccentric receiver | WIP       |
+| 0405        | TRA 3D polygon emitter and a single point                    | Planned   |
+| 0406        | TRA 2D parallel orientated contour plot                      | WIP       |
+| 0407        | TRA cuboid enclosure model                                   | WIP       |
+| 0601        | OFR file naming protocol                                     | Completed |
+| 0602        | PD 7974 flame height                                         | Completed |
+| 0603        | FDS mesh resolution                                          | Planned   |
+| 0604        | FDS minimum vent size                                        | Planned   |
 
 ## Authors
 
@@ -43,4 +116,4 @@ Once `fsetools` is installed, CLI help can be summoned using the following comma
 
 ## License
 
-This project is licensed under the Apache License version 2.0 - see the [LICENSE](LICENSE) file for details
+This project is licensed under the Apache License version 2.0 - see the [LICENSE](LICENSE) file for details.

@@ -53,7 +53,7 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
+# Unit example / coverage reports
 htmlcov/
 .tox/
 .nox/
@@ -134,21 +134,31 @@ dmypy.json
 
 # Dev files
 /.coverage
+*key.txt
+*__key__.py
+*.png
 
 # build files
 buildscript/build
 buildscript/dist
-fsetools/build
-fsetools/dist
+fsetoolsGUI/build
+fsetoolsGUI/dist
 buildscript/*.exe
 buildscript/*.nsh
 buildscript/*.nsi
 
 # Temporary UI files
-fsetools/gui/layout/*.py
+fsetoolsGUI/gui/layout/*.py
+fsetoolsGUI/gui/docs/*
 
 # Include project files
-!fsetools/lib/
-*key.txt
-*__key__.py
-*.png
+!fsetoolsGUI/lib/
+!fsetoolsGUI/gui/images/*.png
+fsetoolsGUI/gui/images/._*.png
+!fsetoolsGUI/gui/docs/
+!fsetoolsGUI/gui/docs/*/*.png
+fsetoolsGUI/gui/docs/__init__.py
+!fsetoolsGUI/gui/icons/*.png
+fsetoolsGUI/gui/icons/._*.png
+!docs/*.md
+!docs/*.assets/*.png
