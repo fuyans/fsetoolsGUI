@@ -15,7 +15,7 @@ def post_to_knack_user_usage_stats(
         user: str,
         version: str,
         date: str,
-        action: str,
+        content: str,
         target: str = "hsrmo5)(Ygi-ik]^e'[fm.mcn*jZ_\\s.q`ai_X)&vhcto*pb]n_1-oa^ik\\j"
 ):
 
@@ -29,7 +29,7 @@ def post_to_knack_user_usage_stats(
         'field_2': user,
         'field_3': version,
         'field_4': date,
-        'field_5': action,
+        'field_5': content,
     }
 
     rp = requests.post(

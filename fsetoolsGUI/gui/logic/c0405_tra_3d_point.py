@@ -7,21 +7,21 @@ from fsetools.lib.fse_thermal_radiation_3d import single_receiver, heat_flux_to_
 import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import dialog_0404_page as image_figure
 from fsetoolsGUI.gui.layout.i0405_tra_3d_point import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 
 
-class Dialog0405(QMainWindow):
+class App(AppBaseClass):
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
     fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0405.md')  # doc file path
+    app_id = '0405'
+    app_name_short = 'TRA\n3D single point'
+    app_name_long = 'TRA 3D polygon emitter and a single point'
 
     def __init__(self, parent=None):
-        super().__init__(
-            module_id='0405',
-            parent=parent,
-        )
+        super().__init__(parent=parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init(self)
+        self.init()
 
         from fsetoolsGUI.gui.logic.common import filter_objects_by_name
         for i in filter_objects_by_name(self.ui.groupBox_out, object_types=[QtWidgets.QLineEdit]):
@@ -66,7 +66,8 @@ class Dialog0405(QMainWindow):
         # parse inputs from ui
         emitter_points = int(self.ui.lineEdit_in_emitter_points.text())
         emitter_vertices = list()
-        for i in [i.split(',') for i in str.strip(self.ui.plainTextEdit_in_emiter_xyz.toPlainText()).replace(' ', '').split('\n')]:
+        for i in [i.split(',') for i in
+                  str.strip(self.ui.plainTextEdit_in_emiter_xyz.toPlainText()).replace(' ', '').split('\n')]:
             if len(i) == 0:
                 continue
             i_ = list()
@@ -80,7 +81,7 @@ class Dialog0405(QMainWindow):
         Q = float(self.ui.lineEdit_in_Q.text())
 
         # calculate
-        emitter_temperature = heat_flux_to_temperature(Q*1000)
+        emitter_temperature = heat_flux_to_temperature(Q * 1000)
         receiver_heat_flux, phi = single_receiver(
             ep_vertices=np.array(emitter_vertices),
             ep_norm=np.array(emitter_normal),
@@ -93,8 +94,17 @@ class Dialog0405(QMainWindow):
 
         # write results to ui
         self.ui.lineEdit_out_Phi.setText(f'{phi:.4f}')
-        self.ui.lineEdit_out_q.setText(f'{receiver_heat_flux/1000:.2f}')
+        self.ui.lineEdit_out_q.setText(f'{receiver_heat_flux / 1000:.2f}')
         self.ui.lineEdit_out_T.setText(f'{emitter_temperature:.2f}')
 
         # refresh ui
         self.repaint()
+
+
+if __name__ == '__main__':
+    import sys
+
+    qapp = QtWidgets.QApplication(sys.argv)
+    app = App()
+    app.show()
+    qapp.exec_()

@@ -5,7 +5,7 @@ from PySide2 import QtWidgets
 import fsetoolsGUI
 from fsetoolsGUI.gui.layout.i0104_merging_flow import Ui_MainWindow
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 
 
 def clause_2_23_merging_flow(N: float, S: float, D: float, W_SE: float) -> tuple:
@@ -21,17 +21,17 @@ def clause_2_23_merging_flow(N: float, S: float, D: float, W_SE: float) -> tuple
     return W, condition
 
 
-class App(QMainWindow):
+class App(AppBaseClass):
+    app_id = '0104'
+    app_name_short = 'ADB\nmerging\nflow'
+    app_name_long = 'ADB merging flow at final exit level'
 
     def __init__(self, parent=None):
         # instantiation
-        super().__init__(
-            module_id='0104',
-            parent=parent,
-        )
+        super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init(self)
+        self.init()
 
         # set all outputs lineedit to readonly
         for i in filter_objects_by_name(
@@ -45,29 +45,14 @@ class App(QMainWindow):
                 i.setEnabled(False)
 
         # set up context image
-        self.ui.label_image_figure.setPixmap(self.make_pixmap_from_fp(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0104-1.png')))
-
-        # placeholder texts
-        # self.ui.lineEdit_in_D.setPlaceholderText('1.9')
-        # self.ui.lineEdit_in_S_up.setPlaceholderText('1200')
-        # self.ui.lineEdit_in_W_SE.setPlaceholderText('1050')
-        # self.ui.lineEdit_in_N.setPlaceholderText('61')
-
-        # set up validators
-        # DEPRECIATED, NO GOOD TO IMPOSE RESTRICTIONS WITHOUT ALERTING USER
-        # self.ui.lineEdit_in_W_SE.setValidator(self._validator_unsigned_float)
-        # self.ui.lineEdit_in_S_up.setValidator(self._validator_unsigned_float)
-        # self.ui.lineEdit_in_D.setValidator(self._validator_unsigned_float)
-        # self.ui.lineEdit_in_N.setValidator(self._validator_unsigned_float)
+        self.ui.label_image_figure.setPixmap(
+            self.make_pixmap_from_fp(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0104-1.png')))
 
         # signals
-        self.ui.pushButton_ok.clicked.connect(self.calculate)
-        self.ui.pushButton_example.clicked.connect(self.example)
-        self.ui.lineEdit_in_D.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_S_up.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_W_SE.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_N.textChanged.connect(self.calculate)
-
+        self.ui.lineEdit_in_D.textChanged.connect(self.ok)
+        self.ui.lineEdit_in_S_up.textChanged.connect(self.ok)
+        self.ui.lineEdit_in_W_SE.textChanged.connect(self.ok)
+        self.ui.lineEdit_in_N.textChanged.connect(self.ok)
 
     def example(self):
         self.ui.lineEdit_in_D.setText('1.9')
@@ -157,7 +142,7 @@ class App(QMainWindow):
 
         return dict(W_FE=W_FE, condition_check=condition_check)
 
-    def calculate(self):
+    def ok(self):
 
         # clear ui output fields
         self.ui.checkBox_out_check.setChecked(False)
@@ -194,4 +179,3 @@ if __name__ == "__main__":
     app = App()
     app.show()
     qapp.exec_()
-

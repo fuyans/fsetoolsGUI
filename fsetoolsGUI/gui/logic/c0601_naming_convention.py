@@ -4,10 +4,13 @@ from datetime import datetime
 from PySide2 import QtGui
 
 from fsetoolsGUI.gui.layout.i0601_naming_convention import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 
 
-class App(QMainWindow):
+class App(AppBaseClass):
+    app_id = '0601'
+    app_name_short = 'OFR\nfile naming\nconvention'
+    app_name_long = 'OFR file name generator'
     __re_date = re.compile(r'[0-9]{4,6}')
     __re_project_no = re.compile(r'[a-zA-Z]{2}[0-9]{5,6}')
     __re_project_stage = re.compile(r'.+')
@@ -15,14 +18,10 @@ class App(QMainWindow):
 
     def __init__(self, parent=None):
         # init
-        super().__init__(
-            module_id='0601',
-            parent=parent,
-            freeze_window_size=True,
-        )
+        super().__init__(parent=parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init(self)
+        self.init()
 
         self.ui.lineEdit_1_date.setToolTip('In format YYMMDD (e.g. 210131) or YYYYMMDD (e.g. 20210131)')
         self.ui.lineEdit_5_title.setToolTip('In plain English')

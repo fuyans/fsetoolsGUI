@@ -3,16 +3,18 @@ import os.path as path
 from PySide2 import QtWidgets, QtGui, QtCore
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
 from fsetoolsGUI.gui.layout.i0101_data_sheet import Ui_MainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 
 
-class DialogPageDisplay(QMainWindow):
-    def __init__(self, module_id: str, fp_image: str, parent=None):
-        super().__init__(
-            module_id=module_id,
-            parent=parent,
-        )
+class DialogPageDisplay(AppBaseClass):
+    app_id = None
+    app_name_short = None
+    app_name_long = None
+
+    def __init__(self, fp_image: str, parent=None):
+
+        super().__init__(parent=parent)
 
         self.mscroll_last_move_y = 0
         self.mscroll_last_move_x = 0
@@ -25,7 +27,7 @@ class DialogPageDisplay(QMainWindow):
         self.scroll_vbar = self.ui.scrollArea.verticalScrollBar()
         self.scroll_hbar = self.ui.scrollArea.horizontalScrollBar()
 
-        self.init(self)
+        self.init()
 
     def mouseMoveEvent(self, event):
 
@@ -86,9 +88,12 @@ class DialogPageDisplay(QMainWindow):
 
 
 class App(DialogPageDisplay):
+    app_id = '0101'
+    app_name_short = 'ADB\ndata sheet\n1'
+    app_name_long = 'ADB vol. 2 data sheet no. 1 - means of escape'
+
     def __init__(self, parent=None):
         super().__init__(
-            module_id='0101',
             fp_image=path.join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0101-0.png'),
             parent=parent
         )

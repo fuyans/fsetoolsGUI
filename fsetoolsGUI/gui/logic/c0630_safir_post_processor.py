@@ -6,7 +6,7 @@ from PySide2.QtCore import Slot
 
 from fsetoolsGUI.etc.safir_post_processor import out2pstrain, pstrain2dict, save_csv, make_strain_lines_for_given_shell
 from fsetoolsGUI.gui.layout.i0630_safir_postprocessor import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
@@ -19,14 +19,12 @@ class Signals(QtCore.QObject):
         return self.__process_safir_out_file_complete
 
 
-class App0630(QMainWindow):
-    __output_fire_curve = dict(
-        time=None,
-        temperature=None
-    )
+class App(AppBaseClass):
+    app_id = '0630'
+    app_name_short = 'Safir\npost\nprocsser'
+    app_name_long = 'Safir post processor'
 
     def __init__(self, parent=None, mode=None):
-        module_id = '0630'
         self.__dict_out = None
         self.__Table = None
         self.__Figure = None
@@ -36,19 +34,15 @@ class App0630(QMainWindow):
         self.__fp_out_strain_csv = None
         self.__strain_lines = None
         self.__Signals = Signals()
+        self.__output_fire_curve = dict(time=None, temperature=None)
 
         # ================================
         # instantiation super and setup ui
         # ================================
-        super().__init__(
-            module_id=module_id,
-            parent=parent,
-            freeze_window_size=False,
-            mode=mode
-        )
+        super().__init__(parent=parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init(self)
+        self.init()
 
         # =======================
         # lineEdit default values
@@ -96,38 +90,6 @@ class App0630(QMainWindow):
         # ================
 
         return dict(fp_out=fp_out, unique_shell=unique_shell)
-
-    @input_parameters.setter
-    def input_parameters(self, v):
-
-        def num2str(num):
-            if isinstance(num, int):
-                return f'{num:g}'
-            elif isinstance(num, float):
-                return f'{num:.3f}'.rstrip('0').rstrip('.')
-            elif isinstance(num, str):
-                return v
-            elif num is None:
-                return ''
-            else:
-                return str(v)
-
-        # units conversion
-        v['duration'] /= 60  # seconds -> minutes
-        v['fire_limiting_time'] /= 60  # seconds -> minutes
-        v['initial_temperature'] -= 273.15  # degree Kelvin -> degree Celsius
-
-        self.ui.lineEdit_in_duration.setText(num2str(v['duration']))
-        self.ui.lineEdit_in_room_total_surface_area.setText(num2str(v['room_total_surface_area']))
-        self.ui.lineEdit_in_room_floor_area.setText(num2str(v['room_floor_area']))
-        self.ui.lineEdit_in_ventilation_area.setText(num2str(v['ventilation_area']))
-        self.ui.lineEdit_in_ventilation_opening_height.setText(num2str(v['ventilation_opening_height']))
-        self.ui.lineEdit_in_fuel_density.setText(num2str(v['fuel_density']))
-        self.ui.lineEdit_in_lining_thermal_conductivity.setText(num2str(v['lining_thermal_conductivity']))
-        self.ui.lineEdit_in_lining_density.setText(num2str(v['lining_density']))
-        self.ui.lineEdit_in_lining_thermal_heat_capacity.setText(num2str(v['lining_thermal_heat_capacity']))
-        self.ui.lineEdit_in_fire_limiting_time.setText(num2str(v['fire_limiting_time']))
-        self.ui.lineEdit_in_initial_temperature.setText(num2str(v['initial_temperature']))
 
     @property
     def output_parameters(self):
@@ -358,6 +320,8 @@ class App0630(QMainWindow):
         if self.__Figure is None:
             self.__Figure = PlotApp(self, title='Figure')
             self.__Figure_ax = self.__Figure.add_subplots()
+            self.activated_dialogs = self.__Figure
+            self.activated_dialogs = self.__Figure_ax
         else:
             self.__Figure_ax.clear()
 
@@ -379,6 +343,6 @@ if __name__ == "__main__":
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App0630(mode=-1)
+    app = App()
     app.show()
     qapp.exec_()

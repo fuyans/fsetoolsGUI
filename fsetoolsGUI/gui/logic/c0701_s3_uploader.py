@@ -1,19 +1,9 @@
-import logging
 from os import path
 
-logger = logging.getLogger('gui')
-
+import boto3
 from PySide2 import QtWidgets, QtCore
 
-try:
-    from imgurpython import ImgurClient
-    from imgurpython.client import AuthWrapper
-except ModuleNotFoundError as e:
-    ImgurClient = None
-    ImgurClient = None
-    logger.error(f'Module `imgurpython` not found {e}')
-
-from fsetoolsGUI.gui.layout.i0700_imgur_uploader import Ui_MainWindow
+from fsetoolsGUI.gui.layout.i0701_s3_uploader import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
@@ -32,23 +22,18 @@ class Signals(QtCore.QObject):
 
 
 class App(AppBaseClass):
-    app_id = '0700'
-    app_name_short = 'imgur\nUploader'
-    app_name_long = 'imgur Uploader'
+    app_id = '0701'
+    app_name_short = 's3\nUploader'
+    app_name_long = 's3 Uploader'
 
     def __init__(self, parent=None, mode=None):
 
-        self.__client_id = '2a5830013bb0f84'
-        self.__client_secret = '02e494ed1134c8bfc89502fc22b243c14b92a0af'
-        self.__access_token = 'e777696ed606854567533da71300ac153df2f5e1'
-        self.__refresh_token = 'a638e7e8b5c1aad9caa5b50dad505b8e64cc5c95'
-
-        self.__imgur_client = ImgurClient(self.__client_id, self.__client_secret)
-        self.__imgur_auth = None
-        self.__image_files = None
-        self.__image_urls = None
+        self.__s3_client = boto3.client('s3')
 
         self.signals = Signals()
+
+        self.__fp_list = None
+        self.__url_list = None
 
         self.__Table = None
 
@@ -69,45 +54,26 @@ class App(AppBaseClass):
         # =================
         self.ui.pushButton_select_img.clicked.connect(self.select_image_and_upload)
 
-    @property
-    def input_parameters(self):
-
-        def str2int(v):
-            try:
-                return int(v)
-            except:
-                return None
-
-        # ====================
-        # parse values from ui
-        # ====================
-
-        # ======================================================
-        # check if necessary inputs are provided for calculation
-        # ======================================================
-
-        # ==============================
-        # validate individual parameters
-        # ==============================
-
-        # ================
-        # units conversion
-        # ================
-
-        return None
-
     def select_image_and_upload(self):
-        self.__image_files = self.select_file_paths()
+        self.__fp_list, _ = QtWidgets.QFileDialog.getOpenFileNames(
+            self,
+            "Select File",
+            "~/",
+            "All ()")
+
+        if len(self.__fp_list) == 0:
+            self.statusBar().showMessage('Nothing to upload')
+            return
 
         try:
-            self.__upload_fp_to_imgur(self.__image_files)
+            self.__upload_to_s3(self.__fp_list, dir=self.ui.lineEdit_in_key.text())
         except Exception as e:
             self.statusBar().showMessage(f'Upload failed {e}')
 
         self.show_results_in_table()
 
     def ok(self):
-        pass
+        self.select_image_and_upload()
 
     def select_file_paths(self) -> list:
         """select input file and copy its path to ui object"""
@@ -126,10 +92,7 @@ class App(AppBaseClass):
 
         # output_parameters = self.output_parameters
 
-        list_content = [[i, path.basename(i), str(j)] for i, j in list(zip(self.__image_files, self.__image_urls))]
-
-        for i in list_content:
-            print(i)
+        list_content = [[i, path.basename(i), str(j)] for i, j in list(zip(self.__fp_list, self.__url_list))]
 
         try:
             win_geo = self.__Table.geometry()
@@ -152,35 +115,18 @@ class App(AppBaseClass):
 
         return True
 
-    def __upload_fp_to_imgur(self, file_paths: list):
+    def __upload_to_s3(self, file_paths: list, dir: str, bucket: str = 'ofr'):
 
-        # file_paths = self.__image_files
-
-        if self.__imgur_auth is None:
-            auth_wrapper = AuthWrapper(
-                access_token=self.__access_token,
-                refresh_token=self.__refresh_token,
-                client_id=self.__client_id,
-                client_secret=self.__client_secret,
-            )
-            auth_wrapper.refresh()
-            self.__imgur_auth = auth_wrapper
-
-        self.__imgur_client.set_user_auth(
-            access_token=self.__imgur_auth.current_access_token,
-            refresh_token=self.__imgur_auth.refresh_token
-        )
-
-        self.__image_urls = list()
+        self.__url_list = list()
         for i, fp in enumerate(file_paths):
             self.statusBar().showMessage(f'Uploading image {i + 1}/{len(file_paths)}...')
             self.repaint()
+
             try:
-                uploaded_img_url = self.__imgur_client.upload_from_path(fp)
-                print(uploaded_img_url)
-                self.__image_urls.append(uploaded_img_url['link'])
+                self.__s3_client.upload_file(fp, bucket, f'{dir}{path.basename(fp)}')
+                self.__url_list.append(f'https://{bucket}.s3.eu-west-2.amazonaws.com/{dir}{path.basename(fp)}')
             except Exception as e:
-                self.__image_urls.append(f'{e}')
+                self.__url_list.append(f'{e}')
 
 
 if __name__ == "__main__":

@@ -4,17 +4,18 @@ from PySide2.QtWidgets import QLineEdit
 from fsetools.lib.fse_activation_hd import heat_detector_temperature_pd7974
 from fsetools.libstd.pd_7974_1_2019 import eq_22_t_squared_fire_growth
 
-from fsetoolsGUI.gui.images_base64 import dialog_0111_context_1 as image_context_1
-from fsetoolsGUI.gui.images_base64 import dialog_0111_context_2 as image_context_2
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_1 as image_figure_1
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_2 as image_figure_2
 from fsetoolsGUI.gui.layout.i0111_pd7974_heat_detector_activation import Ui_MainWindow as Ui_Dialog
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 
-class App(QMainWindow):
+class App(AppBaseClass):
+    app_id = '0111'
+    app_name_short = 'PD 7974\nheat\ndetector\nactivation'
+    app_name_long = 'PD 7974 heat detector device activation time calculator'
 
     def __init__(self, parent=None):
 
@@ -27,13 +28,10 @@ class App(QMainWindow):
         # ========================
         # instantiate super and ui
         # ========================
-        super().__init__(
-            module_id='0111',
-            parent=parent,
-            freeze_window_size=True,
-        )
+        super().__init__(parent=parent)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
+        self.init()
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(
@@ -62,23 +60,21 @@ class App(QMainWindow):
         self.set_temperature_correlation()
 
         # set validators
-        self.ui.lineEdit_in_t.setValidator(self.Validator.unsigned_float)
-        self.ui.lineEdit_in_alpha.setValidator(self.Validator.unsigned_float)
-        self.ui.lineEdit_in_H.setValidator(self.Validator.unsigned_float)
-        self.ui.lineEdit_in_R.setValidator(self.Validator.unsigned_float)
-        self.ui.lineEdit_in_RTI.setValidator(self.Validator.unsigned_float)
-        self.ui.lineEdit_in_C.setValidator(self.Validator.unsigned_float)
-        self.ui.lineEdit_in_HRRPUA.setValidator(self.Validator.unsigned_float)
-        self.ui.lineEdit_in_C_conv.setValidator(self.Validator.unsigned_float)
-        self.ui.lineEdit_in_T_act.setValidator(self.Validator.unsigned_float)
+        # self.ui.lineEdit_in_t.setValidator(self.Validator.unsigned_float)
+        # self.ui.lineEdit_in_alpha.setValidator(self.Validator.unsigned_float)
+        # self.ui.lineEdit_in_H.setValidator(self.Validator.unsigned_float)
+        # self.ui.lineEdit_in_R.setValidator(self.Validator.unsigned_float)
+        # self.ui.lineEdit_in_RTI.setValidator(self.Validator.unsigned_float)
+        # self.ui.lineEdit_in_C.setValidator(self.Validator.unsigned_float)
+        # self.ui.lineEdit_in_HRRPUA.setValidator(self.Validator.unsigned_float)
+        # self.ui.lineEdit_in_C_conv.setValidator(self.Validator.unsigned_float)
+        # self.ui.lineEdit_in_T_act.setValidator(self.Validator.unsigned_float)
 
         # signals
         self.ui.pushButton_ok.clicked.connect(self.calculate)
         self.ui.pushButton_example.clicked.connect(self.example)
         self.ui.radioButton_fire_plume.toggled.connect(self.set_temperature_correlation)
         self.ui.pushButton_show_results_in_table.clicked.connect(self.show_results_in_table)
-
-        self.init(self)
 
     def error(self, msg: str, stop: bool = False):
         self.statusBar().showMessage(msg)
@@ -127,6 +123,9 @@ class App(QMainWindow):
 
         self.repaint()
 
+    def ok(self):
+        self.calculate()
+
     def calculate(self):
         # clear outputs
         self.ui.pushButton_show_results_in_table.setEnabled(False)
@@ -173,8 +172,10 @@ class App(QMainWindow):
         res['time'], res['gas_hrr_kW'] = time, gas_hrr_kW
 
         # work out activation time
-        activation_time = time[np.argmin(np.abs((res['detector_temperature'] - 273.15) - detector_activation_temperature))]
-        activation_gas_temperature = res['jet_temperature'][np.argmin(np.abs((res['detector_temperature'] - 273.15) - detector_activation_temperature))] - 273.15
+        activation_time = time[
+            np.argmin(np.abs((res['detector_temperature'] - 273.15) - detector_activation_temperature))]
+        activation_gas_temperature = res['jet_temperature'][np.argmin(
+            np.abs((res['detector_temperature'] - 273.15) - detector_activation_temperature))] - 273.15
 
         # print results (for console version only)
         list_title = self.__table_header
@@ -188,7 +189,7 @@ class App(QMainWindow):
                 fs1_.append('{:<15.14}'.format(f'{v:<.2f} {unit:<}'))
 
             if i % 25 == 0:
-                print('\n'+''.join(f'{i_:<15.15}' for i_ in list_title))
+                print('\n' + ''.join(f'{i_:<15.15}' for i_ in list_title))
             print(''.join(fs1_))
 
         # write results to ui
@@ -244,6 +245,7 @@ class App(QMainWindow):
 if __name__ == '__main__':
     import sys
     from PySide2 import QtWidgets
+
     qapp = QtWidgets.QApplication(sys.argv)
     app = App()
     app.show()

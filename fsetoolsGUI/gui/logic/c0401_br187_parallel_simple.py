@@ -1,8 +1,9 @@
+from fsetoolsGUI.gui.layout.i0401_br187_simple import Ui_MainWindow as Ui_0401
+from fsetoolsGUI.gui.logic.c0401_br187_base_class import BR187BaseClass
 from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import App as App0403
-from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import AppBase04XX
 
 
-class App(AppBase04XX):
+class App(BR187BaseClass):
     """0401, for analysis thermal radiation between a rectangular shaped emitter and ...
 
     Error handling scenarios:
@@ -13,14 +14,19 @@ class App(AppBase04XX):
             the predefined S.
         4.  Calculation failure, no convergence found.
     """
+    app_id = '0401'
+    app_name_short = 'BR 187\nparallel'
+    app_name_long = 'BR 187 parallel oriented rectangle emitter and receiver'
 
-    def __init__(self, parent=None):
-        super().__init__(module_id='0401', parent=parent)
+    def __init__(self, mode: int = None, parent=None):
+        super().__init__(ui=Ui_0401)
+
         self.ui.label_description.setWordWrap(True)
         self.ui.label_description.setText(
             'This sheet calculates the thermal radiation intensity at a receiver that is parallel to a rectangular '
             'emitter. Calculation coded in this sheet follows "BR 187 External fire spread" 2nd edition.'
         )
+        self.init()
 
     @staticmethod
     def phi_solver(W: float, H: float, w: float, h: float, Q: float, Q_a: float, S=None, UA=None) -> tuple:
@@ -33,6 +39,6 @@ if __name__ == "__main__":
     from PySide2 import QtWidgets
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App()
+    app = App(mode=-1)
     app.show()
     qapp.exec_()
