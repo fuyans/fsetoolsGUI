@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>424</width>
-    <height>657</height>
+    <width>352</width>
+    <height>685</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -45,7 +45,7 @@
        <item row="1" column="0" colspan="3">
         <widget class="QLabel" name="label_batch_run_description">
          <property name="text">
-          <string>Run all *.in files within the selected folder</string>
+          <string>Run all *.in files within the selected root folder and sub-folders and sub-sub-folders.</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -265,7 +265,7 @@
           </size>
          </property>
          <property name="text">
-          <string>No. of run processes</string>
+          <string>No. of processes</string>
          </property>
         </widget>
        </item>
@@ -388,7 +388,7 @@
        <item row="1" column="0" colspan="3">
         <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>Copy a selected BC file to all folders contain a *.in file. The BC file should be comprised of two column, time and temperature, respectively.</string>
+          <string>Copy a selected BC file to all folders containing *.in file. The BC file must be comprised of two columns, time and temperature, respectively.</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -433,7 +433,7 @@
        <item row="7" column="0" colspan="3">
         <widget class="QLabel" name="label_6">
          <property name="text">
-          <string>If selected a file named `bc_reduction.csv` must be present in the selected root directory. The csv file must be comprised of two columns with the first column describes the name of *.in file (without the .in extention) and the second column describes the reduction factor.</string>
+          <string>If selected, a file named `bc_reduction.csv` must be present in the selected root directory containing desired reduction factors. A template will be saved in the root directory upon root directory selection.</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -646,7 +646,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>424</width>
+     <width>352</width>
      <height>22</height>
     </rect>
    </property>
