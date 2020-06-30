@@ -1,16 +1,13 @@
 import copy
 import logging
-import multiprocessing as mp
 import os
-import subprocess
 import threading
-import time
 from os import path
-from typing import List, Dict, Callable
 
 import numpy as np
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtCore import Slot
+from fsetools.lib.safir import safir_batch_run
 
 from fsetoolsGUI.etc.safir_post_processor import out2pstrain, pstrain2dict, save_csv, make_strain_lines_for_given_shell
 from fsetoolsGUI.gui.layout.i0630_safir_postprocessor import Ui_MainWindow
@@ -21,43 +18,17 @@ from fsetoolsGUI.gui.logic.custom_table import TableWindow
 logger = logging.getLogger('gui')
 
 
-def safir_batch_run_worker(args: List) -> List:
-    def worker(
-            cmd: str,
-            cwd: str,
-            fp_stdout: str = None,
-            timeout_seconds: int = 1 * 60,
-    ) -> List:
-        try:
-            if fp_stdout:
-                subprocess.call(cmd, cwd=cwd, timeout=timeout_seconds, stdout=open(fp_stdout, 'w+'))
-            else:
-                subprocess.call(cmd, cwd=cwd, timeout=timeout_seconds, stdout=open(os.devnull, 'w'))
-            return [cmd, 'Success']
-        except subprocess.TimeoutExpired:
-            return [cmd, 'Timed out']
-
-    kwargs, q = args
-    result = worker(**kwargs)
-    q.put(1)
-    return result
-
-
-def safir_batch_copy_bc_to_input_folder(fp_bc: str, ):
-    pass
-
-
 class Signals(QtCore.QObject):
     __process_safir_out_file_complete = QtCore.Signal(bool)
-    __progress_batch_run = QtCore.Signal(int)
+    __progress = QtCore.Signal(int)
 
     @property
     def process_safir_out_file_complete(self) -> QtCore.Signal:
         return self.__process_safir_out_file_complete
 
     @property
-    def progress_batch_run(self) -> QtCore.Signal:
-        return self.__progress_batch_run
+    def progress(self) -> QtCore.Signal:
+        return self.__progress
 
 
 class ProgressBar(QtWidgets.QDialog):
@@ -115,28 +86,18 @@ class App(AppBaseClass):
         self.ui.setupUi(self)
         self.init()
 
-        # =======================
-        # lineEdit default values
-        # =======================
-        self.ui.lineEdit_in_fp_out.setReadOnly(True)
-        self.ui.lineEdit_in_shell.setEnabled(False)
-        self.ui.comboBox_in_shell.setEnabled(False)
-        # self.ui.lineEdit_in_initial_temperature.setText('20')
-
-        # =================
-        # lineEdit tip text
-        # =================
-        # self.ui.lineEdit_in_duration.setToolTip('Fire duration')
-
-        # signals
-        # self.ui.pushButton_example.clicked.connect(self.example)
-        self.ui.pushButton_fp_out.clicked.connect(self.__upon_output_file_selection_step_1)
-        self.ui.comboBox_in_shell.currentIndexChanged.connect(self.__upon_shell_combobox_change)
+        self.__Signals.progress.connect(self.__progress_bar.update_progress_bar)
 
         self.init_batch_run()
         self.init_batch_bc()
+        self.init_post_process_strain()
 
-        self.__Signals.progress_batch_run.connect(self.__progress_bar.update_progress_bar)
+    def init_post_process_strain(self):
+        self.ui.lineEdit_in_fp_out.setReadOnly(True)
+        self.ui.lineEdit_in_shell.setEnabled(False)
+        self.ui.comboBox_in_shell.setEnabled(False)
+        self.ui.pushButton_fp_out.clicked.connect(self.__upon_output_file_selection_step_1)
+        self.ui.comboBox_in_shell.currentIndexChanged.connect(self.__upon_shell_combobox_change)
 
     def init_batch_run(self):
 
@@ -189,11 +150,11 @@ class App(AppBaseClass):
 
                 kwargs = dict(
                     list_kwargs_in=list_kwargs_in,
-                    func_mp=safir_batch_run_worker,
                     n_proc=int(self.ui.lineEdit_batch_run_in_processes.text()) or 1,
-                    dir_work=dir_work
+                    dir_work=dir_work,
+                    qt_progress_signal=self.__Signals.progress
                 )
-                t = threading.Thread(target=self.safir_batch_run, kwargs=kwargs)
+                t = threading.Thread(target=safir_batch_run, kwargs=kwargs)
                 t.start()
 
                 self.__progress_bar.show()
@@ -264,49 +225,6 @@ class App(AppBaseClass):
         self.ui.pushButton_batchbc_root_dir.clicked.connect(select_root_dir)
         self.ui.pushButton_batchbc_bc_file.clicked.connect(select_bc_file)
         self.ui.pushButton_batchbc_ok.clicked.connect(run)
-        pass
-
-    def safir_batch_run(self, list_kwargs_in: List[Dict], func_mp: Callable, n_proc: int = 1, dir_work: str = None, ):
-        # ------------------------------------------
-        # prepare variables used for multiprocessing
-        # ------------------------------------------
-        m, p = mp.Manager(), mp.Pool(n_proc, maxtasksperchild=1000)
-        q = m.Queue()
-        jobs = p.map_async(func_mp, [(dict_, q) for dict_ in list_kwargs_in])
-        n_simulations = len(list_kwargs_in)
-
-        # ---------------------
-        # multiprocessing start
-        # ---------------------
-        while True:
-            if jobs.ready():
-                self.__Signals.progress_batch_run.emit(100)
-                break  # complete
-            else:
-                self.__Signals.progress_batch_run.emit(int(q.qsize() / n_simulations * 100))
-                time.sleep(1)  # in progress
-
-        # --------------------------------------------
-        # pull results and close multiprocess pipeline
-        # --------------------------------------------
-        print('d')
-        p.close()
-        p.join()
-        mp_out = jobs.get()
-        time.sleep(0.5)
-
-        # ----------------------
-        # save and print summary
-        # ----------------------
-        if dir_work:
-            out = mp_out
-            len_1 = int(max([len(' '.join(i[0])) for i in out]))
-            summary = '\n'.join([f'{" ".join(i[0]):<{len_1}} - {i[1]:<{len_1}}' for i in out])
-            print(summary)
-            with open(path.join(dir_work, 'summary.txt'), 'w+') as f:
-                f.write(summary)
-
-        return mp_out
 
     def __upon_output_file_selection_step_1(self):
         self.statusBar().showMessage('Processing *.out file ...')
