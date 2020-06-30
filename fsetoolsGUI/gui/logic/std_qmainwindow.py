@@ -1,7 +1,7 @@
 from PySide2 import QtWidgets
 from fsetoolsGUI.gui.layout.std_qmainwindow import Ui_MainWindow
 
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import QMainWindow
 
 
 class App(QMainWindow):

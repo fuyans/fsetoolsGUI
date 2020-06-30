@@ -1,8 +1,4 @@
-def main():
-
-    from fsetoolsGUI.gui.__main__ import main
-
-    main()
+from fsetoolsGUI.gui.__main__ import *
 
 
 if __name__ == '__main__':

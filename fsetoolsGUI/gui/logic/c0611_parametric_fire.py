@@ -3,34 +3,29 @@ from PySide2 import QtWidgets, QtCore
 from fsetools.libstd.ec_1991_1_2 import appendix_a_parametric_fire
 
 from fsetoolsGUI.gui.layout.i0611_parametric_fire import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 
-class App(QMainWindow):
-    __output_fire_curve = dict(
-        time=None,
-        temperature=None
-    )
+class App(AppBaseClass):
+    app_id = '0611'
+    app_name_short = 'EC 1991\nparametric\nfire'
+    app_name_long = 'EC 1991-1-2 parametric fire generator'
 
     def __init__(self, parent=None):
-        module_id = '0611'
         self.__Table = None
         self.__Figure = None
         self.__Figure_ax = None
+        self.__output_fire_curve = dict(time=None, temperature=None)
 
         # ================================
         # instantiation super and setup ui
         # ================================
-        super().__init__(
-            module_id=module_id,
-            parent=parent,
-            freeze_window_size=True,
-        )
+        super().__init__(parent=parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init(self)
+        self.init()
 
         # =======================
         # lineEdit default values
@@ -249,6 +244,9 @@ class App(QMainWindow):
 
         self.statusBar().showMessage('Calculation complete')
         self.repaint()
+
+    def ok(self):
+        self.calculate()
 
     def show_results_in_table(self):
 

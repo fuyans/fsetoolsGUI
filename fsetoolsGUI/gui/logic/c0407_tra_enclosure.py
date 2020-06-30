@@ -8,27 +8,27 @@ from matplotlib import cm
 
 import fsetoolsGUI
 from fsetoolsGUI.gui.layout.i0407_tra_enclosure import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 
-class App(QMainWindow):
+class App(AppBaseClass):
+    app_id = '0406'
+    app_name_short = 'TRA\ncuboid\nenclosure\nmodel'
+    app_name_long = 'TRA cuboid enclosure model'
 
     def __init__(self, parent=None):
 
         # instantiate super
-        super().__init__(
-            module_id='0407',
-            parent=parent,
-            freeze_window_size=True,
-        )
+        super().__init__(parent=parent)
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        self.init()
 
         # ==============
         # instantiate ui
         # ==============
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
         self.ui.label_figure.setPixmap(path.join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0407-1.png'))
         self.ui.lineEdit_in_solver_deltas.setToolTip('Equivalent to mesh resolution, proportionate to results accuracy')
 
@@ -46,8 +46,6 @@ class App(QMainWindow):
         # =============
         self.ui.pushButton_ok.clicked.connect(self.calculate)
         self.ui.pushButton_example.clicked.connect(self.example)
-
-        self.init(self)
 
     @property
     def input_parameters(self):
@@ -123,6 +121,9 @@ class App(QMainWindow):
         )
         self.input_parameters = input_parameters
         self.repaint()
+
+    def ok(self):
+        self.calculate()
 
     def calculate(self):
         try:

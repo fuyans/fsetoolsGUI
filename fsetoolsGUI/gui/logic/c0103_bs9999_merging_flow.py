@@ -8,31 +8,29 @@ from fsetools.libstd.bs_9999_2017 import (
 import fsetoolsGUI
 from fsetoolsGUI.gui.layout.i0103_merging_flow import Ui_MainWindow
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 
 
-class App(QMainWindow):
+class App(AppBaseClass):
+    app_id = '0103'
+    app_name_short = 'BS 9999\nmerging\nflow'
+    app_name_long = 'BS 9999 merging flow at final exit level'
 
     def __init__(self, parent=None):
-        module_id = '0103'
 
         # instantiation
-        super().__init__(
-            module_id=module_id,
-            parent=parent,
-            freeze_window_size=True,
-        )
+        super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.init()
 
         self.ui.lineEdit_in_X.setToolTip('A1 3.3,\tA2 3.6,\tA3 4.6\nB1 3.6,\tB2 4.1,\tB3 6.0\nC1 3.6,\tC2 4.1,\tC3 6.0')
-        self.init(self)
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(
-            image_figure_1=join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{module_id}-1-1.png'),
-            image_figure_2=join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{module_id}-1-2.png'),
-            image_figure_3=join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{module_id}-1-3.png'),
+            image_figure_1=join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{self.app_id}-1-1.png'),
+            image_figure_2=join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{self.app_id}-1-2.png'),
+            image_figure_3=join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{self.app_id}-1-3.png'),
         )
         for k, v in self.dict_images_pixmap.items():
             # ba = QtCore.QByteArray.fromBase64(v)
@@ -67,17 +65,14 @@ class App(QMainWindow):
         self.ui.radioButton_opt_scenario_1.toggled.connect(self.change_option_scenarios)
         self.ui.radioButton_opt_scenario_2.toggled.connect(self.change_option_scenarios)
         self.ui.radioButton_opt_scenario_3.toggled.connect(self.change_option_scenarios)
-        self.ui.pushButton_example.clicked.connect(self.example)
-        self.ui.pushButton_about.clicked.connect(self.about)
 
-        self.ui.pushButton_ok.clicked.connect(self.calculate)
-        self.ui.lineEdit_in_S_up.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_S_dn.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_W_SE.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_D.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_B.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_N.textChanged.connect(self.calculate)
-        self.ui.lineEdit_in_X.textChanged.connect(self.calculate)
+        self.ui.lineEdit_in_S_up.textChanged.connect(self.ok)
+        self.ui.lineEdit_in_S_dn.textChanged.connect(self.ok)
+        self.ui.lineEdit_in_W_SE.textChanged.connect(self.ok)
+        self.ui.lineEdit_in_D.textChanged.connect(self.ok)
+        self.ui.lineEdit_in_B.textChanged.connect(self.ok)
+        self.ui.lineEdit_in_N.textChanged.connect(self.ok)
+        self.ui.lineEdit_in_X.textChanged.connect(self.ok)
 
     def change_option_scenarios(self):
         """When mode changes, turn off (grey them out) not required inputs and clear their value."""
@@ -254,7 +249,7 @@ class App(QMainWindow):
         self.ui.checkBox_out_check.setChecked(condition_check)
         self.ui.lineEdit_out_W_FE.setText(f'{W_FE * 1e3:.1f}')
 
-    def calculate(self):
+    def ok(self):
 
         # clear ui output fields
         self.ui.checkBox_out_check.setChecked(False)
@@ -291,4 +286,3 @@ if __name__ == "__main__":
     app = App()
     app.show()
     qapp.exec_()
-

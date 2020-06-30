@@ -4,7 +4,7 @@ import time
 import numpy as np
 from PySide2 import QtWidgets, QtCore
 
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import QMainWindow
 
 try:
     from matplotlib.backends.backend_qt5agg import (

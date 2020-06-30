@@ -1,11 +1,11 @@
+from os import path
+
+import boto3
 from PySide2 import QtWidgets, QtCore
 
 from fsetoolsGUI.gui.layout.i0701_s3_uploader import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
-from os import path
-import threading
-import boto3
 
 
 class Signals(QtCore.QObject):
@@ -21,16 +21,15 @@ class Signals(QtCore.QObject):
         return self.__upload_complete
 
 
-class App0700(QMainWindow):
+class App(AppBaseClass):
+    app_id = '0701'
+    app_name_short = 's3\nUploader'
+    app_name_long = 's3 Uploader'
 
     def __init__(self, parent=None, mode=None):
-        module_id = '0701'
 
-        self.__s3_client = boto3.client(
-            's3',
-            aws_access_key_id='',
-            aws_secret_access_key=''
-        )
+        self.__s3_client = boto3.client('s3')
+
 
         self.signals = Signals()
 
@@ -42,15 +41,10 @@ class App0700(QMainWindow):
         # ================================
         # instantiation super and setup ui
         # ================================
-        super().__init__(
-            module_id=module_id,
-            parent=parent,
-            freeze_window_size=False,
-            mode=mode
-        )
+        super().__init__(parent=parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init(self)
+        self.init()
 
         # =======================
         # lineEdit default values
@@ -126,7 +120,7 @@ class App0700(QMainWindow):
 
         self.__url_list = list()
         for i, fp in enumerate(file_paths):
-            self.statusBar().showMessage(f'Uploading image {i+1}/{len(file_paths)}...')
+            self.statusBar().showMessage(f'Uploading image {i + 1}/{len(file_paths)}...')
             self.repaint()
 
             try:
@@ -140,6 +134,6 @@ if __name__ == "__main__":
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App0700(mode=-1)
+    app = App(mode=-1)
     app.show()
     qapp.exec_()

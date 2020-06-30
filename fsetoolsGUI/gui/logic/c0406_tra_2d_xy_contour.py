@@ -9,7 +9,7 @@ from fsetools.lib.fse_thermal_radiation_2d_parallel import main as tra_main
 from matplotlib import cm
 
 from fsetoolsGUI.gui.layout.i0406_tra_2d_xy_contour import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_table import TableModel
 
 try:
@@ -112,16 +112,16 @@ class Signals(QtCore.QObject):
         return self.__calculation_complete
 
 
-class App(QMainWindow):
+class App(AppBaseClass):
+    app_id = '0406'
+    app_name_short = 'TRA\n2D\nparallel'
+    app_name_long = 'TRA 2D parallel orientated contour plot'
 
     def __init__(self, parent=None):
-        super().__init__(
-            module_id='0406',
-            parent=parent,
-            freeze_window_size=True,
-        )
+        super().__init__(parent=parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.init()
 
         # instantiate objects
         self.figure = plt.figure()
@@ -170,8 +170,6 @@ class App(QMainWindow):
         self.__solver_parameters: dict = dict()
         self.__solver_results: dict = dict()
 
-        self.init(self)
-
     def example(self):
 
         param_dict = dict(
@@ -208,6 +206,9 @@ class App(QMainWindow):
 
         self.solver_parameters = param_dict
         self.repaint()
+
+    def ok(self):
+        self.calculate()
 
     def calculate(self):
 
@@ -312,7 +313,7 @@ class App(QMainWindow):
         self.ui.tableView_emitters.resizeRowsToContents()
 
         receiver_list_default = [
-            [''] * 3,
+            ['', '', ''],
         ]
         receiver_list_header = [
             'Name', 'Point 1', 'Point 2'

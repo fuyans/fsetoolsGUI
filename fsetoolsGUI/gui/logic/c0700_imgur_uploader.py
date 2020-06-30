@@ -1,12 +1,21 @@
+import logging
+from os import path
+
+logger = logging.getLogger('gui')
+
 from PySide2 import QtWidgets, QtCore
-from imgurpython import ImgurClient
-from imgurpython.client import AuthWrapper
+
+try:
+    from imgurpython import ImgurClient
+    from imgurpython.client import AuthWrapper
+except ModuleNotFoundError as e:
+    ImgurClient = None
+    ImgurClient = None
+    logger.error(f'Module `imgurpython` not found {e}')
 
 from fsetoolsGUI.gui.layout.i0700_imgur_uploader import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
-from os import path
-import threading
 
 
 class Signals(QtCore.QObject):
@@ -22,10 +31,12 @@ class Signals(QtCore.QObject):
         return self.__upload_complete
 
 
-class App0700(QMainWindow):
+class App(AppBaseClass):
+    app_id = '0700'
+    app_name_short = 'imgur\nUploader'
+    app_name_long = 'imgur Uploader'
 
     def __init__(self, parent=None, mode=None):
-        module_id = '0700'
 
         self.__client_id = '2a5830013bb0f84'
         self.__client_secret = '02e494ed1134c8bfc89502fc22b243c14b92a0af'
@@ -44,15 +55,10 @@ class App0700(QMainWindow):
         # ================================
         # instantiation super and setup ui
         # ================================
-        super().__init__(
-            module_id=module_id,
-            parent=parent,
-            freeze_window_size=False,
-            mode=mode
-        )
+        super().__init__(parent=parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init(self)
+        self.init()
 
         # =======================
         # lineEdit default values
@@ -62,7 +68,6 @@ class App0700(QMainWindow):
         # Slots and Signals
         # =================
         self.ui.pushButton_select_img.clicked.connect(self.select_image_and_upload)
-        self.signals.upload_progress_bar_signal.connect(self.ui.progressBar.setValue)
 
     @property
     def input_parameters(self):
@@ -147,7 +152,6 @@ class App0700(QMainWindow):
 
         return True
 
-
     def __upload_fp_to_imgur(self, file_paths: list):
 
         # file_paths = self.__image_files
@@ -162,8 +166,6 @@ class App0700(QMainWindow):
             auth_wrapper.refresh()
             self.__imgur_auth = auth_wrapper
 
-
-
         self.__imgur_client.set_user_auth(
             access_token=self.__imgur_auth.current_access_token,
             refresh_token=self.__imgur_auth.refresh_token
@@ -171,7 +173,7 @@ class App0700(QMainWindow):
 
         self.__image_urls = list()
         for i, fp in enumerate(file_paths):
-            self.statusBar().showMessage(f'Uploading image {i+1}/{len(file_paths)}...')
+            self.statusBar().showMessage(f'Uploading image {i + 1}/{len(file_paths)}...')
             self.repaint()
             try:
                 uploaded_img_url = self.__imgur_client.upload_from_path(fp)
@@ -185,6 +187,6 @@ if __name__ == "__main__":
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App0700(mode=-1)
+    app = App(mode=-1)
     app.show()
     qapp.exec_()

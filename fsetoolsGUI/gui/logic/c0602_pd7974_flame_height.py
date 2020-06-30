@@ -12,27 +12,27 @@ from fsetoolsGUI.gui.images_base64 import dialog_0602_context as image_context
 from fsetoolsGUI.gui.images_base64 import dialog_0602_figure as image_figure
 from fsetoolsGUI.gui.layout.i0602_flame_height import Ui_MainWindow
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 
 
-class App(QMainWindow):
+class App(AppBaseClass):
+    app_id = '0602'
+    app_name_short = 'PD 7974\nflame height'
+    app_name_long = 'PD 7974 flame height calculator'
+
     def __init__(self, parent=None):
 
         # =================
         # instantiate super
         # =================
-        super().__init__(
-            module_id='0602',
-            parent=parent,
-            freeze_window_size=True,
-        )
+        super().__init__(parent=parent)
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        self.init()
 
         # ==============
         # instantiate ui
         # ==============
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
-        self.init(self)
         self.ui.lineEdit_Q_dot_or_Q_dot_l.setToolTip(
             'Total fire heat release rate (per unit length for line fire shape)')
         self.ui.lineEdit_L_A_or_D.setToolTip('Fire longer dimension (diameter for circular fire shape)')
@@ -66,8 +66,6 @@ class App(QMainWindow):
 
         # signal and slots
         self.ui.comboBox_fire_shape.currentIndexChanged.connect(self.change_fire_shape)
-        self.ui.pushButton_example.clicked.connect(self.example)
-        self.ui.pushButton_ok.clicked.connect(self.calculate)
 
     def change_fire_shape(self):
         if self.ui.comboBox_fire_shape.currentIndex() == 0:  # circular fire source
@@ -132,6 +130,9 @@ class App(QMainWindow):
         except Exception as e:
             self.statusBar().showMessage(f'{str(e)}')
             return
+
+    def ok(self):
+        self.calculate()
 
     @property
     def input_parameters(self):

@@ -9,7 +9,7 @@ from PySide2.QtCore import Signal, Slot, QObject
 from fsetoolsGUI.etc.probability_distribution import solve_dist_for_mean_std
 from fsetoolsGUI.gui.layout.i0620_probabilistic_distribution import Ui_MainWindow
 from fsetoolsGUI.gui.logic.common import GridDialog
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 
 logger = logging.getLogger('gui')
 
@@ -29,7 +29,10 @@ class Signals(QObject):
         return self.__upon_distribution_selection
 
 
-class App0620(QMainWindow):
+class App(AppBaseClass):
+    app_id = '0620'
+    app_name_short = 'Probability\ndistribution'
+    app_name_long = 'Probability distribution'
 
     # all implemented continuous distributions
     # https://docs.scipy.org/doc/scipy/reference/tutorial/stats/continuous.html
@@ -72,15 +75,11 @@ class App0620(QMainWindow):
         self.__x = None
         self.__y = None
 
-        super().__init__(
-            parent=parent,
-            module_id='0620',
-            mode=mode
-        )
+        super().__init__(parent=parent)
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init(self)
+        self.init()
 
         self.ui.label_in_mean.setToolTip('Mean of the distribution')
         self.ui.lineEdit_in_mean.setToolTip('Mean of the distribution')
@@ -107,7 +106,7 @@ class App0620(QMainWindow):
 
         self.signals.upon_distribution_selection.connect(self.upon_distribution_selection)
         self.distribution_selection_dialog = GridDialog(
-            labels=[i[0] for i in self.__dist_available], grid_shape=(10,3),
+            labels=[i[0] for i in self.__dist_available], grid_shape=(10, 3),
             signal_upon_selection=self.signals.upon_distribution_selection,
             window_title='Select a distribution',
             parent=self
@@ -333,7 +332,7 @@ if __name__ == '__main__':
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App0620(mode=-1)
+    app = App()
     app.show()
 
     qapp.exec_()

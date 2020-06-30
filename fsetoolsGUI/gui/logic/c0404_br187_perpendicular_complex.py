@@ -1,19 +1,22 @@
 from fsetools.lib.fse_thermal_radiation import phi_perpendicular_any_br187, linear_solver
 
-from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import AppBase04XX
+from fsetoolsGUI.gui.layout.i0403_br187_complex import Ui_MainWindow as Ui_0403
+from fsetoolsGUI.gui.logic.c0401_br187_base_class import BR187BaseClass
 
 
-class Dialog0404(AppBase04XX):
+class App(BR187BaseClass):
+    app_id = '0404'
+    app_name_short = 'BR 187\nperp.\neccentric'
+    app_name_long = 'BR 187 perpendicular oriented rectangle emitter and eccentric receiver'
+
     def __init__(self, parent=None):
-        super().__init__(
-            module_id='0404',
-            parent=parent,
-        )
+        super().__init__(ui=Ui_0403, parent=parent)
         self.ui.label_description.setWordWrap(True)
         self.ui.label_description.setText(
             'This sheet calculates the thermal radiation intensity at a receiver that is perpendicular to '
             'a rectangular emitter. Calculation coded in this sheet follows "BR 187 External fire spread" 2nd edition.'
         )
+        self.init()
 
     @property
     def input_parameters(self) -> dict:
@@ -29,7 +32,6 @@ class Dialog0404(AppBase04XX):
             raise ValueError('Input parameter h can not be negative')
 
         return input_parameters
-
 
     @staticmethod
     def phi_solver(W: float, H: float, w: float, h: float, Q: float, Q_a: float, S=None, UA=None):
@@ -104,6 +106,6 @@ if __name__ == "__main__":
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = Dialog0404()
+    app = App()
     app.show()
     qapp.exec_()

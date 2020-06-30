@@ -1,5 +1,6 @@
 import logging
 import threading
+from os import path
 
 import requests
 from PySide2 import QtGui, QtCore
@@ -7,27 +8,16 @@ from PySide2.QtCore import Slot
 from PySide2.QtWidgets import QErrorMessage, QPushButton, QDialog, QMainWindow, QLineEdit, QInputDialog, QShortcut
 from packaging import version
 
-import fsetoolsGUI
+# from fsetoolsGUI.gui import icon as icon_
+from fsetoolsGUI import __root_dir__, __version__, __remote_version_url__
 from fsetoolsGUI.gui.layout.i0000_main import Ui_MainWindow
-from fsetoolsGUI.gui.logic.c0101_adb_data_sheet_1 import App as App0101
-from fsetoolsGUI.gui.logic.c0102_bs9999_data_sheet_1 import App as App0102
-from fsetoolsGUI.gui.logic.c0103_bs9999_merging_flow import App as App0103
-from fsetoolsGUI.gui.logic.c0104_adb_merging_flow import App as App0104
-from fsetoolsGUI.gui.logic.c0111_pd7974_detector_activation import App as App0111
-from fsetoolsGUI.gui.logic.c0401_br187_parallel_simple import App as App0401
-from fsetoolsGUI.gui.logic.c0402_br187_perpendicular_simple import App as App0402
-from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import App as App0403
-from fsetoolsGUI.gui.logic.c0404_br187_perpendicular_complex import Dialog0404 as App0404
-from fsetoolsGUI.gui.logic.c0406_tra_2d_xy_contour import App as App0406
-from fsetoolsGUI.gui.logic.c0407_tra_enclosure import App as App0407
-from fsetoolsGUI.gui.logic.c0601_naming_convention import App as App0601
-from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
-from fsetoolsGUI.gui.logic.c0611_parametric_fire import App as App0611
-from fsetoolsGUI.gui.logic.c0620_probability_distribution import App0620
-from fsetoolsGUI.gui.logic.c0630_safir_post_processor import App0630
-from fsetoolsGUI.gui.logic.c0700_imgur_uploader import App0700
+from fsetoolsGUI.gui.logic import Apps
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
-from fsetoolsGUI.gui.logic.custom_mainwindow import QMainWindow
+
+try:
+    qt_css = open(path.join(__root_dir__, 'gui', 'style.css'), "r").read()
+except FileNotFoundError:
+    raise FileNotFoundError('UI style file not found')
 
 logger = logging.getLogger('gui')
 
@@ -46,28 +36,30 @@ class MainWindow(QMainWindow):
         self.remote_version: dict = None
         self.is_executable: bool = True
         self.Signals = Signals()
-        self.activated_dialogs = list()
+        self.__activated_dialogs = list()
+        self.__apps = Apps()
 
         # ui setup
-        super().__init__(
-            module_id='0000',
-            title='Fire Safety Engineering Tools',
-            freeze_window_size=True,
-        )
+        super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init(self)
+        self.setStyleSheet(qt_css)
+
+        # self.setWindowIcon(icon_)
+
+        self.setWindowTitle('Fire Safety Engineering Tools')
+        self.setWindowIcon(QtGui.QPixmap(path.join(__root_dir__, 'gui', 'icons', 'LOGO_1_80_80.png')))
+        # self.setWindowFlag(QtCore.Qt.MSWindowsFixedSizeDialogHint)
 
         self.Signals.check_update_complete.connect(self.setEnabled_all_buttons)
 
         # check update
-        check_update = threading.Timer(0, self.check_update).start()
+        threading.Timer(0, self.check_update).start()
 
         # window properties
-        # self.setFixedSize(self.width(), self.height())
-        self.ui.label_version.setText(f'Version {fsetoolsGUI.__version__}')
-        self.ui.label_version.setStatusTip(f'Version {fsetoolsGUI.__version__}')
-        self.ui.label_version.setToolTip(f'Version {fsetoolsGUI.__version__}')
+        self.ui.label_version.setText(f'Version {__version__}')
+        self.ui.label_version.setStatusTip(f'Version {__version__}')
+        self.ui.label_version.setToolTip(f'Version {__version__}')
         self.ui.label_version.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
 
         # signals
@@ -103,54 +95,45 @@ class MainWindow(QMainWindow):
         To assign Signal for all buttons
         """
 
-        def set_btn(btncls, action: callable = None, name: str = '', tip: str = None):
-            btncls.clicked.connect(lambda: self.activate_app(action))
-            btncls.setText(name)
-            btncls.setToolTip(tip)
-            btncls.setStatusTip(tip)
+        def set_btn(cls: QPushButton, module_code: str):
+            cls.clicked.connect(lambda: self.activate_app(module_code))
+            cls.setText(self.__apps.app_name_short(module_code))
+            cls.setToolTip(self.__apps.app_name_long(module_code))
 
-        module_info = fsetoolsGUI.AppInfo
+        set_btn(self.ui.pushButton_0101_adb2_datasheet_1, '0101')
+        set_btn(self.ui.pushButton_0102_bs9999_datasheet_1, '0102')
+        set_btn(self.ui.pushButton_0103_merging_flow, '0103')
+        set_btn(self.ui.pushButton_0104_merging_flow, '0104')
+        set_btn(self.ui.pushButton_0111_heat_detector_activation, '0111')
+        set_btn(self.ui.pushButton_0401_br187_parallel_simple, '0401')
+        set_btn(self.ui.pushButton_0402_br187_perpendicular_simple, '0402')
+        set_btn(self.ui.pushButton_0403_br187_parallel_complex, '0403')
+        set_btn(self.ui.pushButton_0404_br187_perpendicular_complex, '0403')
+        set_btn(self.ui.pushButton_0406_thermal_radiation_analysis_2d, '0406')
+        set_btn(self.ui.pushButton_0407_tra_enclosure, '0407')
+        set_btn(self.ui.pushButton_0601_naming_convention, '0601')
+        set_btn(self.ui.pushButton_0602_pd7974_flame_height, '0602')
+        set_btn(self.ui.pushButton_0611_ec_parametric_fire, '0611')
+        set_btn(self.ui.pushButton_0620_probability_distribution, '0620')
+        set_btn(self.ui.pushButton_0630_safir_post_processor, '0630')
 
-        set_btn(self.ui.pushButton_0101_adb2_datasheet_1, App0101, *module_info('0101').short_and_long_names)
-        set_btn(self.ui.pushButton_0102_bs9999_datasheet_1, App0102, *module_info('0102').short_and_long_names)
-        set_btn(self.ui.pushButton_0103_merging_flow, App0103, *module_info('0103').short_and_long_names)
-        set_btn(self.ui.pushButton_0104_merging_flow, App0104, *module_info('0104').short_and_long_names)
-        set_btn(self.ui.pushButton_0111_heat_detector_activation, App0111, *module_info('0111').short_and_long_names)
+        QShortcut(QtGui.QKeySequence(QtCore.Qt.SHIFT + QtCore.Qt.Key_D), self).activated.connect(
+            self.activate_app_module_id)
 
-        set_btn(self.ui.pushButton_0401_br187_parallel_simple, App0401, *module_info('0401').short_and_long_names)
-        set_btn(self.ui.pushButton_0402_br187_perpendicular_simple, App0402, *module_info('0402').short_and_long_names)
-        set_btn(self.ui.pushButton_0403_br187_parallel_complex, App0403, *module_info('0403').short_and_long_names)
-        set_btn(self.ui.pushButton_0404_br187_perpendicular_complex, App0404, *module_info('0404').short_and_long_names)
-        set_btn(self.ui.pushButton_0406_thermal_radiation_analysis_2d, App0406,
-                *module_info('0406').short_and_long_names)
-        set_btn(self.ui.pushButton_0407_tra_enclosure, App0407, *module_info('0407').short_and_long_names)
+    def activate_app(self, module_id: str):
+        logger.info(f'EXECUTED MODULE {module_id}')
+        self.activated_dialogs.append(self.__apps.activate_app(code=module_id))
 
-        set_btn(self.ui.pushButton_0601_naming_convention, App0601, *module_info('0601').short_and_long_names)
-        set_btn(self.ui.pushButton_0602_pd7974_flame_height, App0602, *module_info('0602').short_and_long_names)
-        set_btn(self.ui.pushButton_0611_ec_parametric_fire, App0611, *module_info('0611').short_and_long_names)
-        set_btn(self.ui.pushButton_0620_probability_distribution, App0620, *module_info('0620').short_and_long_names)
-        set_btn(self.ui.pushButton_0630_safir_post_processor, App0630, *module_info('0630').short_and_long_names)
-
-        QShortcut(QtGui.QKeySequence(QtCore.Qt.SHIFT + QtCore.Qt.Key_D), self).activated.connect(self.activate_app_module_id)
-
-    def activate_app(self, app_):
-        logger.info(f'EXECUTED MODULE {app_}')
-        app_ = app_()
-        app_.show()
-        self.activated_dialogs.append(app_)
-
-    @QtCore.Slot()
     def activate_app_module_id(self):
         txt, ok = QInputDialog.getText(
             self,
-            "Activate app by Module Code",
-            "Module code:",
+            f'Activate app by Module Code',
+            f'{self.__apps.print_all_app_info()}\n\nModule code:',
             QLineEdit.Normal,
             ""
         )
         if ok and txt:
-            if txt == '0700':
-                self.activate_app(App0700)
+            self.activate_app(txt)
 
     def check_update(self):
         """
@@ -158,7 +141,7 @@ class MainWindow(QMainWindow):
         """
 
         # parse remote version info
-        target = ''.join([chr(ord(v) + i % 10) for i, v in enumerate(fsetoolsGUI.__remote_version_url__)])
+        target = ''.join([chr(ord(v) + i % 10) for i, v in enumerate(__remote_version_url__)])
         try:
             version_dict = requests.get(target).json()
         except Exception as e:
@@ -174,10 +157,10 @@ class MainWindow(QMainWindow):
             if failed to parse version info
             version label -> display local software version in black color
             '''
-            version_label_text = 'Version ' + fsetoolsGUI.__version__
+            version_label_text = 'Version ' + __version__
             self.ui.label_version.setStyleSheet('color: black;')
 
-        elif version.parse(version_dict['latest_version']) > version.parse(fsetoolsGUI.__version__):
+        elif version.parse(version_dict['latest_version']) > version.parse(__version__):
             '''
             if local version is lower than remote version, i.e. updates available, follow the procedures below.
             
@@ -201,10 +184,10 @@ class MainWindow(QMainWindow):
             # parse local version specific data, i.e. specifically for `fsetoolsgui.__version__`
             specific_remote_version_data = None
             try:
-                if '.dev' in fsetoolsGUI.__version__:
-                    local_version = fsetoolsGUI.__version__.split('.dev')[0]
+                if '.dev' in __version__:
+                    local_version = __version__.split('.dev')[0]
                 else:
-                    local_version = fsetoolsGUI.__version__
+                    local_version = __version__
                 specific_remote_version_data = self.remote_version[local_version]
                 logger.info(f'PARSED LOCAL VERSION FROM REMOTE VERSION DATA')
                 logger.debug(f'{specific_remote_version_data}')
@@ -255,12 +238,12 @@ class MainWindow(QMainWindow):
             # ==============================================
             if is_local_version_upgradable:
                 if is_local_version_executable:
-                    version_label_text = f'Running version {fsetoolsGUI.__version__}. ' \
+                    version_label_text = f'Running version {__version__}. ' \
                                          f'A new version {version_dict["latest_version"]} is available. ' \
                                          f'Click here to download.'
                     self.ui.label_version.setStyleSheet('color: black;')
                 else:
-                    version_label_text = f'This version {fsetoolsGUI.__version__} is disabled. ' \
+                    version_label_text = f'This version {__version__} is disabled. ' \
                                          f'A new version {version_dict["latest_version"]} is available. ' \
                                          f'Click here to download.'
                     self.ui.label_version.setStyleSheet('color: black;')
@@ -268,13 +251,13 @@ class MainWindow(QMainWindow):
 
                 self.new_version_update_url = upgrade_executable_url
             else:
-                version_label_text = f'Version {fsetoolsGUI.__version__}'
+                version_label_text = f'Version {__version__}'
                 self.ui.label_version.setStyleSheet('color: grey;')
 
         else:
             # if local version is equal to remote version, i.e. no update available
             # version label -> display local version in grey color
-            version_label_text = f'Version {fsetoolsGUI.__version__}'
+            version_label_text = f'Version {__version__}'
             self.ui.label_version.setStyleSheet('color: grey;')
 
         # update gui label text and tips
@@ -305,35 +288,23 @@ class MainWindow(QMainWindow):
                 logger.error(f'{str(e)}')
 
         logger.debug('Terminating activated dialogs/mainwindows')
-        if len(self.activated_dialogs) > 0:
-            for i in self.activated_dialogs:
-                try:
-                    i.close()
-                except Exception as e:
-                    logger.error(f'{str(e)}')
+        for i in self.activated_dialogs:
+            try:
+                i.close()
+            except Exception as e:
+                logger.error(f'{str(e)}')
 
         logger.debug('All subroutines terminated')
 
         event.accept()
 
-    # def keyPressEvent(self, event):
-    #     print(event)
-    #     logger.debug(event)
-    #     # if event.key() == QtGui.QKeySequence(QtCore.Qt.CTRL + QtCore.Qt.Key_D):
-    #     if event.key() == QtCore.Qt.Key_Find:
-    #
-    #         txt, ok = QInputDialog.getText(
-    #             self,
-    #             "QInputDialog().getText()",
-    #             "Module code:",
-    #             QLineEdit.Normal,
-    #             ""
-    #         )
-    #         if ok and txt:
-    #             if txt == '0700':
-    #                 self.activate_app(App0700)
-    #
-    #     event.accept()
+    @property
+    def activated_dialogs(self):
+        return self.__activated_dialogs
+
+    @activated_dialogs.setter
+    def activated_dialogs(self, d):
+        self.__activated_dialogs.append(d)
 
 
 if __name__ == "__main__":
