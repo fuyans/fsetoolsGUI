@@ -109,12 +109,10 @@ class MainWindow(QMainWindow):
         set_btn(self.ui.pushButton_0402_br187_perpendicular_simple, '0402')
         set_btn(self.ui.pushButton_0403_br187_parallel_complex, '0403')
         set_btn(self.ui.pushButton_0404_br187_perpendicular_complex, '0403')
-        set_btn(self.ui.pushButton_0406_thermal_radiation_analysis_2d, '0406')
         set_btn(self.ui.pushButton_0407_tra_enclosure, '0407')
         set_btn(self.ui.pushButton_0601_naming_convention, '0601')
         set_btn(self.ui.pushButton_0602_pd7974_flame_height, '0602')
         set_btn(self.ui.pushButton_0611_ec_parametric_fire, '0611')
-        set_btn(self.ui.pushButton_0620_probability_distribution, '0620')
         set_btn(self.ui.pushButton_0630_safir_post_processor, '0630')
 
         QShortcut(QtGui.QKeySequence(QtCore.Qt.SHIFT + QtCore.Qt.Key_D), self).activated.connect(
