@@ -156,7 +156,10 @@ class AppBaseClass(QtWidgets.QMainWindow):
         self.__activated_dialogs.append(d)
 
     @staticmethod
-    def user_usage_stats(content: str):
+    def user_usage_stats(content: str, is_dev: bool = 'dev' in __version__):
+        if is_dev:
+            logger.debug(f'DEV VERSION, STATS POST IGNORED FOR {content}')
+            return
         try:
             logger.debug(f'STATS POST STARTED FOR {content}')
             rp = post_to_knack_user_usage_stats(
