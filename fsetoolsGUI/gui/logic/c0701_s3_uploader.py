@@ -30,6 +30,7 @@ class App(AppBaseClass):
 
         self.__s3_client = boto3.client('s3')
 
+
         self.signals = Signals()
 
         self.__fp_list = None
