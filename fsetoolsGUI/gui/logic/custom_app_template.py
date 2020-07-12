@@ -88,12 +88,6 @@ class AppBaseClass(QtWidgets.QMainWindow):
         assert_attr('app_id')
         assert_attr('app_name_short')
         assert_attr('app_name_long')
-        try:
-            assert_attr('ok')
-        except AttributeError:
-            logger.warning('`ok` method not defined')
-
-        pass
 
     def init(self):
         self.setWindowTitle(self.app_name_long)
