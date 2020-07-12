@@ -44,11 +44,11 @@ class ProgressBar(QtWidgets.QDialog):
         self.progressbar.setMaximum(100)
         self.progressbar.setValue(initial_value)
 
-        self.button_cancel = QtWidgets.QPushButton("Cancel")
+        # self.button_cancel = QtWidgets.QPushButton("Cancel")
 
         self.grid_layout = QtWidgets.QGridLayout()
         self.grid_layout.addWidget(self.progressbar, 1, 0)
-        self.grid_layout.addWidget(self.button_cancel, 1, 1)
+        # self.grid_layout.addWidget(self.button_cancel, 1, 1)
 
         self.setLayout(self.grid_layout)
 
