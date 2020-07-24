@@ -108,7 +108,7 @@ class MainWindow(QMainWindow):
         set_btn(self.ui.pushButton_0401_br187_parallel_simple, '0401')
         set_btn(self.ui.pushButton_0402_br187_perpendicular_simple, '0402')
         set_btn(self.ui.pushButton_0403_br187_parallel_complex, '0403')
-        set_btn(self.ui.pushButton_0404_br187_perpendicular_complex, '0403')
+        set_btn(self.ui.pushButton_0404_br187_perpendicular_complex, '0404')
         set_btn(self.ui.pushButton_0407_tra_enclosure, '0407')
         set_btn(self.ui.pushButton_0601_naming_convention, '0601')
         set_btn(self.ui.pushButton_0602_pd7974_flame_height, '0602')
