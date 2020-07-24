@@ -12,18 +12,39 @@ def general_purpose_dist_func(x0, arg):
     dist_func = getattr(stats, dist_name)(*x0)
     loss = (dist_func.mean() - mean) ** 2 + (dist_func.std() - sd) ** 2
 
+    print(dist_func.mean(), mean, dist_func.std(), sd)
+
     return loss
 
 
 def solve_dist_for_mean_std(dist_name, *args, **kwargs):
     if dist_name == 'lognorm':
+        # for lognorm distribution, the s, loc and scale parameters are calculated deterministically
+
+        def lognorm_(mean: float, sd: float, **_):
+            cov = sd / mean
+            sigma_ln = np.sqrt(np.log(1 + cov ** 2))
+            miu_ln = np.log(mean) - 1 / 2 * sigma_ln ** 2
+            s = sigma_ln
+            loc = 0
+            scale = np.exp(miu_ln)
+            return dict(s=s, loc=loc, scale=scale)
+
         if len(args) == 2:
-            s = args[-1]
-            args = [s] + list(args)
-        if 'bounds' in kwargs:
-            bounds = kwargs['bounds']
+            args = lognorm_(*args)
+            args = [args['s'], args['loc'], args['scale']]
         else:
-            bounds = [[1e-5, 1e10], [0, 0], [1e-5, 1e10]]
+            raise NotImplementedError()
+
+        # if 'bounds' in kwargs:
+        #     bounds = kwargs['bounds']
+        # else:
+        #     bounds = [[1e-5, 1e10], [0, 1e10], [1e-5, 1e10]]
+
+        class FakeDistFit:
+            x = args
+
+        optimized_result = FakeDistFit
 
     else:
         if 'bounds' in kwargs:
@@ -31,8 +52,12 @@ def solve_dist_for_mean_std(dist_name, *args, **kwargs):
         else:
             bounds = [[-1e10, 1e10], [1e-5, 1e10]]
 
-    optimized_result = optimize.minimize(general_purpose_dist_func, x0=args, args=[dist_name] + list(args),
-                                         bounds=bounds)
+        optimized_result = optimize.minimize(
+            general_purpose_dist_func,
+            x0=args,
+            args=[dist_name] + list(args),
+            bounds=bounds
+        )
 
     return optimized_result
 
