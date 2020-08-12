@@ -14,7 +14,7 @@ def md2md_embedded_img(fp_md: str):
     with open(fp_md, 'r') as f:
         md = f.read()
 
-    for ref_img in re.findall(r'!\[.+\]\(.+\)', md):
+    for ref_img in re.findall(r'!\[.+?\]\(.+?\)', md):
         # get full file path
         fp_img = re.search(r'\((.+)\)', ref_img).group(1)
         fp_img = path.realpath(path.join(path.dirname(fp_md), *path.split(fp_img)))
@@ -22,7 +22,7 @@ def md2md_embedded_img(fp_md: str):
         try:
             img = Image.open(fp_img)
         except FileNotFoundError:
-            continue
+            print('Missing file ', fp_img)
         img_width, img_height = img.size
         img_width, img_height = 700, (img_height * 700 / img_width)
         img = img.resize((img_width, int(img_height)), resample=Image.LANCZOS)
@@ -69,11 +69,12 @@ if __name__ == '__main__':
             if fn.endswith('.md'):
                 fp_md_list.append(path.join(dirpath, fn))
 
-    html: str = None
+    html = None
 
-    for fp_md in fp_md_list:
+    for i, fp_md in enumerate(fp_md_list):
+        print(fp_md, f' ({i}/{len(fp_md_list)})')
         html = md2html(md2md_embedded_img(fp_md))
         css = f"<style type='text/css'>{fsetoolsGUI.gui.md_css}</style>"
-        with open(path.join(fsetoolsGUI.__root_dir__, 'gui', 'docs', path.basename(fp_md).replace('.md', '.html')),
-                  'w+') as f:
+        fp_html = path.join(fsetoolsGUI.__root_dir__, 'gui', 'docs', path.basename(fp_md).replace('.md', '.html'))
+        with open(fp_html, 'w+') as f:
             f.write(css + html)

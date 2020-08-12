@@ -27,8 +27,8 @@ def ui2py():
         cmd_list.append(cmd)
 
     procs_list = list()
-    for cmd in cmd_list:
-        print(' '.join(cmd))
+    for i, cmd in enumerate(cmd_list):
+        print(' '.join(cmd), f' ({i}/{len(cmd_list)})')
         procs_list.append(subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE))
 
     for proc in procs_list:
