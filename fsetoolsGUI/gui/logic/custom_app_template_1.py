@@ -47,7 +47,7 @@ class AboutDialog(QtWidgets.QMainWindow):
 
 class AppBaseClass(QtWidgets.QMainWindow):
 
-    def __init__(self, parent=None, *args, **kwargs):
+    def __init__(self, parent=None, post_stats:bool=True, *args, **kwargs):
         self.__activated_dialogs = list()
         self.__about_dialog = None
 
@@ -55,19 +55,7 @@ class AppBaseClass(QtWidgets.QMainWindow):
         self.ui = main_ui()
         self.ui.setupUi(self)
 
-        self.ui.p3_layout = QHBoxLayout(self.ui.page_3)
-        self.ui.p3_layout.setContentsMargins(0, 0, 0, 0)
-        self.ui.p3_about = QPushButton('About')
-        self.ui.p3_layout.addWidget(self.ui.p3_about)
-        self.ui.p3_layout.addSpacing(5)
-        self.ui.p3_example = QPushButton('Example')
-        self.ui.p3_layout.addWidget(self.ui.p3_example)
-        self.ui.p3_layout.addStretch(1)
-        self.ui.p3_submit = QPushButton('Submit')
-        self.ui.p3_layout.addWidget(self.ui.p3_submit)
-
-        self.ui.page_1.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        self.ui.page_2.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        self.__init_ui(post_stats)
 
     def __init_subclass__(cls, **kwargs):
         def assert_attr(attr_: str):
@@ -83,15 +71,32 @@ class AppBaseClass(QtWidgets.QMainWindow):
         assert_attr('app_name_short')
         assert_attr('app_name_long')
 
-    def init(self):
+    def __init_ui(self, post_stats:bool):
+        # set window title, icon and stylesheet
         self.setWindowTitle(self.app_name_long)
         try:
             self.setWindowIcon(QtGui.QPixmap(path.join(__root_dir__, 'gui', 'icons', 'LOGO_1_80_80.png')))
         except Exception as e:
             logger.error(f'Icon file not found {e}')
-
         self.setStyleSheet(qt_css)
 
+        # instantiate buttons etc
+        self.ui.p3_layout = QHBoxLayout(self.ui.page_3)
+        self.ui.p3_layout.setContentsMargins(0, 0, 0, 0)
+        self.ui.p3_about = QPushButton('About')
+        self.ui.p3_layout.addWidget(self.ui.p3_about)
+        self.ui.p3_layout.addSpacing(5)
+        self.ui.p3_example = QPushButton('Example')
+        self.ui.p3_layout.addWidget(self.ui.p3_example)
+        self.ui.p3_layout.addStretch(1)
+        self.ui.p3_submit = QPushButton('Submit')
+        self.ui.p3_layout.addWidget(self.ui.p3_submit)
+
+        self.ui.page_1.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        self.ui.page_2.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        self.ui.page_3.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+
+        # instantiate and configure signals
         if hasattr(self.ui, 'p3_submit'):
             self.ui.p3_submit.clicked.connect(self.ok)
         if hasattr(self.ui, 'p3_about'):
@@ -102,9 +107,9 @@ class AppBaseClass(QtWidgets.QMainWindow):
         if hasattr(self.ui, 'p3_example'):
             self.ui.p3_example.clicked.connect(self.example)
 
-        self.adjustSize()
-
-        threading.Thread(target=self.user_usage_stats, args=[self.app_id]).start()
+        # post stats if required
+        if post_stats:
+            threading.Thread(target=self.user_usage_stats, args=[self.app_id]).start()
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
@@ -136,14 +141,15 @@ class AppBaseClass(QtWidgets.QMainWindow):
         msgbox.exec_()
 
     def add_widget_to_grid(
-            self, grid: QGridLayout, row: int, name: str, description: str, unit: str, min_lineedit_width: int = 50
+            self, grid: QGridLayout, row: int, name: str, description: str, unit: str, min_width: int = 50,
+            descrip_cls: str = 'QLabel'
     ):
         # create description label, input box, unit label
-        setattr(self.ui, f'{name}_label', QLabel(description))
+        setattr(self.ui, f'{name}_label', getattr(QtWidgets, descrip_cls)(description))
         setattr(self.ui, f'{name}', QLineEdit())
         setattr(self.ui, f'{name}_unit', QLabel(unit))
         # set min. width for the input box
-        getattr(self.ui, f'{name}').setMinimumWidth(min_lineedit_width)
+        getattr(self.ui, f'{name}').setMinimumWidth(min_width)
         # add the created objects to the grid
         grid.addWidget(getattr(self.ui, f'{name}_label'), row, 0, 1, 1)
         grid.addWidget(getattr(self.ui, f'{name}'), row, 1, 1, 1)

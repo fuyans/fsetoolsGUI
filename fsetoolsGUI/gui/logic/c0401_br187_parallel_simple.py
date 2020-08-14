@@ -1,9 +1,13 @@
-from fsetoolsGUI.gui.layout.i0401_br187_simple import Ui_MainWindow as Ui_0401
-from fsetoolsGUI.gui.logic.c0401_br187_base_class import BR187BaseClass
+from os.path import join
+
+from PySide2.QtWidgets import QLabel, QVBoxLayout
+
+import fsetoolsGUI
+from fsetoolsGUI.gui.logic.c0400_br187_base_class import BR187SimpleBaseClass
 from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import App as App0403
 
 
-class App(BR187BaseClass):
+class App(BR187SimpleBaseClass):
     """0401, for analysis thermal radiation between a rectangular shaped emitter and ...
 
     Error handling scenarios:
@@ -18,15 +22,21 @@ class App(BR187BaseClass):
     app_name_short = 'BR 187\nparallel'
     app_name_long = 'BR 187 parallel oriented rectangle emitter and receiver'
 
-    def __init__(self, mode: int = None, parent=None):
-        super().__init__(ui=Ui_0401)
+    def __init__(self, parent=None, post_stats: bool = True):
+        super().__init__(parent, post_stats)
 
-        self.ui.label_description.setWordWrap(True)
-        self.ui.label_description.setText(
-            'This sheet calculates the thermal radiation intensity at a receiver that is parallel to a rectangular '
-            'emitter. Calculation coded in this sheet follows "BR 187 External fire spread" 2nd edition.'
+        self.ui.p1_description = QLabel(
+            'This sheet calculates the thermal radiation intensity at a receiver that is '
+            'parallel to a rectangular emitter. Calculation coded in this sheet follows "BR 187 External fire spread" '
+            '2nd edition.'
         )
-        self.init()
+        self.ui.p1_description.setFixedWidth(350)
+        self.ui.p1_description.setWordWrap(True)
+        self.ui.p1_image = QLabel()
+        self.ui.p1_image.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0401-1.png'))
+        self.ui.p1_layout = QVBoxLayout(self.ui.page_1)
+        self.ui.p1_layout.addWidget(self.ui.p1_description)
+        self.ui.p1_layout.addWidget(self.ui.p1_image)
 
     @staticmethod
     def phi_solver(W: float, H: float, w: float, h: float, Q: float, Q_a: float, S=None, UA=None) -> tuple:
@@ -39,6 +49,6 @@ if __name__ == "__main__":
     from PySide2 import QtWidgets
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App(mode=-1)
+    app = App(post_stats=False)
     app.show()
     qapp.exec_()
