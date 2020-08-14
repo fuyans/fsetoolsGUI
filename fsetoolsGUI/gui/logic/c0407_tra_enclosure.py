@@ -22,7 +22,6 @@ class App(AppBaseClass):
 
         # instantiate super
         super().__init__(parent=parent)
-        self.init()
 
         # ==============
         # instantiate ui
