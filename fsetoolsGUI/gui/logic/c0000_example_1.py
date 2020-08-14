@@ -45,6 +45,8 @@ class App(AppBaseClass):
         self.add_widget_to_grid(self.ui.p2_grid, 10, 'p2_entry_10', 'test description 10', 'unit 10')
         self.add_widget_to_grid(self.ui.p2_grid, 11, 'p2_entry_11', 'test description 11', 'unit 11')
 
+        self.init()
+
     def ok(self):
         pass
 

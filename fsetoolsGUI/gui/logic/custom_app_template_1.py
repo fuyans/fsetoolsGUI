@@ -1,46 +1,21 @@
-import logging
 import threading
 from datetime import datetime
 from os import getlogin, path
 
-from PySide2 import QtGui
-from PySide2 import QtWidgets, QtCore
-from PySide2.QtWidgets import QLabel, QLineEdit, QGridLayout, QSpacerItem, QSizePolicy, QPushButton, QHBoxLayout
+from PySide2 import QtWidgets
+from PySide2.QtWidgets import QLabel, QLineEdit, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy
 
 from fsetoolsGUI import __root_dir__, __version__
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
-from fsetoolsGUI.gui.layout.i0001_text_browser import Ui_MainWindow
-from fsetoolsGUI.gui.layout.i0000_template_1 import Ui_MainWindow
-
-logger = logging.getLogger('gui')
+from fsetoolsGUI.gui.layout.i0000_template_1 import Ui_MainWindow as main_ui
+from fsetoolsGUI.gui.layout.i0001_text_browser import Ui_MainWindow as aboutform_ui
+from fsetoolsGUI.gui.logic.c0000_utilities import *
 
 # parse css for Qt GUI
 try:
     qt_css = open(path.join(__root_dir__, 'gui', 'style.css'), "r").read()
 except FileNotFoundError:
     raise FileNotFoundError('UI style file not found')
-
-
-class Validator:
-    def __init__(self):
-        """Contains a number of QtGui validators using regex for flexibility
-        """
-        # validator templates
-        self.__unsigned_float = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]*\.{0,1}[0-9]*!'))
-        self.__signed_float = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[\+\-]*[0-9]*\.{0,1}[0-9]*!'))
-
-    @property
-    def unsigned_float(self):
-        return self.__unsigned_float
-
-    @property
-    def signed_float(self):
-        return self.__signed_float
-
-
-def copy_to_clipboard(s: str):
-    clipboard = QtGui.QGuiApplication.clipboard()
-    clipboard.setText(s)
 
 
 class AboutDialog(QtWidgets.QMainWindow):
@@ -50,7 +25,7 @@ class AboutDialog(QtWidgets.QMainWindow):
 
         super().__init__(parent=parent)
 
-        self.ui = Ui_MainWindow()
+        self.ui = aboutform_ui()
         self.ui.setupUi(self)
 
         self.setWindowTitle('About this app')
@@ -77,7 +52,7 @@ class AppBaseClass(QtWidgets.QMainWindow):
         self.__about_dialog = None
 
         super().__init__(parent=parent, *args, **kwargs)
-        self.ui = Ui_MainWindow()
+        self.ui = main_ui()
         self.ui.setupUi(self)
 
         self.ui.p3_layout = QHBoxLayout(self.ui.page_3)
@@ -91,7 +66,8 @@ class AppBaseClass(QtWidgets.QMainWindow):
         self.ui.p3_submit = QPushButton('Submit')
         self.ui.p3_layout.addWidget(self.ui.p3_submit)
 
-        QSpacerItem(20, 2, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.ui.page_1.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        self.ui.page_2.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
 
     def __init_subclass__(cls, **kwargs):
         def assert_attr(attr_: str):
@@ -116,15 +92,15 @@ class AppBaseClass(QtWidgets.QMainWindow):
 
         self.setStyleSheet(qt_css)
 
-        if hasattr(self.ui, 'pushButton_ok'):
-            self.ui.pushButton_ok.clicked.connect(self.ok)
-        if hasattr(self.ui, 'pushButton_about'):
+        if hasattr(self.ui, 'p3_submit'):
+            self.ui.p3_submit.clicked.connect(self.ok)
+        if hasattr(self.ui, 'p3_about'):
             if self.__about_dialog is None:
                 self.__about_dialog = AboutDialog(
                     fp_or_html=path.join(__root_dir__, 'gui', 'docs', f'{self.app_id}.html'))
-            self.ui.pushButton_about.clicked.connect(lambda: self.__about_dialog.show())
-        if hasattr(self.ui, 'pushButton_example'):
-            self.ui.pushButton_example.clicked.connect(self.example)
+            self.ui.p3_about.clicked.connect(lambda: self.__about_dialog.show())
+        if hasattr(self.ui, 'p3_example'):
+            self.ui.p3_example.clicked.connect(self.example)
 
         self.adjustSize()
 
