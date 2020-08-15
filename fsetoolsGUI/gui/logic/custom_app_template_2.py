@@ -1,45 +1,21 @@
-import logging
 import threading
 from datetime import datetime
 from os import getlogin, path
 
-from PySide2 import QtGui
-from PySide2 import QtWidgets, QtCore
-from PySide2.QtWidgets import QLabel, QLineEdit, QGridLayout
+from PySide2 import QtWidgets
+from PySide2.QtWidgets import QLabel, QLineEdit, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy
 
 from fsetoolsGUI import __root_dir__, __version__
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
-from fsetoolsGUI.gui.layout.i0001_text_browser import Ui_MainWindow
-
-logger = logging.getLogger('gui')
+from fsetoolsGUI.gui.layout.i0000_template_2 import Ui_MainWindow as main_ui
+from fsetoolsGUI.gui.layout.i0001_text_browser import Ui_MainWindow as aboutform_ui
+from fsetoolsGUI.gui.logic.c0000_utilities import *
 
 # parse css for Qt GUI
 try:
     qt_css = open(path.join(__root_dir__, 'gui', 'style.css'), "r").read()
 except FileNotFoundError:
     raise FileNotFoundError('UI style file not found')
-
-
-class Validator:
-    def __init__(self):
-        """Contains a number of QtGui validators using regex for flexibility
-        """
-        # validator templates
-        self.__unsigned_float = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[0-9]*\.{0,1}[0-9]*!'))
-        self.__signed_float = QtGui.QRegExpValidator(QtCore.QRegExp(r'^[\+\-]*[0-9]*\.{0,1}[0-9]*!'))
-
-    @property
-    def unsigned_float(self):
-        return self.__unsigned_float
-
-    @property
-    def signed_float(self):
-        return self.__signed_float
-
-
-def copy_to_clipboard(s: str):
-    clipboard = QtGui.QGuiApplication.clipboard()
-    clipboard.setText(s)
 
 
 class AboutDialog(QtWidgets.QMainWindow):
@@ -49,7 +25,7 @@ class AboutDialog(QtWidgets.QMainWindow):
 
         super().__init__(parent=parent)
 
-        self.ui = Ui_MainWindow()
+        self.ui = aboutform_ui()
         self.ui.setupUi(self)
 
         self.setWindowTitle('About this app')
@@ -71,11 +47,15 @@ class AboutDialog(QtWidgets.QMainWindow):
 
 class AppBaseClass(QtWidgets.QMainWindow):
 
-    def __init__(self, parent=None, *args, **kwargs):
-        super().__init__(parent=parent, *args, **kwargs)
-
+    def __init__(self, parent=None, post_stats: bool = True, *args, **kwargs):
         self.__activated_dialogs = list()
         self.__about_dialog = None
+
+        super().__init__(parent=parent, *args, **kwargs)
+        self.ui = main_ui()
+        self.ui.setupUi(self)
+
+        self.__init_ui(post_stats)
 
     def __init_subclass__(cls, **kwargs):
         def assert_attr(attr_: str):
@@ -91,28 +71,47 @@ class AppBaseClass(QtWidgets.QMainWindow):
         assert_attr('app_name_short')
         assert_attr('app_name_long')
 
-    def init(self):
+    def __init_ui(self, post_stats: bool):
+        # set window title, icon and stylesheet
         self.setWindowTitle(self.app_name_long)
         try:
             self.setWindowIcon(QtGui.QPixmap(path.join(__root_dir__, 'gui', 'icons', 'LOGO_1_80_80.png')))
         except Exception as e:
             logger.error(f'Icon file not found {e}')
-
         self.setStyleSheet(qt_css)
 
-        if hasattr(self.ui, 'pushButton_ok'):
-            self.ui.pushButton_ok.clicked.connect(self.ok)
-        if hasattr(self.ui, 'pushButton_about'):
+        # instantiate buttons etc
+        self.ui.p3_layout = QHBoxLayout(self.ui.page_3)
+        self.ui.p3_layout.setContentsMargins(0, 0, 0, 0)
+        self.ui.p3_about = QPushButton('About')
+        self.ui.p3_about.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.ui.p3_layout.addWidget(self.ui.p3_about)
+        self.ui.p3_layout.addSpacing(5)
+        self.ui.p3_example = QPushButton('Example')
+        self.ui.p3_example.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.ui.p3_layout.addWidget(self.ui.p3_example)
+        self.ui.p3_layout.addStretch(1)
+        self.ui.p3_submit = QPushButton('Submit')
+        self.ui.p3_submit.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.ui.p3_layout.addWidget(self.ui.p3_submit)
+
+        self.ui.page_2.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        self.ui.page_3.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+
+        # instantiate and configure signals
+        if hasattr(self.ui, 'p3_submit'):
+            self.ui.p3_submit.clicked.connect(self.ok)
+        if hasattr(self.ui, 'p3_about'):
             if self.__about_dialog is None:
                 self.__about_dialog = AboutDialog(
                     fp_or_html=path.join(__root_dir__, 'gui', 'docs', f'{self.app_id}.html'))
-            self.ui.pushButton_about.clicked.connect(lambda: self.__about_dialog.show())
-        if hasattr(self.ui, 'pushButton_example'):
-            self.ui.pushButton_example.clicked.connect(self.example)
+            self.ui.p3_about.clicked.connect(lambda: self.__about_dialog.show())
+        if hasattr(self.ui, 'p3_example'):
+            self.ui.p3_example.clicked.connect(self.example)
 
-        self.adjustSize()
-
-        threading.Thread(target=self.user_usage_stats, args=[self.app_id]).start()
+        # post stats if required
+        if post_stats:
+            threading.Thread(target=self.user_usage_stats, args=[self.app_id]).start()
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
@@ -144,14 +143,15 @@ class AppBaseClass(QtWidgets.QMainWindow):
         msgbox.exec_()
 
     def add_widget_to_grid(
-            self, grid: QGridLayout, row: int, name: str, description: str, unit: str, min_lineedit_width: int = 50
+            self, grid: QGridLayout, row: int, name: str, description: str, unit: str, min_width: int = 50,
+            descrip_cls: str = 'QLabel'
     ):
         # create description label, input box, unit label
-        setattr(self.ui, f'{name}_label', QLabel(description))
+        setattr(self.ui, f'{name}_label', getattr(QtWidgets, descrip_cls)(description))
         setattr(self.ui, f'{name}', QLineEdit())
         setattr(self.ui, f'{name}_unit', QLabel(unit))
         # set min. width for the input box
-        getattr(self.ui, f'{name}').setMinimumWidth(min_lineedit_width)
+        getattr(self.ui, f'{name}').setMinimumWidth(min_width)
         # add the created objects to the grid
         grid.addWidget(getattr(self.ui, f'{name}_label'), row, 0, 1, 1)
         grid.addWidget(getattr(self.ui, f'{name}'), row, 1, 1, 1)
@@ -210,4 +210,9 @@ class AppBaseClass(QtWidgets.QMainWindow):
 
 
 if __name__ == '__main__':
-    test = AppBaseClass()
+    import sys
+
+    qapp = QtWidgets.QApplication(sys.argv)
+    app = AppBaseClass()
+    app.show()
+    qapp.exec_()

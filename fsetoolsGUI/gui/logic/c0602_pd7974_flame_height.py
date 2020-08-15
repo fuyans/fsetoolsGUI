@@ -17,7 +17,7 @@ from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 
 class App(AppBaseClass):
     app_id = '0602'
-    app_name_short = 'PD 7974\nflame height'
+    app_name_short = 'PD 7974\nflame\nheight'
     app_name_long = 'PD 7974 flame height calculator'
 
     def __init__(self, parent=None):

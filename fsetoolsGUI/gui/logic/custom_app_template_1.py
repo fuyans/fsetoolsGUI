@@ -47,7 +47,7 @@ class AboutDialog(QtWidgets.QMainWindow):
 
 class AppBaseClass(QtWidgets.QMainWindow):
 
-    def __init__(self, parent=None, post_stats:bool=True, *args, **kwargs):
+    def __init__(self, parent=None, post_stats: bool = True, *args, **kwargs):
         self.__activated_dialogs = list()
         self.__about_dialog = None
 
@@ -71,7 +71,7 @@ class AppBaseClass(QtWidgets.QMainWindow):
         assert_attr('app_name_short')
         assert_attr('app_name_long')
 
-    def __init_ui(self, post_stats:bool):
+    def __init_ui(self, post_stats: bool):
         # set window title, icon and stylesheet
         self.setWindowTitle(self.app_name_long)
         try:
@@ -84,12 +84,15 @@ class AppBaseClass(QtWidgets.QMainWindow):
         self.ui.p3_layout = QHBoxLayout(self.ui.page_3)
         self.ui.p3_layout.setContentsMargins(0, 0, 0, 0)
         self.ui.p3_about = QPushButton('About')
+        self.ui.p3_about.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
         self.ui.p3_layout.addWidget(self.ui.p3_about)
         self.ui.p3_layout.addSpacing(5)
         self.ui.p3_example = QPushButton('Example')
+        self.ui.p3_example.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
         self.ui.p3_layout.addWidget(self.ui.p3_example)
         self.ui.p3_layout.addStretch(1)
         self.ui.p3_submit = QPushButton('Submit')
+        self.ui.p3_submit.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
         self.ui.p3_layout.addWidget(self.ui.p3_submit)
 
         self.ui.page_1.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)

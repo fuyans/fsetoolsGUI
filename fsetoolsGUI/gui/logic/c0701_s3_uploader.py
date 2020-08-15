@@ -1,11 +1,15 @@
 from os import path
 
-import boto3
 from PySide2 import QtWidgets, QtCore
 
 from fsetoolsGUI.gui.layout.i0701_s3_uploader import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
+
+try:
+    import boto3
+except ModuleNotFoundError:
+    pass
 
 
 class Signals(QtCore.QObject):
@@ -29,7 +33,6 @@ class App(AppBaseClass):
     def __init__(self, parent=None, mode=None):
 
         self.__s3_client = boto3.client('s3')
-
 
         self.signals = Signals()
 

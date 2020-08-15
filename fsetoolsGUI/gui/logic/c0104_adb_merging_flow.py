@@ -1,11 +1,10 @@
 from os.path import join
 
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtGui
+from PySide2.QtWidgets import QVBoxLayout, QGridLayout, QLabel, QPushButton, QRadioButton, QCheckBox
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.layout.i0104_merging_flow import Ui_MainWindow
-from fsetoolsGUI.gui.logic.common import filter_objects_by_name
-from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
+from fsetoolsGUI.gui.logic.custom_app_template_1 import AppBaseClass
 
 
 def clause_2_23_merging_flow(N: float, S: float, D: float, W_SE: float) -> tuple:
@@ -26,39 +25,54 @@ class App(AppBaseClass):
     app_name_short = 'ADB\nmerging\nflow'
     app_name_long = 'ADB merging flow at final exit level'
 
-    def __init__(self, parent=None):
-        # instantiation
-        super().__init__()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
-        self.init()
+    def __init__(self, parent=None, post_stats: bool = True):
 
-        # set all outputs lineedit to readonly
-        for i in filter_objects_by_name(
-                self.ui.frame_userio,
-                object_types=[QtWidgets.QLineEdit, QtWidgets.QCheckBox],
-                names=['_out_']
-        ):
-            try:
-                i.setReadOnly(True)
-            except AttributeError:
-                i.setEnabled(False)
+        # instantiation
+        super().__init__(parent, post_stats)
+
+        self.ui.p1_layout = QVBoxLayout(self.ui.page_1)
+        self.ui.p1_description = QLabel(
+            'This sheet calculates the merging flow at final exit level in accordance with Section 2.23 in '
+            'Approved Document B, Volume 2'
+        )
+        self.ui.p1_description.setFixedWidth(350)
+        self.ui.p1_description.setWordWrap(True)
+        self.ui.p1_layout.addWidget(self.ui.p1_description)
+        self.ui.label_image_figure = QLabel()
+        self.ui.label_image_figure.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0104-1.png'))
+        self.ui.p1_layout.addWidget(self.ui.label_image_figure)
+
+        self.ui.p2_layout = QGridLayout(self.ui.page_2)
+        self.ui.p2_layout.setHorizontalSpacing(5)
+        self.ui.p2_layout.setVerticalSpacing(5)
+        self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), 0, 0, 1, 3)
+        self.add_widget_to_grid(self.ui.p2_layout, 1, 'p2_in_S_up', 'S<sub>up</sub>, upper stair width', 'mm')
+        self.add_widget_to_grid(self.ui.p2_layout, 2, 'p2_in_D', 'D, door separation', 'm')
+        self.add_widget_to_grid(self.ui.p2_layout, 3, 'p2_in_W_SE', 'W<sub>SE</sub>, door width from current level', 'mm')
+        self.add_widget_to_grid(self.ui.p2_layout, 4, 'p2_in_N', 'N, no. pers. from exit level', 'person')
+        self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), 5, 0, 1, 3)
+        self.ui.p2_out_check = QCheckBox('Are "D>2" and "N>60" all true?')
+        self.ui.p2_out_check.setDisabled(True)
+        self.ui.p2_layout.addWidget(self.ui.p2_out_check, 6, 0, 1, 3)
+        self.add_widget_to_grid(self.ui.p2_layout, 7, 'p2_out_W_FE', 'W<sub>FE</sub>, solved min. exit width', 'mm')
+        self.ui.p2_out_W_FE.setReadOnly(True)
+
 
         # set up context image
         self.ui.label_image_figure.setPixmap(
             self.make_pixmap_from_fp(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0104-1.png')))
 
         # signals
-        self.ui.lineEdit_in_D.textChanged.connect(self.ok)
-        self.ui.lineEdit_in_S_up.textChanged.connect(self.ok)
-        self.ui.lineEdit_in_W_SE.textChanged.connect(self.ok)
-        self.ui.lineEdit_in_N.textChanged.connect(self.ok)
+        self.ui.p2_in_D.textChanged.connect(self.ok)
+        self.ui.p2_in_S_up.textChanged.connect(self.ok)
+        self.ui.p2_in_W_SE.textChanged.connect(self.ok)
+        self.ui.p2_in_N.textChanged.connect(self.ok)
 
     def example(self):
-        self.ui.lineEdit_in_D.setText('1.9')
-        self.ui.lineEdit_in_S_up.setText('1200')
-        self.ui.lineEdit_in_W_SE.setText('1050')
-        self.ui.lineEdit_in_N.setText('61')
+        self.ui.p2_in_D.setText('1.9')
+        self.ui.p2_in_S_up.setText('1200')
+        self.ui.p2_in_W_SE.setText('1050')
+        self.ui.p2_in_N.setText('61')
 
         self.repaint()
 
@@ -76,14 +90,14 @@ class App(AppBaseClass):
                 return None
 
         try:
-            S_up = str2float(self.ui.lineEdit_in_S_up.text())
+            S_up = str2float(self.ui.p2_in_S_up.text())
             if S_up is not None:
                 S_up /= 1e3
-            W_SE = str2float(self.ui.lineEdit_in_W_SE.text())
+            W_SE = str2float(self.ui.p2_in_W_SE.text())
             if W_SE is not None:
                 W_SE /= 1e3
-            D = str2float(self.ui.lineEdit_in_D.text())
-            N = str2float(self.ui.lineEdit_in_N.text())
+            D = str2float(self.ui.p2_in_D.text())
+            N = str2float(self.ui.p2_in_N.text())
         except Exception as e:
             raise e
 
@@ -124,8 +138,8 @@ class App(AppBaseClass):
         except KeyError:
             raise KeyError('Not enough parameters to self.output_parameters')
 
-        self.ui.checkBox_out_check.setChecked(condition_check)
-        self.ui.lineEdit_out_W_FE.setText(f'{W_FE * 1e3:.1f}')
+        self.ui.p2_out_check.setChecked(condition_check)
+        self.ui.p2_out_W_FE.setText(f'{W_FE * 1e3:.1f}')
 
     @staticmethod
     def __calculate_merging_flow(S_up, D, N, W_SE):
@@ -145,8 +159,8 @@ class App(AppBaseClass):
     def ok(self):
 
         # clear ui output fields
-        self.ui.checkBox_out_check.setChecked(False)
-        self.ui.lineEdit_out_W_FE.clear()
+        self.ui.p2_out_check.setChecked(False)
+        self.ui.p2_out_W_FE.clear()
 
         # parse inputs from ui
         try:
@@ -176,6 +190,6 @@ if __name__ == "__main__":
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App()
+    app = App(post_stats=False)
     app.show()
     qapp.exec_()

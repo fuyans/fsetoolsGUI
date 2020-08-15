@@ -7,7 +7,10 @@ from os import path
 import numpy as np
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtCore import Slot
-from fsetools.lib.safir import safir_batch_run
+try:
+    from fsetools.lib.safir import safir_batch_run
+except ModuleNotFoundError:
+    safir_batch_run = None
 
 from fsetoolsGUI.etc.safir_post_processor import out2pstrain, pstrain2dict, save_csv, make_strain_lines_for_given_shell
 from fsetoolsGUI.gui.layout.i0630_safir_postprocessor import Ui_MainWindow

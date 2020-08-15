@@ -110,7 +110,7 @@ class App(BR187ComplexBaseClass):
             q_solved = Q * phi_solved * UA
 
             if S_solved < 2:
-                msg = (f'Calculation complete. Forced boundary separation to 1 from {S_solved:.3f} m.')
+                msg = f'Calculation complete. Forced boundary separation to 1 from {S_solved:.3f} m.'
                 S_solved = 2
 
         return phi_solved, q_solved, S_solved, UA_solved, msg

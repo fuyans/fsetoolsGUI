@@ -61,7 +61,7 @@ class App(AppBaseClass):
 
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setHorizontalSpacing(5)
-        self.ui.p2_layout.setVerticalSpacing(2)
+        self.ui.p2_layout.setVerticalSpacing(5)
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), 0, 0, 1, 3)
         self.add_widget_to_grid(self.ui.p2_layout, 1, 'in_width', '  Width', 'm')
         self.add_widget_to_grid(self.ui.p2_layout, 2, 'in_depth', '  Depth', 'm')

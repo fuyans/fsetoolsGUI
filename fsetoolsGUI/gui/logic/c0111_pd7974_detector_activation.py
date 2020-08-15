@@ -1,14 +1,16 @@
+from os.path import join
+
 import numpy as np
-from PySide2 import QtGui, QtCore
-from PySide2.QtWidgets import QLineEdit
+from PySide2 import QtCore
+from PySide2 import QtGui
+from PySide2.QtWidgets import QVBoxLayout, QGridLayout, QLabel, QRadioButton
 from fsetools.lib.fse_activation_hd import heat_detector_temperature_pd7974
 from fsetools.libstd.pd_7974_1_2019 import eq_22_t_squared_fire_growth
 
+import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_1 as image_figure_1
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_2 as image_figure_2
-from fsetoolsGUI.gui.layout.i0111_pd7974_heat_detector_activation import Ui_MainWindow as Ui_Dialog
-from fsetoolsGUI.gui.logic.common import filter_objects_by_name
-from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
+from fsetoolsGUI.gui.logic.custom_app_template_1 import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 
@@ -17,7 +19,10 @@ class App(AppBaseClass):
     app_name_short = 'PD 7974\nheat\ndetector\nactivation'
     app_name_long = 'PD 7974 heat detector device activation time calculator'
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, post_stats: bool = True):
+
+        # instantiation
+        super().__init__(parent, post_stats)
 
         # containers, variables etc
         self.__Table = None
@@ -25,18 +30,48 @@ class App(AppBaseClass):
         self.__table_content: list = None
         self._numerical_results: dict = None
 
-        # ========================
-        # instantiate super and ui
-        # ========================
-        super().__init__(parent=parent)
-        self.ui = Ui_Dialog()
-        self.ui.setupUi(self)
-        self.init()
+        self.ui.p1_layout = QVBoxLayout(self.ui.page_1)
+        self.ui.p1_description = QLabel(
+            'This app estimates the activation time of a heat detection element '
+            '(e.g. heat detector, sprinkler head etc.) located above a fire bed.\n\n'
+            'Calculation follows '
+            '"PD 7974-1:2019 Application of fire safety engineering principles to the design of buildings. '
+            'Part 1: Initiation and development of fire within the enclosure of origin (Sub-system 1)".'
+        )
+        self.ui.p1_description.setFixedWidth(350)
+        self.ui.p1_description.setWordWrap(True)
+        self.ui.p1_layout.addWidget(self.ui.p1_description)
+        self.ui.p1_figure = QLabel()
+        self.ui.p1_figure.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', f'{self.app_id}-1.png'))
+        self.ui.p1_layout.addWidget(self.ui.p1_figure)
+
+        self.ui.p2_layout = QGridLayout(self.ui.page_2)
+        self.ui.p2_layout.setHorizontalSpacing(5)
+        self.ui.p2_layout.setVerticalSpacing(5)
+        self.ui.p2_layout.addWidget(QLabel('<b>Options</b>'), 0, 0, 1, 3)
+        self.ui.p2_in_ceiling_jet = QRadioButton('Use ceiling jet equations', self.ui.page_2)
+        self.ui.p2_in_fire_plume = QRadioButton('Use plume equations', self.ui.page_2)
+        self.ui.p2_layout.addWidget(self.ui.p2_in_ceiling_jet, 1, 0, 1, 3)
+        self.ui.p2_layout.addWidget(self.ui.p2_in_fire_plume, 2, 0, 1, 3)
+        self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), 3, 0, 1, 3)
+        self.add_widget_to_grid(self.ui.p2_layout, 4, 'p2_in_t', 't, fire duration', 's')
+        self.add_widget_to_grid(self.ui.p2_layout, 5, 'p2_in_alpha', 'α, fire growth factor', 'kW/m<sup>2</sup>')
+        self.add_widget_to_grid(self.ui.p2_layout, 6, 'p2_in_H', 'H, height', 'm')
+        self.add_widget_to_grid(self.ui.p2_layout, 7, 'p2_in_R', 'R, radial distance', 'm')
+        self.add_widget_to_grid(self.ui.p2_layout, 8, 'p2_in_RTI', 'RTI, response time index',
+                                'm<sup>0.5</sup>s<sup>0.5</sup>')
+        self.add_widget_to_grid(self.ui.p2_layout, 9, 'p2_in_C', 'C, conduction factor',
+                                'm<sup>0.5</sup>/s<sup>0.5</sup>')
+        self.add_widget_to_grid(self.ui.p2_layout, 10, 'p2_in_HRRPUA', 'HRR per unit area', 'kW/m<sup>2</sup>')
+        self.add_widget_to_grid(self.ui.p2_layout, 11, 'p2_in_C_conv', 'C<sub>conv</sub> convection HRR', '%')
+        self.add_widget_to_grid(self.ui.p2_layout, 12, 'p2_in_t_act', 'detector act. temp.', '<sup>o</sup>C')
+        self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), 13, 0, 1, 3)
+        self.add_widget_to_grid(self.ui.p2_layout, 14, 'p2_out_T_g_act', 'T<sub>g,act</sub>, gas temp.',
+                                '<sup>o</sup>C')
+        self.add_widget_to_grid(self.ui.p2_layout, 15, 'p2_out_t_act', 't<sub>act</sub>, detector act. time', 's')
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(
-            # image_context_1=image_context_1,
-            # image_context_2=image_context_2,
             image_figure_1=image_figure_1,
             image_figure_2=image_figure_2,
         )
@@ -45,36 +80,12 @@ class App(AppBaseClass):
             self.dict_images_pixmap[k] = QtGui.QPixmap()
             self.dict_images_pixmap[k].loadFromData(ba)
 
-        # set output items readonly
-        for i in filter_objects_by_name(self.ui.frame_userio, object_types=[QLineEdit], names=['_out_']):
-            try:
-                i.setReadOnly(True)
-            except AttributeError:
-                i.setEnabled(False)
-
-        # window properties
-        self.ui.pushButton_show_results_in_table.setEnabled(False)
-
         # default values
-        self.ui.radioButton_ceiling_jet.setChecked(True)
+        self.ui.p2_in_ceiling_jet.setChecked(True)
         self.set_temperature_correlation()
 
-        # set validators
-        # self.ui.lineEdit_in_t.setValidator(self.Validator.unsigned_float)
-        # self.ui.lineEdit_in_alpha.setValidator(self.Validator.unsigned_float)
-        # self.ui.lineEdit_in_H.setValidator(self.Validator.unsigned_float)
-        # self.ui.lineEdit_in_R.setValidator(self.Validator.unsigned_float)
-        # self.ui.lineEdit_in_RTI.setValidator(self.Validator.unsigned_float)
-        # self.ui.lineEdit_in_C.setValidator(self.Validator.unsigned_float)
-        # self.ui.lineEdit_in_HRRPUA.setValidator(self.Validator.unsigned_float)
-        # self.ui.lineEdit_in_C_conv.setValidator(self.Validator.unsigned_float)
-        # self.ui.lineEdit_in_T_act.setValidator(self.Validator.unsigned_float)
-
         # signals
-        self.ui.pushButton_ok.clicked.connect(self.calculate)
-        self.ui.pushButton_example.clicked.connect(self.example)
-        self.ui.radioButton_fire_plume.toggled.connect(self.set_temperature_correlation)
-        self.ui.pushButton_show_results_in_table.clicked.connect(self.show_results_in_table)
+        self.ui.p2_in_fire_plume.toggled.connect(self.set_temperature_correlation)
 
     def error(self, msg: str, stop: bool = False):
         self.statusBar().showMessage(msg)
@@ -85,41 +96,36 @@ class App(AppBaseClass):
     def set_temperature_correlation(self):
 
         # clear output
-        self.ui.lineEdit_out_t_act.setText('')
-        self.ui.pushButton_show_results_in_table.setEnabled(False)
+        self.ui.p2_out_t_act.setText('')
+        self.ui.p2_out_T_g_act.setText('')
+
         self._numerical_results = dict()
 
         """Set figures, disable and enable UI items accordingly."""
-        if self.ui.radioButton_fire_plume.isChecked():  # plume temperature and velocity
-            self.ui.lineEdit_in_R.setEnabled(False)
-            self.ui.label_in_R_label.setEnabled(False)
-            self.ui.label_in_R_unit.setEnabled(False)
-            # self.ui.label_image_context.setPixmap(self.dict_images_pixmap['image_context_2'])
-            self.ui.label_image_figure.setPixmap(self.dict_images_pixmap['image_figure_2'])
+        if self.ui.p2_in_fire_plume.isChecked():  # plume temperature and velocity
+            self.ui.p2_in_R.setEnabled(False)
+            self.ui.p1_figure.setPixmap(self.dict_images_pixmap['image_figure_2'])
             self.__table_header = [
                 'Time [s]', 'HRR [kW]', 'V. Origin [m]', 'Plume T. [°C]', 'Plume Vel. [m/s]', 'Detector T. [°C]'
             ]
         else:  # ceiling jet temperature and velocity
-            self.ui.lineEdit_in_R.setEnabled(True)
-            self.ui.label_in_R_label.setEnabled(True)
-            self.ui.label_in_R_unit.setEnabled(True)
-            # self.ui.label_image_context.setPixmap(self.dict_images_pixmap['image_context_1'])
-            self.ui.label_image_figure.setPixmap(self.dict_images_pixmap['image_figure_1'])
+            self.ui.p2_in_R.setEnabled(True)
+            self.ui.p1_figure.setPixmap(self.dict_images_pixmap['image_figure_1'])
             self.__table_header = [
                 'Time [s]', 'HRR [kW]', 'V. Origin [m]', 'Jet T. [°C]', 'Jet Vel. [m/s]', 'Detector T. [°C]'
             ]
 
     def example(self):
 
-        self.ui.lineEdit_in_t.setText('600')
-        self.ui.lineEdit_in_alpha.setText('0.0117')
-        self.ui.lineEdit_in_H.setText('2.4')
-        self.ui.lineEdit_in_R.setText('2.5')
-        self.ui.lineEdit_in_RTI.setText('115')
-        self.ui.lineEdit_in_C.setText('0.4')
-        self.ui.lineEdit_in_HRRPUA.setText('510')
-        self.ui.lineEdit_in_C_conv.setText('66.7')
-        self.ui.lineEdit_in_T_act.setText('68')
+        self.ui.p2_in_t.setText('600')
+        self.ui.p2_in_alpha.setText('0.0117')
+        self.ui.p2_in_H.setText('2.4')
+        self.ui.p2_in_R.setText('2.5')
+        self.ui.p2_in_RTI.setText('115')
+        self.ui.p2_in_C.setText('0.4')
+        self.ui.p2_in_HRRPUA.setText('510')
+        self.ui.p2_in_C_conv.setText('66.7')
+        self.ui.p2_in_t_act.setText('68')
 
         self.repaint()
 
@@ -128,23 +134,22 @@ class App(AppBaseClass):
 
     def calculate(self):
         # clear outputs
-        self.ui.pushButton_show_results_in_table.setEnabled(False)
-        self.ui.lineEdit_out_t_act.setText('')
+        self.ui.p2_out_t_act.setText('')
 
         # get data
         try:
-            time = float(self.ui.lineEdit_in_t.text())
-            alpha = float(self.ui.lineEdit_in_alpha.text())
-            detector_to_fire_vertical_distance = float(self.ui.lineEdit_in_H.text())
-            if self.ui.radioButton_ceiling_jet.isChecked():  # `detector_to_fire_horizontal_distance` may be disabled if plume temperature correlation is checked.
-                detector_to_fire_horizontal_distance = float(self.ui.lineEdit_in_R.text())
+            time = float(self.ui.p2_in_t.text())
+            alpha = float(self.ui.p2_in_alpha.text())
+            detector_to_fire_vertical_distance = float(self.ui.p2_in_H.text())
+            if self.ui.p2_in_ceiling_jet.isChecked():  # `detector_to_fire_horizontal_distance` may be disabled if plume temperature correlation is checked.
+                detector_to_fire_horizontal_distance = float(self.ui.p2_in_R.text())
             else:
                 detector_to_fire_horizontal_distance = 0.
-            detector_response_time_index = float(self.ui.lineEdit_in_RTI.text())
-            detector_conduction_factor = float(self.ui.lineEdit_in_C.text())
-            fire_hrr_density_kWm2 = float(self.ui.lineEdit_in_HRRPUA.text())
-            fire_convection_fraction = float(self.ui.lineEdit_in_C_conv.text()) / 100.
-            detector_activation_temperature = float(self.ui.lineEdit_in_T_act.text())
+            detector_response_time_index = float(self.ui.p2_in_RTI.text())
+            detector_conduction_factor = float(self.ui.p2_in_C.text())
+            fire_hrr_density_kWm2 = float(self.ui.p2_in_HRRPUA.text())
+            fire_convection_fraction = float(self.ui.p2_in_C_conv.text()) / 100.
+            detector_activation_temperature = float(self.ui.p2_in_t_act.text())
         except Exception as e:
             self.error(f'Failed to parse inputs. Error "{e}".')
             raise e
@@ -163,7 +168,7 @@ class App(AppBaseClass):
                 detector_conduction_factor=detector_conduction_factor,
                 fire_hrr_density_kWm2=fire_hrr_density_kWm2,
                 fire_convection_fraction=fire_convection_fraction,
-                force_plume_temperature_correlation=self.ui.radioButton_fire_plume.isChecked()
+                force_plume_temperature_correlation=self.ui.p2_in_fire_plume.isChecked()
             )
         except Exception as e:
             self.error(str(e))
@@ -193,15 +198,14 @@ class App(AppBaseClass):
             print(''.join(fs1_))
 
         # write results to ui
-        self.ui.lineEdit_out_t_act.setText(f'{activation_time:.1f}')
-        self.ui.lineEdit_out_T_g_act.setText(f'{activation_gas_temperature:.1f}')
+        self.ui.p2_out_t_act.setText(f'{activation_time:.1f}')
+        self.ui.p2_out_T_g_act.setText(f'{activation_gas_temperature:.1f}')
         # store calculated results
         self._numerical_results = res
         # status feedback
         self.statusBar().showMessage('Calculation complete.')
         # enable button to view numerical results
-        self.ui.pushButton_show_results_in_table.setEnabled(True)
-        # refresh ui
+        self.show_results_in_table()
         self.repaint()
 
     def show_results_in_table(self):
@@ -232,7 +236,7 @@ class App(AppBaseClass):
             window_geometry=win_geo,
             data_list=list_content,
             header_col=self.__table_header,
-            window_title='Parametric fire numerical results',
+            window_title='Numerical results',
         )
 
         self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)

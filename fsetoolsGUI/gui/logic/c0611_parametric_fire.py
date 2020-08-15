@@ -1,9 +1,10 @@
 import numpy as np
 from PySide2 import QtWidgets, QtCore
+from PySide2.QtWidgets import QGridLayout, QLabel
 from fsetools.libstd.ec_1991_1_2 import appendix_a_parametric_fire
 
-from fsetoolsGUI.gui.layout.i0611_parametric_fire import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
+# from fsetoolsGUI.gui.layout.i0611_parametric_fire import Ui_MainWindow
+from fsetoolsGUI.gui.logic.custom_app_template_2 import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
@@ -13,7 +14,7 @@ class App(AppBaseClass):
     app_name_short = 'EC 1991\nparametric\nfire'
     app_name_long = 'EC 1991-1-2 parametric fire generator'
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, post_stats: bool = True):
         self.__Table = None
         self.__Figure = None
         self.__Figure_ax = None
@@ -22,36 +23,52 @@ class App(AppBaseClass):
         # ================================
         # instantiation super and setup ui
         # ================================
-        super().__init__(parent=parent)
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
-        self.init()
+        super().__init__(parent, post_stats)
 
-        # =======================
-        # lineEdit default values
-        # =======================
-        self.ui.lineEdit_in_initial_temperature.setText('20')
+        # ================
+        # instantiation ui
+        # ================
+        self.ui.p2_layout = QGridLayout(self.ui.page_2)
+        self.ui.p2_layout.setHorizontalSpacing(5)
+        self.ui.p2_layout.setVerticalSpacing(5)
+        self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), 0, 0, 1, 3)
+        self.add_widget_to_grid(self.ui.p2_layout, 1, 'p2_in_duration', 'Duration', 'min')
+        self.add_widget_to_grid(
+            self.ui.p2_layout, 2, 'p2_in_room_total_surface_area', 'Room total surface area', 'm<sup>2</sup>')
+        self.add_widget_to_grid(self.ui.p2_layout, 3, 'p2_in_room_floor_area', 'Room floor area', 'm<sup>2</sup>')
+        self.add_widget_to_grid(self.ui.p2_layout, 4, 'p2_in_ventilation_area', 'Ventilation area', 'm<sup>2</sup>')
+        self.add_widget_to_grid(
+            self.ui.p2_layout, 5, 'p2_in_ventilation_opening_height', 'Ventilation opening height', 'm<sup>2</sup>')
+        self.add_widget_to_grid(self.ui.p2_layout, 6, 'p2_in_fuel_density', 'Fuel density', 'MJ/m<sup>2</sup>')
+        self.add_widget_to_grid(
+            self.ui.p2_layout, 7, 'p2_in_lining_thermal_conductivity', 'Lining thermal conductivity', 'K/kg/m')
+        self.add_widget_to_grid(self.ui.p2_layout, 8, 'p2_in_lining_density', 'Lining density', 'kg/m<sup>3</sup>')
+        self.add_widget_to_grid(
+            self.ui.p2_layout, 9, 'p2_in_lining_thermal_heat_capacity', 'Lining thermal heat capacity', 'J/K/kg')
+        self.add_widget_to_grid(self.ui.p2_layout, 10, 'p2_in_fire_limiting_time', 'Limiting time t<sub>lim</sub>',
+                                'min')
+        self.add_widget_to_grid(
+            self.ui.p2_layout, 11, 'p2_in_initial_temperature', 'Initial temperature', '<sup>o</sup>C')
+
+        self.ui.p2_in_initial_temperature.setText('20')
 
         # =================
         # lineEdit tip text
         # =================
-        self.ui.lineEdit_in_duration.setToolTip('Fire duration')
-        self.ui.lineEdit_in_room_total_surface_area.setToolTip('Room total interior surface area, including opening')
-        self.ui.lineEdit_in_room_floor_area.setToolTip('Room floor area')
-        self.ui.lineEdit_in_ventilation_area.setToolTip('Room ventilation opening area')
-        self.ui.lineEdit_in_ventilation_opening_height.setToolTip('Room ventilation opening weighted height')
-        self.ui.lineEdit_in_fuel_density.setToolTip('Fuel load density')
-        self.ui.lineEdit_in_lining_thermal_conductivity.setToolTip('Room wall/ceiling thermal conductivity')
-        self.ui.lineEdit_in_lining_density.setToolTip('Room wall/ceiling density')
-        self.ui.lineEdit_in_lining_thermal_heat_capacity.setToolTip('Room wall/ceiling heat capacity')
-        self.ui.lineEdit_in_fire_limiting_time.setToolTip('Associated with fire growth rate.\n'
-                                                          'Slow: 25 minutes\n'
-                                                          'Medium: 20 minutes\nFast: 15 minutes')
-        self.ui.lineEdit_in_initial_temperature.setToolTip('Initial or ambient temperature')
-
-        # signals
-        self.ui.pushButton_ok.clicked.connect(self.calculate)
-        self.ui.pushButton_example.clicked.connect(self.example)
+        self.ui.p2_in_duration.setToolTip('Fire duration')
+        self.ui.p2_in_room_total_surface_area.setToolTip('Room total interior surface area, including opening')
+        self.ui.p2_in_room_floor_area.setToolTip('Room floor area')
+        self.ui.p2_in_ventilation_area.setToolTip('Room ventilation opening area')
+        self.ui.p2_in_ventilation_opening_height.setToolTip('Room ventilation opening weighted height')
+        self.ui.p2_in_fuel_density.setToolTip('Fuel load density')
+        self.ui.p2_in_lining_thermal_conductivity.setToolTip('Room wall/ceiling thermal conductivity')
+        self.ui.p2_in_lining_density.setToolTip('Room wall/ceiling density')
+        self.ui.p2_in_lining_thermal_heat_capacity.setToolTip('Room wall/ceiling heat capacity')
+        self.ui.p2_in_fire_limiting_time.setToolTip(
+            'Associated with fire growth rate.\n'
+            'Slow: 25 minutes\n'
+            'Medium: 20 minutes\nFast: 15 minutes')
+        self.ui.p2_in_initial_temperature.setToolTip('Initial or ambient temperature')
 
     def example(self):
 
@@ -83,17 +100,17 @@ class App(AppBaseClass):
         # ====================
         # parse values from ui
         # ====================
-        duration = str2float(self.ui.lineEdit_in_duration.text())
-        room_total_surface_area = str2float(self.ui.lineEdit_in_room_total_surface_area.text())
-        room_floor_area = str2float(self.ui.lineEdit_in_room_floor_area.text())
-        ventilation_area = str2float(self.ui.lineEdit_in_ventilation_area.text())
-        ventilation_opening_height = str2float(self.ui.lineEdit_in_ventilation_opening_height.text())
-        fuel_density = str2float(self.ui.lineEdit_in_fuel_density.text())
-        lining_thermal_conductivity = str2float(self.ui.lineEdit_in_lining_thermal_conductivity.text())
-        lining_density = str2float(self.ui.lineEdit_in_lining_density.text())
-        lining_thermal_heat_capacity = str2float(self.ui.lineEdit_in_lining_thermal_heat_capacity.text())
-        fire_limiting_time = str2float(self.ui.lineEdit_in_fire_limiting_time.text())
-        initial_temperature = str2float(self.ui.lineEdit_in_initial_temperature.text())
+        duration = str2float(self.ui.p2_in_duration.text())
+        room_total_surface_area = str2float(self.ui.p2_in_room_total_surface_area.text())
+        room_floor_area = str2float(self.ui.p2_in_room_floor_area.text())
+        ventilation_area = str2float(self.ui.p2_in_ventilation_area.text())
+        ventilation_opening_height = str2float(self.ui.p2_in_ventilation_opening_height.text())
+        fuel_density = str2float(self.ui.p2_in_fuel_density.text()) * 1e6
+        lining_thermal_conductivity = str2float(self.ui.p2_in_lining_thermal_conductivity.text())
+        lining_density = str2float(self.ui.p2_in_lining_density.text())
+        lining_thermal_heat_capacity = str2float(self.ui.p2_in_lining_thermal_heat_capacity.text())
+        fire_limiting_time = str2float(self.ui.p2_in_fire_limiting_time.text())
+        initial_temperature = str2float(self.ui.p2_in_initial_temperature.text())
 
         # ======================================================
         # check if necessary inputs are provided for calculation
@@ -157,17 +174,17 @@ class App(AppBaseClass):
         v['fire_limiting_time'] /= 60  # seconds -> minutes
         v['initial_temperature'] -= 273.15  # degree Kelvin -> degree Celsius
 
-        self.ui.lineEdit_in_duration.setText(num2str(v['duration']))
-        self.ui.lineEdit_in_room_total_surface_area.setText(num2str(v['room_total_surface_area']))
-        self.ui.lineEdit_in_room_floor_area.setText(num2str(v['room_floor_area']))
-        self.ui.lineEdit_in_ventilation_area.setText(num2str(v['ventilation_area']))
-        self.ui.lineEdit_in_ventilation_opening_height.setText(num2str(v['ventilation_opening_height']))
-        self.ui.lineEdit_in_fuel_density.setText(num2str(v['fuel_density']))
-        self.ui.lineEdit_in_lining_thermal_conductivity.setText(num2str(v['lining_thermal_conductivity']))
-        self.ui.lineEdit_in_lining_density.setText(num2str(v['lining_density']))
-        self.ui.lineEdit_in_lining_thermal_heat_capacity.setText(num2str(v['lining_thermal_heat_capacity']))
-        self.ui.lineEdit_in_fire_limiting_time.setText(num2str(v['fire_limiting_time']))
-        self.ui.lineEdit_in_initial_temperature.setText(num2str(v['initial_temperature']))
+        self.ui.p2_in_duration.setText(num2str(v['duration']))
+        self.ui.p2_in_room_total_surface_area.setText(num2str(v['room_total_surface_area']))
+        self.ui.p2_in_room_floor_area.setText(num2str(v['room_floor_area']))
+        self.ui.p2_in_ventilation_area.setText(num2str(v['ventilation_area']))
+        self.ui.p2_in_ventilation_opening_height.setText(num2str(v['ventilation_opening_height']))
+        self.ui.p2_in_fuel_density.setText(num2str(v['fuel_density'] / 1e6))
+        self.ui.p2_in_lining_thermal_conductivity.setText(num2str(v['lining_thermal_conductivity']))
+        self.ui.p2_in_lining_density.setText(num2str(v['lining_density']))
+        self.ui.p2_in_lining_thermal_heat_capacity.setText(num2str(v['lining_thermal_heat_capacity']))
+        self.ui.p2_in_fire_limiting_time.setText(num2str(v['fire_limiting_time']))
+        self.ui.p2_in_initial_temperature.setText(num2str(v['initial_temperature']))
 
     @property
     def output_parameters(self):
@@ -253,8 +270,9 @@ class App(AppBaseClass):
         output_parameters = self.output_parameters
 
         # print results (for console enabled version only)
-        list_content = [[float(i), float(j)] for i, j in
-                        zip(output_parameters['time'], output_parameters['temperature'])]
+        list_content = [
+            [float(i), float(j)] for i, j in zip(output_parameters['time'], output_parameters['temperature'])
+        ]
 
         try:
             win_geo = self.__Table.geometry()
@@ -302,6 +320,6 @@ if __name__ == "__main__":
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App()
+    app = App(post_stats=False)
     app.show()
     qapp.exec_()
