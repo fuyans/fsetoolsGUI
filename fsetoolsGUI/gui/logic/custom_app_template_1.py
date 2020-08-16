@@ -143,20 +143,20 @@ class AppBaseClass(QtWidgets.QMainWindow):
         msgbox.setStandardButtons(msgbox.Ok)
         msgbox.exec_()
 
-    def add_widget_to_grid(
+    def add_lineedit_set_to_grid(
             self, grid: QGridLayout, row: int, name: str, description: str, unit: str, min_width: int = 50,
-            descrip_cls: str = 'QLabel'
+            descrip_cls: str = 'QLabel', col: int = 0
     ):
         # create description label, input box, unit label
-        setattr(self.ui, f'{name}_label', getattr(QtWidgets, descrip_cls)(description))
         setattr(self.ui, f'{name}', QLineEdit())
+        setattr(self.ui, f'{name}_label', getattr(QtWidgets, descrip_cls)(description))
         setattr(self.ui, f'{name}_unit', QLabel(unit))
         # set min. width for the input box
         getattr(self.ui, f'{name}').setMinimumWidth(min_width)
         # add the created objects to the grid
-        grid.addWidget(getattr(self.ui, f'{name}_label'), row, 0, 1, 1)
-        grid.addWidget(getattr(self.ui, f'{name}'), row, 1, 1, 1)
-        grid.addWidget(getattr(self.ui, f'{name}_unit'), row, 2, 1, 1)
+        grid.addWidget(getattr(self.ui, f'{name}_label'), row, col, 1, 1)
+        grid.addWidget(getattr(self.ui, f'{name}'), row, col + 1, 1, 1)
+        grid.addWidget(getattr(self.ui, f'{name}_unit'), row, col + 2, 1, 1)
 
     @property
     def activated_dialogs(self):

@@ -1,7 +1,7 @@
 import numpy as np
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtWidgets import QGridLayout, QLabel
-from fsetools.libstd.ec_1991_1_2 import appendix_a_parametric_fire
+from fsetools.libstd.bs_en_1991_1_2_2002_annex_a import appendix_a_parametric_fire
 
 # from fsetoolsGUI.gui.layout.i0611_parametric_fire import Ui_MainWindow
 from fsetoolsGUI.gui.logic.custom_app_template_2 import AppBaseClass

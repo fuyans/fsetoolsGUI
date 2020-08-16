@@ -9,7 +9,7 @@ from fsetoolsGUI.gui.logic.custom_table import TableWindow
 try:
     import boto3
 except ModuleNotFoundError:
-    pass
+    boto3 = None
 
 
 class Signals(QtCore.QObject):
@@ -30,7 +30,7 @@ class App(AppBaseClass):
     app_name_short = 's3\nUploader'
     app_name_long = 's3 Uploader'
 
-    def __init__(self, parent=None, mode=None):
+    def __init__(self, parent=None):
 
         self.__s3_client = boto3.client('s3')
 

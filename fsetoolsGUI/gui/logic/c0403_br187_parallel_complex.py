@@ -28,6 +28,7 @@ class App(BR187ComplexBaseClass):
         self.ui.p1_image = QLabel()
         self.ui.p1_image.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0403-1.png'))
         self.ui.p1_layout = QVBoxLayout(self.ui.page_1)
+        self.ui.p1_layout.setContentsMargins(0, 0, 0, 0)
         self.ui.p1_layout.addWidget(self.ui.p1_description)
         self.ui.p1_layout.addWidget(self.ui.p1_image)
 

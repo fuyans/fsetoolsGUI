@@ -1,7 +1,7 @@
 from os.path import join
 
-from PySide2 import QtWidgets, QtGui
-from PySide2.QtWidgets import QVBoxLayout, QGridLayout, QLabel, QPushButton, QRadioButton, QCheckBox
+from PySide2 import QtWidgets
+from PySide2.QtWidgets import QVBoxLayout, QGridLayout, QLabel, QCheckBox
 
 import fsetoolsGUI
 from fsetoolsGUI.gui.logic.custom_app_template_1 import AppBaseClass
@@ -31,6 +31,7 @@ class App(AppBaseClass):
         super().__init__(parent, post_stats)
 
         self.ui.p1_layout = QVBoxLayout(self.ui.page_1)
+        self.ui.p1_layout.setContentsMargins(0, 0, 0, 0)
         self.ui.p1_description = QLabel(
             'This sheet calculates the merging flow at final exit level in accordance with Section 2.23 in '
             'Approved Document B, Volume 2'
@@ -46,27 +47,19 @@ class App(AppBaseClass):
         self.ui.p2_layout.setHorizontalSpacing(5)
         self.ui.p2_layout.setVerticalSpacing(5)
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), 0, 0, 1, 3)
-        self.add_widget_to_grid(self.ui.p2_layout, 1, 'p2_in_S_up', 'S<sub>up</sub>, upper stair width', 'mm')
-        self.add_widget_to_grid(self.ui.p2_layout, 2, 'p2_in_D', 'D, door separation', 'm')
-        self.add_widget_to_grid(self.ui.p2_layout, 3, 'p2_in_W_SE', 'W<sub>SE</sub>, door width from current level', 'mm')
-        self.add_widget_to_grid(self.ui.p2_layout, 4, 'p2_in_N', 'N, no. pers. from exit level', 'person')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 1, 'p2_in_S_up', 'S<sub>up</sub>, upper stair width', 'mm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 2, 'p2_in_D', 'D, door separation', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 3, 'p2_in_W_SE', 'W<sub>SE</sub>, door width from current level', 'mm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 4, 'p2_in_N', 'N, no. pers. from exit level', 'person')
         self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), 5, 0, 1, 3)
         self.ui.p2_out_check = QCheckBox('Are "D>2" and "N>60" all true?')
         self.ui.p2_out_check.setDisabled(True)
         self.ui.p2_layout.addWidget(self.ui.p2_out_check, 6, 0, 1, 3)
-        self.add_widget_to_grid(self.ui.p2_layout, 7, 'p2_out_W_FE', 'W<sub>FE</sub>, solved min. exit width', 'mm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 7, 'p2_out_W_FE', 'W<sub>FE</sub>, solved min. exit width', 'mm')
         self.ui.p2_out_W_FE.setReadOnly(True)
 
-
         # set up context image
-        self.ui.label_image_figure.setPixmap(
-            self.make_pixmap_from_fp(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0104-1.png')))
-
-        # signals
-        self.ui.p2_in_D.textChanged.connect(self.ok)
-        self.ui.p2_in_S_up.textChanged.connect(self.ok)
-        self.ui.p2_in_W_SE.textChanged.connect(self.ok)
-        self.ui.p2_in_N.textChanged.connect(self.ok)
+        self.ui.label_image_figure.setPixmap(self.make_pixmap_from_fp(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0104-1.png')))
 
     def example(self):
         self.ui.p2_in_D.setText('1.9')

@@ -31,6 +31,7 @@ class App(AppBaseClass):
         self._numerical_results: dict = None
 
         self.ui.p1_layout = QVBoxLayout(self.ui.page_1)
+        self.ui.p1_layout.setContentsMargins(0, 0, 0, 0)
         self.ui.p1_description = QLabel(
             'This app estimates the activation time of a heat detection element '
             '(e.g. heat detector, sprinkler head etc.) located above a fire bed.\n\n'
@@ -54,21 +55,21 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(self.ui.p2_in_ceiling_jet, 1, 0, 1, 3)
         self.ui.p2_layout.addWidget(self.ui.p2_in_fire_plume, 2, 0, 1, 3)
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), 3, 0, 1, 3)
-        self.add_widget_to_grid(self.ui.p2_layout, 4, 'p2_in_t', 't, fire duration', 's')
-        self.add_widget_to_grid(self.ui.p2_layout, 5, 'p2_in_alpha', 'α, fire growth factor', 'kW/m<sup>2</sup>')
-        self.add_widget_to_grid(self.ui.p2_layout, 6, 'p2_in_H', 'H, height', 'm')
-        self.add_widget_to_grid(self.ui.p2_layout, 7, 'p2_in_R', 'R, radial distance', 'm')
-        self.add_widget_to_grid(self.ui.p2_layout, 8, 'p2_in_RTI', 'RTI, response time index',
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 4, 'p2_in_t', 't, fire duration', 's')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 5, 'p2_in_alpha', 'α, fire growth factor', 'kW/m<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 6, 'p2_in_H', 'H, height', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 7, 'p2_in_R', 'R, radial distance', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'p2_in_RTI', 'RTI, response time index',
                                 'm<sup>0.5</sup>s<sup>0.5</sup>')
-        self.add_widget_to_grid(self.ui.p2_layout, 9, 'p2_in_C', 'C, conduction factor',
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 9, 'p2_in_C', 'C, conduction factor',
                                 'm<sup>0.5</sup>/s<sup>0.5</sup>')
-        self.add_widget_to_grid(self.ui.p2_layout, 10, 'p2_in_HRRPUA', 'HRR per unit area', 'kW/m<sup>2</sup>')
-        self.add_widget_to_grid(self.ui.p2_layout, 11, 'p2_in_C_conv', 'C<sub>conv</sub> convection HRR', '%')
-        self.add_widget_to_grid(self.ui.p2_layout, 12, 'p2_in_t_act', 'detector act. temp.', '<sup>o</sup>C')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 10, 'p2_in_HRRPUA', 'HRR per unit area', 'kW/m<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'p2_in_C_conv', 'C<sub>conv</sub> convection HRR', '%')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 12, 'p2_in_t_act', 'detector act. temp.', '<sup>o</sup>C')
         self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), 13, 0, 1, 3)
-        self.add_widget_to_grid(self.ui.p2_layout, 14, 'p2_out_T_g_act', 'T<sub>g,act</sub>, gas temp.',
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 14, 'p2_out_T_g_act', 'T<sub>g,act</sub>, gas temp.',
                                 '<sup>o</sup>C')
-        self.add_widget_to_grid(self.ui.p2_layout, 15, 'p2_out_t_act', 't<sub>act</sub>, detector act. time', 's')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 15, 'p2_out_t_act', 't<sub>act</sub>, detector act. time', 's')
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(
