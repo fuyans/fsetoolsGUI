@@ -23,6 +23,7 @@ from fsetoolsGUI.gui.logic.c0404_br187_perpendicular_complex import App as App04
 from fsetoolsGUI.gui.logic.c0405_tra_3d_point import App as App0405
 from fsetoolsGUI.gui.logic.c0406_tra_2d_xy_contour import App as App0406
 from fsetoolsGUI.gui.logic.c0407_tra_enclosure import App as App0407
+from fsetoolsGUI.gui.logic.c0411_ec_external_flame import App as App0411
 from fsetoolsGUI.gui.logic.c0601_naming_convention import App as App0601
 from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
 from fsetoolsGUI.gui.logic.c0611_parametric_fire import App as App0611
@@ -54,6 +55,7 @@ class Apps:
         '0405': App0405,
         '0406': App0406,
         '0407': App0407,
+        '0411': App0411,
         '0601': App0601,
         '0602': App0602,
         '0611': App0611,
