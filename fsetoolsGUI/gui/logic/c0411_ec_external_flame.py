@@ -28,7 +28,7 @@ class App(AppBaseClass):
             '(a) the maximum temperatures of a compartment fire; '
             '(b) the size and temperatures of the flame from openings; and '
             '(c) the thermal radiation and convection parameters.\n\n'
-            'Calculation methodology follows Anndex B in BS EN 1991-1-2:2002 '
+            'Calculation methodology follows Annex B in BS EN 1991-1-2:2002 '
             '"Eurocode 1: Actions on structures – Part 1-2: General actions – Actions on structures exposed to fire"'
         )
         self.ui.p1_description.setFixedWidth(440)
@@ -63,32 +63,34 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(QLabel('<b>Options</b>'), 0, 4, 1, 4)
         self.ui.p2_in_is_forced_draught = QCheckBox('Is forced draught?')
         self.ui.p2_in_is_wall_above_opening = QCheckBox('Is wall above opening?')
-        self.ui.p2_in_is_windows_on_more_than_one_wall = QCheckBox('Are openings on more than one wall?')
+        self.ui.p2_in_is_windows_on_more_than_one_wall = QCheckBox('Win. on more than 1 wall?')
         self.ui.p2_in_is_central_core = QCheckBox('Is central core present?')
-        # self.ui.p2_in_is_windows_on_more_than_one_wall.setHidden(True)  # todo, not yet implemented
-        # self.ui.p2_in_is_central_core.setHidden(True)  # todo, not yet implemented
         self.ui.p2_in_make_pdf_web = QCheckBox('Make PDF report?')
         self.ui.p2_layout.addWidget(self.ui.p2_in_is_forced_draught, 1, 4, 1, 4)
         self.ui.p2_layout.addWidget(self.ui.p2_in_is_wall_above_opening, 2, 4, 1, 4)
-        # self.ui.p2_layout.addWidget(self.ui.p2_in_is_windows_on_more_than_one_wall, 3, 4, 1, 3)
-        # self.ui.p2_layout.addWidget(self.ui.p2_in_is_central_core, 4, 4, 1, 3)
-        self.ui.p2_layout.addWidget(self.ui.p2_in_make_pdf_web, 3, 4, 1, 4)
+        self.ui.p2_layout.addWidget(self.ui.p2_in_is_windows_on_more_than_one_wall, 3, 4, 1, 4)
+        self.ui.p2_layout.addWidget(self.ui.p2_in_is_central_core, 4, 4, 1, 4)
+        self.ui.p2_layout.addWidget(self.ui.p2_in_make_pdf_web, 5, 4, 1, 4)
 
-        self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), 4, 4, 1, 4)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 5, 'p2_out_Q', 'HRR', 'MW', col=4, min_width=60)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 6, 'p2_out_T_f', 'T<sub>f</sub>', 'K', col=4)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 7, 'p2_out_L_L', 'L<sub>L</sub>', 'm', col=4)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'p2_out_L_H', 'L<sub>H</sub>', 'm', col=4)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 9, 'p2_out_L_f', 'L<sub>f</sub>', 'm', col=4)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 10, 'p2_out_T_w', 'T<sub>w</sub>', 'K', col=4)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'p2_out_T_z', 'T<sub>z</sub>', 'K', col=4)
+        self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), 6, 4, 1, 4)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 7, 'p2_out_Q', 'HRR', 'MW', col=4, min_width=60)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'p2_out_T_f', 'T<sub>f</sub>', 'K', col=4)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 9, 'p2_out_L_L', 'L<sub>L</sub>', 'm', col=4)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 10, 'p2_out_L_H', 'L<sub>H</sub>', 'm', col=4)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'p2_out_L_f', 'L<sub>f</sub>', 'm', col=4)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 12, 'p2_out_T_w', 'T<sub>w</sub>', 'K', col=4)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 13, 'p2_out_T_z', 'T<sub>z</sub>', 'K', col=4)
+        # is_windows_on_more_than_one_wall = self.ui.p2_in_is_windows_on_more_than_one_wall.isChecked()
+        # is_central_core = self.ui.p2_in_is_central_core.isChecked()
         self.ui.p2_out_T_w_check = QCheckBox(self.ui.page_2)
         self.ui.p2_out_T_z_check = QCheckBox(self.ui.page_2)
-        self.ui.p2_layout.addWidget(self.ui.p2_out_T_w_check, 10, 7, 1, 1)
-        self.ui.p2_layout.addWidget(self.ui.p2_out_T_z_check, 11, 7, 1, 1)
+        self.ui.p2_layout.addWidget(self.ui.p2_out_T_w_check, 12, 7, 1, 1)
+        self.ui.p2_layout.addWidget(self.ui.p2_out_T_z_check, 13, 7, 1, 1)
 
         # default values
         # self.__override_Q()
+        self.ui.p2_in_is_windows_on_more_than_one_wall.setEnabled(False)  # todo, not yet implemented
+        self.ui.p2_in_is_central_core.setEnabled(False)  # todo, not yet implemented
         self.ui.p2_in_Q.setEnabled(False)
         self.__change_forced_draught()
         self.ui.p2_out_T_w_check.setChecked(True)
@@ -101,10 +103,8 @@ class App(AppBaseClass):
             self.ui.p2_out_Q.setEnabled(not self.ui.p2_in_Q_label.isChecked())
 
         self.ui.p2_in_Q_label.stateChanged.connect(override_Q)
-        self.ui.p2_out_T_w_check.stateChanged.connect(
-            lambda: self.ui.p2_out_T_w.setEnabled(self.ui.p2_out_T_w_check.isChecked()))
-        self.ui.p2_out_T_z_check.stateChanged.connect(
-            lambda: self.ui.p2_out_T_z.setEnabled(self.ui.p2_out_T_z_check.isChecked()))
+        self.ui.p2_out_T_w_check.stateChanged.connect(lambda: self.ui.p2_out_T_w.setEnabled(self.ui.p2_out_T_w_check.isChecked()))
+        self.ui.p2_out_T_z_check.stateChanged.connect(lambda: self.ui.p2_out_T_z.setEnabled(self.ui.p2_out_T_z_check.isChecked()))
         self.ui.p2_in_is_forced_draught.toggled.connect(self.__change_forced_draught)
 
     def example(self):

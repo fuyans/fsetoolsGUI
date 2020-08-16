@@ -286,7 +286,7 @@ class BR187ComplexBaseClass(AppBaseClass):
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 5, 'p2_in_Q', 'Emitter heat flux', 'kW/m<sup>2</sup>')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 6, 'p2_in_Q_crit', 'Receiver critical heat flux', 'kW/m²')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 7, 'p2_in_half_S', '½S, emitter to boundary', 'm', descrip_cls='QRadioButton')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'p2_in_unprotected_area', 'Unprotected option', '%', descrip_cls='QRadioButton')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'p2_in_unprotected_area', 'Unprotected area', '%', descrip_cls='QRadioButton')
         self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), 9, 0, 1, 1)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 10, 'p2_out_Phi', 'Φ, configuration factor', '×10<sup>-3</sup>')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'p2_out_q', 'q, receiver heat flux', 'kW/m<sup>2</sup>')
