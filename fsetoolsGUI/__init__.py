@@ -1,6 +1,14 @@
 import datetime
 import os
+import logging
 
+c_handler = logging.StreamHandler()
+c_handler.setFormatter(
+    logging.Formatter('%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s')
+)
+logger = logging.getLogger('gui')
+logger.setLevel(logging.INFO)
+logger.addHandler(c_handler)
 
 # make root directory of this app which will be used 1. when running the app; 2. pyinstaller at compiling the app.
 if os.path.exists(os.path.dirname(__file__)):
