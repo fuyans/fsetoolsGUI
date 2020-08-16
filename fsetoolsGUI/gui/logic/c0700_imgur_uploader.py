@@ -1,7 +1,6 @@
-import logging
 from os import path
 
-logger = logging.getLogger('gui')
+from fsetoolsGUI import logger
 
 from PySide2 import QtWidgets, QtCore
 
@@ -14,7 +13,7 @@ except ModuleNotFoundError as e:
     logger.error(f'Module `imgurpython` not found {e}')
 
 from fsetoolsGUI.gui.layout.i0700_imgur_uploader import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template_old import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 

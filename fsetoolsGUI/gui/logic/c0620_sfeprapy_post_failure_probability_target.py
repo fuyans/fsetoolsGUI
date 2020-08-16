@@ -4,7 +4,7 @@ from fsetools.libstd.ec_1991_1_2 import appendix_a_parametric_fire
 from os import path
 
 from fsetoolsGUI.gui.layout.i0611_parametric_fire import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_app_template import QMainWindow
+from fsetoolsGUI.gui.logic.c0000_app_template_old import QMainWindow
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_tableview import TableWindow
 

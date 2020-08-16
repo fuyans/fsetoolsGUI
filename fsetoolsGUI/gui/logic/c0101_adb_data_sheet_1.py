@@ -4,7 +4,7 @@ from PySide2 import QtWidgets, QtGui, QtCore
 
 import fsetoolsGUI
 from fsetoolsGUI.gui.layout.i0101_data_sheet import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template_old import AppBaseClass
 
 
 class DialogPageDisplay(AppBaseClass):

@@ -1,8 +1,4 @@
-import logging
-
 from PySide2 import QtCore, QtGui
-
-logger = logging.getLogger('gui')
 
 
 class Validator:

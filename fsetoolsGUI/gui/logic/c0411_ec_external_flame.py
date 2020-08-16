@@ -267,9 +267,6 @@ class App(AppBaseClass):
 
     @output_parameters.setter
     def output_parameters(self, v: dict):
-        v.pop('_latex')
-        v.pop('_latex_equation_content')
-        v.pop('_latex_equation_header')
 
         def float2str(v_: float):
             if v_ is None:

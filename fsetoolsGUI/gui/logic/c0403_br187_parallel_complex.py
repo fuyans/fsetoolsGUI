@@ -5,10 +5,9 @@ from PySide2.QtWidgets import QLabel, QVBoxLayout
 from fsetools.lib.fse_thermal_radiation import linear_solver
 from fsetools.lib.fse_thermal_radiation import phi_parallel_any_br187
 
-import fsetoolsGUI
+from fsetoolsGUI import __root_dir__, logger
 from fsetoolsGUI.gui.logic.c0400_br187_base_class import BR187ComplexBaseClass
 
-logger = logging.getLogger('gui')
 
 
 class App(BR187ComplexBaseClass):
@@ -26,7 +25,7 @@ class App(BR187ComplexBaseClass):
         self.ui.p1_description.setFixedWidth(350)
         self.ui.p1_description.setWordWrap(True)
         self.ui.p1_image = QLabel()
-        self.ui.p1_image.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0403-1.png'))
+        self.ui.p1_image.setPixmap(join(__root_dir__, 'gui', 'images', '0403-1.png'))
         self.ui.p1_layout = QVBoxLayout(self.ui.page_1)
         self.ui.p1_layout.setContentsMargins(0, 0, 0, 0)
         self.ui.p1_layout.addWidget(self.ui.p1_description)

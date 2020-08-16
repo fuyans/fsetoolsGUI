@@ -1,5 +1,3 @@
-import logging
-
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats as stats
@@ -9,9 +7,8 @@ from PySide2.QtCore import Signal, Slot, QObject
 from fsetoolsGUI.etc.probability_distribution import solve_dist_for_mean_std
 from fsetoolsGUI.gui.layout.i0620_probabilistic_distribution import Ui_MainWindow
 from fsetoolsGUI.gui.logic.common import GridDialog
-from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
-
-logger = logging.getLogger('gui')
+from fsetoolsGUI.gui.logic.c0000_app_template_old import AppBaseClass
+from fsetoolsGUI import logger
 
 try:
     from matplotlib.backends.backend_qt5agg import FigureCanvas

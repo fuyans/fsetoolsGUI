@@ -1,4 +1,3 @@
-import logging
 import threading
 from datetime import datetime
 from os import getlogin, path
@@ -7,11 +6,9 @@ from PySide2 import QtGui
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtWidgets import QLabel, QLineEdit, QGridLayout
 
-from fsetoolsGUI import __root_dir__, __version__
+from fsetoolsGUI import __root_dir__, __version__, logger
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
 from fsetoolsGUI.gui.layout.i0001_text_browser import Ui_MainWindow
-
-logger = logging.getLogger('gui')
 
 # parse css for Qt GUI
 try:
