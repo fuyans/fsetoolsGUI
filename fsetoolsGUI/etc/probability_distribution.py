@@ -1,6 +1,10 @@
+import logging
+
 import numpy as np
 import scipy.optimize as optimize
 import scipy.stats as stats
+
+logger = logging.getLogger('gui')
 
 
 def general_purpose_dist_func(x0, arg):
@@ -12,7 +16,7 @@ def general_purpose_dist_func(x0, arg):
     dist_func = getattr(stats, dist_name)(*x0)
     loss = (dist_func.mean() - mean) ** 2 + (dist_func.std() - sd) ** 2
 
-    print(dist_func.mean(), mean, dist_func.std(), sd)
+    logger.debug(dist_func.mean(), mean, dist_func.std(), sd)
 
     return loss
 

@@ -1,10 +1,8 @@
-import logging
 
 from PySide2.QtWidgets import QLabel, QGridLayout
 
 from fsetoolsGUI.gui.logic.c0000_app_template_1 import AppBaseClass
-
-logger = logging.getLogger('gui')
+from fsetoolsGUI import logger
 
 
 class BR187SimpleBaseClass(AppBaseClass):

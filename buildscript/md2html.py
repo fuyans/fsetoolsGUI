@@ -72,7 +72,7 @@ if __name__ == '__main__':
     html = None
 
     for i, fp_md in enumerate(fp_md_list):
-        print(fp_md, f' ({i}/{len(fp_md_list)})')
+        print(fp_md, f' ({i+1}/{len(fp_md_list)})')
         html = md2html(md2md_embedded_img(fp_md))
         css = f"<style type='text/css'>{fsetoolsGUI.gui.md_css}</style>"
         fp_html = path.join(fsetoolsGUI.__root_dir__, 'gui', 'docs', path.basename(fp_md).replace('.md', '.html'))

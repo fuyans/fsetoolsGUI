@@ -9,7 +9,7 @@ from fsetools.lib.fse_thermal_radiation_2d_parallel import main as tra_main
 from matplotlib import cm
 
 from fsetoolsGUI.gui.layout.i0406_tra_2d_xy_contour import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template_old import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_table import TableModel
 
 try:

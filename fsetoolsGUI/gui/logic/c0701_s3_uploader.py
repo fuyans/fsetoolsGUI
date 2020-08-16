@@ -3,7 +3,7 @@ from os import path
 from PySide2 import QtWidgets, QtCore
 
 from fsetoolsGUI.gui.layout.i0701_s3_uploader import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template_old import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 try:

@@ -14,7 +14,7 @@ except ModuleNotFoundError:
 
 from fsetoolsGUI.etc.safir_post_processor import out2pstrain, pstrain2dict, save_csv, make_strain_lines_for_given_shell
 from fsetoolsGUI.gui.layout.i0630_safir_postprocessor import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template_old import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 

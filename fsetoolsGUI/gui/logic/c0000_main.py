@@ -8,8 +8,7 @@ from PySide2.QtCore import Slot
 from PySide2.QtWidgets import QErrorMessage, QPushButton, QDialog, QMainWindow, QLineEdit, QInputDialog, QShortcut
 from packaging import version
 
-from fsetoolsGUI import __root_dir__
-from fsetoolsGUI import __version__, __remote_version_url__
+from fsetoolsGUI import __version__, __remote_version_url__, __root_dir__, logger
 from fsetoolsGUI.gui.layout.i0000_main import Ui_MainWindow
 from fsetoolsGUI.gui.logic.c0101_adb_data_sheet_1 import App as App0101
 from fsetoolsGUI.gui.logic.c0102_bs9999_data_sheet_1 import App as App0102
@@ -37,8 +36,6 @@ try:
     qt_css = open(path.join(__root_dir__, 'gui', 'style.css'), "r").read()
 except FileNotFoundError:
     raise FileNotFoundError('UI style file not found')
-
-logger = logging.getLogger('gui')
 
 
 class Apps:
