@@ -7,7 +7,7 @@ from fsetools.libstd.bs_9999_2017 import (
 )
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.logic.custom_app_template_1 import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template_1 import AppBaseClass
 
 
 class App(AppBaseClass):

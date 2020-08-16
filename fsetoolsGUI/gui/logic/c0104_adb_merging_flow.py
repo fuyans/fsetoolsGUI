@@ -4,7 +4,7 @@ from PySide2 import QtWidgets
 from PySide2.QtWidgets import QVBoxLayout, QGridLayout, QLabel, QCheckBox
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.logic.custom_app_template_1 import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template_1 import AppBaseClass
 
 
 def clause_2_23_merging_flow(N: float, S: float, D: float, W_SE: float) -> tuple:

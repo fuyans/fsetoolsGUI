@@ -3,7 +3,7 @@ from datetime import datetime
 from os import getlogin, path
 
 from PySide2 import QtWidgets
-from PySide2.QtWidgets import QLabel, QLineEdit, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy
+from PySide2.QtWidgets import QLabel, QLineEdit, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy, QVBoxLayout
 
 from fsetoolsGUI import __root_dir__, __version__
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
@@ -211,9 +211,59 @@ class AppBaseClass(QtWidgets.QMainWindow):
 
 
 if __name__ == '__main__':
+    class AppBaseClassTest(AppBaseClass):
+        app_id = '0000'
+        app_name_short = 'example name short'
+        app_name_long = 'example name long'
+
+        def __init__(self, parent=None):
+            # instantiate ui
+            super().__init__(
+                parent=parent,
+            )
+
+            self.ui.p1_layout = QVBoxLayout(self.ui.page_1)
+            self.ui.p1_layout.setContentsMargins(0, 0, 0, 0)
+
+            self.ui.p1_intro = QLabel(
+                'This is a brief description. \n\n'
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et '
+                'dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip '
+                'ex ea commodo consequat.'
+            )
+            self.ui.p1_intro.setFixedWidth(350)
+            self.ui.p1_intro.setWordWrap(True)
+            self.ui.p1_image = QLabel('placeholder image')
+            self.ui.p1_image.setFixedSize(350, 200)
+            self.ui.p1_image.setAlignment(QtCore.Qt.AlignCenter)
+            self.ui.p1_layout.addWidget(self.ui.p1_intro)
+            self.ui.p1_layout.addWidget(self.ui.p1_image)
+
+            self.ui.p2_layout = QGridLayout(self.ui.page_2)
+            self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
+            self.ui.p2_layout.addWidget(QLabel('<b>Input parameter list</b>'), 0, 0, 1, 3)
+            self.add_lineedit_set_to_grid(self.ui.p2_layout, 1, 'p2_entry_1', 'test description 1', 'unit 1')
+            self.add_lineedit_set_to_grid(self.ui.p2_layout, 2, 'p2_entry_2', 'test description 2', 'unit 2')
+            self.add_lineedit_set_to_grid(self.ui.p2_layout, 3, 'p2_entry_3', 'test description 3', 'unit 3')
+            self.add_lineedit_set_to_grid(self.ui.p2_layout, 4, 'p2_entry_4', 'test description 4', 'unit 4')
+            self.add_lineedit_set_to_grid(self.ui.p2_layout, 5, 'p2_entry_5', 'test description 5', 'unit 5')
+            self.add_lineedit_set_to_grid(self.ui.p2_layout, 6, 'p2_entry_6', 'test description 6', 'unit 6')
+            self.add_lineedit_set_to_grid(self.ui.p2_layout, 7, 'p2_entry_7', 'test description 7', 'unit 7')
+            self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'p2_entry_8', 'test description 8', 'unit 8')
+            self.ui.p2_layout.addWidget(QLabel('<b>Output parameter list</b>'), 9, 0, 1, 3)
+            self.add_lineedit_set_to_grid(self.ui.p2_layout, 10, 'p2_entry_10', 'test description 10', 'unit 10')
+            self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'p2_entry_11', 'test description 11', 'unit 11')
+
+        def ok(self):
+            pass
+
+        def example(self):
+            pass
+
+
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = AppBaseClass()
+    app = AppBaseClassTest()
     app.show()
     qapp.exec_()

@@ -4,7 +4,7 @@ from PySide2.QtWidgets import QGridLayout, QLabel
 from fsetools.libstd.bs_en_1991_1_2_2002_annex_a import appendix_a_parametric_fire
 
 # from fsetoolsGUI.gui.layout.i0611_parametric_fire import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_app_template_2 import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template_2 import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 

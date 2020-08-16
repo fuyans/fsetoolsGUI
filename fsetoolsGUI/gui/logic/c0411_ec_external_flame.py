@@ -8,7 +8,7 @@ from fsetools.lib.fse_bs_en_1991_1_2_external_flame import ExternalFlame
 from fsetools.lib.fse_bs_en_1991_1_2_external_flame_forced_draught import ExternalFlameForcedDraught
 
 from fsetoolsGUI import __root_dir__, logger
-from fsetoolsGUI.gui.logic.custom_app_template_1 import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template_1 import AppBaseClass
 
 
 class App(AppBaseClass):

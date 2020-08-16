@@ -10,7 +10,7 @@ from fsetools.libstd.pd_7974_1_2019 import eq_22_t_squared_fire_growth
 import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_1 as image_figure_1
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_2 as image_figure_2
-from fsetoolsGUI.gui.logic.custom_app_template_1 import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template_1 import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 
