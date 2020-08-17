@@ -214,15 +214,17 @@ class MainWindow(QMainWindow):
         self.activated_dialogs.append(self.__apps.activate_app(code=module_id))
 
     def activate_app_module_id(self):
-        txt, ok = QInputDialog.getText(
-            self,
-            f'Activate app by Module Code',
-            f'{self.__apps.print_all_app_info()}\n\nModule code:',
-            QLineEdit.Normal,
-            ""
-        )
-        if ok and txt:
-            self.activate_app(txt)
+
+        if self.is_executable:
+            txt, ok = QInputDialog.getText(
+                self,
+                f'Activate app by Module Code',
+                f'{self.__apps.print_all_app_info()}\n\nModule code:',
+                QLineEdit.Normal,
+                ""
+            )
+            if ok and txt:
+                self.activate_app(txt)
 
     def check_update(self):
         """
