@@ -42,22 +42,21 @@ class App(AppBaseClass):
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), 0, 0, 1, 3)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 1, 'p2_in_q_fd', 'q<sub>fd</sub>, design fuel load', 'MJ/m<sup>2</sup>', min_width=60)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 2, 'p2_in_Q', 'Override HRR', 'MW', descrip_cls='QCheckBox')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 3, 'p2_in_W_1', 'W<sub>1</sub>, enclosure dim. 1', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 4, 'p2_in_W_2', 'W<sub>2</sub>, enclosure dim. 2', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 5, 'p2_in_A_f', 'A<sub>f</sub>, floor area', 'm<sup>2</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 6, 'p2_in_A_t', 'A<sub>t</sub>, total surface area', 'm<sup>2</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 7, 'p2_in_h_eq', 'h<sub>eq</sub>, weighted win. height', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'p2_in_w_t', 'w<sub>t</sub>, total win. width', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 9, 'p2_in_A_v', 'A<sub>v</sub>, total win. area', 'm<sup>2</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 10, 'p2_in_T_0', 'T<sub>0</sub>, Ambient temp.', 'K')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'p2_in_tau_F', 'τ<sub>F</sub>, free burning duration', 's')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 12, 'p2_in_L_x', 'L<sub>x</sub>, length along flame axis', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 13, 'p2_in_u', 'u, wind speed', 'm/s')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 14, 'p2_in_L_c', 'L<sub>c</sub>, core length', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 15, 'p2_in_W_c', 'W<sub>c</sub>, core depth', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 16, 'p2_in_A_v1', 'A<sub>v1</sub>, win. area on wall 1', 'm<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 1, 'p2_in_q_fd', '<i>q<sub>fd</sub></i>, design fuel load', 'MJ/m<sup>2</sup>', min_width=60)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 2, 'p2_in_Q', 'Q, HRR (override)', 'MW', descrip_cls='QCheckBox')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 3, 'p2_in_W_1', '<i>W<sub>1</sub></i>, enclosure dim. 1', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 4, 'p2_in_W_2', '<i>W<sub>2</sub></i>, enclosure dim. 2', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 5, 'p2_in_A_f', '<i>A<sub>f</sub></i>, floor area', 'm<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 6, 'p2_in_A_t', '<i>A<sub>t</sub></i>, total surface area', 'm<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 7, 'p2_in_h_eq', '<i>h<sub>eq</sub></i>, weighted win. height', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'p2_in_w_t', '<i>w<sub>t</sub></i>, total win. width', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 9, 'p2_in_T_0', '<i>T<sub>0</sub></i>, Ambient temp.', 'K')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 10, 'p2_in_tau_F', '<i>τ<sub>F</sub></i>, free burning duration', 's')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'p2_in_L_x', '<i>L<sub>x</sub></i>, length along flame axis', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 12, 'p2_in_u', '<i>u</i>, wind speed', 'm/s')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 13, 'p2_in_L_c', '<i>L<sub>c</sub></i>, core length', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 14, 'p2_in_W_c', '<i>W<sub>c</sub></i>, core depth', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 15, 'p2_in_A_v1', '<i>A<sub>v1</sub></i>, win. area on wall 1', 'm<sup>2</sup>')
 
         self.ui.p2_layout.addItem(QSpacerItem(10, 1, QSizePolicy.Fixed, QSizePolicy.Minimum), 0, 3, 1, 1)
 
@@ -73,25 +72,27 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(self.ui.p2_in_is_central_core, 4, 4, 1, 4)
         self.ui.p2_layout.addWidget(self.ui.p2_in_make_pdf_web, 5, 4, 1, 4)
 
-        self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), 9, 4, 1, 4)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 10, 'p2_out_Q', 'HRR', 'MW', col=4, min_width=60)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'p2_out_T_f', 'T<sub>f</sub>', 'K', col=4)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 12, 'p2_out_L_L', 'L<sub>L</sub>', 'm', col=4)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 13, 'p2_out_L_H', 'L<sub>H</sub>', 'm', col=4)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 14, 'p2_out_L_f', 'L<sub>f</sub>', 'm', col=4)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 15, 'p2_out_T_w', 'T<sub>w</sub>', 'K', col=4)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 16, 'p2_out_T_z', 'T<sub>z</sub>', 'K', col=4)
+        self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), 8, 4, 1, 4)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 9, 'p2_out_Q', 'HRR', 'MW', col=4, min_width=60)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 10, 'p2_out_L_L', '<i>L<sub>L</sub></i>', 'm', col=4)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'p2_out_L_H', '<i>L<sub>H</sub></i>', 'm', col=4)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 12, 'p2_out_L_f', '<i>L<sub>f</sub></i>', 'm', col=4)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 13, 'p2_out_T_f', '<i>T<sub>f</sub></i>', 'K', col=4)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 14, 'p2_out_T_w', '<i>T<sub>w</sub></i>', 'K', col=4)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 15, 'p2_out_T_z', '<i>T<sub>z</sub></i>', 'K', col=4)
+        self.ui.p2_out_T_f_check = QCheckBox(self.ui.page_2)
         self.ui.p2_out_T_w_check = QCheckBox(self.ui.page_2)
         self.ui.p2_out_T_z_check = QCheckBox(self.ui.page_2)
-        self.ui.p2_layout.addWidget(self.ui.p2_out_T_w_check, 15, 7, 1, 1)
-        self.ui.p2_layout.addWidget(self.ui.p2_out_T_z_check, 16, 7, 1, 1)
+        self.ui.p2_layout.addWidget(self.ui.p2_out_T_f_check, 13, 7, 1, 1)
+        self.ui.p2_layout.addWidget(self.ui.p2_out_T_w_check, 14, 7, 1, 1)
+        self.ui.p2_layout.addWidget(self.ui.p2_out_T_z_check, 15, 7, 1, 1)
 
         # default values
-        self.ui.p2_in_Q.setEnabled(False)
-        self.ui.p2_in_u.setEnabled(False)
-        self.ui.p2_in_L_c.setEnabled(False)
-        self.ui.p2_in_W_c.setEnabled(False)
-        self.ui.p2_in_A_v1.setEnabled(False)
+        self.ui.p2_in_is_forced_draught.setChecked(True)
+        self.ui.p2_in_tau_F.setText('1200')
+        self.ui.p2_in_T_0.setText('293.15')
+        self.ui.p2_in_Q_label.setChecked(True)
+        self.ui.p2_out_T_f_check.setChecked(True)
         self.ui.p2_out_T_w_check.setChecked(True)
         self.ui.p2_out_T_z_check.setChecked(True)
 
@@ -117,7 +118,14 @@ class App(AppBaseClass):
 
         def override_Q():
             self.ui.p2_in_Q.setEnabled(self.ui.p2_in_Q_label.isChecked())
+            self.ui.p2_in_is_windows_on_more_than_one_wall.setEnabled(not self.ui.p2_in_Q_label.isChecked())
+            self.ui.p2_in_is_central_core.setEnabled(not self.ui.p2_in_Q_label.isChecked())
             self.ui.p2_in_q_fd.setEnabled(not self.ui.p2_in_Q_label.isChecked())
+            self.ui.p2_in_W_1.setEnabled(not self.ui.p2_in_Q_label.isChecked())
+            self.ui.p2_in_W_2.setEnabled(not self.ui.p2_in_Q_label.isChecked())
+            self.ui.p2_in_A_f.setEnabled(not self.ui.p2_in_Q_label.isChecked())
+            self.ui.p2_in_A_t.setEnabled(self.ui.p2_out_T_f_check.isChecked() or not self.ui.p2_in_Q_label.isChecked())
+            self.ui.p2_in_tau_F.setEnabled(not self.ui.p2_in_Q_label.isChecked())
             self.ui.p2_in_L_c.setEnabled(self.ui.p2_in_is_central_core.isChecked() and not self.ui.p2_in_Q_label.isChecked())
             self.ui.p2_in_W_c.setEnabled(self.ui.p2_in_is_central_core.isChecked() and not self.ui.p2_in_Q_label.isChecked())
             self.ui.p2_in_A_v1.setEnabled(
@@ -125,16 +133,29 @@ class App(AppBaseClass):
             )
             self.ui.p2_out_Q.setEnabled(not self.ui.p2_in_Q_label.isChecked())
 
+        def T_f_check():
+            self.ui.p2_out_T_f.setEnabled(self.ui.p2_out_T_f_check.isChecked())
+            self.ui.p2_in_A_t.setEnabled(self.ui.p2_out_T_f_check.isChecked() or not self.ui.p2_in_Q_label.isChecked())
+
         def T_z_check():
             self.ui.p2_in_L_x.setEnabled(self.ui.p2_out_T_z_check.isChecked())
+            self.ui.p2_out_T_w_check.setChecked(self.ui.p2_out_T_z_check.isChecked() or self.ui.p2_out_T_w_check.isChecked())
             self.ui.p2_out_T_z.setEnabled(self.ui.p2_out_T_z_check.isChecked())
 
         self.ui.p2_in_Q_label.stateChanged.connect(override_Q)
         self.ui.p2_in_is_forced_draught.stateChanged.connect(is_forced_draught)
         self.ui.p2_in_is_central_core.stateChanged.connect(is_central_core)
         self.ui.p2_in_is_windows_on_more_than_one_wall.stateChanged.connect(is_windows_on_more_than_one_wall)
+        self.ui.p2_out_T_f_check.stateChanged.connect(T_f_check)
         self.ui.p2_out_T_w_check.stateChanged.connect(lambda: self.ui.p2_out_T_w.setEnabled(self.ui.p2_out_T_w_check.isChecked()))
         self.ui.p2_out_T_z_check.stateChanged.connect(T_z_check)
+
+        # set UI default with signals/slots affects
+        self.ui.p2_in_is_forced_draught.setChecked(False)
+        self.ui.p2_out_T_z_check.setChecked(False)
+        self.ui.p2_out_T_w_check.setChecked(False)
+        self.ui.p2_out_T_f_check.setChecked(False)
+        self.ui.p2_in_Q_label.setChecked(False)
 
     def example(self):
         input_kwargs = dict(
@@ -146,7 +167,6 @@ class App(AppBaseClass):
             A_t=70.3,
             h_eq=1.1,
             w_t=1.82,
-            A_v=2.002,
             L_x=0.1,
             tau_F=1200,
             rho_g=0.45,
@@ -161,6 +181,7 @@ class App(AppBaseClass):
             is_central_core=False,
             is_forced_draught=False,
             make_pdf_web=False,
+            T_f=None,
             T_z=None,
             T_w=None,
         )
@@ -195,11 +216,11 @@ class App(AppBaseClass):
         self.ui.p2_out_T_z.setText('')
 
         try:
-
             self.output_parameters = self.calculate(self.input_parameters)
             self.statusBar().showMessage('Calculation complete')
         except Exception as e:
             self.statusBar().showMessage(f'{e}', timeout=10 * 1e3)
+            raise e
 
     @property
     def input_parameters(self):
@@ -223,7 +244,6 @@ class App(AppBaseClass):
         A_t = str2float(self.ui.p2_in_A_t.text())
         h_eq = str2float(self.ui.p2_in_h_eq.text())
         w_t = str2float(self.ui.p2_in_w_t.text())
-        A_v = str2float(self.ui.p2_in_A_v.text())
         T_0 = str2float(self.ui.p2_in_T_0.text())
         L_x = str2float(self.ui.p2_in_L_x.text())
         tau_F = str2float(self.ui.p2_in_tau_F.text())
@@ -232,6 +252,9 @@ class App(AppBaseClass):
         W_c = str2float(self.ui.p2_in_W_c.text())
         A_v1 = str2float(self.ui.p2_in_A_v1.text())
 
+        # assign None to unchecked outputs so the calculation ignores them
+        if not self.ui.p2_out_T_f_check.isChecked():
+            T_f = None
         if not self.ui.p2_out_T_w_check.isChecked():
             T_w = None
         if not self.ui.p2_out_T_z_check.isChecked():
@@ -268,7 +291,7 @@ class App(AppBaseClass):
         self.ui.p2_in_A_t.setText(float2str(v['A_t']))
         self.ui.p2_in_h_eq.setText(float2str(v['h_eq']))
         self.ui.p2_in_w_t.setText(float2str(v['w_t']))
-        self.ui.p2_in_A_v.setText(float2str(v['A_v']))
+        # self.ui.p2_in_A_v.setText(float2str(v['A_v']))
         self.ui.p2_in_T_0.setText(float2str(v['T_0']))
         self.ui.p2_in_L_x.setText(float2str(v['L_x']))
         self.ui.p2_in_tau_F.setText(float2str(v['tau_F']))
@@ -277,6 +300,8 @@ class App(AppBaseClass):
         self.ui.p2_in_W_c.setText(float2str(v['W_c']))
         self.ui.p2_in_A_v1.setText(float2str(v['A_v1']))
 
+        if 'T_f' in v:
+            self.ui.p2_out_T_f_check.setChecked(False)
         if 'T_w' in v:
             self.ui.p2_out_T_w_check.setChecked(False)
         if 'T_z' in v:
@@ -303,30 +328,24 @@ class App(AppBaseClass):
     @output_parameters.setter
     def output_parameters(self, v: dict):
 
-        def float2str(v_: float):
-            if v_ is None:
-                return ''
+        # a helper function to set float to QLineEdit
+        def try_set_text(cls, v_):
             try:
                 if v_ > 1e2:
-                    return f'{v_:.0f}'
+                    v_ = f'{v_:.0f}'
                 else:
-                    return f'{v_:.3g}'
-            except ValueError:
-                return ''
+                    v_ = f'{v_:.3g}'
+            except (ValueError, TypeError):
+                v_ = ''
+            getattr(cls, 'setText')(v_)
 
-        def try_set_text(cls, d: dict, k: str):
-            try:
-                getattr(cls, 'setText')(float2str(d[k]))
-            except KeyError:
-                logger.info(f'Key {k} not found in {d.keys()}')
-
-        try_set_text(self.ui.p2_out_Q, v, 'Q')
-        try_set_text(self.ui.p2_out_T_f, v, 'T_f')
-        try_set_text(self.ui.p2_out_L_L, v, 'L_L')
-        try_set_text(self.ui.p2_out_L_H, v, 'L_H')
-        try_set_text(self.ui.p2_out_L_f, v, 'L_f')
-        try_set_text(self.ui.p2_out_T_w, v, 'T_w')
-        try_set_text(self.ui.p2_out_T_z, v, 'T_z')
+        try_set_text(self.ui.p2_out_Q, v['Q'])
+        try_set_text(self.ui.p2_out_T_f, v['T_f'])
+        try_set_text(self.ui.p2_out_L_L, v['L_L'])
+        try_set_text(self.ui.p2_out_L_H, v['L_H'])
+        try_set_text(self.ui.p2_out_L_f, v['L_f'])
+        try_set_text(self.ui.p2_out_T_w, v['T_w'])
+        try_set_text(self.ui.p2_out_T_z, v['T_z'])
 
     @staticmethod
     def __set_hidden_label_input_and_unit(cls, attr_name: str, is_hidden: bool = True):
