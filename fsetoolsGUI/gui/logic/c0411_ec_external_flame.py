@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
+
 import tempfile
 import threading
 from os.path import join
 
-from PySide2 import QtWidgets
 from PySide2.QtWidgets import QVBoxLayout, QGridLayout, QLabel, QCheckBox, QSpacerItem, QSizePolicy
 from fsetools.lib.fse_bs_en_1991_1_2_external_flame import ExternalFlame
 from fsetools.lib.fse_bs_en_1991_1_2_external_flame_forced_draught import ExternalFlameForcedDraught
@@ -51,8 +52,8 @@ class App(AppBaseClass):
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'p2_in_w_t', 'w<sub>t</sub>, total win. width', 'm')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 9, 'p2_in_A_v', 'A<sub>v</sub>, total win. area', 'm<sup>2</sup>')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 10, 'p2_in_T_0', 'T<sub>0</sub>, Ambient temp.', 'K')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'p2_in_L_x', 'L<sub>x</sub>, length along flame axis', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 12, 'p2_in_tau_F', 'tau<sub>F</sub>, free burning duration', 's')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'p2_in_tau_F', 'τ<sub>F</sub>, free burning duration', 's')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 12, 'p2_in_L_x', 'L<sub>x</sub>, length along flame axis', 'm')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 13, 'p2_in_u', 'u, wind speed', 'm/s')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 14, 'p2_in_L_c', 'L<sub>c</sub>, core length', 'm')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 15, 'p2_in_W_c', 'W<sub>c</sub>, core depth', 'm')
@@ -87,7 +88,7 @@ class App(AppBaseClass):
 
         # default values
         self.ui.p2_in_Q.setEnabled(False)
-        self.__change_forced_draught()
+        self.ui.p2_in_u.setEnabled(False)
         self.ui.p2_in_L_c.setEnabled(False)
         self.ui.p2_in_W_c.setEnabled(False)
         self.ui.p2_in_A_v1.setEnabled(False)
@@ -95,13 +96,12 @@ class App(AppBaseClass):
         self.ui.p2_out_T_z_check.setChecked(True)
 
         # signals
-        def override_Q():
-            self.ui.p2_in_Q.setEnabled(self.ui.p2_in_Q_label.isChecked())
-            self.ui.p2_in_q_fd.setEnabled(not self.ui.p2_in_Q_label.isChecked())
-            self.ui.p2_in_L_c.setEnabled(not self.ui.p2_in_Q_label.isChecked())
-            self.ui.p2_in_W_c.setEnabled(not self.ui.p2_in_Q_label.isChecked())
-            self.ui.p2_in_A_v1.setEnabled(not self.ui.p2_in_Q_label.isChecked())
-            self.ui.p2_out_Q.setEnabled(not self.ui.p2_in_Q_label.isChecked())
+        def is_forced_draught():
+            self.ui.p2_in_u.setEnabled(self.ui.p2_in_is_forced_draught.isChecked())
+            if self.ui.p2_in_is_forced_draught.isChecked():
+                self.ui.p1_figure.setPixmap(join(__root_dir__, 'gui', 'images', f'{self.app_id}-2.png'))
+            else:
+                self.ui.p1_figure.setPixmap(join(__root_dir__, 'gui', 'images', f'{self.app_id}-1.png'))
 
         def is_central_core():
             self.ui.p2_in_L_c.setEnabled(self.ui.p2_in_is_central_core.isChecked() and not self.ui.p2_in_Q_label.isChecked())
@@ -115,17 +115,31 @@ class App(AppBaseClass):
                 (self.ui.p2_in_is_windows_on_more_than_one_wall.isChecked() or self.ui.p2_in_is_central_core.isChecked()) and not self.ui.p2_in_Q_label.isChecked()
             )
 
+        def override_Q():
+            self.ui.p2_in_Q.setEnabled(self.ui.p2_in_Q_label.isChecked())
+            self.ui.p2_in_q_fd.setEnabled(not self.ui.p2_in_Q_label.isChecked())
+            self.ui.p2_in_L_c.setEnabled(self.ui.p2_in_is_central_core.isChecked() and not self.ui.p2_in_Q_label.isChecked())
+            self.ui.p2_in_W_c.setEnabled(self.ui.p2_in_is_central_core.isChecked() and not self.ui.p2_in_Q_label.isChecked())
+            self.ui.p2_in_A_v1.setEnabled(
+                (self.ui.p2_in_is_windows_on_more_than_one_wall.isChecked() or self.ui.p2_in_is_central_core.isChecked()) and not self.ui.p2_in_Q_label.isChecked()
+            )
+            self.ui.p2_out_Q.setEnabled(not self.ui.p2_in_Q_label.isChecked())
+
+        def T_z_check():
+            self.ui.p2_in_L_x.setEnabled(self.ui.p2_out_T_z_check.isChecked())
+            self.ui.p2_out_T_z.setEnabled(self.ui.p2_out_T_z_check.isChecked())
+
         self.ui.p2_in_Q_label.stateChanged.connect(override_Q)
-        self.ui.p2_in_is_forced_draught.stateChanged.connect(self.__change_forced_draught)
+        self.ui.p2_in_is_forced_draught.stateChanged.connect(is_forced_draught)
         self.ui.p2_in_is_central_core.stateChanged.connect(is_central_core)
         self.ui.p2_in_is_windows_on_more_than_one_wall.stateChanged.connect(is_windows_on_more_than_one_wall)
         self.ui.p2_out_T_w_check.stateChanged.connect(lambda: self.ui.p2_out_T_w.setEnabled(self.ui.p2_out_T_w_check.isChecked()))
-        self.ui.p2_out_T_z_check.stateChanged.connect(lambda: self.ui.p2_out_T_z.setEnabled(self.ui.p2_out_T_z_check.isChecked()))
+        self.ui.p2_out_T_z_check.stateChanged.connect(T_z_check)
 
     def example(self):
         input_kwargs = dict(
             q_fd=870,
-            Q=80,
+            Q=None,
             W_1=1.82,
             W_2=5.46,
             A_f=14.88,
@@ -150,7 +164,6 @@ class App(AppBaseClass):
             T_z=None,
             T_w=None,
         )
-
         self.input_parameters = input_kwargs
 
     @staticmethod
@@ -244,6 +257,7 @@ class App(AppBaseClass):
         self.ui.p2_in_is_wall_above_opening.setChecked(v['is_wall_above_opening'])
         self.ui.p2_in_is_central_core.setChecked(v['is_central_core'])
         self.ui.p2_in_is_windows_on_more_than_one_wall.setChecked(v['is_windows_on_more_than_one_wall'])
+        self.ui.p2_in_Q_label.setChecked(v['Q'] is not None)
         self.ui.p2_in_make_pdf_web.setChecked(v['make_pdf_web'])
 
         self.ui.p2_in_q_fd.setText(float2str(v['q_fd']))
@@ -314,15 +328,6 @@ class App(AppBaseClass):
         try_set_text(self.ui.p2_out_T_w, v, 'T_w')
         try_set_text(self.ui.p2_out_T_z, v, 'T_z')
 
-    def __change_forced_draught(self):
-        if self.ui.p2_in_is_forced_draught.isChecked():
-            self.__set_enabled_label_input_and_unit(self.ui, 'p2_in_u', True)
-            self.ui.p1_figure.setPixmap(join(__root_dir__, 'gui', 'images', f'{self.app_id}-2.png'))
-
-        else:
-            self.__set_enabled_label_input_and_unit(self.ui, 'p2_in_u', False)
-            self.ui.p1_figure.setPixmap(join(__root_dir__, 'gui', 'images', f'{self.app_id}-1.png'))
-
     @staticmethod
     def __set_hidden_label_input_and_unit(cls, attr_name: str, is_hidden: bool = True):
         getattr(cls, attr_name).setHidden(is_hidden)
@@ -337,15 +342,8 @@ class App(AppBaseClass):
 
 
 if __name__ == '__main__':
-    from PySide2 import QtWidgets, QtCore
-    import PySide2
+    from PySide2 import QtWidgets
     import sys
-
-    if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
-        PySide2.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-
-    if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
-        PySide2.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
     qapp = QtWidgets.QApplication(sys.argv)
     app = App(post_stats=False)
