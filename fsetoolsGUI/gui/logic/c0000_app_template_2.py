@@ -147,9 +147,11 @@ class AppBaseClass(QtWidgets.QMainWindow):
             descrip_cls: str = 'QLabel'
     ):
         # create description label, input box, unit label
-        setattr(self.ui, f'{name}_label', getattr(QtWidgets, descrip_cls)(description))
+        if description is not None:
+            setattr(self.ui, f'{name}_label', getattr(QtWidgets, descrip_cls)(description))
         setattr(self.ui, f'{name}', QLineEdit())
-        setattr(self.ui, f'{name}_unit', QLabel(unit))
+        if str is not None:
+            setattr(self.ui, f'{name}_unit', QLabel(unit))
         # set min. width for the input box
         getattr(self.ui, f'{name}').setMinimumWidth(min_width)
         # add the created objects to the grid
