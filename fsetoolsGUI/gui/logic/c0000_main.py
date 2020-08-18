@@ -15,6 +15,7 @@ from fsetoolsGUI.gui.logic.c0102_bs9999_data_sheet_1 import App as App0102
 from fsetoolsGUI.gui.logic.c0103_bs9999_merging_flow import App as App0103
 from fsetoolsGUI.gui.logic.c0104_adb_merging_flow import App as App0104
 from fsetoolsGUI.gui.logic.c0111_pd7974_detector_activation import App as App0111
+from fsetoolsGUI.gui.logic.c0311_ec_external_column import App as App0311
 from fsetoolsGUI.gui.logic.c0401_br187_parallel_simple import App as App0401
 from fsetoolsGUI.gui.logic.c0402_br187_perpendicular_simple import App as App0402
 from fsetoolsGUI.gui.logic.c0403_br187_parallel_complex import App as App0403
@@ -45,6 +46,7 @@ class Apps:
         '0103': App0103,
         '0104': App0104,
         '0111': App0111,
+        '0311': App0311,
         '0401': App0401,
         '0402': App0402,
         '0403': App0403,
