@@ -21,3 +21,42 @@ class Validator:
 def copy_to_clipboard(s: str):
     clipboard = QtGui.QGuiApplication.clipboard()
     clipboard.setText(s)
+
+
+class Counter:
+    def __init__(self):
+        self.v: int = 0
+
+    def __add__(self, other):
+        if isinstance(other, int):
+            self.v = self.v + other
+        elif isinstance(other, Counter):
+            self.v = self.v + other.v
+        else:
+            raise TypeError
+
+    def __repr__(self):
+        return f'{self.v:d}'
+
+    def add(self):
+        self.v += 1
+
+    def reset(self, v: int = 0):
+        if isinstance(v, int):
+            self.v = v
+        else:
+            raise TypeError
+
+    @property
+    def count(self):
+        self.add()
+        return self.v - 1
+
+if __name__ == '__main__':
+    counter = Counter()
+    counter.add()
+    print(counter)
+    counter + 5
+    print(counter)
+    counter.reset(-1)
+    print(counter)
