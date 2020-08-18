@@ -10,7 +10,7 @@ from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
 from fsetoolsGUI.gui.layout.i0000_template_1 import Ui_MainWindow as main_ui
 from fsetoolsGUI.gui.layout.i0001_text_browser import Ui_MainWindow as aboutform_ui
 from fsetoolsGUI.gui.logic.c0000_utilities import *
-
+from typing import Union
 # parse css for Qt GUI
 try:
     qt_css = open(path.join(__root_dir__, 'gui', 'style.css'), "r").read()
@@ -144,9 +144,12 @@ class AppBaseClass(QtWidgets.QMainWindow):
         msgbox.exec_()
 
     def add_lineedit_set_to_grid(
-            self, grid: QGridLayout, row: int, name: str, description: str, unit: str, min_width: int = 50,
+            self, grid: QGridLayout, row: Union[int, Counter], name: str, description: str, unit: str, min_width: int = 50,
             descrip_cls: str = 'QLabel', col: int = 0
     ):
+        if isinstance(row, Counter):
+            row = row.count
+
         # create description label, input box, unit label
         setattr(self.ui, f'{name}', QLineEdit())
         setattr(self.ui, f'{name}_label', getattr(QtWidgets, descrip_cls)(description))
