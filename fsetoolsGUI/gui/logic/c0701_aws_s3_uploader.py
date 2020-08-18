@@ -3,7 +3,7 @@ from os import path
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtWidgets import QGridLayout
 
-from fsetoolsGUI.gui.logic.c0000_app_template_2 import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 try:
@@ -41,7 +41,7 @@ class App(AppBaseClass):
         self.__url_list = None
         self.__Table = None
 
-        super().__init__(parent, post_stats)
+        super().__init__(parent, post_stats, ui=AppBaseClassUISimplified01)
 
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setVerticalSpacing(5)

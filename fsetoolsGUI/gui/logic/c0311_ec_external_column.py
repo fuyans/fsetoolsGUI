@@ -7,7 +7,7 @@ from PySide2.QtWidgets import QVBoxLayout, QGridLayout, QLabel, QSpacerItem, QSi
 from fsetools.lib.fse_bs_en_1993_1_2_external_column import ExternalSteelTemperatureFullyEngulfedColumn
 
 from fsetoolsGUI import __root_dir__, logger
-from fsetoolsGUI.gui.logic.c0000_app_template_1 import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass
 from fsetoolsGUI.gui.logic.c0000_utilities import Counter
 
 

@@ -1,8 +1,8 @@
 
 from PySide2.QtWidgets import QLabel, QGridLayout
 
-from fsetoolsGUI.gui.logic.c0000_app_template_1 import AppBaseClass
 from fsetoolsGUI import logger
+from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass
 
 
 class BR187SimpleBaseClass(AppBaseClass):

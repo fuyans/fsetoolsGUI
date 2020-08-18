@@ -4,7 +4,7 @@ from PySide2.QtWidgets import QGridLayout, QLabel
 from fsetools.libstd.bs_en_1991_1_2_2002_annex_a import appendix_a_parametric_fire
 
 # from fsetoolsGUI.gui.layout.i0611_parametric_fire import Ui_MainWindow
-from fsetoolsGUI.gui.logic.c0000_app_template_2 import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
@@ -23,32 +23,25 @@ class App(AppBaseClass):
         # ================================
         # instantiation super and setup ui
         # ================================
-        super().__init__(parent, post_stats)
+        super().__init__(parent, post_stats, ui=AppBaseClassUISimplified01)
 
         # ================
         # instantiation ui
         # ================
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
-        self.ui.p2_layout.setHorizontalSpacing(5)
-        self.ui.p2_layout.setVerticalSpacing(5)
+        self.ui.p2_layout.setHorizontalSpacing(5), self.ui.p2_layout.setVerticalSpacing(5)
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), 0, 0, 1, 3)
-        self.add_widget_to_grid(self.ui.p2_layout, 1, 'p2_in_duration', 'Duration', 'min')
-        self.add_widget_to_grid(
-            self.ui.p2_layout, 2, 'p2_in_room_total_surface_area', 'Room total surface area', 'm<sup>2</sup>')
-        self.add_widget_to_grid(self.ui.p2_layout, 3, 'p2_in_room_floor_area', 'Room floor area', 'm<sup>2</sup>')
-        self.add_widget_to_grid(self.ui.p2_layout, 4, 'p2_in_ventilation_area', 'Ventilation area', 'm<sup>2</sup>')
-        self.add_widget_to_grid(
-            self.ui.p2_layout, 5, 'p2_in_ventilation_opening_height', 'Ventilation opening height', 'm<sup>2</sup>')
-        self.add_widget_to_grid(self.ui.p2_layout, 6, 'p2_in_fuel_density', 'Fuel density', 'MJ/m<sup>2</sup>')
-        self.add_widget_to_grid(
-            self.ui.p2_layout, 7, 'p2_in_lining_thermal_conductivity', 'Lining thermal conductivity', 'K/kg/m')
-        self.add_widget_to_grid(self.ui.p2_layout, 8, 'p2_in_lining_density', 'Lining density', 'kg/m<sup>3</sup>')
-        self.add_widget_to_grid(
-            self.ui.p2_layout, 9, 'p2_in_lining_thermal_heat_capacity', 'Lining thermal heat capacity', 'J/K/kg')
-        self.add_widget_to_grid(self.ui.p2_layout, 10, 'p2_in_fire_limiting_time', 'Limiting time t<sub>lim</sub>',
-                                'min')
-        self.add_widget_to_grid(
-            self.ui.p2_layout, 11, 'p2_in_initial_temperature', 'Initial temperature', '<sup>o</sup>C')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 1, 'p2_in_duration', 'Duration', 'min')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 2, 'p2_in_room_total_surface_area', 'Room total surface area', 'm<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 3, 'p2_in_room_floor_area', 'Room floor area', 'm<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 4, 'p2_in_ventilation_area', 'Ventilation area', 'm<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 5, 'p2_in_ventilation_opening_height', 'Ventilation opening height', 'm<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 6, 'p2_in_fuel_density', 'Fuel density', 'MJ/m<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 7, 'p2_in_lining_thermal_conductivity', 'Lining thermal conductivity', 'K/kg/m')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'p2_in_lining_density', 'Lining density', 'kg/m<sup>3</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 9, 'p2_in_lining_thermal_heat_capacity', 'Lining thermal heat capacity', 'J/K/kg')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 10, 'p2_in_fire_limiting_time', 'Limiting time t<sub>lim</sub>', 'min')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'p2_in_initial_temperature', 'Initial temperature', '<sup>o</sup>C')
 
         self.ui.p2_in_initial_temperature.setText('20')
 

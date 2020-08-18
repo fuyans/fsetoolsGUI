@@ -1,15 +1,14 @@
-import logging
 import threading
 from os import path
 
 import requests
-from PySide2 import QtGui, QtCore
 from PySide2.QtCore import Slot
-from PySide2.QtWidgets import QErrorMessage, QPushButton, QDialog, QMainWindow, QLineEdit, QInputDialog, QShortcut
+from PySide2.QtWidgets import QErrorMessage, QPushButton, QDialog, QLineEdit, QInputDialog
+from PySide2.QtWidgets import QMainWindow, QSizePolicy, QWidget, QGridLayout, QGroupBox, QLabel
 from packaging import version
 
 from fsetoolsGUI import __version__, __remote_version_url__, __root_dir__, logger
-from fsetoolsGUI.gui.layout.i0000_main import Ui_MainWindow
+from fsetoolsGUI.gui.logic.c0000_utilities import *
 from fsetoolsGUI.gui.logic.c0101_adb_data_sheet_1 import App as App0101
 from fsetoolsGUI.gui.logic.c0102_bs9999_data_sheet_1 import App as App0102
 from fsetoolsGUI.gui.logic.c0103_bs9999_merging_flow import App as App0103
@@ -29,7 +28,6 @@ from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
 from fsetoolsGUI.gui.logic.c0611_parametric_fire import App as App0611
 from fsetoolsGUI.gui.logic.c0620_probability_distribution import App as App0620
 from fsetoolsGUI.gui.logic.c0630_safir_post_processor import App as App0630
-# from fsetoolsGUI.gui.logic.c0700_imgur_uploader import App as App0700
 from fsetoolsGUI.gui.logic.c0701_aws_s3_uploader import App as App0701
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 
@@ -39,7 +37,7 @@ except FileNotFoundError:
     raise FileNotFoundError('UI style file not found')
 
 
-class Apps:
+class AppsCollection:
     __apps = {
         '0101': App0101,
         '0102': App0102,
@@ -104,14 +102,11 @@ class Apps:
         return '\n'.join([f'{i:<{l1}}     {j:<{l2}}' for i, j in zip(module_code, module_app_name_long)])
 
     def activate_app(self, code: str, parent=None):
-        app = self.__apps[code](parent=parent)
-        app.show()
-        return app
+        def func():
+            app = self.__apps[code](parent=parent)
+            app.show()
 
-
-def _test_Apps():
-    apps = Apps()
-    print(apps.print_all_app_info())
+        return func
 
 
 class Signals(QtCore.QObject):
@@ -122,30 +117,48 @@ class Signals(QtCore.QObject):
     check_update_complete = QtCore.Signal(bool)
 
 
-class MainWindow(QMainWindow):
+class AppUI(object):
+    def setupUi(self, main_window):
+        self.centralwidget = QWidget(main_window)
+
+        self.p0_layout = QGridLayout(self.centralwidget)
+        self.p0_layout.setSpacing(10), self.p0_layout.setContentsMargins(15, 15, 15, 15)
+
+        self.page_2 = QGroupBox(self.centralwidget)
+        self.label_version = QLabel(__version__)
+        self.label_version.setWordWrap(True)
+
+        self.p0_layout.addWidget(self.page_2, 0, 0, 1, 1)
+        self.p0_layout.addWidget(self.label_version, 1, 0, 1, 1)
+
+        main_window.setCentralWidget(self.centralwidget)
+
+        self.page_2.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+
+
+class App(QMainWindow):
 
     def __init__(self):
         self.remote_version: dict = None
         self.is_executable: bool = True
         self.Signals = Signals()
         self.__activated_dialogs = list()
-        self.__apps = Apps()
+        self.__apps = AppsCollection()
 
         # ui setup
         super().__init__()
-        self.ui = Ui_MainWindow()
+        self.ui = AppUI()
         self.ui.setupUi(self)
         self.setStyleSheet(qt_css)
-
-        # self.setWindowIcon(icon_)
 
         self.setWindowTitle('Fire Safety Engineering Tools')
         self.setWindowIcon(QtGui.QPixmap(path.join(__root_dir__, 'gui', 'icons', 'LOGO_1_80_80.png')))
         # self.setWindowFlag(QtCore.Qt.MSWindowsFixedSizeDialogHint)
 
-        self.Signals.check_update_complete.connect(self.setEnabled_all_buttons)
+        self.add_buttons()
 
         # check update
+        self.Signals.check_update_complete.connect(self.setEnabled_all_buttons)
         threading.Timer(0, self.check_update).start()
 
         # window properties
@@ -155,14 +168,38 @@ class MainWindow(QMainWindow):
         self.ui.label_version.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
 
         # signals
-        self.init_buttons()
-        self.ui.label_version.mousePressEvent = self.label_version_mousePressEvent
+        self.ui.label_version.mousePressEvent = lambda event: QtGui.QDesktopServices.openUrl(QtCore.QUrl(self.new_version_update_url)) if event else None
 
         # default values
         self.ui.dialog_error = QErrorMessage(self)
         self.ui.dialog_error.setWindowTitle('Message')
         self.__new_version_update_url = None
         self.__dialog_opened = list()
+
+    def add_buttons(self):
+        button_collection = {
+            'Miscellaneous': ['0601', '0602', '0611', '0407', '0630'],
+            'B1 Means of escape': ['0101', '0102', '0104', '0103', '0111'],
+            'B4 External fire spread': ['0401', '0402', '0403', '0404', '0411'],
+        }
+
+        table_cols = 5
+
+        row_i = Counter()
+        col_i = Counter()
+        self.ui.p2_layout = QGridLayout(self.ui.page_2)
+        self.ui.p2_layout.setHorizontalSpacing(5), self.ui.p2_layout.setVerticalSpacing(5)
+
+        for k in button_collection.keys():
+            self.ui.p2_layout.addWidget(QLabel(f'<b>{k}</b>'), row_i.count, 0, 1, table_cols)
+            for v in button_collection[k]:
+                act_app = self.__apps.activate_app(v, self)
+                setattr(self.ui, f'p2_in_{v}', QPushButton(self.__apps.app_name_short(v)))
+                getattr(self.ui, f'p2_in_{v}').clicked.connect(act_app)
+                getattr(self.ui, f'p2_in_{v}').setFixedSize(76, 76)
+                self.ui.p2_layout.addWidget(getattr(self.ui, f'p2_in_{v}'), row_i.v, col_i.count, 1, 1)
+            row_i.add()
+            col_i.reset()
 
     @Slot(bool)
     def setEnabled_all_buttons(self, v: bool):
@@ -172,47 +209,11 @@ class MainWindow(QMainWindow):
         """
         if not self.is_executable:
             all_push_buttons = filter_objects_by_name(
-                object_parent_widget=self.ui.frame_userio,
+                object_parent_widget=self.ui.page_2,
                 object_types=[QPushButton]
             )
             for pushButton in all_push_buttons:
                 pushButton.setEnabled(v)
-
-    def label_version_mousePressEvent(self, event=None):
-        if event:
-            QtGui.QDesktopServices.openUrl(QtCore.QUrl(self.new_version_update_url))
-
-    def init_buttons(self):
-        """
-        To assign Signal for all buttons
-        """
-
-        def set_btn(cls: QPushButton, module_code: str):
-            cls.clicked.connect(lambda: self.activate_app(module_code))
-            cls.setText(self.__apps.app_name_short(module_code))
-            cls.setToolTip(self.__apps.app_name_long(module_code))
-
-        set_btn(self.ui.pushButton_0101_adb2_datasheet_1, '0101')
-        set_btn(self.ui.pushButton_0102_bs9999_datasheet_1, '0102')
-        set_btn(self.ui.pushButton_0103_merging_flow, '0103')
-        set_btn(self.ui.pushButton_0104_merging_flow, '0104')
-        set_btn(self.ui.pushButton_0111_heat_detector_activation, '0111')
-        set_btn(self.ui.pushButton_0401_br187_parallel_simple, '0401')
-        set_btn(self.ui.pushButton_0402_br187_perpendicular_simple, '0402')
-        set_btn(self.ui.pushButton_0403_br187_parallel_complex, '0403')
-        set_btn(self.ui.pushButton_0404_br187_perpendicular_complex, '0404')
-        set_btn(self.ui.pushButton_0407_tra_enclosure, '0407')
-        set_btn(self.ui.pushButton_0601_naming_convention, '0601')
-        set_btn(self.ui.pushButton_0602_pd7974_flame_height, '0602')
-        set_btn(self.ui.pushButton_0611_ec_parametric_fire, '0611')
-        set_btn(self.ui.pushButton_0630_safir_post_processor, '0630')
-
-        QShortcut(QtGui.QKeySequence(QtCore.Qt.SHIFT + QtCore.Qt.Key_D), self).activated.connect(
-            self.activate_app_module_id)
-
-    def activate_app(self, module_id: str):
-        logger.info(f'EXECUTED MODULE {module_id}')
-        self.activated_dialogs.append(self.__apps.activate_app(code=module_id))
 
     def activate_app_module_id(self):
 
@@ -225,7 +226,7 @@ class MainWindow(QMainWindow):
                 ""
             )
             if ok and txt:
-                self.activate_app(txt)
+                self.activated_dialogs.append(self.__apps.activate_app(code=txt))
 
     def check_update(self):
         """
@@ -399,11 +400,16 @@ class MainWindow(QMainWindow):
         self.__activated_dialogs.append(d)
 
 
+def _test_Apps():
+    apps = AppsCollection()
+    print(apps.print_all_app_info())
+
+
 if __name__ == "__main__":
     import sys
     from PySide2 import QtWidgets
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = MainWindow()
+    app = App()
     app.show()
     qapp.exec_()

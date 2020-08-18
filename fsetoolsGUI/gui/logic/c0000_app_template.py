@@ -1,16 +1,16 @@
 import threading
 from datetime import datetime
 from os import getlogin, path
+from typing import Union
 
 from PySide2 import QtWidgets
-from PySide2.QtWidgets import QLabel, QLineEdit, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy, QVBoxLayout
+from PySide2.QtWidgets import QLabel, QLineEdit, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy, QGroupBox, QMenuBar, QWidget, QStatusBar, QVBoxLayout
 
 from fsetoolsGUI import __root_dir__, __version__, logger
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
-from fsetoolsGUI.gui.layout.i0000_template_1 import Ui_MainWindow as main_ui
 from fsetoolsGUI.gui.layout.i0001_text_browser import Ui_MainWindow as aboutform_ui
 from fsetoolsGUI.gui.logic.c0000_utilities import *
-from typing import Union
+
 # parse css for Qt GUI
 try:
     qt_css = open(path.join(__root_dir__, 'gui', 'style.css'), "r").read()
@@ -45,17 +45,125 @@ class AboutDialog(QtWidgets.QMainWindow):
             return
 
 
+class AppBaseClassUI(object):
+    def setupUi(self, main_window):
+        self.centralwidget = QWidget(main_window)
+
+        self.p0_layout = QGridLayout(self.centralwidget)
+        self.p0_layout.setSpacing(10), self.p0_layout.setContentsMargins(15, 15, 15, 15)
+
+        self.page_1 = QWidget(self.centralwidget)
+        self.page_2 = QGroupBox(self.centralwidget)
+        self.page_3 = QWidget(self.centralwidget)
+
+        self.p0_layout.addWidget(self.page_1, 0, 0, 1, 1)
+        self.p0_layout.addWidget(self.page_3, 1, 0, 1, 2)
+        self.p0_layout.addWidget(self.page_2, 0, 1, 1, 1)
+
+        self.menubar = QMenuBar(main_window)
+        self.statusbar = QStatusBar(main_window)
+
+        main_window.setCentralWidget(self.centralwidget)
+        main_window.setStatusBar(self.statusbar)
+
+        # instantiate buttons etc
+        self.p3_layout = QHBoxLayout(self.page_3)
+        self.p3_layout.setContentsMargins(0, 0, 0, 0)
+        self.p3_about = QPushButton('About')
+        self.p3_about.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.p3_layout.addWidget(self.p3_about)
+        self.p3_layout.addSpacing(5)
+        self.p3_example = QPushButton('Example')
+        self.p3_example.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.p3_layout.addWidget(self.p3_example)
+        self.p3_layout.addStretch(1)
+        self.p3_submit = QPushButton('Submit')
+        self.p3_submit.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.p3_layout.addWidget(self.p3_submit)
+
+        self.page_1.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        self.page_2.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        self.page_3.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+
+
+class AppBaseClassUISimplified01(object):
+    def setupUi(self, main_window):
+        self.centralwidget = QWidget(main_window)
+
+        self.p0_layout = QGridLayout(self.centralwidget)
+        self.p0_layout.setSpacing(10), self.p0_layout.setContentsMargins(15, 15, 15, 15)
+
+        self.page_2 = QGroupBox(self.centralwidget)
+        self.page_3 = QWidget(self.centralwidget)
+
+        self.p0_layout.addWidget(self.page_3, 1, 0, 1, 2)
+        self.p0_layout.addWidget(self.page_2, 0, 1, 1, 1)
+
+        self.statusbar = QStatusBar(main_window)
+
+        main_window.setCentralWidget(self.centralwidget)
+        main_window.setStatusBar(self.statusbar)
+
+        # instantiate buttons etc
+        self.p3_layout = QHBoxLayout(self.page_3)
+        self.p3_layout.setContentsMargins(0, 0, 0, 0)
+        self.p3_about = QPushButton('About')
+        self.p3_about.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.p3_layout.addWidget(self.p3_about)
+        self.p3_layout.addSpacing(5)
+        self.p3_example = QPushButton('Example')
+        self.p3_example.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.p3_layout.addWidget(self.p3_example)
+        self.p3_layout.addStretch(1)
+        self.p3_submit = QPushButton('Submit')
+        self.p3_submit.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.p3_layout.addWidget(self.p3_submit)
+
+        self.page_2.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        self.page_3.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+
+
 class AppBaseClass(QtWidgets.QMainWindow):
 
-    def __init__(self, parent=None, post_stats: bool = True, *args, **kwargs):
+    def __init__(self, parent=None, post_stats: bool = True, ui=AppBaseClassUI, *args, **kwargs):
         self.__activated_dialogs = list()
         self.__about_dialog = None
 
         super().__init__(parent=parent, *args, **kwargs)
-        self.ui = main_ui()
+        self.ui = ui()
         self.ui.setupUi(self)
 
-        self.__init_ui(post_stats)
+        # set window title, icon and stylesheet
+        self.setWindowTitle(self.app_name_long)
+        try:
+            self.setWindowIcon(QtGui.QPixmap(path.join(__root_dir__, 'gui', 'icons', 'LOGO_1_80_80.png')))
+        except Exception as e:
+            logger.error(f'Icon file not found {e}')
+        self.setStyleSheet(qt_css)
+
+        # instantiate and configure signals
+        try:
+            self.ui.p3_submit.clicked.connect(self.ok)
+        except Exception as e:
+            logger.warning(f'{e}')
+        try:
+            self.__about_dialog = self.__about_dialog or AboutDialog(fp_or_html=path.join(__root_dir__, 'gui', 'docs', f'{self.app_id}.html'))
+            self.ui.p3_about.clicked.connect(lambda: self.__about_dialog.show())
+        except Exception as e:
+            logger.warning(f'{e}')
+        try:
+            self.ui.p3_example.clicked.connect(self.example)
+        except Exception as e:
+            logger.warning(f'{e}')
+
+        # post stats if required
+        try:
+            if post_stats:
+                threading.Thread(target=self.user_usage_stats, args=[self.app_id]).start()
+        except Exception as e:
+            logger.warning(f'{e}')
+
+        self.adjustSize()
 
     def __init_subclass__(cls, **kwargs):
         def assert_attr(attr_: str):
@@ -70,49 +178,6 @@ class AppBaseClass(QtWidgets.QMainWindow):
         assert_attr('app_id')
         assert_attr('app_name_short')
         assert_attr('app_name_long')
-
-    def __init_ui(self, post_stats: bool):
-        # set window title, icon and stylesheet
-        self.setWindowTitle(self.app_name_long)
-        try:
-            self.setWindowIcon(QtGui.QPixmap(path.join(__root_dir__, 'gui', 'icons', 'LOGO_1_80_80.png')))
-        except Exception as e:
-            logger.error(f'Icon file not found {e}')
-        self.setStyleSheet(qt_css)
-
-        # instantiate buttons etc
-        self.ui.p3_layout = QHBoxLayout(self.ui.page_3)
-        self.ui.p3_layout.setContentsMargins(0, 0, 0, 0)
-        self.ui.p3_about = QPushButton('About')
-        self.ui.p3_about.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
-        self.ui.p3_layout.addWidget(self.ui.p3_about)
-        self.ui.p3_layout.addSpacing(5)
-        self.ui.p3_example = QPushButton('Example')
-        self.ui.p3_example.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
-        self.ui.p3_layout.addWidget(self.ui.p3_example)
-        self.ui.p3_layout.addStretch(1)
-        self.ui.p3_submit = QPushButton('Submit')
-        self.ui.p3_submit.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
-        self.ui.p3_layout.addWidget(self.ui.p3_submit)
-
-        self.ui.page_1.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        self.ui.page_2.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        self.ui.page_3.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-
-        # instantiate and configure signals
-        if hasattr(self.ui, 'p3_submit'):
-            self.ui.p3_submit.clicked.connect(self.ok)
-        if hasattr(self.ui, 'p3_about'):
-            if self.__about_dialog is None:
-                self.__about_dialog = AboutDialog(
-                    fp_or_html=path.join(__root_dir__, 'gui', 'docs', f'{self.app_id}.html'))
-            self.ui.p3_about.clicked.connect(lambda: self.__about_dialog.show())
-        if hasattr(self.ui, 'p3_example'):
-            self.ui.p3_example.clicked.connect(self.example)
-
-        # post stats if required
-        if post_stats:
-            threading.Thread(target=self.user_usage_stats, args=[self.app_id]).start()
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
