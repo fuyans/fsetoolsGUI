@@ -4,23 +4,14 @@ import subprocess
 import sys
 from os.path import join, realpath, dirname, relpath
 
-import fsetoolsGUI
+from fsetoolsGUI import __version__, __root_dir__, logger
 
 try:
     from buildscript.__key__ import key as key_
+
     key = key_()
 except ModuleNotFoundError:
     key = None
-
-import logging
-
-c_handler = logging.StreamHandler()
-c_handler.setFormatter(
-    logging.Formatter('%(asctime)s,%(msecs)d %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s')
-)
-logger = logging.getLogger('pyinstaller_build')
-logger.setLevel(logging.DEBUG)
-logger.addHandler(c_handler)
 
 
 def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build_entry.py', options: list = None):
@@ -36,7 +27,7 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
         '--exclude-module=' + 'docopt',
         '--exclude-module=' + 'setuptools',
     ]
-    if 'dev' in fsetoolsGUI.__version__:
+    if 'dev' in __version__:
         logger.info('Dev. build is enabled.')
     else:
         cmd_option_list.append('--windowed')
@@ -66,7 +57,7 @@ def make_fp_images() -> list:
     list_fp = list()
     list_fp_append = list_fp.append
 
-    for dirpath, dirnames, filenames in os.walk(join(fsetoolsGUI.__root_dir__, 'gui')):
+    for dirpath, dirnames, filenames in os.walk(join(__root_dir__, 'gui')):
 
         for fn in filenames:
             if fn.endswith('.png') or fn.endswith('.ico') or fn.endswith('.html') or fn.endswith('.css'):
@@ -85,11 +76,11 @@ def main():
     ]
 
     # include fsetoolsGUI/gui/*
-    options.extend([f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=fsetoolsGUI.__root_dir__)}' for fp in
+    options.extend([f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=__root_dir__)}' for fp in
                     make_fp_images()])
 
     # include fsetoolsGUI/gui/docs
-    options.extend([f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=fsetoolsGUI.__root_dir__)}' for fp in
+    options.extend([f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=__root_dir__)}' for fp in
                     make_fp_images()])
 
     # include fsetoolsGUI/gui/docs/*.md
