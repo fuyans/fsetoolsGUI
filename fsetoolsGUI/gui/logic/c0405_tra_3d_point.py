@@ -7,7 +7,7 @@ from fsetools.lib.fse_thermal_radiation_3d import single_receiver, heat_flux_to_
 import fsetoolsGUI
 from fsetoolsGUI.gui.images_base64 import dialog_0404_page as image_figure
 from fsetoolsGUI.gui.layout.i0405_tra_3d_point import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template_old import AppBaseClass
 
 
 class App(AppBaseClass):

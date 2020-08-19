@@ -4,7 +4,7 @@ from datetime import datetime
 from PySide2 import QtGui
 
 from fsetoolsGUI.gui.layout.i0601_naming_convention import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template_old import AppBaseClass
 
 
 class App(AppBaseClass):

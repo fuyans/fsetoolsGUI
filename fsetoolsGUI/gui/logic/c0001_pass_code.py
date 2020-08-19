@@ -1,3 +1,5 @@
+from os import getlogin
+
 import requests
 from PySide2 import QtWidgets, QtGui, QtCore
 
@@ -13,8 +15,9 @@ class App(QtWidgets.QDialog):
 
         # ui elements instantiation
         self.label = QtWidgets.QLabel(
-            f'Version {fsetoolsGUI.__version__} released on {fsetoolsGUI.__date_released__.strftime("%Y %B %d")} is expired.\n'
-            f'Download the latest version (follow link below) or enter a pass code in the input box below.'
+            f'FSETOOLS {fsetoolsGUI.__version__} released on {fsetoolsGUI.__date_released__.strftime("%Y %B %d")} is expired.\n\n'
+            f'Either to download the latest version (link provided in the box below) or enter a pass code.\n\n'
+            f'Your login name is {getlogin()}\n'
         )
         self.label.setWordWrap(True)
 
@@ -33,12 +36,13 @@ class App(QtWidgets.QDialog):
                 self.edit.setText(str(e))
 
         self.button = QtWidgets.QPushButton('OK')
+        self.button.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
 
         # layout
-        layout = QtWidgets.QVBoxLayout()
-        layout.addWidget(self.label)
-        layout.addWidget(self.edit)
-        layout.addWidget(self.button)
+        layout = QtWidgets.QGridLayout()
+        layout.addWidget(self.label, 0, 0, 1, 2)
+        layout.addWidget(self.edit, 1, 0, 1, 1)
+        layout.addWidget(self.button, 1, 1, 1, 1)
         self.setLayout(layout)
 
         # window properties
@@ -46,7 +50,7 @@ class App(QtWidgets.QDialog):
         pix_map = QtGui.QPixmap()
         pix_map.loadFromData(ba)
         self.setWindowIcon(pix_map)
-        self.setWindowTitle('Warning')
+        self.setWindowTitle('Application Expired')
 
         # signals and slots
         self.button.clicked.connect(self.submit)

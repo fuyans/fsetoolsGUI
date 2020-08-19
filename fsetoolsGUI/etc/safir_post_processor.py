@@ -10,7 +10,7 @@ def out2pstrain(fp_out: str, fp_out_strain):
         while True:
             l = f.readline()
             if l:
-                if 'strain' in l or 'TIME' in l:
+                if 'strain' in l.lower() or 'time' in l.lower():
                     f_out_p1.write(l)
                 count += 1
 
@@ -35,16 +35,16 @@ def pstrain2dict(fp: str) -> dict:
     """
     rp_time_str = re.compile(r'TIME[ ]*=[ ]+[0-9.0-9]+')
     rp_time_val = re.compile(r'[0-9.0-9]+')
-    rp_shell_str = re.compile(r'SHELL\:[ ]*[0-9]+')
+    rp_shell_str = re.compile(r'SHELL:[ ]*[0-9]+')
     rp_shell_val = re.compile(r'[0-9]+')
-    rp_surf_str = re.compile(r'SURF\:[ ]*[0-9]+')
+    rp_surf_str = re.compile(r'SURF:[ ]*[0-9]+')
     rp_surf_val = re.compile(r'[0-9]+')
-    rp_rebar_str = re.compile(r'REBAR\:[ ]*[0-9]+')
+    rp_rebar_str = re.compile(r'REBAR:[ ]*[0-9]+')
     rp_rebar_val = re.compile(r'[0-9]+')
-    rp_strain_str = re.compile(r'Total strain[ ]*\:[ ]*[0-9\.]+')
-    rp_strain_val = re.compile(r'[0-9\.]+')
-    rp_strain_str2 = re.compile(r'Stress related strain[ ]*\:[ ]*[0-9\.]+')
-    rp_strain_val2 = re.compile(r'[0-9\.]+')
+    rp_strain_str = re.compile(r'Total strain[ ]*:[ ]*[-0-9.]+|Strain[ ]*:[ ]*[-0-9.]+')
+    rp_strain_val = re.compile(r'[-0-9.]+')
+    rp_strain_str2 = re.compile(r'Stress related strain[ ]*:[ -]*[0-9.]+')
+    rp_strain_val2 = re.compile(r'[-0-9.]+')
 
     def get_value(s, rp1, rp2):
         s1 = rp1.findall(s)

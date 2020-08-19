@@ -2,12 +2,12 @@ import os
 import subprocess
 from os.path import join, dirname
 
-import fsetoolsGUI
+from fsetoolsGUI import __root_dir__
 
 
 def ui2py():
 
-    dir_ui = join(fsetoolsGUI.__root_dir__, 'gui', 'layout', 'ui')
+    dir_ui = join(__root_dir__, 'gui', 'layout', 'ui')
     list_ui_file_names = list()
 
     for dirpath, dirnames, filenames in os.walk(dir_ui):
@@ -27,8 +27,8 @@ def ui2py():
         cmd_list.append(cmd)
 
     procs_list = list()
-    for cmd in cmd_list:
-        print(' '.join(cmd))
+    for i, cmd in enumerate(cmd_list):
+        print(' '.join(cmd), f' ({i+1}/{len(cmd_list)})')
         procs_list.append(subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE))
 
     for proc in procs_list:

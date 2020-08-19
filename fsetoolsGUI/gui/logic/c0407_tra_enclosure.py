@@ -3,18 +3,18 @@ from os import path
 
 import numpy as np
 from PySide2 import QtWidgets
+from PySide2.QtWidgets import QLabel, QGridLayout, QVBoxLayout
 from fsetools.lib.fse_thermal_radiation_2d_ortho import CuboidRoomModel
 from matplotlib import cm
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.layout.i0407_tra_enclosure import Ui_MainWindow
-from fsetoolsGUI.gui.logic.custom_app_template import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 
 class App(AppBaseClass):
-    app_id = '0406'
+    app_id = '0407'
     app_name_short = 'TRA\ncuboid\nenclosure\nmodel'
     app_name_long = 'TRA cuboid enclosure model'
 
@@ -22,15 +22,13 @@ class App(AppBaseClass):
 
         # instantiate super
         super().__init__(parent=parent)
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
-        self.init()
 
         # ==============
         # instantiate ui
         # ==============
-        self.ui.label_figure.setPixmap(path.join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0407-1.png'))
-        self.ui.lineEdit_in_solver_deltas.setToolTip('Equivalent to mesh resolution, proportionate to results accuracy')
+        # self.ui.label_figure.setPixmap(path.join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0407-1.png'))
+        # self.ui.in_mesh_resolution.setToolTip('Equivalent to mesh resolution, proportionate to results accuracy')
+        self.init_ui()
 
         # =======================
         # create local parameters
@@ -44,8 +42,39 @@ class App(AppBaseClass):
         # =============
         # setup signals
         # =============
-        self.ui.pushButton_ok.clicked.connect(self.calculate)
-        self.ui.pushButton_example.clicked.connect(self.example)
+        self.ui.p3_submit.clicked.connect(self.calculate)
+        self.ui.p3_example.clicked.connect(self.example)
+
+    def init_ui(self):
+
+        self.ui.p1_description = QLabel(
+            'This app calculates the imposed thermal radiation heat flux at the ceiling surface due to the wall and '
+            'floor within the same enclosure as per figure below.'
+        )
+        self.ui.p1_description.setFixedWidth(350)
+        self.ui.p1_description.setWordWrap(True)
+        self.ui.p1_figure = QLabel()
+        self.ui.p1_figure.setPixmap(path.join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0407-1.png'))
+        self.ui.p1_layout = QVBoxLayout(self.ui.page_1)
+        self.ui.p1_layout.addWidget(self.ui.p1_description)
+        self.ui.p1_layout.addWidget(self.ui.p1_figure)
+
+        self.ui.p2_layout = QGridLayout(self.ui.page_2)
+        self.ui.p2_layout.setHorizontalSpacing(5)
+        self.ui.p2_layout.setVerticalSpacing(5)
+        self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), 0, 0, 1, 3)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 1, 'in_width', '  Width', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 2, 'in_depth', '  Depth', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 3, 'in_height', '  Height', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 4, 'in_mesh_resolution', ' Mesh resolution', 'm')
+        self.ui.in_mesh_resolution.setToolTip('Equivalent to mesh resolution, proportionate to results accuracy')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 5, 'in_wall_1_heat_flux', '  Wall 1 heat flux', 'kW/m²')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 6, 'in_wall_2_heat_flux', '  Wall 2 heat flux', 'kW/m²')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 7, 'in_wall_3_heat_flux', '  Wall 3 heat flux', 'kW/m²')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'in_wall_4_heat_flux', '  Wall 4 heat flux', 'kW/m²')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 9, 'in_floor_heat_flux', '  Floor heat flux', 'kW/m²')
+        self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), 10, 0, 1, 3)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'out_max_heat_flux', '  Maximum heat flux', 'kW/m²')
 
     @property
     def input_parameters(self):
@@ -56,15 +85,15 @@ class App(AppBaseClass):
             except ValueError:
                 return None
 
-        width = str2num(self.ui.lineEdit_in_width.text())
-        depth = str2num(self.ui.lineEdit_in_depth.text())
-        height = str2num(self.ui.lineEdit_in_height.text())
-        deltas = str2num(self.ui.lineEdit_in_solver_deltas.text())
-        wall_1_heat_flux = str2num(self.ui.lineEdit_in_wall_1_heat_flux.text())
-        wall_2_heat_flux = str2num(self.ui.lineEdit_in_wall_2_heat_flux.text())
-        wall_3_heat_flux = str2num(self.ui.lineEdit_in_wall_3_heat_flux.text())
-        wall_4_heat_flux = str2num(self.ui.lineEdit_in_wall_4_heat_flux.text())
-        floor_heat_flux = str2num(self.ui.lineEdit_in_floor_heat_flux.text())
+        width = str2num(self.ui.in_width.text())
+        depth = str2num(self.ui.in_depth.text())
+        height = str2num(self.ui.in_height.text())
+        deltas = str2num(self.ui.in_mesh_resolution.text())
+        wall_1_heat_flux = str2num(self.ui.in_wall_1_heat_flux.text())
+        wall_2_heat_flux = str2num(self.ui.in_wall_2_heat_flux.text())
+        wall_3_heat_flux = str2num(self.ui.in_wall_3_heat_flux.text())
+        wall_4_heat_flux = str2num(self.ui.in_wall_4_heat_flux.text())
+        floor_heat_flux = str2num(self.ui.in_floor_heat_flux.text())
 
         self.__input_parameters = dict(
             width=width, depth=depth, height=height, deltas=deltas, wall_1_heat_flux=wall_1_heat_flux,
@@ -89,15 +118,15 @@ class App(AppBaseClass):
         wall_4_heat_flux = v['wall_4_heat_flux']
         floor_heat_flux = v['floor_heat_flux']
 
-        self.ui.lineEdit_in_width.setText(width)
-        self.ui.lineEdit_in_depth.setText(depth)
-        self.ui.lineEdit_in_height.setText(height)
-        self.ui.lineEdit_in_solver_deltas.setText(deltas)
-        self.ui.lineEdit_in_wall_1_heat_flux.setText(wall_1_heat_flux)
-        self.ui.lineEdit_in_wall_2_heat_flux.setText(wall_2_heat_flux)
-        self.ui.lineEdit_in_wall_3_heat_flux.setText(wall_3_heat_flux)
-        self.ui.lineEdit_in_wall_4_heat_flux.setText(wall_4_heat_flux)
-        self.ui.lineEdit_in_floor_heat_flux.setText(floor_heat_flux)
+        self.ui.in_width.setText(width)
+        self.ui.in_depth.setText(depth)
+        self.ui.in_height.setText(height)
+        self.ui.in_mesh_resolution.setText(deltas)
+        self.ui.in_wall_1_heat_flux.setText(wall_1_heat_flux)
+        self.ui.in_wall_2_heat_flux.setText(wall_2_heat_flux)
+        self.ui.in_wall_3_heat_flux.setText(wall_3_heat_flux)
+        self.ui.in_wall_4_heat_flux.setText(wall_4_heat_flux)
+        self.ui.in_floor_heat_flux.setText(floor_heat_flux)
 
     @property
     def output_parameters(self):
@@ -106,6 +135,8 @@ class App(AppBaseClass):
     @output_parameters.setter
     def output_parameters(self, output_parameters: dict):
         self.__output_parameters = output_parameters
+
+        self.ui.out_max_heat_flux.setText(f'{np.amax(output_parameters["resultant_heat_flux"]):.2f}')
 
     def example(self):
         input_parameters = dict(
@@ -254,8 +285,11 @@ class App(AppBaseClass):
         self.__Figure.figure_canvas.draw()
 
     @staticmethod
-    def __calculate_worker(width, depth, height, deltas, wall_1_heat_flux, wall_2_heat_flux, wall_3_heat_flux,
-                           wall_4_heat_flux, floor_heat_flux, *args, **kwargs):
+    def __calculate_worker(
+            width, depth, height, deltas,
+            wall_1_heat_flux, wall_2_heat_flux, wall_3_heat_flux, wall_4_heat_flux, floor_heat_flux,
+            *_, **__
+    ):
 
         model = CuboidRoomModel(width=width, depth=depth, height=height, delta=deltas)
         resultant_heat_flux = model.resultant_heat_flux(

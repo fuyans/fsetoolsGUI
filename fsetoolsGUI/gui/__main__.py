@@ -2,37 +2,23 @@
 # coding:utf-8
 
 import datetime
-import logging
 import os
 import sys
 import time
-import warnings
 
 import PySide2
 from PySide2 import QtCore, QtWidgets
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.logic.c0000_main import MainWindow
+from fsetoolsGUI.gui.logic.c0000_main import App
 
 # load key which is used when the expiry date is passed
 try:
     from fsetoolsGUI.__key__ import key
+
     KEY = key()
 except ModuleNotFoundError:
     raise ModuleNotFoundError('fsetoolsGUI.__key__ is missing')
-
-warnings.filterwarnings("ignore")
-
-# configure logger
-c_handler = logging.StreamHandler()
-c_handler.setFormatter(
-    logging.Formatter('%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s')
-)
-logger = logging.getLogger('gui')
-logger.setLevel(logging.INFO)
-logger.addHandler(c_handler)
-
-logger.info('Hi from fsetoolsgui')
 
 # enable qt optimisation for high dpi monitors
 if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
@@ -46,7 +32,7 @@ def main_core():
     if app is None:
         app = QtWidgets.QApplication(sys.argv)
 
-    window = MainWindow()
+    window = App()
     window.show()
 
     sys.exit(app.exec_())

@@ -1,22 +1,38 @@
+from os.path import join
+
+from PySide2.QtWidgets import QLabel, QVBoxLayout
 from fsetools.lib.fse_thermal_radiation import phi_perpendicular_any_br187, linear_solver
 
-from fsetoolsGUI.gui.layout.i0403_br187_complex import Ui_MainWindow as Ui_0403
-from fsetoolsGUI.gui.logic.c0401_br187_base_class import BR187BaseClass
+import fsetoolsGUI
+from fsetoolsGUI.gui.logic.c0400_br187_base_class import BR187ComplexBaseClass
 
 
-class App(BR187BaseClass):
+class App(BR187ComplexBaseClass):
     app_id = '0404'
     app_name_short = 'BR 187\nperp.\neccentric'
     app_name_long = 'BR 187 perpendicular oriented rectangle emitter and eccentric receiver'
 
-    def __init__(self, parent=None):
-        super().__init__(ui=Ui_0403, parent=parent)
-        self.ui.label_description.setWordWrap(True)
-        self.ui.label_description.setText(
+    def __init__(self, parent=None, post_stats: bool = True):
+        super().__init__(parent, post_stats)
+        # self.ui.label_description.setWordWrap(True)
+        # self.ui.label_description.setText(
+        #     'This sheet calculates the thermal radiation intensity at a receiver that is perpendicular to '
+        #     'a rectangular emitter. Calculation coded in this sheet follows "BR 187 External fire spread" 2nd edition.'
+        # )
+        # self.init()
+
+        self.ui.p1_description = QLabel(
             'This sheet calculates the thermal radiation intensity at a receiver that is perpendicular to '
             'a rectangular emitter. Calculation coded in this sheet follows "BR 187 External fire spread" 2nd edition.'
         )
-        self.init()
+        self.ui.p1_description.setFixedWidth(350)
+        self.ui.p1_description.setWordWrap(True)
+        self.ui.p1_image = QLabel()
+        self.ui.p1_image.setPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0404-1.png'))
+        self.ui.p1_layout = QVBoxLayout(self.ui.page_1)
+        self.ui.p1_layout.setContentsMargins(0, 0, 0, 0)
+        self.ui.p1_layout.addWidget(self.ui.p1_description)
+        self.ui.p1_layout.addWidget(self.ui.p1_image)
 
     @property
     def input_parameters(self) -> dict:
@@ -95,10 +111,23 @@ class App(BR187BaseClass):
             q_solved = Q * phi_solved * UA
 
             if S_solved < 2:
-                msg = (f'Calculation complete. Forced boundary separation to 1 from {S_solved:.3f} m.')
+                msg = f'Calculation complete. Forced boundary separation to 1 from {S_solved:.3f} m.'
                 S_solved = 2
 
         return phi_solved, q_solved, S_solved, UA_solved, msg
+
+    def example(self):
+        self.ui.p2_in_half_S_label.setChecked(True)
+        self.change_mode_S_and_UA()
+        self.ui.p2_in_W.setText('10')
+        self.ui.p2_in_H.setText('6')
+        self.ui.p2_in_w.setText('-5')
+        self.ui.p2_in_h.setText('0')
+        self.ui.p2_in_Q.setText('84')
+        self.ui.p2_in_Q_crit.setText('12.6')
+        self.ui.p2_in_half_S.setText('1')
+
+        self.repaint()
 
 
 if __name__ == "__main__":
@@ -106,6 +135,6 @@ if __name__ == "__main__":
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App()
+    app = App(post_stats=False)
     app.show()
     qapp.exec_()
