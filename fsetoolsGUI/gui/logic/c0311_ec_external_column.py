@@ -87,10 +87,6 @@ class App(AppBaseClass):
         for k, v in self.output_symbols.items():
             self.add_lineedit_set_to_grid(self.ui.p2_layout, c, f'p2_out_{k}', v[0], v[1], col=4)
 
-        # # signals and slots
-        # def is_forced_draught():
-        #     self.ui.p1_figure.setPixmap(join(__root_dir__, 'gui', 'images', f'{self.app_id}-2.png' if self.ui.p2_in_is_forced_draught.isChecked() else f'{self.app_id}-2.png'))
-
         self.ui.p2_in_is_forced_draught.stateChanged.connect(
             lambda: self.ui.p1_figure.setPixmap(
                 join(__root_dir__, 'gui', 'images', f'{self.app_id}-2.png' if self.ui.p2_in_is_forced_draught.isChecked() else f'{self.app_id}-1.png')))
@@ -130,17 +126,20 @@ class App(AppBaseClass):
         return cls
 
     def ok(self):
-        cls = self.calculate(self.input_parameters)
-        self.output_parameters = cls.output_kwargs
+        try:
+            cls = self.calculate(self.input_parameters)
+            self.output_parameters = cls.output_kwargs
+            self.statusBar().showMessage('Calculation complete')
+        except Exception as e:
+            self.statusBar().showMessage(f'{e}', timeout=10 * 1e3)
+            raise e
 
         if self.ui.p2_in_make_pdf_web.isChecked():
             temp = tempfile.NamedTemporaryFile(suffix='.pdf')
             fp_pdf = temp.name
             temp.close()
-            logger.info(fp_pdf)
+            logger.info(f'Making PDF at {fp_pdf}')
             threading.Thread(target=lambda: cls.make_pdf(fp_pdf=fp_pdf)).start()
-
-        self.statusBar().show()
 
     @property
     def input_parameters(self):
@@ -149,9 +148,10 @@ class App(AppBaseClass):
                 return float(v)
             except ValueError:
                 return None
+
         input_parameters = {k: str2float(getattr(self.ui, f'p2_in_{k}').text()) for k in list(self.input_symbols.keys())}
         input_parameters['is_forced_draught'] = self.ui.p2_in_is_forced_draught.isChecked()
-        logger.info(input_parameters)
+        logger.info(f'Inputs: {input_parameters}')
         return input_parameters
 
     @input_parameters.setter
@@ -167,7 +167,7 @@ class App(AppBaseClass):
 
     @property
     def output_parameters(self):
-        pass
+        raise NotImplementedError
 
     @output_parameters.setter
     def output_parameters(self, v: dict):

@@ -197,16 +197,7 @@ class App(AppBaseClass):
         else:
             cls = ExternalFlame(alpha_c_beam=None, alpha_c_column=None, **input_kwargs)
 
-        try:
-            if input_kwargs['make_pdf_web']:
-                temp = tempfile.NamedTemporaryFile(suffix='.tex')
-                fp_tex = temp.name
-                temp.close()
-                threading.Thread(target=lambda: cls.make_pdf_web(fp_tex=fp_tex)).start()
-        except Exception as e:
-            logger.debug(f'{e}')
-
-        return cls.output_kwargs
+        return cls
 
     def ok(self):
 
@@ -219,11 +210,19 @@ class App(AppBaseClass):
         self.ui.p2_out_T_z.setText('')
 
         try:
-            self.output_parameters = self.calculate(self.input_parameters)
+            cls = self.calculate(self.input_parameters)
+            self.output_parameters = cls.output_kwargs
             self.statusBar().showMessage('Calculation complete')
         except Exception as e:
             self.statusBar().showMessage(f'{e}', timeout=10 * 1e3)
             raise e
+
+        if self.ui.p2_in_make_pdf_web.isChecked():
+            temp = tempfile.NamedTemporaryFile(suffix='.pdf')
+            fp_pdf = temp.name
+            temp.close()
+            logger.info(f'Making PDF at {fp_pdf}')
+            threading.Thread(target=lambda: cls.make_pdf(fp_pdf=fp_pdf)).start()
 
     @property
     def input_parameters(self):
