@@ -60,7 +60,6 @@ class AppBaseClassUI(object):
         self.p0_layout.addWidget(self.page_3, 1, 0, 1, 2)
         self.p0_layout.addWidget(self.page_2, 0, 1, 1, 1)
 
-        self.menubar = QMenuBar(main_window)
         self.statusbar = QStatusBar(main_window)
 
         main_window.setCentralWidget(self.centralwidget)
