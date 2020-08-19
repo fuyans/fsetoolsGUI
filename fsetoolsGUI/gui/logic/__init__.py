@@ -18,8 +18,7 @@ from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
 from fsetoolsGUI.gui.logic.c0611_parametric_fire import App as App0611
 from fsetoolsGUI.gui.logic.c0620_probability_distribution import App as App0620
 from fsetoolsGUI.gui.logic.c0630_safir_post_processor import App as App0630
-# from fsetoolsGUI.gui.logic.c0700_imgur_uploader import App as App0700
-from fsetoolsGUI.gui.logic.c0701_s3_uploader import App as App0701
+from fsetoolsGUI.gui.logic.c0701_aws_s3_uploader import App as App0701
 
 
 class Apps:
@@ -41,7 +40,6 @@ class Apps:
         '0611': App0611,
         '0620': App0620,
         '0630': App0630,
-        # '0700': App0700,
         '0701': App0701,
     }
 
