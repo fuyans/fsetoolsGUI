@@ -42,12 +42,9 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(self.ui.p2_in_scenario_2, 2, 0, 1, 3)
         self.ui.p2_layout.addWidget(self.ui.p2_in_scenario_3, 3, 0, 1, 3)
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), 4, 0, 1, 3)
-        self.add_lineedit_set_to_grid(
-            self.ui.p2_layout, 5, 'p2_in_S_up', 'S<sub>up</sub>, upper stair width', 'mm')
-        self.add_lineedit_set_to_grid(
-            self.ui.p2_layout, 6, 'p2_in_S_dn', 'S<sub>dn</sub>, lower stair width', 'mm')
-        self.add_lineedit_set_to_grid(
-            self.ui.p2_layout, 7, 'p2_in_W_SE', 'W<sub>SE</sub>, door width', 'mm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 5, 'p2_in_S_up', 'S<sub>up</sub>, upper stair width', 'mm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 6, 'p2_in_S_dn', 'S<sub>dn</sub>, lower stair width', 'mm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 7, 'p2_in_W_SE', 'W<sub>SE</sub>, door width', 'mm')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'p2_in_D', 'D, door separation', 'm')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 9, 'p2_in_B', 'B, no. pers. from lower levels', 'person')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 10, 'p2_in_N', 'N, no. pers. from exit level', 'person')
@@ -55,9 +52,9 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), 12, 0, 1, 3)
         self.ui.p2_out_check = QCheckBox('Are "(B+N)>60" and "D<2" all true?')
         self.ui.p2_out_check.setDisabled(True)
+        self.ui.p2_out_check.setStyleSheet('QCheckBox{color:"black"}')
         self.ui.p2_layout.addWidget(self.ui.p2_out_check, 13, 0, 1, 3)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 14, 'p2_out_W_FE', 'W<sub>FE</sub>, solved min. exit width',
-                                      'mm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 14, 'p2_out_W_FE', 'W<sub>FE</sub>, solved min. exit width', 'mm')
         self.ui.p2_out_W_FE.setReadOnly(True)
 
         self.ui.p2_in_X.setToolTip('A1 3.3,\tA2 3.6,\tA3 4.6\nB1 3.6,\tB2 4.1,\tB3 6.0\nC1 3.6,\tC2 4.1,\tC3 6.0')
