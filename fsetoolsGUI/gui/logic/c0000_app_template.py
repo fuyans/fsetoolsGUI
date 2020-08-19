@@ -4,11 +4,10 @@ from os import getlogin, path
 from typing import Union
 
 from PySide2 import QtWidgets
-from PySide2.QtWidgets import QLabel, QLineEdit, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy, QGroupBox, QMenuBar, QWidget, QStatusBar, QVBoxLayout
+from PySide2.QtWidgets import QLabel, QLineEdit, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy, QGroupBox, QWidget, QStatusBar, QVBoxLayout, QTextBrowser, QScrollArea
 
 from fsetoolsGUI import __root_dir__, __version__, logger
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
-from fsetoolsGUI.gui.layout.i0001_text_browser import Ui_MainWindow as aboutform_ui
 from fsetoolsGUI.gui.logic.c0000_utilities import *
 
 # parse css for Qt GUI
@@ -18,6 +17,43 @@ except FileNotFoundError:
     raise FileNotFoundError('UI style file not found')
 
 
+class AboutDialogUI(object):
+    def setupUi(self, main_window):
+        # TREE:
+        # label ->
+        # (scroll_area_widget_content_layout, scroll_area_widget_content) ->
+        # scroll_area ->
+        # (page_2, p2_layout) ->
+        # (central_widget, p0_layout) ->
+        # main_window
+
+        self.central_widget = QWidget(main_window)
+        self.page_2 = QGroupBox(self.central_widget)
+
+        # create scroll area content
+        self.scroll_area_widget_content = QWidget()
+        self.text_browser = QTextBrowser(self.scroll_area_widget_content)
+        self.scroll_area_widget_content_layout = QGridLayout(self.scroll_area_widget_content)
+        self.scroll_area_widget_content_layout.addWidget(self.text_browser, 1, 0, 1, 1)
+
+        # create scroll area
+        self.scroll_area = QScrollArea(self.page_2)
+        self.scroll_area.setWidget(self.scroll_area_widget_content)
+
+        self.p2_layout = QGridLayout(self.page_2)
+        self.p2_layout.addWidget(self.scroll_area, 0, 0, 1, 1)
+
+        self.p0_layout = QGridLayout(self.central_widget)
+        self.p0_layout.addWidget(self.page_2, 0, 0, 1, 1)
+
+        self.p0_layout.setSpacing(0), self.p0_layout.setContentsMargins(0, 0, 0, 0)
+        self.p2_layout.setSpacing(0), self.p2_layout.setContentsMargins(0, 0, 0, 0)
+        self.scroll_area.setWidgetResizable(True)
+        self.scroll_area_widget_content_layout.setSpacing(0), self.scroll_area_widget_content_layout.setContentsMargins(0, 0, 0, 0)
+
+        main_window.setCentralWidget(self.central_widget)
+
+
 class AboutDialog(QtWidgets.QMainWindow):
     """todo: docstring"""
 
@@ -25,7 +61,7 @@ class AboutDialog(QtWidgets.QMainWindow):
 
         super().__init__(parent=parent)
 
-        self.ui = aboutform_ui()
+        self.ui = AboutDialogUI()
         self.ui.setupUi(self)
 
         self.setWindowTitle('About this app')
@@ -35,9 +71,11 @@ class AboutDialog(QtWidgets.QMainWindow):
 
         try:
             with open(fp_or_html, 'r') as f:
-                self.ui.textBrowser.setText(f.read())
+                self.ui.text_browser.setText(f.read())
+            self.ui.text_browser.setFixedWidth(800)
         except Exception:
-            self.ui.textBrowser.setText(fp_or_html)
+            self.ui.text_browser.setText(fp_or_html)
+        self.resize(810, 600)
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
@@ -47,22 +85,22 @@ class AboutDialog(QtWidgets.QMainWindow):
 
 class AppBaseClassUI(object):
     def setupUi(self, main_window):
-        self.centralwidget = QWidget(main_window)
+        self.central_widget = QWidget(main_window)
 
-        self.p0_layout = QGridLayout(self.centralwidget)
+        self.p0_layout = QGridLayout(self.central_widget)
         self.p0_layout.setSpacing(10), self.p0_layout.setContentsMargins(15, 15, 15, 15)
 
-        self.page_1 = QWidget(self.centralwidget)
-        self.page_2 = QGroupBox(self.centralwidget)
-        self.page_3 = QWidget(self.centralwidget)
+        self.page_1 = QWidget(self.central_widget)
+        self.page_2 = QGroupBox(self.central_widget)
+        self.page_3 = QWidget(self.central_widget)
 
         self.p0_layout.addWidget(self.page_1, 0, 0, 1, 1)
-        self.p0_layout.addWidget(self.page_3, 1, 0, 1, 2)
         self.p0_layout.addWidget(self.page_2, 0, 1, 1, 1)
+        self.p0_layout.addWidget(self.page_3, 1, 0, 1, 2)
 
         self.statusbar = QStatusBar(main_window)
 
-        main_window.setCentralWidget(self.centralwidget)
+        main_window.setCentralWidget(self.central_widget)
         main_window.setStatusBar(self.statusbar)
 
         # instantiate buttons etc
@@ -87,20 +125,20 @@ class AppBaseClassUI(object):
 
 class AppBaseClassUISimplified01(object):
     def setupUi(self, main_window):
-        self.centralwidget = QWidget(main_window)
+        self.central_widget = QWidget(main_window)
 
-        self.p0_layout = QGridLayout(self.centralwidget)
+        self.p0_layout = QGridLayout(self.central_widget)
         self.p0_layout.setSpacing(10), self.p0_layout.setContentsMargins(15, 15, 15, 15)
 
-        self.page_2 = QGroupBox(self.centralwidget)
-        self.page_3 = QWidget(self.centralwidget)
+        self.page_2 = QGroupBox(self.central_widget)
+        self.page_3 = QWidget(self.central_widget)
 
         self.p0_layout.addWidget(self.page_3, 1, 0, 1, 2)
         self.p0_layout.addWidget(self.page_2, 0, 1, 1, 1)
 
         self.statusbar = QStatusBar(main_window)
 
-        main_window.setCentralWidget(self.centralwidget)
+        main_window.setCentralWidget(self.central_widget)
         main_window.setStatusBar(self.statusbar)
 
         # instantiate buttons etc
@@ -127,6 +165,7 @@ class AppBaseClass(QtWidgets.QMainWindow):
     def __init__(self, parent=None, post_stats: bool = True, ui=AppBaseClassUI, *args, **kwargs):
         self.__activated_dialogs = list()
         self.__about_dialog = None
+        self.__clipboard = QtWidgets.QApplication.clipboard()
 
         super().__init__(parent=parent, *args, **kwargs)
         self.ui = ui()
@@ -179,6 +218,8 @@ class AppBaseClass(QtWidgets.QMainWindow):
         assert_attr('app_name_long')
 
     def keyPressEvent(self, event):
+        logger.info(f'{event.key()} key pressed.')
+
         if event.key() == QtCore.Qt.Key_Escape:
             self.close()
         elif event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
@@ -186,6 +227,12 @@ class AppBaseClass(QtWidgets.QMainWindow):
                 getattr(self, 'ok')()
             except Exception as e:
                 raise e
+        elif event.modifiers() & QtCore.Qt.ControlModifier and event.modifiers() & QtCore.Qt.ShiftModifier and event.key() == QtCore.Qt.Key_C:
+            try:
+                self.__clipboard.setPixmap(self.ui.central_widget.grab())
+                logger.info('Successfully set image to clipboard.')
+            except Exception as e:
+                logger.warning(f'Failed to set image to clipboard, {e}.')
         event.accept()
 
     def validate_show_statusBar_msg(self, var, type, err_msg: str):
