@@ -119,19 +119,19 @@ class Signals(QtCore.QObject):
 
 class AppUI(object):
     def setupUi(self, main_window):
-        self.centralwidget = QWidget(main_window)
+        self.central_widget = QWidget(main_window)
 
-        self.p0_layout = QGridLayout(self.centralwidget)
+        self.p0_layout = QGridLayout(self.central_widget)
         self.p0_layout.setSpacing(10), self.p0_layout.setContentsMargins(15, 15, 15, 15)
 
-        self.page_2 = QGroupBox(self.centralwidget)
+        self.page_2 = QGroupBox(self.central_widget)
         self.label_version = QLabel(__version__)
         self.label_version.setWordWrap(True)
 
         self.p0_layout.addWidget(self.page_2, 0, 0, 1, 1)
         self.p0_layout.addWidget(self.label_version, 1, 0, 1, 1)
 
-        main_window.setCentralWidget(self.centralwidget)
+        main_window.setCentralWidget(self.central_widget)
 
         self.page_2.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
 
@@ -139,7 +139,7 @@ class AppUI(object):
 class App(QMainWindow):
 
     def __init__(self):
-        self.remote_version: dict = None
+        self.update_data: dict = None
         self.is_executable: bool = True
         self.Signals = Signals()
         self.__activated_dialogs = list()
@@ -226,7 +226,7 @@ class App(QMainWindow):
                 ""
             )
             if ok and txt:
-                self.activated_dialogs.append(self.__apps.activate_app(code=txt))
+                self.activated_dialogs.append(self.__apps.activate_app(code=txt)())
 
     def check_update(self):
         """
@@ -234,134 +234,104 @@ class App(QMainWindow):
         """
 
         # parse remote version info
+        logger.info('Parsing update data ...')
         target = ''.join([chr(ord(v) + i % 10) for i, v in enumerate(__remote_version_url__)])
         try:
-            version_dict = requests.get(target).json()
+            self.update_data = requests.get(target).json()
+            logger.info(f'Successfully parsed update data.')
+            logger.debug(f'{str(self.update_data)}.')
         except Exception as e:
-            version_dict = {}  # assign an empty dict if failed to parse remote version info
-            self.statusBar().showMessage(str(e))
-        self.remote_version = version_dict  # assign version info to object
-        logger.info(f'PARSED REMOTE VERSION')
-        logger.debug(f'{str(version_dict)}.')
+            self.update_data = {}  # assign an empty dict if failed to parse remote version info
+            logger.error(f'Failed to parse update data, {e}.')
+            return
 
-        # update gui version label accordingly
-        if len(version_dict) == 0:
-            '''
-            if failed to parse version info
-            version label -> display local software version in black color
-            '''
-            version_label_text = 'Version ' + __version__
-            self.ui.label_version.setStyleSheet('color: black;')
+        logger.info('Analysing update data ...')
+        try:
+            latest_version = self.update_data['latest_version']
+            logger.info(f'Successfully parsed the latest version, {latest_version}')
+        except Exception as e:
+            logger.error(f'Failed to get the latest version from update data, {e}')
+            return
 
-        elif version.parse(version_dict['latest_version']) > version.parse(__version__):
-            '''
-            if local version is lower than remote version, i.e. updates available, follow the procedures below.
-            
-                if update available and local version executable ->
-                    show update available message in black
-                if update available and local version NOT executable ->
-                    disable all modules (buttons)
-                    show update message in black
-                if no update available
-                    show local version in grey
-
-            caveat.
-                only local version specific data is parsed from the remote version data.
-                if no local version specific data available in remote version data, this will be effectively be
-                `no update available` as above.
-            '''
-
-            # ============================================
-            # parse relevant info from remote version data
-            # ============================================
-            # parse local version specific data, i.e. specifically for `fsetoolsgui.__version__`
-            specific_remote_version_data = None
-            try:
-                if '.dev' in __version__:
-                    local_version = __version__.split('.dev')[0]
-                else:
-                    local_version = __version__
-                specific_remote_version_data = self.remote_version[local_version]
-                logger.info(f'PARSED LOCAL VERSION FROM REMOTE VERSION DATA')
-                logger.debug(f'{specific_remote_version_data}')
-            except Exception as e:
-                logger.warning(f'FAILED TO PARSE LOCAL VERSION FROM REMOTE VERSION DATA. ERROR {str(e)}.')
-
-            # parse `is_executable` from remote version info
-            # this will be used to check whether local version is executable
-            is_local_version_executable = None
-            try:
-                assert specific_remote_version_data
-                is_local_version_executable = specific_remote_version_data['is_executable']
-                logger.info(f'PARSED `is_executable`')
-                logger.debug(f'{is_local_version_executable}')
-            except Exception as e:
-                logger.warning(f'FAILED TO PARSE `is_executable`. ERROR {e}.')
-
-            # parse `is_upgradable` from remote version info
-            # this will be used to display upgrade notification
-            is_local_version_upgradable = None
-            try:
-                assert specific_remote_version_data
-                is_local_version_upgradable = specific_remote_version_data['is_upgradable']
-                logger.info(f'PARSED `is_upgradable`')
-                logger.debug(f'{is_local_version_upgradable}')
-            except Exception as e:
-                logger.warning(f'FAILED TO PARSE `is_upgradable`. ERROR {e}.')
-
-            # parse `executable_download_url` from remote version info
-            # this will be used to display upgrade notification
-            upgrade_executable_url = None
-            try:
-                if 'executable_download_url' in specific_remote_version_data:
-                    upgrade_executable_url = specific_remote_version_data['executable_download_url']
-                    logger.info(f'SUCCESSFULLY PARSED `executable_download_url`')
-                    logger.debug(f'{upgrade_executable_url}')
-                if 'latest_executable_download_url' in self.remote_version and upgrade_executable_url is None:
-                    upgrade_executable_url = self.remote_version['latest_executable_download_url']
-                    logger.info('SUCCESSFULLY PARSED `latest_executable_download_url`.')
-                    logger.debug(f'{upgrade_executable_url}')
-            except Exception as e:
-                # if both `executable_download_url` and `latest_executable_download_url` not exist, assign None and
-                # print an indicative message.
-                logger.warning(f'FAILED TO LOCAL VERSION FROM REMOVE VERSION DATA. ERROR {e}')
-
-            # ==============================================
-            # actions in accordance with parsed version data
-            # ==============================================
-            if is_local_version_upgradable:
-                if is_local_version_executable:
-                    version_label_text = f'Running version {__version__}. ' \
-                        f'A new version {version_dict["latest_version"]} is available. ' \
-                        f'Click here to download.'
-                    self.ui.label_version.setStyleSheet('color: black;')
-                else:
-                    version_label_text = f'This version {__version__} is disabled. ' \
-                        f'A new version {version_dict["latest_version"]} is available. ' \
-                        f'Click here to download.'
-                    self.ui.label_version.setStyleSheet('color: black;')
-                    self.is_executable = False
-
-                self.new_version_update_url = upgrade_executable_url
-            else:
-                version_label_text = f'Version {__version__}'
+        try:
+            if version.parse(latest_version) <= version.parse(__version__):
                 self.ui.label_version.setStyleSheet('color: grey;')
+                logger.info(f'No updates available')
+                return
+        except Exception as e:
+            logger.error(f'Failed to analyse update data, {e}')
+            return
 
+        '''
+        if no updates available -> version text change from black to grey
+        
+        if local version is lower than remote version, i.e. updates available, follow the procedures below:
+        
+            a) if local version is executable -> show update available message in black
+            b) if local version IS NOT executable -> disable all modules (buttons) and show update message in black
+
+        if failed to parse remote info or no local version specific data found in remote version data, leave version text in black colour.
+        '''
+
+        try:
+            specific_remote_version_data = self.update_data[__version__.split('.dev')[0] if '.dev' in __version__ else __version__]
+            logger.info(f'Successfully parsed local version from update data')
+            logger.debug(f'{specific_remote_version_data}')
+        except Exception as e:
+            logger.error(f'Failed to parse local version from update data, {str(e)}')
+            return
+
+        # parse `is_executable` from remote version info
+        # this will be used to check whether local version is executable
+        try:
+            is_local_version_executable = specific_remote_version_data['is_executable']
+            logger.info(f'Successfully parsed `is_executable`, {is_local_version_executable}')
+            if is_local_version_executable is False:
+                logger.warning(f'Local version IS NOT executable, all features will be disabled')
+                self.is_executable = is_local_version_executable
+                self.Signals.check_update_complete.emit(self.is_executable)
+        except Exception as e:
+            logger.error(f'Failed to parse `is_executable`, {e}')
+            return
+
+        # parse `is_upgradable` from remote version info
+        # this will be used to display upgrade notification
+        try:
+            is_local_version_upgradable = specific_remote_version_data['is_upgradable']
+            logger.info(f'Successfully parsed `is_upgradable`, {is_local_version_upgradable}')
+        except Exception as e:
+            logger.error(f'Failed to parse `is_upgradable`, {e}.')
+            return
+
+        # parse `executable_download_url` from remote version info
+        # this will be used to display upgrade notification
+        try:
+            try:
+                upgrade_executable_url = specific_remote_version_data['executable_download_url']
+                logger.info(f'Successfully parsed `executable_download_url`, {upgrade_executable_url}')
+            except KeyError:
+                upgrade_executable_url = self.update_data['latest_executable_download_url']
+                logger.info(f'Successfully parsed `latest_executable_download_url`, {upgrade_executable_url}')
+            self.new_version_update_url = upgrade_executable_url
+        except Exception as e:
+            # if both `executable_download_url` and `latest_executable_download_url` not exist, assign None and
+            # print an indicative message.
+            logger.error(f'Failed to parse `executable_download_url` or `latest_executable_download_url`, {e}')
+            return
+
+        if not is_local_version_executable:
+            version_label_text = f'Running version {__version__}. A new version {latest_version} is available. Click here to download.'
+        elif is_local_version_upgradable:
+            version_label_text = f'This version {__version__} is disabled. A new version {latest_version} is available. Click here to download.'
         else:
-            # if local version is equal to remote version, i.e. no update available
-            # version label -> display local version in grey color
-            version_label_text = f'Version {__version__}'
+            version_label_text = None
             self.ui.label_version.setStyleSheet('color: grey;')
 
         # update gui label text and tips
-        self.ui.label_version.setText(version_label_text)
-        self.ui.label_version.setStatusTip(version_label_text)
-        self.ui.label_version.setToolTip(version_label_text)
-
-        # emit a signal to disable modules/buttons if necessary
-        self.Signals.check_update_complete.emit(self.is_executable)
-
-        # DO NOT REPAINT AS THIS METHOD IS CALLED IN A DIFFERENT THREAD
+        if version_label_text:
+            self.ui.label_version.setText(version_label_text)
+            self.ui.label_version.setStatusTip(version_label_text)
+            self.ui.label_version.setToolTip(version_label_text)
 
     @property
     def new_version_update_url(self):
@@ -398,6 +368,12 @@ class App(QMainWindow):
     @activated_dialogs.setter
     def activated_dialogs(self, d):
         self.__activated_dialogs.append(d)
+
+    def keyPressEvent(self, event):
+        logger.info(f'{event.key()} key pressed.')
+        if event.modifiers() & QtCore.Qt.ShiftModifier and event.key() == QtCore.Qt.Key_D:
+            self.activate_app_module_id()
+        event.accept()
 
 
 def _test_Apps():
