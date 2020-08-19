@@ -46,8 +46,8 @@ class App(AppBaseClass):
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setVerticalSpacing(5)
         self.ui.p2_layout.setHorizontalSpacing(5)
-        self.add_widget_to_grid(self.ui.p2_layout, 0, 'p2_in_bucket', 'Bucket name', None)
-        self.add_widget_to_grid(self.ui.p2_layout, 1, 'p2_in_prefix', 'Prefix', None, min_width=180)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 0, 'p2_in_bucket', 'Bucket name', None)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 1, 'p2_in_prefix', 'Prefix', None, min_width=180)
         self.ui.p3_submit.setText('Select files and upload')
 
         self.ui.p3_about.setHidden(True)
