@@ -1,3 +1,4 @@
+import shutil
 import tempfile
 import threading
 from os.path import join
@@ -66,12 +67,12 @@ class App(AppBaseClass):
         self.ui.p2_in_is_wall_above_opening = QCheckBox('Is wall above opening?')
         self.ui.p2_in_is_windows_on_more_than_one_wall = QCheckBox('Win. on more than 1 wall?')
         self.ui.p2_in_is_central_core = QCheckBox('Is central core present?')
-        self.ui.p2_in_make_pdf_web = QCheckBox('Make PDF report?')
+        self.ui.p2_in_make_pdf = QCheckBox('Make PDF report?')
         self.ui.p2_layout.addWidget(self.ui.p2_in_is_forced_draught, c.count, 4, 1, 4)
         self.ui.p2_layout.addWidget(self.ui.p2_in_is_wall_above_opening, c.count, 4, 1, 4)
         self.ui.p2_layout.addWidget(self.ui.p2_in_is_windows_on_more_than_one_wall, c.count, 4, 1, 4)
         self.ui.p2_layout.addWidget(self.ui.p2_in_is_central_core, c.count, 4, 1, 4)
-        self.ui.p2_layout.addWidget(self.ui.p2_in_make_pdf_web, c.count, 4, 1, 4)
+        self.ui.p2_layout.addWidget(self.ui.p2_in_make_pdf, c.count, 4, 1, 4)
 
         c.reset(8)
         self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), c.count, 4, 1, 4)
@@ -101,6 +102,7 @@ class App(AppBaseClass):
 
         # signals
         def is_forced_draught():
+            self.ui.p2_in_A_t.setEnabled(self.ui.p2_out_T_f_check.isChecked() or not self.ui.p2_in_Q_label.isChecked() or self.ui.p2_in_is_forced_draught.isChecked())
             self.ui.p2_in_u.setEnabled(self.ui.p2_in_is_forced_draught.isChecked())
             if self.ui.p2_in_is_forced_draught.isChecked():
                 self.ui.p1_figure.setPixmap(join(__root_dir__, 'gui', 'images', f'{self.app_id}-2.png'))
@@ -127,7 +129,7 @@ class App(AppBaseClass):
             self.ui.p2_in_W_1.setEnabled(not self.ui.p2_in_Q_label.isChecked())
             self.ui.p2_in_W_2.setEnabled(not self.ui.p2_in_Q_label.isChecked())
             self.ui.p2_in_A_f.setEnabled(not self.ui.p2_in_Q_label.isChecked())
-            self.ui.p2_in_A_t.setEnabled(self.ui.p2_out_T_f_check.isChecked() or not self.ui.p2_in_Q_label.isChecked())
+            self.ui.p2_in_A_t.setEnabled(self.ui.p2_out_T_f_check.isChecked() or not self.ui.p2_in_Q_label.isChecked() or self.ui.p2_in_is_forced_draught.isChecked())
             self.ui.p2_in_tau_F.setEnabled(not self.ui.p2_in_Q_label.isChecked())
             self.ui.p2_in_L_c.setEnabled(self.ui.p2_in_is_central_core.isChecked() and not self.ui.p2_in_Q_label.isChecked())
             self.ui.p2_in_W_c.setEnabled(self.ui.p2_in_is_central_core.isChecked() and not self.ui.p2_in_Q_label.isChecked())
@@ -138,7 +140,7 @@ class App(AppBaseClass):
 
         def T_f_check():
             self.ui.p2_out_T_f.setEnabled(self.ui.p2_out_T_f_check.isChecked())
-            self.ui.p2_in_A_t.setEnabled(self.ui.p2_out_T_f_check.isChecked() or not self.ui.p2_in_Q_label.isChecked())
+            self.ui.p2_in_A_t.setEnabled(self.ui.p2_out_T_f_check.isChecked() or not self.ui.p2_in_Q_label.isChecked() or self.ui.p2_in_is_forced_draught.isChecked())
 
         def T_z_check():
             self.ui.p2_in_L_x.setEnabled(self.ui.p2_out_T_z_check.isChecked())
@@ -196,7 +198,6 @@ class App(AppBaseClass):
             cls = ExternalFlameForcedDraught(alpha_c_beam=None, alpha_c_column=None, T_z_1=None, T_z_2=None, **input_kwargs)
         else:
             cls = ExternalFlame(alpha_c_beam=None, alpha_c_column=None, **input_kwargs)
-
         return cls
 
     def ok(self):
@@ -210,19 +211,33 @@ class App(AppBaseClass):
         self.ui.p2_out_T_z.setText('')
 
         try:
+            logger.info('Calculation started ...')
             cls = self.calculate(self.input_parameters)
             self.output_parameters = cls.output_kwargs
+            logger.info('Successfully completed calculation')
             self.statusBar().showMessage('Calculation complete')
         except Exception as e:
+            logger.error(f'Failed to complete calculation, {e}')
             self.statusBar().showMessage(f'{e}', timeout=10 * 1e3)
             raise e
 
-        if self.ui.p2_in_make_pdf_web.isChecked():
-            temp = tempfile.NamedTemporaryFile(suffix='.pdf')
-            fp_pdf = temp.name
-            temp.close()
-            logger.info(f'Making PDF at {fp_pdf}')
-            threading.Thread(target=lambda: cls.make_pdf(fp_pdf=fp_pdf)).start()
+        if self.ui.p2_in_make_pdf.isChecked():
+            logger.info('Making local PDF ...')
+            try:
+                if shutil.which('latexmk'):
+                    temp = tempfile.NamedTemporaryFile(suffix='.pdf')
+                    temp.close()
+                    fp_pdf = temp.name
+                    logger.info(f'Making local PDF ... {fp_pdf}')
+                    threading.Thread(target=lambda: cls.make_pdf(fp_pdf=fp_pdf)).start()
+                else:
+                    temp = tempfile.NamedTemporaryFile(suffix='.tex', )
+                    temp.close()
+                    fp_tex = temp.name
+                    logger.info(f'Making online PDF ... {fp_tex}')
+                    threading.Thread(target=lambda: cls.make_pdf_web(fp_tex=fp_tex)).start()
+            except Exception as e:
+                logger.error(f'Failed to make PDF, {e}')
 
     @property
     def input_parameters(self):
@@ -236,7 +251,7 @@ class App(AppBaseClass):
         is_wall_above_opening = self.ui.p2_in_is_wall_above_opening.isChecked()
         is_windows_on_more_than_one_wall = self.ui.p2_in_is_windows_on_more_than_one_wall.isChecked()
         is_central_core = self.ui.p2_in_is_central_core.isChecked()
-        make_pdf_web = self.ui.p2_in_make_pdf_web.isChecked()
+        make_pdf_web = self.ui.p2_in_make_pdf.isChecked()
 
         q_fd = str2float(self.ui.p2_in_q_fd.text())
         Q = str2float(self.ui.p2_in_Q.text())
@@ -254,19 +269,24 @@ class App(AppBaseClass):
         W_c = str2float(self.ui.p2_in_W_c.text())
         A_v1 = str2float(self.ui.p2_in_A_v1.text())
 
-        # assign None to unchecked outputs so the calculation ignores them
-        if not self.ui.p2_out_T_f_check.isChecked():
-            T_f = None
-        if not self.ui.p2_out_T_w_check.isChecked():
-            T_w = None
-        if not self.ui.p2_out_T_z_check.isChecked():
-            T_z = None
-
         input_kwargs = locals()
         input_kwargs.pop('self')
         input_kwargs.pop('str2float')
-        if not self.ui.p2_in_Q_label.isChecked():
+
+        for k in list(input_kwargs.keys()):
+            if input_kwargs[k] is None:
+                input_kwargs.pop(k)
+
+        if not self.ui.p2_in_Q_label.isChecked() and 'Q' in input_kwargs:
             input_kwargs.pop('Q')
+
+        # assign None to unchecked outputs so the calculation ignores them
+        if not self.ui.p2_out_T_f_check.isChecked():
+            input_kwargs['T_f'] = None
+        if not self.ui.p2_out_T_w_check.isChecked():
+            input_kwargs['T_w'] = None
+        if not self.ui.p2_out_T_z_check.isChecked():
+            input_kwargs['T_z'] = None
 
         return input_kwargs
 
@@ -283,7 +303,7 @@ class App(AppBaseClass):
         self.ui.p2_in_is_central_core.setChecked(v['is_central_core'])
         self.ui.p2_in_is_windows_on_more_than_one_wall.setChecked(v['is_windows_on_more_than_one_wall'])
         self.ui.p2_in_Q_label.setChecked(v['Q'] is not None)
-        self.ui.p2_in_make_pdf_web.setChecked(v['make_pdf_web'])
+        self.ui.p2_in_make_pdf.setChecked(v['make_pdf_web'])
 
         self.ui.p2_in_q_fd.setText(float2str(v['q_fd']))
         self.ui.p2_in_Q.setText(float2str(v['Q']))
