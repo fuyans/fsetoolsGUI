@@ -103,9 +103,13 @@ class AppsCollection:
 
     def activate_app(self, code: str, parent=None):
         def func():
-            app = self.__apps[code](parent=parent)
-            app.show()
-
+            try:
+                app = self.__apps[code](parent=parent)
+                app.show()
+                logger.info(f'Sccessfully loaded module {code}')
+            except Exception as e:
+                logger.error(f'Failed to load module {code}, {e}')
+                raise e
         return func
 
 
