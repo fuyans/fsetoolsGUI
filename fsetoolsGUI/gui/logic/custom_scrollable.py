@@ -70,7 +70,6 @@ class AppBaseClassScrollableContent(AppBaseClass):
         left, right, top, bottom = geo().left(), geo().right(), geo().top(), geo().bottom()
 
         if left < x < right and top < y < bottom:
-
             if self.mscroll_last_move_x == 0:
                 self.mscroll_last_move_x = x
             if self.mscroll_last_move_y == 0:

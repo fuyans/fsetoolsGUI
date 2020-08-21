@@ -251,7 +251,7 @@ class App(AppBaseClass):
         is_wall_above_opening = self.ui.p2_in_is_wall_above_opening.isChecked()
         is_windows_on_more_than_one_wall = self.ui.p2_in_is_windows_on_more_than_one_wall.isChecked()
         is_central_core = self.ui.p2_in_is_central_core.isChecked()
-        make_pdf_web = self.ui.p2_in_make_pdf.isChecked()
+        make_pdf = self.ui.p2_in_make_pdf.isChecked()
 
         q_fd = str2float(self.ui.p2_in_q_fd.text())
         Q = str2float(self.ui.p2_in_Q.text())
@@ -303,7 +303,7 @@ class App(AppBaseClass):
         self.ui.p2_in_is_central_core.setChecked(v['is_central_core'])
         self.ui.p2_in_is_windows_on_more_than_one_wall.setChecked(v['is_windows_on_more_than_one_wall'])
         self.ui.p2_in_Q_label.setChecked(v['Q'] is not None)
-        self.ui.p2_in_make_pdf.setChecked(v['make_pdf_web'])
+        self.ui.p2_in_make_pdf.setChecked(v['make_pdf'])
 
         self.ui.p2_in_q_fd.setText(float2str(v['q_fd']))
         self.ui.p2_in_Q.setText(float2str(v['Q']))

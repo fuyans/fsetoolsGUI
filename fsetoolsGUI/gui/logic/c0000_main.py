@@ -104,9 +104,15 @@ class AppsCollection:
     def activate_app(self, code: str, parent=None):
         def func():
             try:
-                app = self.__apps[code](parent=parent)
+                app = self.__apps[code]
+                if code == '0101' or code == '0102':
+                    # todo: 0101 and 0102 do not run without parent
+                    app = app(parent=parent)
+                else:
+                    app = app()
+                    parent.activated_dialogs.append(app)
                 app.show()
-                logger.info(f'Sccessfully loaded module {code}')
+                logger.info(f'Successfully loaded module {code}')
             except Exception as e:
                 logger.error(f'Failed to load module {code}, {e}')
                 raise e
@@ -190,8 +196,7 @@ class App(QMainWindow):
 
         table_cols = 5
 
-        row_i = Counter()
-        col_i = Counter()
+        row_i, col_i = Counter(), Counter()
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setHorizontalSpacing(5), self.ui.p2_layout.setVerticalSpacing(5)
 
@@ -231,7 +236,9 @@ class App(QMainWindow):
                 ""
             )
             if ok and txt:
-                self.activated_dialogs.append(self.__apps.activate_app(code=txt)())
+                app = self.__apps.activate_app(code=txt, parent=self)
+                app()
+                self.activated_dialogs.append(app)
 
     def check_update(self):
         """
@@ -347,23 +354,20 @@ class App(QMainWindow):
     def new_version_update_url(self, url: str):
         self.__new_version_update_url = url
 
+    def showEvent(self, event):
+        logger.info('main')
+        event.accept()
+
     def closeEvent(self, event):
 
-        logger.debug('Terminating children')
-        for i in self.findChildren(QMainWindow) + self.findChildren(QDialog):
-            try:
-                i.close()
-            except Exception as e:
-                logger.error(f'{str(e)}')
-
-        logger.debug('Terminating activated dialogs/mainwindows')
+        logger.debug('Terminating activated dialogs/mainwindows ...')
         for i in self.activated_dialogs:
             try:
                 i.close()
             except Exception as e:
                 logger.error(f'{str(e)}')
 
-        logger.debug('All subroutines terminated')
+        logger.debug('All activated widgets are terminated')
 
         event.accept()
 

@@ -1,12 +1,11 @@
-import logging
+from os.path import join
 
 from PySide2.QtWidgets import QLabel, QVBoxLayout
 from fsetools.lib.fse_thermal_radiation import linear_solver
 from fsetools.lib.fse_thermal_radiation import phi_parallel_any_br187
 
-from fsetoolsGUI import __root_dir__, logger
+from fsetoolsGUI import __root_dir__
 from fsetoolsGUI.gui.logic.c0400_br187_base_class import BR187ComplexBaseClass
-
 
 
 class App(BR187ComplexBaseClass):

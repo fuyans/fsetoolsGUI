@@ -195,11 +195,11 @@ class AppBaseClass(QtWidgets.QMainWindow):
             logger.warning(f'{e}')
 
         # post stats if required
-        try:
-            if post_stats:
+        if post_stats:
+            try:
                 threading.Thread(target=self.user_usage_stats, args=[self.app_id]).start()
-        except Exception as e:
-            logger.warning(f'{e}')
+            except Exception as e:
+                logger.warning(f'{e}')
 
         self.adjustSize()
 
