@@ -53,14 +53,14 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
             f.write(c)
 
 
-def make_fp_images() -> list:
+def find_fp(dirwork: str, endswith: list) -> list:
     list_fp = list()
     list_fp_append = list_fp.append
 
     for dirpath, dirnames, filenames in os.walk(join(__root_dir__, 'gui')):
 
         for fn in filenames:
-            if fn.endswith('.png') or fn.endswith('.ico') or fn.endswith('.html') or fn.endswith('.css'):
+            if any([fn.endswith(suffix) for suffix in endswith]):
                 list_fp_append(join(dirpath, fn))
 
     return list_fp
@@ -75,16 +75,10 @@ def main():
         f'--add-data={realpath(join("etc", "ofr_logo_1_80_80.ico"))}{os.pathsep}etc',  # include icon file
     ]
 
-    # include fsetoolsGUI/gui/*
-    options.extend([f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=__root_dir__)}' for fp in
-                    make_fp_images()])
-
-    # include fsetoolsGUI/gui/docs
-    options.extend([f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=__root_dir__)}' for fp in
-                    make_fp_images()])
-
-    # include fsetoolsGUI/gui/docs/*.md
-    # options.extend([f'--add-data={fp}{os.pathsep}{join("gui", "docs")}' for fp in make_fp_about_md()])
+    # include fsetoolsGUI/gui/*, i.e. image, icon, stylesheet and documentation (in html format) files
+    options.extend([
+        f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=__root_dir__)}' for fp in find_fp(dirwork=join(__root_dir__, 'gui'), endswith=['.png', '.ico', '.css', '.html'])
+    ])
 
     build_gui(options=options)
 
