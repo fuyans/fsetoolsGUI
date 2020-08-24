@@ -283,20 +283,20 @@ class AppBaseClass(QtWidgets.QMainWindow):
     @staticmethod
     def user_usage_stats(content: str, is_dev: bool = 'dev' in __version__):
         if is_dev:
-            logger.debug(f'DEV VERSION, STATS POST IGNORED FOR {content}')
+            logger.debug(f'Post usage stats ignored for dev version, {content}')
             return
         try:
-            logger.debug(f'STATS POST STARTED FOR {content}')
+            logger.info(f'Post usage stats started {content} ...')
             rp = post_to_knack_user_usage_stats(
                 user=str(getlogin()),  # user indicator
                 version=__version__,  # current app version
                 date=datetime.now().strftime("%d%m%Y %H:%M%p"),  # example "03/28/2014 10:30pm"
                 content=content  # action is the current app id
             )
-            logger.info(f'STATS POST STATUS {rp}')
+            logger.info(f'Successfully posted usage stats, {rp}')
             logger.debug(f'{rp.text}')
         except Exception as e:
-            logger.error(f'User stats post failed {e}')
+            logger.error(f'Failed to post usage stats, {e}')
 
     @staticmethod
     def make_pixmap_from_base64(image_base64: bytes):
