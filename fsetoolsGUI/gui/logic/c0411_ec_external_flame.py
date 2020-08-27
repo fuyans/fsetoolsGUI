@@ -185,7 +185,7 @@ class App(AppBaseClass):
             is_windows_on_more_than_one_wall=False,
             is_central_core=False,
             is_forced_draught=False,
-            make_pdf_web=False,
+            make_pdf=False,
             T_f=None,
             T_z=None,
             T_w=None,
