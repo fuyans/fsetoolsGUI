@@ -133,8 +133,8 @@ class AppBaseClassUISimplified01(object):
         self.page_2 = QGroupBox(self.central_widget)
         self.page_3 = QWidget(self.central_widget)
 
-        self.p0_layout.addWidget(self.page_3, 1, 0, 1, 2)
-        self.p0_layout.addWidget(self.page_2, 0, 1, 1, 1)
+        self.p0_layout.addWidget(self.page_2, 0, 0, 1, 1)
+        self.p0_layout.addWidget(self.page_3, 1, 0, 1, 1)
 
         self.statusbar = QStatusBar(main_window)
 
