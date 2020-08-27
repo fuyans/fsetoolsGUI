@@ -73,9 +73,9 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(QLabel('Distribution'), c.value, 0, 1, 1)
         self.ui.p2_in_distribution = QLineEdit()
         self.ui.p2_layout.addWidget(self.ui.p2_in_distribution, c.value, 1, 1, 1)
-        self.ui.p2_in_select_dist = QPushButton('Select dist.')
-        self.ui.p2_in_select_dist.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
-        self.ui.p2_layout.addWidget(self.ui.p2_in_select_dist, c.count, 2, 1, 1)
+        self.ui.p2_in_fp_inputs = QPushButton('Select dist.')
+        self.ui.p2_in_fp_inputs.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.ui.p2_layout.addWidget(self.ui.p2_in_fp_inputs, c.count, 2, 1, 1)
 
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_mean', 'Mean', '')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_sd', 'SD', '')
@@ -102,8 +102,8 @@ class App(AppBaseClass):
             window_title='Select a distribution',
             parent=self
         )
-        self.ui.p2_in_select_dist.clicked.connect(lambda: self.distribution_selection_dialog.show())
-        self.ui.p2_in_select_dist.adjustSize()
+        self.ui.p2_in_fp_inputs.clicked.connect(lambda: self.distribution_selection_dialog.show())
+        self.ui.p2_in_fp_inputs.adjustSize()
 
     @Slot(int)
     def upon_distribution_selection(self, distribution_index: int):
