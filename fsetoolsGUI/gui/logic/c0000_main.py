@@ -27,7 +27,9 @@ from fsetoolsGUI.gui.logic.c0601_naming_convention import App as App0601
 from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
 from fsetoolsGUI.gui.logic.c0611_parametric_fire import App as App0611
 from fsetoolsGUI.gui.logic.c0620_probability_distribution import App as App0620
-from fsetoolsGUI.gui.logic.c0621_sfeprapy_pre_bluebeam import App as App0621
+from fsetoolsGUI.gui.logic.c0640_sfeprapy_mcs0 import App as App0640
+from fsetoolsGUI.gui.logic.c0641_sfeprapy_pre_bluebeam import App as App0641
+from fsetoolsGUI.gui.logic.c0642_sfeprapy_post_failure_probability import App as App0642
 from fsetoolsGUI.gui.logic.c0630_safir_post_processor import App as App0630
 from fsetoolsGUI.gui.logic.c0701_aws_s3_uploader import App as App0701
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
@@ -58,8 +60,10 @@ class AppsCollection:
         '0602': App0602,
         '0611': App0611,
         '0620': App0620,
-        '0621': App0621,
         '0630': App0630,
+        '0640': App0640,
+        '0641': App0641,
+        '0642': App0642,
         '0701': App0701,
     }
 
