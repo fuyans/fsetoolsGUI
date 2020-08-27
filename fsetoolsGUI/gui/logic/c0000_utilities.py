@@ -25,32 +25,41 @@ def copy_to_clipboard(s: str):
 
 class Counter:
     def __init__(self):
-        self.v: int = 0
+        self.__v: int = 0
 
     def __add__(self, other):
         if isinstance(other, int):
-            self.v = self.v + other
+            self.__v = self.__v + other
         elif isinstance(other, Counter):
-            self.v = self.v + other.v
+            self.__v = self.__v + other.__v
         else:
             raise TypeError
 
     def __repr__(self):
-        return f'{self.v:d}'
+        return f'{self.__v:d}'
 
     def add(self):
-        self.v += 1
+        self.__v += 1
 
     def reset(self, v: int = 0):
         if isinstance(v, int):
-            self.v = v
+            self.__v = v
         else:
             raise TypeError
 
     @property
     def count(self):
         self.add()
-        return self.v - 1
+        return self.__v - 1
+
+    @property
+    def value(self):
+        return self.__v
+
+    @value.setter
+    def value(self, v: int):
+        assert isinstance(v, int)
+        self.__v = v
 
 if __name__ == '__main__':
     counter = Counter()
