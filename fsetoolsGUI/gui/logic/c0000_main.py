@@ -3,7 +3,7 @@ from os import path
 
 import requests
 from PySide2.QtCore import Slot
-from PySide2.QtWidgets import QErrorMessage, QPushButton, QDialog, QLineEdit, QInputDialog
+from PySide2.QtWidgets import QErrorMessage, QPushButton, QLineEdit, QInputDialog
 from PySide2.QtWidgets import QMainWindow, QSizePolicy, QWidget, QGridLayout, QGroupBox, QLabel
 from packaging import version
 
@@ -27,6 +27,7 @@ from fsetoolsGUI.gui.logic.c0601_naming_convention import App as App0601
 from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
 from fsetoolsGUI.gui.logic.c0611_parametric_fire import App as App0611
 from fsetoolsGUI.gui.logic.c0620_probability_distribution import App as App0620
+from fsetoolsGUI.gui.logic.c0621_sfeprapy_pre_bluebeam import App as App0621
 from fsetoolsGUI.gui.logic.c0630_safir_post_processor import App as App0630
 from fsetoolsGUI.gui.logic.c0701_aws_s3_uploader import App as App0701
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
@@ -57,6 +58,7 @@ class AppsCollection:
         '0602': App0602,
         '0611': App0611,
         '0620': App0620,
+        '0621': App0621,
         '0630': App0630,
         '0701': App0701,
     }
@@ -116,6 +118,7 @@ class AppsCollection:
             except Exception as e:
                 logger.error(f'Failed to load module {code}, {e}')
                 raise e
+
         return func
 
 
@@ -191,25 +194,30 @@ class App(QMainWindow):
         button_collection = {
             'Miscellaneous': ['0601', '0602', '0611', '0407', '0630'],
             'B1 Means of escape': ['0101', '0102', '0104', '0103', '0111'],
-            'B4 External fire spread': ['0401', '0402', '0403', '0404', '0411'],
+            'B3 Elements of structure': ['0411', '0311'],
+            'B4 External fire spread': ['0403', '0404'],
         }
 
-        table_cols = 5
-
-        row_i, col_i = Counter(), Counter()
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setHorizontalSpacing(5), self.ui.p2_layout.setVerticalSpacing(5)
 
-        for k in button_collection.keys():
-            self.ui.p2_layout.addWidget(QLabel(f'<b>{k}</b>'), row_i.count, 0, 1, table_cols)
-            for v in button_collection[k]:
-                act_app = self.__apps.activate_app(v, self)
-                setattr(self.ui, f'p2_in_{v}', QPushButton(self.__apps.app_name_short(v)))
-                getattr(self.ui, f'p2_in_{v}').clicked.connect(act_app)
-                getattr(self.ui, f'p2_in_{v}').setFixedSize(76, 76)
-                self.ui.p2_layout.addWidget(getattr(self.ui, f'p2_in_{v}'), row_i.v, col_i.count, 1, 1)
-            row_i.add()
-            col_i.reset()
+        self.add_button_set_to_grid(self.ui.p2_layout, 'Miscellaneous', button_collection['Miscellaneous'], 0, 0, 5)
+        self.add_button_set_to_grid(self.ui.p2_layout, 'B1 Means of escape', button_collection['B1 Means of escape'], 2, 0, 5)
+        self.add_button_set_to_grid(self.ui.p2_layout, 'B3 Elements of structure', button_collection['B3 Elements of structure'], 4, 0, 2)
+        self.add_button_set_to_grid(self.ui.p2_layout, 'B4 External fire spread', button_collection['B4 External fire spread'], 4, 2, 2)
+
+    def add_button_set_to_grid(self, layout: QGridLayout, label: str, button_id_list: list, row_0: int, col_0: int, cols: int):
+        row_i, col_i = Counter(), Counter()
+        row_i.reset(row_0), col_i.reset(col_0)
+        layout.addWidget(QLabel(f'<b>{label}</b>'), row_i.count, col_0, 1, cols)
+        for v in button_id_list:
+            act_app = self.__apps.activate_app(v, self)
+            setattr(self.ui, f'p2_in_{v}', QPushButton(self.__apps.app_name_short(v)))
+            getattr(self.ui, f'p2_in_{v}').clicked.connect(act_app)
+            getattr(self.ui, f'p2_in_{v}').setFixedSize(76, 76)
+            layout.addWidget(getattr(self.ui, f'p2_in_{v}'), row_i.value, col_i.count, 1, 1)
+        row_i.add()
+        col_i.reset()
 
     @Slot(bool)
     def setEnabled_all_buttons(self, v: bool):
@@ -355,7 +363,6 @@ class App(QMainWindow):
         self.__new_version_update_url = url
 
     def showEvent(self, event):
-        logger.info('main')
         event.accept()
 
     def closeEvent(self, event):
