@@ -1,21 +1,16 @@
-import matplotlib.pyplot as plt
+import numpy as np
 import numpy as np
 import scipy.stats as stats
 from PySide2 import QtWidgets
 from PySide2.QtCore import Signal, Slot, QObject
+from PySide2.QtWidgets import QGridLayout, QLineEdit, QLabel, QPushButton
 
-from fsetoolsGUI.etc.probability_distribution import solve_dist_for_mean_std
-from fsetoolsGUI.gui.layout.i0620_probabilistic_distribution import Ui_MainWindow
-from fsetoolsGUI.gui.logic.common import GridDialog
-from fsetoolsGUI.gui.logic.c0000_app_template_old import AppBaseClass
 from fsetoolsGUI import logger
-
-try:
-    from matplotlib.backends.backend_qt5agg import FigureCanvas
-    from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
-except ModuleNotFoundError:
-    from matplotlib.backends.backend_qt4agg import FigureCanvas
-    from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
+from fsetoolsGUI.etc.probability_distribution import solve_dist_for_mean_std
+from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
+from fsetoolsGUI.gui.logic.c0000_utilities import *
+from fsetoolsGUI.gui.logic.common import GridDialog
+from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 
 
 class Signals(QObject):
@@ -60,46 +55,45 @@ class App(AppBaseClass):
         ['Wald', 'wald'],
     ]
 
-    def __init__(self, parent=None, mode=None):
+    def __init__(self, parent=None, post_stats: bool = True):
 
         self.__input_parameters = None
         self.__output_parameters = None
-        self.__fig = None
-        self.__ax_pdf = None
-        self.__ax_cdf = None
-        self.figure_canvas = None
+        self._Figure = None
+        self._Figure_ax_pdf = None
+        self._Figure_ax_cdf = None
         self.signals = Signals()
-        self.__x = None
-        self.__y = None
 
-        super().__init__(parent=parent)
+        super().__init__(parent=parent, post_stats=post_stats, ui=AppBaseClassUISimplified01)
 
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
-        self.init()
+        c = Counter()
+        self.ui.p2_layout = QGridLayout(self.ui.page_2)
+        self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
+        self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
+        self.ui.p2_layout.addWidget(QLabel('Distribution'), c.value, 0, 1, 1)
+        self.ui.p2_in_distribution = QLineEdit()
+        self.ui.p2_layout.addWidget(self.ui.p2_in_distribution, c.value, 1, 1, 1)
+        self.ui.p2_in_select_dist = QPushButton('Select dist.')
+        self.ui.p2_in_select_dist.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.ui.p2_layout.addWidget(self.ui.p2_in_select_dist, c.count, 2, 1, 1)
 
-        self.ui.label_in_mean.setToolTip('Mean of the distribution')
-        self.ui.lineEdit_in_mean.setToolTip('Mean of the distribution')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_mean', 'Mean', '')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_sd', 'SD', '')
 
-        # instantiate figure and associated objects
+        self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), c.count, 0, 1, 3)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_cdf', 'CDF', '')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_sample_value', 'Sample value', '')
 
-        self.figure = plt.figure()
-        self.figure.set_facecolor('None')
-        self.figure_canvas = FigureCanvas(self.figure)
-        self.figure_canvas.setStyleSheet("background-color:transparent;border:0px")  # set background transparent.
-        self.ui.frame_layout.addWidget(self.figure_canvas)
+        # signals and slots
+        self.ui.p2_in_cdf.textChanged.connect(self.__cdf_value_change)
+        self.ui.p2_in_sample_value.textChanged.connect(self.__sample_value_change)
 
-        # self.ui.
+        self.ui.p2_in_distribution.textChanged.connect(self.__distribution_update)
+        self.ui.p2_in_mean.textChanged.connect(self.__distribution_update)
+        self.ui.p2_in_sd.textChanged.connect(self.__distribution_update)
 
-        self.ui.lineEdit_in_cdf.textChanged.connect(self.__cdf_value_change)
-        self.ui.lineEdit_in_sample_value.textChanged.connect(self.__sample_value_change)
-
-        self.ui.lineEdit_in_distribution.textChanged.connect(self.__distribution_update)
-        self.ui.lineEdit_in_mean.textChanged.connect(self.__distribution_update)
-        self.ui.lineEdit_in_sd.textChanged.connect(self.__distribution_update)
-
-        self.ui.lineEdit_in_sample_value.setEnabled(False)
-        self.ui.lineEdit_in_cdf.setEnabled(False)
+        self.ui.p2_in_sample_value.setEnabled(False)
+        self.ui.p2_in_cdf.setEnabled(False)
 
         self.signals.upon_distribution_selection.connect(self.upon_distribution_selection)
         self.distribution_selection_dialog = GridDialog(
@@ -108,13 +102,13 @@ class App(AppBaseClass):
             window_title='Select a distribution',
             parent=self
         )
-        self.ui.pushButton_in_select_distribution.clicked.connect(lambda: self.distribution_selection_dialog.show())
-        self.ui.pushButton_in_select_distribution.adjustSize()
+        self.ui.p2_in_select_dist.clicked.connect(lambda: self.distribution_selection_dialog.show())
+        self.ui.p2_in_select_dist.adjustSize()
 
     @Slot(int)
     def upon_distribution_selection(self, distribution_index: int):
         self.activateWindow()
-        self.ui.lineEdit_in_distribution.setText(self.__dist_available[distribution_index][1])
+        self.ui.p2_in_distribution.setText(self.__dist_available[distribution_index][1])
 
     def ok(self):
         """Placeholder method to be overridden by child classes.
@@ -125,7 +119,8 @@ class App(AppBaseClass):
         try:
             input_parameters = self.input_parameters
         except Exception as e:
-            self.statusBar().showMessage(f'Unable to parse inputs. {e}')
+            logger.error(f'Failed to parse inputs, {e}')
+            self.statusBar().showMessage(f'Failed to parse inputs, {e}')
             return e
 
         # Step 2. Perform analysis
@@ -134,23 +129,32 @@ class App(AppBaseClass):
             assert hasattr(stats, input_parameters['dist_name'])
             output_parameters = self.solve_dist(**input_parameters)
         except Exception as e:
-            self.statusBar().showMessage(f'Failed to make distribution. {e}')
-            logger.error(f'{e}')
+            logger.error(f'Failed to make distribution, {e}')
+            self.statusBar().showMessage(f'Failed to make distribution, {e}')
             return e
 
         # Step 3. Cast result onto UI
         try:
             self.output_parameters = output_parameters
         except Exception as e:
-            self.statusBar().showMessage(f'Failed to output results. {e}')
+            logger.error(f'Failed to output results, {e}')
+            self.statusBar().showMessage(f'Failed to output results, {e}')
             return e
 
-        if not self.ui.lineEdit_in_sample_value.isEnabled():
-            self.ui.lineEdit_in_sample_value.setEnabled(True)
-            self.ui.lineEdit_in_cdf.setEnabled(True)
+        try:
+            self.show_results_in_figure()
+        except Exception as e:
+            logger.error(f'Failed to make plots, {e}')
+            self.statusBar().showMessage(f'Failed to make plots, {e}')
+            return e
 
+        if not self.ui.p2_in_sample_value.isEnabled():
+            self.ui.p2_in_sample_value.setEnabled(True)
+            self.ui.p2_in_cdf.setEnabled(True)
+
+        logger.info(f'Calculation complete')
+        self.ui.statusbar.showMessage('Calculation complete')
         self.repaint()
-        self.ui.statusbar.showMessage('Complete')
 
     def save_figure(self):
         path_to_file, _ = QtWidgets.QFileDialog.getSaveFileName(
@@ -168,9 +172,9 @@ class App(AppBaseClass):
 
         sample_value = dist.ppf(cdf_value)
 
-        self.ui.lineEdit_in_sample_value.textChanged.disconnect()
-        self.ui.lineEdit_in_sample_value.setText(f'{sample_value:.5g}')
-        self.ui.lineEdit_in_sample_value.textChanged.connect(self.__sample_value_change)
+        self.ui.p2_in_sample_value.textChanged.disconnect()
+        self.ui.p2_in_sample_value.setText(f'{sample_value:.5g}')
+        self.ui.p2_in_sample_value.textChanged.connect(self.__sample_value_change)
 
     def __sample_value_change(self):
 
@@ -179,28 +183,28 @@ class App(AppBaseClass):
 
         cdf_value = dist.cdf(sample_value)
 
-        self.ui.lineEdit_in_cdf.textChanged.disconnect()
-        self.ui.lineEdit_in_cdf.setText(f'{cdf_value:.5g}')
-        self.ui.lineEdit_in_cdf.textChanged.connect(self.__cdf_value_change)
+        self.ui.p2_in_cdf.textChanged.disconnect()
+        self.ui.p2_in_cdf.setText(f'{cdf_value:.5g}')
+        self.ui.p2_in_cdf.textChanged.connect(self.__cdf_value_change)
 
     def __distribution_update(self):
-        if self.__ax_pdf is not None and self.__ax_cdf is not None:
-            if self.__ax_pdf.lines or self.__ax_cdf.lines:
-                self.__ax_pdf.clear()
-                self.__ax_pdf.set_yticks([])
-                self.__ax_cdf.clear()
-                self.__ax_cdf.set_xticks([])
-                self.__ax_cdf.set_yticks([])
-                self.figure_canvas.draw()
+        if self._Figure_ax_pdf is not None and self._Figure_ax_cdf is not None:
+            if self._Figure_ax_pdf.lines or self._Figure_ax_cdf.lines:
+                self._Figure_ax_pdf.clear()
+                self._Figure_ax_pdf.set_yticks([])
+                self._Figure_ax_pdf.clear()
+                self._Figure_ax_pdf.set_xticks([])
+                self._Figure_ax_pdf.set_yticks([])
+                self._Figure.figure_canvas.draw()
 
-        if self.ui.lineEdit_in_cdf.text() != '':
-            self.ui.lineEdit_in_cdf.textChanged.disconnect()
-            self.ui.lineEdit_in_cdf.clear()
-            self.ui.lineEdit_in_cdf.textChanged.connect(self.__cdf_value_change)
-        if self.ui.lineEdit_in_sample_value.text() != '':
-            self.ui.lineEdit_in_sample_value.textChanged.disconnect()
-            self.ui.lineEdit_in_sample_value.clear()
-            self.ui.lineEdit_in_sample_value.textChanged.connect(self.__sample_value_change)
+        if self.ui.p2_in_cdf.text() != '':
+            self.ui.p2_in_cdf.textChanged.disconnect()
+            self.ui.p2_in_cdf.clear()
+            self.ui.p2_in_cdf.textChanged.connect(self.__cdf_value_change)
+        if self.ui.p2_in_sample_value.text() != '':
+            self.ui.p2_in_sample_value.textChanged.disconnect()
+            self.ui.p2_in_sample_value.clear()
+            self.ui.p2_in_sample_value.textChanged.connect(self.__sample_value_change)
 
     @property
     def figure(self):
@@ -219,12 +223,12 @@ class App(AppBaseClass):
             except:
                 return None
 
-        dist_name = self.ui.lineEdit_in_distribution.text()
-        mean = str2float(self.ui.lineEdit_in_mean.text())
-        sd = str2float(self.ui.lineEdit_in_sd.text())
-        sample_value = str2float(self.ui.lineEdit_in_sample_value.text())
+        dist_name = self.ui.p2_in_distribution.text()
+        mean = str2float(self.ui.p2_in_mean.text())
+        sd = str2float(self.ui.p2_in_sd.text())
+        sample_value = str2float(self.ui.p2_in_sample_value.text())
         pdf_value = None
-        cdf_value = str2float(self.ui.lineEdit_in_cdf.text())
+        cdf_value = str2float(self.ui.p2_in_cdf.text())
 
         return dict(dist_name=dist_name, mean=mean, sd=sd, sample_value=sample_value, pdf_value=pdf_value,
                     cdf_value=cdf_value)
@@ -233,7 +237,6 @@ class App(AppBaseClass):
     def solve_dist(dist_name, mean, sd, sample_value, pdf_value, cdf_value) -> dict:
 
         result = solve_dist_for_mean_std(dist_name, mean, sd)
-
         dist = getattr(stats, dist_name)(*result.x)
 
         return dict(dist=dist, sample_value=sample_value, pdf_value=pdf_value, cdf_value=cdf_value)
@@ -243,80 +246,9 @@ class App(AppBaseClass):
         return self.__output_parameters
 
     @output_parameters.setter
-    def output_parameters(self, output_parameters_: dict):
+    def output_parameters(self, v: dict):
         """cast outputs onto gui, in this instance, only the pdf and cdf plots"""
-
-        dist = output_parameters_['dist']
-
-        # ------------------------------------
-        # instantiate axes if not already exit
-        # ------------------------------------
-        if self.ax_pdf is None:
-            ax_pdf = self.figure.add_subplot(211)
-            ax_pdf.set_xticklabels([])
-            ax_pdf.tick_params(axis='both', which='both', labelsize=8)
-            self.ax_pdf = ax_pdf
-
-        if self.ax_cdf is None:
-            ax_cdf = self.figure.add_subplot(212, sharex=self.__ax_pdf)
-            ax_cdf.tick_params(axis='both', which='both', labelsize=8)
-            self.ax_cdf = ax_cdf
-
-        # --------
-        # plot pdf
-        # --------
-        x = np.linspace(dist.ppf(1e-3), dist.ppf(1 - 1e-3), 50)
-        y_pdf = dist.pdf(x)
-        self.ax_pdf.clear()
-        self.ax_pdf.plot(x, y_pdf, c='k')
-        self.ax_pdf.set_ylim(bottom=0)
-        self.ax_pdf.tick_params(axis='both', direction='in', labelbottom=False)
-
-        # --------
-        # plot cdf
-        # --------
-        y_cdf = dist.cdf(x)
-        self.ax_cdf.clear()
-        self.ax_cdf.plot(x, y_cdf, c='k')
-        self.ax_cdf.set_ylim(bottom=0)
-        self.ax_cdf.set_yticks([0, 1])
-        self.ax_cdf.tick_params(axis='both', direction='in')
-
-        # -------------------------------------------------------------
-        # highlight area under the pdf and cdf if `sample_value` exists
-        # -------------------------------------------------------------
-        if output_parameters_['sample_value'] is not None:
-            x_ = np.linspace(x[0], output_parameters_['sample_value'], 50)
-            y_pdf_, y_cdf_ = dist.pdf(x_), dist.cdf(x_)
-            self.ax_pdf.fill_between(x_, y_pdf_, np.zeros_like(x_), facecolor='grey', interpolate=True)
-            self.ax_cdf.fill_between(x_, y_cdf_, np.zeros_like(x_), facecolor='grey', interpolate=True)
-
-        # ----------------------
-        # finalise/format figure
-        # ----------------------
-        self.figure.tight_layout(pad=0.25)
-        self.figure_canvas.draw()
-
-        # -------------------------
-        # assign to object property
-        # -------------------------
-        self.__output_parameters = output_parameters_
-
-    @property
-    def ax_cdf(self) -> plt.axis:
-        return self.__ax_cdf
-
-    @ax_cdf.setter
-    def ax_cdf(self, ax):
-        self.__ax_cdf = ax
-
-    @property
-    def ax_pdf(self) -> plt.axis:
-        return self.__ax_pdf
-
-    @ax_pdf.setter
-    def ax_pdf(self, ax):
-        self.__ax_pdf = ax
+        self.__output_parameters = v
 
     def moveEvent(self, event):
         geo = self.distribution_selection_dialog.geometry()
@@ -324,12 +256,71 @@ class App(AppBaseClass):
         geo.setY(self.normalGeometry().y())
         self.distribution_selection_dialog.setGeometry(geo)
 
+    def show_results_in_figure(self):
+        dist = self.output_parameters['dist']
+
+        if self._Figure is None:
+            self._Figure = PlotApp(self, title='Distribution visualisation')
+            self._Figure_ax_pdf = self._Figure.figure.add_subplot(211)
+            self._Figure_ax_cdf = self._Figure.figure.add_subplot(212, sharex=self._Figure_ax_pdf)
+
+            self._Figure_ax_pdf.set_xticklabels([])
+            self._Figure_ax_pdf.tick_params(axis='both', which='both', labelsize=8)
+            self._Figure_ax_cdf.tick_params(axis='both', which='both', labelsize=8)
+
+            # self._Figure_ax = self._Figure.add_subplots()
+
+            # self._Figure = plt.figure()
+            # self._Figure.set_facecolor('None')
+            # self._Figure_canvas = FigureCanvas(self._Figure)
+            # self._Figure_canvas.setStyleSheet("background-color:transparent;border:0px")  # set background transparent.
+        else:
+            self._Figure_ax_pdf.clear()
+            self._Figure_ax_cdf.clear()
+
+        # --------
+        # plot pdf
+        # --------
+        x = np.linspace(dist.ppf(1e-3), dist.ppf(1 - 1e-3), 50)
+        y_pdf = dist.pdf(x)
+        self._Figure_ax_pdf.plot(x, y_pdf, c='k')
+        self._Figure_ax_pdf.set_ylim(bottom=0)
+        self._Figure_ax_pdf.tick_params(axis='both', direction='in', labelbottom=False)
+
+        # --------
+        # plot cdf
+        # --------
+        y_cdf = dist.cdf(x)
+        self._Figure_ax_cdf.plot(x, y_cdf, c='k')
+        self._Figure_ax_cdf.set_ylim(bottom=0)
+        self._Figure_ax_cdf.set_yticks([0, 1])
+        self._Figure_ax_cdf.tick_params(axis='both', direction='in')
+
+        # -------------------------------------------------------------
+        # highlight area under the pdf and cdf if `sample_value` exists
+        # -------------------------------------------------------------
+        if self.input_parameters['sample_value'] is not None:
+            x_ = np.linspace(x[0], self.input_parameters['sample_value'], 50)
+            y_pdf_, y_cdf_ = dist.pdf(x_), dist.cdf(x_)
+            self._Figure_ax_pdf.fill_between(x_, y_pdf_, np.zeros_like(x_), facecolor='grey', interpolate=True)
+            self._Figure_ax_cdf.fill_between(x_, y_cdf_, np.zeros_like(x_), facecolor='grey', interpolate=True)
+
+        # ----------------------
+        # finalise/format figure
+        # ----------------------
+        self._Figure.figure.tight_layout(pad=0.25)
+        self._Figure.figure_canvas.draw()
+        # self._Figure_canvas.draw()
+        self._Figure.show()
+
+        return True
+
 
 if __name__ == '__main__':
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App()
+    app = App(post_stats=False)
     app.show()
 
     qapp.exec_()
