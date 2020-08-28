@@ -35,7 +35,7 @@ class App(AppBaseClass):
         self.ui.p2_in_fp_inputs = QPushButton('Select')
         self.ui.p2_in_fp_inputs.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
         self.ui.p2_layout.addWidget(self.ui.p2_in_fp_inputs, c.count, 2, 1, 1)
-        self.ui.p3_example.setVisible(False)
+        self.ui.p3_example.setText('Bluebeam toolbox')
 
         # =================
         # signals and slots
@@ -48,7 +48,12 @@ class App(AppBaseClass):
         self.ui.p2_in_fp_inputs.clicked.connect(select_database)
 
     def example(self):
-        pass
+        from fsetoolsGUI.etc.sfeprapy_bluebeam_toolbox import xml
+        fp = QtWidgets.QFileDialog.getSaveFileName(self, 'Save SFEPRAPY Bluebeam toolbox', '', '(*.btx)')[0]
+        if fp:
+            with open(fp, 'w+') as f:
+                f.write(xml)
+
 
     @property
     def input_parameters(self):
