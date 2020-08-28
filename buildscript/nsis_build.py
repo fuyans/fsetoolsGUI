@@ -4,7 +4,7 @@ import sys
 from os.path import join, realpath, dirname
 
 import fsetoolsGUI
-from buildscript import nsis_build_nsi
+from buildscript import nsis_build_nsi_2 as nsis_build_nsi
 
 
 def find_all_dist_files(dir_build: str, include_root_name: bool = True):

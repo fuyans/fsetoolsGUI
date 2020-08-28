@@ -53,6 +53,10 @@ ${{If}} $0 != "admin" ;Require admin rights on NT4+
 ${{EndIf}}
 !macroend
 
+;--------------------------------
+; Installer
+;--------------------------------
+
 function .onInit
     setShellVarContext all
     !insertmacro VerifyUserIsAdmin
@@ -93,7 +97,9 @@ section "install"
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${{COMPANYNAME}} ${{APPNAME}}" "EstimatedSize" ${{INSTALLSIZE}}
 sectionEnd
 
+;--------------------------------
 ;Uninstaller
+;--------------------------------
 
 function un.onInit
     SetShellVarContext all
