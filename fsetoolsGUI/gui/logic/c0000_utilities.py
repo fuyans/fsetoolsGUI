@@ -31,7 +31,7 @@ class ProgressBar(QtWidgets.QDialog):
         # ==============
         self.progressbar = QtWidgets.QProgressBar()
         self.progressbar.setMinimum(0), self.progressbar.setMaximum(100), self.progressbar.setValue(initial_value)
-        self.progress_label = QtWidgets.QLabel('--')
+        self.progress_label = QtWidgets.QLabel('Progress')
 
         self.grid_layout = QtWidgets.QHBoxLayout()
         self.grid_layout.addWidget(self.progressbar)
