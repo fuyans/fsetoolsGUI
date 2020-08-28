@@ -27,10 +27,10 @@ from fsetoolsGUI.gui.logic.c0601_naming_convention import App as App0601
 from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
 from fsetoolsGUI.gui.logic.c0611_parametric_fire import App as App0611
 from fsetoolsGUI.gui.logic.c0620_probability_distribution import App as App0620
+from fsetoolsGUI.gui.logic.c0630_safir_batch_run import App as App0630
 from fsetoolsGUI.gui.logic.c0640_sfeprapy_mcs0 import App as App0640
 from fsetoolsGUI.gui.logic.c0641_sfeprapy_pre_bluebeam import App as App0641
 from fsetoolsGUI.gui.logic.c0642_sfeprapy_post_failure_probability import App as App0642
-from fsetoolsGUI.gui.logic.c0630_safir_batch_run import App as App0630
 from fsetoolsGUI.gui.logic.c0701_aws_s3_uploader import App as App0701
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 
@@ -196,10 +196,10 @@ class App(QMainWindow):
 
     def add_buttons(self):
         button_collection = {
-            'Miscellaneous': ['0601', '0602', '0611', '0407', '0630'],
+            'Miscellaneous': ['0601', '0602', '0611', '0407', '0620'],
             'B1 Means of escape': ['0101', '0102', '0104', '0103', '0111'],
-            'B3 Elements of structure': ['0411', '0311'],
-            'B4 External fire spread': ['0403', '0404'],
+            'B3 Elements of structure': ['0311', '0630', '0640', '0641', '0642'],
+            'B4 External fire spread': ['0403', '0404', '0411'],
         }
 
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
@@ -207,8 +207,8 @@ class App(QMainWindow):
 
         self.add_button_set_to_grid(self.ui.p2_layout, 'Miscellaneous', button_collection['Miscellaneous'], 0, 0, 5)
         self.add_button_set_to_grid(self.ui.p2_layout, 'B1 Means of escape', button_collection['B1 Means of escape'], 2, 0, 5)
-        self.add_button_set_to_grid(self.ui.p2_layout, 'B3 Elements of structure', button_collection['B3 Elements of structure'], 4, 0, 2)
-        self.add_button_set_to_grid(self.ui.p2_layout, 'B4 External fire spread', button_collection['B4 External fire spread'], 4, 2, 2)
+        self.add_button_set_to_grid(self.ui.p2_layout, 'B3 Elements of structure', button_collection['B3 Elements of structure'], 4, 0, 5)
+        self.add_button_set_to_grid(self.ui.p2_layout, 'B4 External fire spread', button_collection['B4 External fire spread'], 6, 0, 5)
 
     def add_button_set_to_grid(self, layout: QGridLayout, label: str, button_id_list: list, row_0: int, col_0: int, cols: int):
         row_i, col_i = Counter(), Counter()

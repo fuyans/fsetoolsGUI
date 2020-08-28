@@ -29,7 +29,7 @@ class Signals(QtCore.QObject):
 
 class App(AppBaseClass):
     app_id = '0630'
-    app_name_short = 'Safir\nprocsser'
+    app_name_short = 'Safir\nbatch\nprocsser'
     app_name_long = 'Safir batch run processor'
 
     def __init__(self, parent=None, post_stats: bool = True):

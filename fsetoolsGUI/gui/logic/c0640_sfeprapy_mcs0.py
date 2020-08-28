@@ -13,8 +13,8 @@ from fsetoolsGUI.gui.logic.c0000_utilities import Counter, ProgressBar
 
 class App(AppBaseClass):
     app_id = '0621'
-    app_name_short = 'SFEPRAPY'
-    app_name_long = 'SFEPRAPY MCS0'
+    app_name_short = 'SFEPRAPY\nMC0'
+    app_name_long = 'SFEPRAPY Monte Carlo Simulation (method 0)'
 
     def __init__(self, parent=None, post_stats: bool = True):
 
