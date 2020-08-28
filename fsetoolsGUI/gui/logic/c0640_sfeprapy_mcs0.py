@@ -13,8 +13,8 @@ from fsetoolsGUI.gui.logic.c0000_utilities import Counter, ProgressBar
 
 class App(AppBaseClass):
     app_id = '0621'
-    app_name_short = 'SFEPRAPY\nSimulator'
-    app_name_long = 'SFE Probabilistic Risk Assessment Simulator'
+    app_name_short = 'SFEPRAPY'
+    app_name_long = 'SFEPRAPY MCS0'
 
     def __init__(self, parent=None, post_stats: bool = True):
 
@@ -41,7 +41,7 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(self.ui.p2_in_fp_mcs_input, c.value, 1, 1, 1)
         self.ui.p2_layout.addWidget(self.ui.p2_in_fp_mcs_input_unit, c.count, 2, 1, 1)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_n_mp', 'No. processes', '')
-        self.ui.p3_example.setVisible(False)
+        self.ui.p3_example.setText('Input template')
 
         # ============
         # set defaults
@@ -59,7 +59,20 @@ class App(AppBaseClass):
         self.ui.p2_in_fp_mcs_input_unit.clicked.connect(select_fp_inputs)
 
     def example(self):
-        pass
+        logger.info('Saving a SFEPRAPY template input file ...')
+        self.statusBar().showMessage('Saving a SFEPRAPY template input file ...')
+        from sfeprapy.mcs0 import EXAMPLE_INPUT_DF
+        fp = QtWidgets.QFileDialog.getSaveFileName(self, 'Save a SFEPRAPY template input file', '', '(*.xlsx *.csv)')[0]
+        if fp.endswith('.csv'):
+            EXAMPLE_INPUT_DF.to_csv(fp)
+        elif fp.endswith('.xlsx'):
+            EXAMPLE_INPUT_DF.to_excel(fp)
+        else:
+            logger.info('Failed to create a SFEPRAPY template input file')
+            self.statusBar().showMessage('Failed to create a SFEPRAPY template input file')
+            raise TypeError('Unknown file format')
+        logger.info('Successfully created a SFEPRAPY template input file')
+        self.statusBar().showMessage('Successfully created a SFEPRAPY template input file')
 
     @property
     def input_parameters(self):
