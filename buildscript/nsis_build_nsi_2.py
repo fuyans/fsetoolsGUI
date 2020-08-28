@@ -1,3 +1,4 @@
+
 nsi_script = r"""
 ;--------------------------------
 ;Include Modern UI
@@ -22,11 +23,11 @@ nsi_script = r"""
 
     
   ;Define optional URL that will be opened after the installation was successful
-  !define AFTER_INSTALLATION_URL "https://github.com/AnonymerNiklasistanonym/NsiWindowsInstallerExamples"
+  !define AFTER_INSTALLATION_URL "https://github.com/fsepy/fsetools"
 
 
   ;Define the main name of the installer
-  Name "${{COMPANYNAME}}\${{APPNAME}}"
+  Name "${{APPNAME}}"
 
   ;Define the directory where the installer should be saved
   OutFile "{fn_installer}"
@@ -80,8 +81,8 @@ nsi_script = r"""
 
   ;For the installer
   !insertmacro MUI_PAGE_WELCOME # simply remove this and other pages if you don't want it
-  !insertmacro MUI_PAGE_LICENSE "..\LICENSE" # link to an ANSI encoded license file
-  !insertmacro MUI_PAGE_COMPONENTS # remove if you don't want to list components
+  ;!insertmacro MUI_PAGE_LICENSE "..\LICENSE" # link to an ANSI encoded license file
+  ;!insertmacro MUI_PAGE_COMPONENTS # remove if you don't want to list components
   !insertmacro MUI_PAGE_INSTFILES
   !insertmacro MUI_PAGE_FINISH
 
@@ -164,6 +165,35 @@ nsi_script = r"""
 
 
 ;--------------------------------
+!macro UninstallExisting exitcode uninstcommand
+    Push `${{uninstcommand}}`
+        Call UninstallExisting
+    Pop ${{exitcode}}
+!macroend
+
+Function UninstallExisting
+    Exch $1                             ; uninstcommand
+    ;Push $2                             ; Uninstaller
+    ;Push $3                             ; Len
+    ExecWait "$1 /S _?$INSTDIR"
+FunctionEnd
+
+
+Function .onInit
+    ;ReadRegStr $0 HKCU "Software\Software\Microsoft\Windows\CurrentVersion\Uninstall\${{APPNAME}}" "UninstallString"
+    ReadRegStr $0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${{COMPANYNAME}} ${{APPNAME}}" "UninstallString"
+    ${{If}} $0 != ""
+    ${{AndIf}} ${{Cmd}} `MessageBox MB_YESNO|MB_ICONQUESTION "Uninstall previous version?" /SD IDYES IDYES`
+        !insertmacro UninstallExisting $0 $0
+        ${{If}} $0 <> 0
+            MessageBox MB_YESNO|MB_ICONSTOP "Failed to uninstall, continue anyway?" /SD IDYES IDYES +2
+                Abort
+        ${{EndIf}}
+    ${{EndIf}}
+FunctionEnd
+
+
+;--------------------------------
 ;Installer Section
 
 Section "Main Component"
@@ -176,15 +206,15 @@ Section "Main Component"
         File /r 'dist\FSETOOLS\*'
     
     ;Create uninstaller
-        WriteUninstaller "$INSTDIR\uninstall.exe"
+        WriteUninstaller "$INSTDIR\${{APPNAME}}_uninstaller.exe"
     
     ;Store installation folder in registry
         WriteRegStr HKLM "Software\${{COMPANYNAME}}\${{APPNAME}}" "" $INSTDIR
 
     ;Registry information for add/remove programs
         WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${{COMPANYNAME}} ${{APPNAME}}" "DisplayName" "${{APPNAME}}"
-        WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${{COMPANYNAME}} ${{APPNAME}}" "UninstallString" "$INSTDIR\uninstall.exe"
-        WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${{COMPANYNAME}} ${{APPNAME}}" "QuietUninstallString" "$INSTDIR\uninstall.exe /S"
+        WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${{COMPANYNAME}} ${{APPNAME}}" "UninstallString" "$INSTDIR\${{APPNAME}}_uninstaller.exe"
+        WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${{COMPANYNAME}} ${{APPNAME}}" "QuietUninstallString" "$INSTDIR\${{APPNAME}}_uninstaller.exe /S"
         WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${{COMPANYNAME}} ${{APPNAME}}" "InstallLocation" "$INSTDIR"
         WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${{COMPANYNAME}} ${{APPNAME}}" "DisplayIcon" "$INSTDIR\etc\ofr_logo_1_80_80.ico"
         WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${{COMPANYNAME}} ${{APPNAME}}" "Publisher" "${{COMPANYNAME}}"
@@ -192,16 +222,10 @@ Section "Main Component"
         WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${{COMPANYNAME}} ${{APPNAME}}" "VersionMajor" ${{VERSIONMAJOR}}
         WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${{COMPANYNAME}} ${{APPNAME}}" "VersionMinor" ${{VERSIONMINOR}}
     
-    ;Start menu
-        createDirectory "$SMPROGRAMS\${{COMPANYNAME}}"
-        createShortCut "$SMPROGRAMS\${{COMPANYNAME}}\${{APPNAME}}.lnk" "$INSTDIR\${{APPNAME}}.exe" "" "$INSTDIR\etc\ofr_logo_1_80_80.ico"
-    
     ;Create optional start menu shortcut for uninstaller and Main component
-        ;CreateDirectory "$SMPROGRAMS\${{COMPANYNAME}}\${{APPNAME}}"
-        ;CreateShortCut "$SMPROGRAMS\${{COMPANYNAME}}\${{APPNAME}}\Main Component.lnk" "$INSTDIR\example_file_component_01.txt" "" "$INSTDIR\example_file_component_01.txt" 0
-        ;CreateShortCut "$SMPROGRAMS\${{COMPANYNAME}}\${{APPNAME}}\Uninstall ${{COMPANYNAME}}\${{APPNAME}}.lnk" "$INSTDIR\${{COMPANYNAME}}\${{APPNAME}}_uninstaller.exe" "" "$INSTDIR\${{COMPANYNAME}}\${{APPNAME}}_uninstaller.exe" 0
-
-  
+        CreateDirectory "$SMPROGRAMS\${{APPNAME}}"
+        CreateShortCut "$SMPROGRAMS\${{APPNAME}}\${{APPNAME}}.lnk" "$INSTDIR\${{APPNAME}}.exe" "" "$INSTDIR\etc\ofr_logo_1_80_80.ico" 0
+        CreateShortCut "$SMPROGRAMS\${{APPNAME}}\Uninstall ${{APPNAME}}.lnk" "$INSTDIR\${{APPNAME}}_uninstaller.exe" "" "$INSTDIR\etc\ofr_logo_1_80_80.ico" 1
 
 SectionEnd
 
@@ -209,23 +233,36 @@ SectionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
-
-  ;Remove all registry keys
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${{COMPANYNAME}}\${{APPNAME}}"
-  DeleteRegKey HKLM "Software\${{COMPANYNAME}}\${{APPNAME}}"
-
-  ;Delete the installation directory + all files in it
-  ;Add 'RMDir /r "$INSTDIR\folder\*.*"' for every folder you have added additionaly
-  RMDir /r "$INSTDIR\*.*"
-  RMDir "$INSTDIR"
-
-  ;Delete the appdata directory + files
-  RMDir /r "${{INSTDIR_DATA}}\*.*"
-  RMDir "${{INSTDIR_DATA}}"
-
-  ;Delete Start Menu Shortcuts
-  Delete "$SMPROGRAMS\${{COMPANYNAME}}\${{APPNAME}}\*.*"
-  RmDir  "$SMPROGRAMS\${{COMPANYNAME}}\${{APPNAME}}"
+  
+    ;Remove Start Menu launcher
+    Delete "$SMPROGRAMS\${{APPNAME}}\${{APPNAME}}.lnk"
+    Delete "$SMPROGRAMS\${{APPNAME}}\*.*"
+    RmDir  "$SMPROGRAMS\${{APPNAME}}"
+    
+    ;Try to remove the Start Menu folder - this will only happen if it is empty
+    rmDir "$SMPROGRAMS\${{APPNAME}}"
+    
+    ;Remove the files (using externally generated file list)
+    ;!include ${{UNINST_LIST}}
+    
+    ;Delete the installation directory + all files in it
+    ;Add 'RMDir /r "$INSTDIR\folder\*.*"' for every folder you have added additionaly
+    RMDir /r "$INSTDIR\*.*"
+    RMDir "$INSTDIR"
+    
+    ;Delete the appdata directory + files
+    RMDir /r "${{INSTDIR_DATA}}\*.*"
+    RMDir "${{INSTDIR_DATA}}"
+    
+    ;Always delete uninstaller as the last action
+    delete $INSTDIR\uninstall.exe
+    
+    ;Try to remove the install directory - this will only happen if it is empty
+    rmDir /r $INSTDIR
+ 
+    ;Remove uninstaller information from the registry
+    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${{COMPANYNAME}} ${{APPNAME}}"
+    DeleteRegKey HKLM "Software\${{COMPANYNAME}}\${{APPNAME}}"
 
 SectionEnd
 
@@ -240,3 +277,4 @@ Function .onInstSuccess
 
 FunctionEnd
 """
+
