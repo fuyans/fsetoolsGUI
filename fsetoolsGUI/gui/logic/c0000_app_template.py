@@ -3,8 +3,7 @@ from datetime import datetime
 from os import getlogin, path
 from typing import Union
 
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import QLabel, QLineEdit, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy, QGroupBox, QWidget, QStatusBar, QVBoxLayout, QTextBrowser, QScrollArea
+from PySide2.QtWidgets import QLabel, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy, QGroupBox, QWidget, QStatusBar, QVBoxLayout, QTextBrowser, QScrollArea
 
 from fsetoolsGUI import __root_dir__, __version__, logger
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
@@ -255,18 +254,31 @@ class AppBaseClass(QtWidgets.QMainWindow):
         msgbox.exec_()
 
     def add_lineedit_set_to_grid(
-            self, grid: QGridLayout, row: Union[int, Counter], name: str, description: str, unit: str, min_width: int = 50,
-            descrip_cls: str = 'QLabel', col: int = 0
+            self,
+            grid: QGridLayout,
+            row: Union[int, Counter],
+            name: str, description: str,
+            unit: str, min_width: int = 50,
+            label_obj: str = 'QLabel',
+            col: int = 0,
+            unit_obj: str = 'QLabel',
+            obj: str = 'QLineEdit'
     ):
         if isinstance(row, Counter):
             row = row.count
 
-        # create description label, input box, unit label
-        setattr(self.ui, f'{name}', QLineEdit())
-        setattr(self.ui, f'{name}_label', getattr(QtWidgets, descrip_cls)(description))
-        setattr(self.ui, f'{name}_unit', QLabel(unit))
-        # set min. width for the input box
+        # instantiate objects: label, input box, unit label
+        setattr(self.ui, f'{name}_label', getattr(QtWidgets, label_obj)(description))
+        setattr(self.ui, f'{name}', getattr(QtWidgets, obj)())
+        setattr(self.ui, f'{name}_unit', getattr(QtWidgets, unit_obj)(unit))
+
+        # formatting
         getattr(self.ui, f'{name}').setMinimumWidth(min_width)
+        if label_obj == 'QPushButton':
+            getattr(self.ui, f'{name}_label').setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        if unit_obj == 'QPushButton':
+            getattr(self.ui, f'{name}_unit').setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+
         # add the created objects to the grid
         grid.addWidget(getattr(self.ui, f'{name}_label'), row, col, 1, 1)
         grid.addWidget(getattr(self.ui, f'{name}'), row, col + 1, 1, 1)

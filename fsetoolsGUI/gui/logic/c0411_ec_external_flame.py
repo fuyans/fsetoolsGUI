@@ -44,7 +44,7 @@ class App(AppBaseClass):
         self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_q_fd', '<i>q<sub>fd</sub></i>, design fuel load', 'MJ/m<sup>2</sup>', min_width=60)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_Q', 'Q, HRR (override)', 'MW', descrip_cls='QCheckBox')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_Q', 'Q, HRR (override)', 'MW', label_obj='QCheckBox')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_W_1', '<i>W<sub>1</sub></i>, enclosure dim. 1', 'm')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_W_2', '<i>W<sub>2</sub></i>, enclosure dim. 2', 'm')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_A_f', '<i>A<sub>f</sub></i>, floor area', 'm<sup>2</sup>')
