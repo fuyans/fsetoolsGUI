@@ -18,7 +18,7 @@ setuptools.setup(
     version=fsetoolsGUI.__version__,
     description="Fire Safety Engineering Tools",
     author="Ian Fu",
-    author_email=''.join([chr(ord(v)+i) for i, v in enumerate(r'ftw^jn:`eX_a"Va^')]),
+    author_email=''.join([chr(ord(v) + i) for i, v in enumerate(r'ftw^jn:`eX_a"Va^')]),
     url="https://github.com/fsepy/fsetools",
     download_url="https://github.com/fsepy/fsetools/archive/master.zip",
     keywords=["fire", "safety", "engineering"],
@@ -45,7 +45,7 @@ setuptools.setup(
     include_package_data=True,
     entry_points={"console_scripts": ["fsetoolsGUI=fsetoolsGUI.cli.__main__:main"]},
     ext_modules=[
-        setuptools.extension.Extension("fputs", ["fsetoolsGUI/etc/realpythonexample.c"]),
+        setuptools.extension.Extension("fsetoolsGUI.test1", ["fsetoolsGUI/etc/helloworld.c"]),
         # setuptools.extension.Extension("superfastexample", ["fsetoolsGUI/etc/msexample.cpp"])
     ],
 )
