@@ -30,7 +30,7 @@ from fsetoolsGUI.gui.logic.c0620_probability_distribution import App as App0620
 from fsetoolsGUI.gui.logic.c0630_safir_batch_run import App as App0630
 from fsetoolsGUI.gui.logic.c0640_sfeprapy_mcs0 import App as App0640
 from fsetoolsGUI.gui.logic.c0641_sfeprapy_pre_bluebeam import App as App0641
-from fsetoolsGUI.gui.logic.c0642_sfeprapy_post_failure_probability import App as App0642
+from fsetoolsGUI.gui.logic.c0642_sfeprapy_post_processor import App as App0642
 from fsetoolsGUI.gui.logic.c0701_aws_s3_uploader import App as App0701
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 
