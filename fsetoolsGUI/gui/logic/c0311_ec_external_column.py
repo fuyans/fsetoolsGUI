@@ -1,3 +1,4 @@
+import shutil
 import tempfile
 import threading
 from collections import OrderedDict
@@ -78,9 +79,9 @@ class App(AppBaseClass):
         c.reset()
         self.ui.p2_layout.addWidget(QLabel('<b>Options</b>'), c.count, 4, 1, 4)
         self.ui.p2_in_is_forced_draught = QCheckBox('Is forced draught?')
-        self.ui.p2_in_make_pdf_web = QCheckBox('Make PDF report?')
+        self.ui.p2_in_make_pdf = QCheckBox('Make PDF report?')
         self.ui.p2_layout.addWidget(self.ui.p2_in_is_forced_draught, c.count, 4, 1, 4)
-        self.ui.p2_layout.addWidget(self.ui.p2_in_make_pdf_web, c.count, 4, 1, 4)
+        self.ui.p2_layout.addWidget(self.ui.p2_in_make_pdf, c.count, 4, 1, 4)
 
         c.reset(c.count + 8)
         self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), c.count, 4, 1, 3)
@@ -134,12 +135,23 @@ class App(AppBaseClass):
             self.statusBar().showMessage(f'{e}', timeout=10 * 1e3)
             raise e
 
-        if self.ui.p2_in_make_pdf_web.isChecked():
-            temp = tempfile.NamedTemporaryFile(suffix='.pdf')
-            fp_pdf = temp.name
-            temp.close()
-            logger.info(f'Making PDF at {fp_pdf}')
-            threading.Thread(target=lambda: cls.make_pdf(fp_pdf=fp_pdf)).start()
+        if self.ui.p2_in_make_pdf.isChecked():
+            logger.info('Making local PDF ...')
+            try:
+                if shutil.which('latexmk'):
+                    temp = tempfile.NamedTemporaryFile(suffix='.pdf')
+                    temp.close()
+                    fp_pdf = temp.name
+                    logger.info(f'Making local PDF ... {fp_pdf}')
+                    threading.Thread(target=lambda: cls.make_pdf(fp_pdf=fp_pdf)).start()
+                else:
+                    temp = tempfile.NamedTemporaryFile(suffix='.tex', )
+                    temp.close()
+                    fp_tex = temp.name
+                    logger.info(f'Making online PDF ... {fp_tex}')
+                    threading.Thread(target=lambda: cls.make_pdf_web(fp_tex=fp_tex)).start()
+            except Exception as e:
+                logger.error(f'Failed to make PDF, {e}')
 
     @property
     def input_parameters(self):

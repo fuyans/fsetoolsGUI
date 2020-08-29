@@ -3,7 +3,7 @@ from os import path
 
 import requests
 from PySide2.QtCore import Slot
-from PySide2.QtWidgets import QErrorMessage, QPushButton, QDialog, QLineEdit, QInputDialog
+from PySide2.QtWidgets import QErrorMessage, QPushButton, QLineEdit, QInputDialog
 from PySide2.QtWidgets import QMainWindow, QSizePolicy, QWidget, QGridLayout, QGroupBox, QLabel
 from packaging import version
 
@@ -27,7 +27,10 @@ from fsetoolsGUI.gui.logic.c0601_naming_convention import App as App0601
 from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
 from fsetoolsGUI.gui.logic.c0611_parametric_fire import App as App0611
 from fsetoolsGUI.gui.logic.c0620_probability_distribution import App as App0620
-from fsetoolsGUI.gui.logic.c0630_safir_post_processor import App as App0630
+from fsetoolsGUI.gui.logic.c0630_safir_batch_run import App as App0630
+from fsetoolsGUI.gui.logic.c0640_sfeprapy_mcs0 import App as App0640
+from fsetoolsGUI.gui.logic.c0641_sfeprapy_pre_bluebeam import App as App0641
+from fsetoolsGUI.gui.logic.c0642_sfeprapy_post_processor import App as App0642
 from fsetoolsGUI.gui.logic.c0701_aws_s3_uploader import App as App0701
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 
@@ -58,6 +61,9 @@ class AppsCollection:
         '0611': App0611,
         '0620': App0620,
         '0630': App0630,
+        '0640': App0640,
+        '0641': App0641,
+        '0642': App0642,
         '0701': App0701,
     }
 
@@ -103,8 +109,19 @@ class AppsCollection:
 
     def activate_app(self, code: str, parent=None):
         def func():
-            app = self.__apps[code](parent=parent)
-            app.show()
+            try:
+                app = self.__apps[code]
+                if code == '0101' or code == '0102':
+                    # todo: 0101 and 0102 do not run without parent
+                    app = app(parent=parent)
+                else:
+                    app = app()
+                    parent.activated_dialogs.append(app)
+                app.show()
+                logger.info(f'Successfully loaded module {code}')
+            except Exception as e:
+                logger.error(f'Failed to load module {code}, {e}')
+                raise e
 
         return func
 
@@ -143,6 +160,7 @@ class App(QMainWindow):
         self.is_executable: bool = True
         self.Signals = Signals()
         self.__activated_dialogs = list()
+
         self.__apps = AppsCollection()
 
         # ui setup
@@ -178,28 +196,32 @@ class App(QMainWindow):
 
     def add_buttons(self):
         button_collection = {
-            'Miscellaneous': ['0601', '0602', '0611', '0407', '0630'],
+            'Miscellaneous': ['0601', '0602', '0611', '0407', '0620'],
             'B1 Means of escape': ['0101', '0102', '0104', '0103', '0111'],
-            'B4 External fire spread': ['0401', '0402', '0403', '0404', '0411'],
+            'B3 Elements of structure': ['0311', '0630', '0640', '0641', '0642'],
+            'B4 External fire spread': ['0403', '0404', '0411'],
         }
 
-        table_cols = 5
-
-        row_i = Counter()
-        col_i = Counter()
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setHorizontalSpacing(5), self.ui.p2_layout.setVerticalSpacing(5)
 
-        for k in button_collection.keys():
-            self.ui.p2_layout.addWidget(QLabel(f'<b>{k}</b>'), row_i.count, 0, 1, table_cols)
-            for v in button_collection[k]:
-                act_app = self.__apps.activate_app(v, self)
-                setattr(self.ui, f'p2_in_{v}', QPushButton(self.__apps.app_name_short(v)))
-                getattr(self.ui, f'p2_in_{v}').clicked.connect(act_app)
-                getattr(self.ui, f'p2_in_{v}').setFixedSize(76, 76)
-                self.ui.p2_layout.addWidget(getattr(self.ui, f'p2_in_{v}'), row_i.v, col_i.count, 1, 1)
-            row_i.add()
-            col_i.reset()
+        self.add_button_set_to_grid(self.ui.p2_layout, 'Miscellaneous', button_collection['Miscellaneous'], 0, 0, 5)
+        self.add_button_set_to_grid(self.ui.p2_layout, 'B1 Means of escape', button_collection['B1 Means of escape'], 2, 0, 5)
+        self.add_button_set_to_grid(self.ui.p2_layout, 'B3 Elements of structure', button_collection['B3 Elements of structure'], 4, 0, 5)
+        self.add_button_set_to_grid(self.ui.p2_layout, 'B4 External fire spread', button_collection['B4 External fire spread'], 6, 0, 5)
+
+    def add_button_set_to_grid(self, layout: QGridLayout, label: str, button_id_list: list, row_0: int, col_0: int, cols: int):
+        row_i, col_i = Counter(), Counter()
+        row_i.reset(row_0), col_i.reset(col_0)
+        layout.addWidget(QLabel(f'<b>{label}</b>'), row_i.count, col_0, 1, cols)
+        for v in button_id_list:
+            act_app = self.__apps.activate_app(v, self)
+            setattr(self.ui, f'p2_in_{v}', QPushButton(self.__apps.app_name_short(v)))
+            getattr(self.ui, f'p2_in_{v}').clicked.connect(act_app)
+            getattr(self.ui, f'p2_in_{v}').setFixedSize(76, 76)
+            layout.addWidget(getattr(self.ui, f'p2_in_{v}'), row_i.value, col_i.count, 1, 1)
+        row_i.add()
+        col_i.reset()
 
     @Slot(bool)
     def setEnabled_all_buttons(self, v: bool):
@@ -226,7 +248,9 @@ class App(QMainWindow):
                 ""
             )
             if ok and txt:
-                self.activated_dialogs.append(self.__apps.activate_app(code=txt)())
+                app = self.__apps.activate_app(code=txt, parent=self)
+                app()
+                self.activated_dialogs.append(app)
 
     def check_update(self):
         """
@@ -324,6 +348,7 @@ class App(QMainWindow):
         elif is_local_version_upgradable:
             version_label_text = f'This version {__version__} is disabled. A new version {latest_version} is available. Click here to download.'
         else:
+
             version_label_text = None
             self.ui.label_version.setStyleSheet('color: grey;')
 
@@ -341,23 +366,19 @@ class App(QMainWindow):
     def new_version_update_url(self, url: str):
         self.__new_version_update_url = url
 
+    def showEvent(self, event):
+        event.accept()
+
     def closeEvent(self, event):
 
-        logger.debug('Terminating children')
-        for i in self.findChildren(QMainWindow) + self.findChildren(QDialog):
-            try:
-                i.close()
-            except Exception as e:
-                logger.error(f'{str(e)}')
-
-        logger.debug('Terminating activated dialogs/mainwindows')
+        logger.debug('Terminating activated dialogs/mainwindows ...')
         for i in self.activated_dialogs:
             try:
                 i.close()
             except Exception as e:
                 logger.error(f'{str(e)}')
 
-        logger.debug('All subroutines terminated')
+        logger.debug('All activated widgets are terminated')
 
         event.accept()
 

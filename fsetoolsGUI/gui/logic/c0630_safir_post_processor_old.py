@@ -135,12 +135,14 @@ class App(AppBaseClass):
                 fp_safir_exe = self.ui.lineEdit_batch_run_in_safir_exe_path.text()
                 dir_work = self.ui.lineEdit_batch_run_in_safir_input_folder.text()
                 timeout_seconds = int(self.ui.lineEdit_batch_run_in_timeout.text())
+                logger.info(f'{fp_safir_exe}, {dir_work}, {timeout_seconds}')
 
                 list_fp_in = list()
                 for root, dirs, files in os.walk(dir_work):
                     for file_ in files:
                         if file_.endswith('.in'):
                             list_fp_in.append(path.join(root, file_))
+                logger.info(f'{list_fp_in}')
 
                 list_kwargs_in = list()
                 for i in list_fp_in:

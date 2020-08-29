@@ -1,22 +1,26 @@
-import logging
 from os.path import join
 
+from PySide2.QtGui import QPixmap
 from PySide2.QtWidgets import QLabel, QVBoxLayout
 from fsetools.lib.fse_thermal_radiation import linear_solver
 from fsetools.lib.fse_thermal_radiation import phi_parallel_any_br187
 
-from fsetoolsGUI import __root_dir__, logger
+from fsetoolsGUI import __root_dir__
 from fsetoolsGUI.gui.logic.c0400_br187_base_class import BR187ComplexBaseClass
-
 
 
 class App(BR187ComplexBaseClass):
     app_id = '0403'
-    app_name_short = 'BR 187\nparallel\neccentric'
+    app_name_short = 'BR 187\nparallel'
     app_name_long = 'BR 187 parallel oriented rectangle emitter and eccentric receiver'
 
     def __init__(self, parent=None, post_stats: bool = True):
         super().__init__(parent, post_stats)
+
+        pixmaps = [
+            QPixmap(join(__root_dir__, 'gui', 'images', '0403-0.png')),
+            QPixmap(join(__root_dir__, 'gui', 'images', '0403-1.png')),
+        ]
 
         self.ui.p1_description = QLabel(
             'This sheet calculates the thermal radiation intensity at a receiver that is parallel to a rectangular '
@@ -30,6 +34,22 @@ class App(BR187ComplexBaseClass):
         self.ui.p1_layout.setContentsMargins(0, 0, 0, 0)
         self.ui.p1_layout.addWidget(self.ui.p1_description)
         self.ui.p1_layout.addWidget(self.ui.p1_image)
+        self.ui.p2_in_receiver_at_origin.setText('Receiver at emitter centroid')
+
+        # signals
+        def receiver_at_origin(v: bool):
+            if v:
+                self.ui.p2_in_w.setText('0')
+                self.ui.p2_in_h.setText('0')
+                self.ui.p1_image.setPixmap(pixmaps[0])
+            else:
+                self.ui.p2_in_w.setText('')
+                self.ui.p2_in_h.setText('')
+                self.ui.p1_image.setPixmap(pixmaps[1])
+            self.ui.p2_in_w.setEnabled(not v)
+            self.ui.p2_in_h.setEnabled(not v)
+
+        self.ui.p2_in_receiver_at_origin.stateChanged.connect(receiver_at_origin)
 
     @staticmethod
     def phi_solver(W: float, H: float, w: float, h: float, Q: float, Q_a: float, S=None, UA=None):
@@ -93,6 +113,7 @@ class App(BR187ComplexBaseClass):
 
     def example(self):
         self.ui.p2_in_half_S_label.setChecked(True)
+        self.ui.p2_in_receiver_at_origin.setChecked(False)
         self.change_mode_S_and_UA()
         self.ui.p2_in_W.setText('10')
         self.ui.p2_in_H.setText('6')

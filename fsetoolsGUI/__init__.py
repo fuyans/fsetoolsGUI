@@ -2,13 +2,6 @@ import datetime
 import logging
 import os
 
-c_handler = logging.StreamHandler()
-c_handler.setFormatter(
-    logging.Formatter('%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s')
-)
-logger = logging.getLogger('gui')
-logger.setLevel(logging.INFO)
-logger.addHandler(c_handler)
 
 # make root directory of this app which will be used 1. when running the app; 2. pyinstaller at compiling the app.
 if os.path.exists(os.path.dirname(__file__)):
@@ -21,6 +14,28 @@ elif os.path.exists(os.path.dirname(os.path.dirname(__file__))):
     __root_dir__ = os.path.dirname(os.path.dirname(__file__))
 else:
     __root_dir__ = None
+
+
+# setup logger
+def get_logger():
+    logger_ = logging.getLogger('gui')
+
+    f_handler = logging.FileHandler(os.path.join(os.path.expanduser('~'), 'fsetoolsgui.log'))
+    f_handler.setLevel(logging.WARNING)
+    f_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s'))
+    logger_.addHandler(f_handler)
+
+    c_handler = logging.StreamHandler()
+    c_handler.setLevel(logging.INFO)
+    c_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s'))
+    logger_.addHandler(c_handler)
+
+    logger_.setLevel(logging.DEBUG)
+
+    return logger_
+
+
+logger = get_logger()
 
 """
 VERSION IDENTIFICATION RULES DOCUMENTED IN PEP 440.
@@ -58,9 +73,9 @@ Public version identifiers are separated into up to five segments:
 
 """
 
-__version__ = "0.0.5"
-__date_released__ = datetime.datetime(2020, 8, 17)
-__expiry_period_days__ = 360 + 180
+__version__ = "0.0.6"
+__date_released__ = datetime.datetime(2020, 8, 28)
+__expiry_period_days__ = 360
 __remote_version_url__ = r'hsrmo5)(jXw-efpco[mjeqaljo_gl%cnk,bpsZfj/ucoodigk&m`qqam)_k\tnmioBOBWFFQ,gojh'
 
 if __name__ == "__main__":

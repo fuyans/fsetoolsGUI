@@ -3,8 +3,7 @@ from datetime import datetime
 from os import getlogin, path
 from typing import Union
 
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import QLabel, QLineEdit, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy, QGroupBox, QWidget, QStatusBar, QVBoxLayout, QTextBrowser, QScrollArea
+from PySide2.QtWidgets import QLabel, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy, QGroupBox, QWidget, QStatusBar, QVBoxLayout, QTextBrowser, QScrollArea
 
 from fsetoolsGUI import __root_dir__, __version__, logger
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
@@ -133,8 +132,8 @@ class AppBaseClassUISimplified01(object):
         self.page_2 = QGroupBox(self.central_widget)
         self.page_3 = QWidget(self.central_widget)
 
-        self.p0_layout.addWidget(self.page_3, 1, 0, 1, 2)
-        self.p0_layout.addWidget(self.page_2, 0, 1, 1, 1)
+        self.p0_layout.addWidget(self.page_2, 0, 0, 1, 1)
+        self.p0_layout.addWidget(self.page_3, 1, 0, 1, 1)
 
         self.statusbar = QStatusBar(main_window)
 
@@ -195,11 +194,11 @@ class AppBaseClass(QtWidgets.QMainWindow):
             logger.warning(f'{e}')
 
         # post stats if required
-        try:
-            if post_stats:
+        if post_stats:
+            try:
                 threading.Thread(target=self.user_usage_stats, args=[self.app_id]).start()
-        except Exception as e:
-            logger.warning(f'{e}')
+            except Exception as e:
+                logger.warning(f'{e}')
 
         self.adjustSize()
 
@@ -255,18 +254,31 @@ class AppBaseClass(QtWidgets.QMainWindow):
         msgbox.exec_()
 
     def add_lineedit_set_to_grid(
-            self, grid: QGridLayout, row: Union[int, Counter], name: str, description: str, unit: str, min_width: int = 50,
-            descrip_cls: str = 'QLabel', col: int = 0
+            self,
+            grid: QGridLayout,
+            row: Union[int, Counter],
+            name: str, description: str,
+            unit: str, min_width: int = 50,
+            label_obj: str = 'QLabel',
+            col: int = 0,
+            unit_obj: str = 'QLabel',
+            obj: str = 'QLineEdit'
     ):
         if isinstance(row, Counter):
             row = row.count
 
-        # create description label, input box, unit label
-        setattr(self.ui, f'{name}', QLineEdit())
-        setattr(self.ui, f'{name}_label', getattr(QtWidgets, descrip_cls)(description))
-        setattr(self.ui, f'{name}_unit', QLabel(unit))
-        # set min. width for the input box
+        # instantiate objects: label, input box, unit label
+        setattr(self.ui, f'{name}_label', getattr(QtWidgets, label_obj)(description))
+        setattr(self.ui, f'{name}', getattr(QtWidgets, obj)())
+        setattr(self.ui, f'{name}_unit', getattr(QtWidgets, unit_obj)(unit))
+
+        # formatting
         getattr(self.ui, f'{name}').setMinimumWidth(min_width)
+        if label_obj == 'QPushButton':
+            getattr(self.ui, f'{name}_label').setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        if unit_obj == 'QPushButton':
+            getattr(self.ui, f'{name}_unit').setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+
         # add the created objects to the grid
         grid.addWidget(getattr(self.ui, f'{name}_label'), row, col, 1, 1)
         grid.addWidget(getattr(self.ui, f'{name}'), row, col + 1, 1, 1)
@@ -283,20 +295,20 @@ class AppBaseClass(QtWidgets.QMainWindow):
     @staticmethod
     def user_usage_stats(content: str, is_dev: bool = 'dev' in __version__):
         if is_dev:
-            logger.debug(f'DEV VERSION, STATS POST IGNORED FOR {content}')
+            logger.debug(f'Post usage stats ignored for dev version, {content}')
             return
         try:
-            logger.debug(f'STATS POST STARTED FOR {content}')
+            logger.info(f'Post usage stats started {content} ...')
             rp = post_to_knack_user_usage_stats(
                 user=str(getlogin()),  # user indicator
                 version=__version__,  # current app version
                 date=datetime.now().strftime("%d%m%Y %H:%M%p"),  # example "03/28/2014 10:30pm"
                 content=content  # action is the current app id
             )
-            logger.info(f'STATS POST STATUS {rp}')
+            logger.info(f'Successfully posted usage stats, {rp}')
             logger.debug(f'{rp.text}')
         except Exception as e:
-            logger.error(f'User stats post failed {e}')
+            logger.error(f'Failed to post usage stats, {e}')
 
     @staticmethod
     def make_pixmap_from_base64(image_base64: bytes):

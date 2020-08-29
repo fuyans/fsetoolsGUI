@@ -1,6 +1,4 @@
-packaging>=20.1
 pillow>=7.0.0
 markdown2>=2.3.8
 pycryptodome>=3.8.2
-pyinstaller>=3.6
-imgurpython>=1.1.7
+pyinstaller==4.0

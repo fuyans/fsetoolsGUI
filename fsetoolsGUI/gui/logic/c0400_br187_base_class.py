@@ -1,8 +1,8 @@
-
-from PySide2.QtWidgets import QLabel, QGridLayout
+from PySide2.QtWidgets import QLabel, QGridLayout, QCheckBox
 
 from fsetoolsGUI import logger
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_utilities import *
 
 
 class BR187SimpleBaseClass(AppBaseClass):
@@ -39,8 +39,8 @@ class BR187SimpleBaseClass(AppBaseClass):
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 2, 'p2_in_H', 'H, emitter height', 'm')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 3, 'p2_in_Q', 'Emitter heat flux', 'kW/m<sup>2</sup>')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 4, 'p2_in_Q_crit', 'Receiver critical heat flux', 'kW/m<sup>2</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 5, 'p2_in_half_S', '½S, emitter to boundary', 'm', descrip_cls='QRadioButton')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 6, 'p2_in_unprotected_area', 'Unprotected area', '%', descrip_cls='QRadioButton')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 5, 'p2_in_half_S', '½S, emitter to boundary', 'm', label_obj='QRadioButton')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 6, 'p2_in_unprotected_area', 'Unprotected area', '%', label_obj='QRadioButton')
         self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), 7, 0, 1, 1)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'p2_out_Phi', 'Φ, configuration factor', '×10<sup>-3</sup>')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 9, 'p2_out_q', 'q, receiver heat flux', 'kW/m<sup>2</sup>')
@@ -255,9 +255,29 @@ class BR187ComplexBaseClass(AppBaseClass):
 
     def __init__(self, parent=None, post_stats: bool = True, *args, **kwargs):
         super().__init__(parent=parent, post_stats=post_stats, *args, **kwargs)
-        self.init_ui()
+
+        c = Counter()
+        self.ui.p2_layout = QGridLayout(self.ui.page_2)
+        self.ui.p2_layout.setHorizontalSpacing(5), self.ui.p2_layout.setVerticalSpacing(5)
+        self.ui.p2_layout.addWidget(QLabel('<b>Options</b>'), c.count, 0, 1, 3)
+        self.ui.p2_in_receiver_at_origin = QCheckBox('Receiver at the origin')
+        self.ui.p2_layout.addWidget(self.ui.p2_in_receiver_at_origin, c.count, 0, 1, 3)
+        self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_W', 'W, emitter width', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_H', 'H, emitter height', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_w', 'w, receiver location', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_h', 'h, receiver location', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_Q', 'Emitter heat flux', 'kW/m<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_Q_crit', 'Receiver critical heat flux', 'kW/m²')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_half_S', '½S, emitter to boundary', 'm', label_obj='QRadioButton')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_unprotected_area', 'Unprotected area', '%', label_obj='QRadioButton')
+        self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), c.count, 0, 1, 3)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_out_Phi', 'Φ, configuration factor', '×10<sup>-3</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_out_q', 'q, receiver heat flux', 'kW/m<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_out_S_or_UA', 'Allowable unprotected area', '%')
 
         # set default values
+        self.ui.p2_in_receiver_at_origin.setChecked(False)
         self.ui.p2_in_half_S_label.setChecked(True)
         self.change_mode_S_and_UA()
 
@@ -273,22 +293,23 @@ class BR187ComplexBaseClass(AppBaseClass):
         self.ui.p2_in_unprotected_area_label.toggled.connect(self.change_mode_S_and_UA)
 
     def init_ui(self):
+        c = Counter()
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setHorizontalSpacing(5)
         self.ui.p2_layout.setVerticalSpacing(5)
-        self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), 0, 0, 1, 1)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 1, 'p2_in_W', 'W, emitter width', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 2, 'p2_in_H', 'H, emitter height', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 3, 'p2_in_w', 'w, receiver location', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 4, 'p2_in_h', 'h, receiver location', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 5, 'p2_in_Q', 'Emitter heat flux', 'kW/m<sup>2</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 6, 'p2_in_Q_crit', 'Receiver critical heat flux', 'kW/m²')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 7, 'p2_in_half_S', '½S, emitter to boundary', 'm', descrip_cls='QRadioButton')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'p2_in_unprotected_area', 'Unprotected area', '%', descrip_cls='QRadioButton')
-        self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), 9, 0, 1, 1)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 10, 'p2_out_Phi', 'Φ, configuration factor', '×10<sup>-3</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'p2_out_q', 'q, receiver heat flux', 'kW/m<sup>2</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 12, 'p2_out_S_or_UA', 'Allowable unprotected area', '%')
+        self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 1)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_W', 'W, emitter width', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_H', 'H, emitter height', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_w', 'w, receiver location', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_h', 'h, receiver location', 'm')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_Q', 'Emitter heat flux', 'kW/m<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_Q_crit', 'Receiver critical heat flux', 'kW/m²')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_half_S', '½S, emitter to boundary', 'm', label_obj='QRadioButton')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_unprotected_area', 'Unprotected area', '%', label_obj='QRadioButton')
+        self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), c.count, 0, 1, 1)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_out_Phi', 'Φ, configuration factor', '×10<sup>-3</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_out_q', 'q, receiver heat flux', 'kW/m<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_out_S_or_UA', 'Allowable unprotected area', '%')
 
     def change_mode_S_and_UA(self):
         """update ui to align with whether to calculate boundary distance or unprotected area %"""
