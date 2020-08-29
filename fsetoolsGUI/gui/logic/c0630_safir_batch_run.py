@@ -1,15 +1,11 @@
-import copy
 import os
 import threading
 from os import path
 
-import numpy as np
 from PySide2 import QtWidgets, QtCore
-from PySide2.QtCore import Slot
 from PySide2.QtWidgets import QLabel, QGridLayout, QFileDialog
 from fsetools.etc.safir import safir_batch_run
 
-from fsetoolsGUI.etc.safir_post_processor import out2pstrain, pstrain2dict, save_csv
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.logic.c0000_utilities import Counter, ProgressBar
 
@@ -46,6 +42,7 @@ class App(AppBaseClass):
         self.__Signals = Signals()
         self.__output_fire_curve = dict(time=None, temperature=None)
         self.__progress_bar = ProgressBar('Progress', parent=self, initial_value=0)
+        self.activated_dialogs.append(self.__progress_bar)
 
         # ================================
         # instantiation super and setup ui
@@ -62,7 +59,7 @@ class App(AppBaseClass):
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_timeout', 'timeout', 's')
 
         # default parameters
-        self.ui.p2_in_fp_safir_exe.setText(os.path.join('c:', os.sep, 'work', 'fem', 'SAFIR','safir.exe'))
+        self.ui.p2_in_fp_safir_exe.setText(os.path.join('c:', os.sep, 'work', 'fem', 'SAFIR', 'safir.exe'))
         self.ui.p2_in_n_mp.setText('2')
         self.ui.p2_in_timeout.setText('1800')
 

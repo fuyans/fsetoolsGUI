@@ -24,6 +24,7 @@ class App(AppBaseClass):
         super().__init__(parent, post_stats, ui=AppBaseClassUISimplified01)
 
         self.__progress_bar = ProgressBar('Progress', parent=self)
+        self.activated_dialogs.append(self.__progress_bar)
 
         # ================
         # instantiation ui
