@@ -15,7 +15,7 @@ from fsetoolsGUI.gui.logic.c0406_tra_2d_xy_contour import App as App0406
 from fsetoolsGUI.gui.logic.c0407_tra_enclosure import App as App0407
 from fsetoolsGUI.gui.logic.c0601_naming_convention import App as App0601
 from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
-from fsetoolsGUI.gui.logic.c0611_parametric_fire import App as App0611
+from fsetoolsGUI.gui.logic.c0611_ec_parametric_fire import App as App0611
 from fsetoolsGUI.gui.logic.c0620_probability_distribution import App as App0620
 from fsetoolsGUI.gui.logic.c0630_safir_batch_run import App as App0630
 from fsetoolsGUI.gui.logic.c0701_aws_s3_uploader import App as App0701
