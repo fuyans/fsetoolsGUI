@@ -25,7 +25,9 @@ from fsetoolsGUI.gui.logic.c0407_tra_enclosure import App as App0407
 from fsetoolsGUI.gui.logic.c0411_ec_external_flame import App as App0411
 from fsetoolsGUI.gui.logic.c0601_naming_convention import App as App0601
 from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
-from fsetoolsGUI.gui.logic.c0611_parametric_fire import App as App0611
+from fsetoolsGUI.gui.logic.c0610_travelling_fire import App as App0610
+from fsetoolsGUI.gui.logic.c0611_ec_parametric_fire import App as App0611
+from fsetoolsGUI.gui.logic.c0612_ec_protected_steel_heat_transfer import App as App0612
 from fsetoolsGUI.gui.logic.c0620_probability_distribution import App as App0620
 from fsetoolsGUI.gui.logic.c0630_safir_batch_run import App as App0630
 from fsetoolsGUI.gui.logic.c0640_sfeprapy_mcs0 import App as App0640
@@ -58,7 +60,9 @@ class AppsCollection:
         '0411': App0411,
         '0601': App0601,
         '0602': App0602,
+        '0610': App0610,
         '0611': App0611,
+        '0612': App0612,
         '0620': App0620,
         '0630': App0630,
         '0640': App0640,
