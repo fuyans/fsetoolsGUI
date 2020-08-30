@@ -1,14 +1,15 @@
 import os
-# import seaborn as sns
 import threading
 from os.path import join
 
+import matplotlib
 import numpy as np
 import pandas as pd
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QGridLayout, QLabel
 from tqdm import tqdm
 
+from fsetoolsGUI import logger
 from fsetoolsGUI.etc.sfeprapy_post_processor import lineplot, lineplot_matrix
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.logic.c0000_utilities import Counter, ProgressBar
@@ -137,6 +138,8 @@ class App(AppBaseClass):
             figure_xstep: float,
             figure_legend_cols: int,
             qt_progress_signal_0=None, qt_progress_signal_1=None):
+
+        matplotlib.use('agg')  # this method will be called in a thread, no GUI allowed for matplotlib
         os.chdir(os.path.dirname(fp_mcs_output_dir))
 
         if qt_progress_signal_0:
@@ -187,9 +190,13 @@ class App(AppBaseClass):
 
         # Calculate design failure probability due to fire for individual compartments
         dict_P = dict()
-        for k, teq_cdf in dict_teq_cdf.items():
-            dict_P[k] = np.product([df_input.loc[i][k] for i in ['p1', 'p2', 'p3', 'p4', 'representative_floor_area']])
-        # assert sum(dict_P.values()) == 1
+        try:
+            assert all([i in df_input.columns for i in ['p1', 'p2', 'p3', 'p4', 'representative_floor_area']])
+            for k, teq_cdf in dict_teq_cdf.items():
+                dict_P[k] = np.product([df_input.loc[i][k] for i in ['p1', 'p2', 'p3', 'p4', 'representative_floor_area']])
+        except AssertionError:
+            dict_P = {k: 1 for k in dict_teq_cdf.keys()}
+            logger.warning('Failed to parse p1, p2, p3, p4 and representative_floor_area, they are not defined in the input file, a unity is assigned')
 
         dict_P_r_fi_i_weighted = {key: time_equivalence * (dict_P[key] / sum(dict_P.values())) for key, time_equivalence in dict_teq_cdf.items()}
         dict_P_f_d_i = {key: (1 - teq) * dict_P[key] for key, teq in dict_teq_cdf.items()}
@@ -260,7 +267,7 @@ class App(AppBaseClass):
             xlim=(figure_xmin, figure_xmax),
             xlim_step=figure_xstep,
         )
-        fig.savefig('3-P_f_fi_i.png', dpi=300, bbox_inches='tight')
+        fig.savefig('3-P_f_fi_i.png', dpi=300, bbox_inches='tight', transparent=True)
 
         if qt_progress_signal_0:
             qt_progress_signal_0.emit(25 + 15 + 15 + 15)

@@ -79,10 +79,12 @@ class App(QtWidgets.QMainWindow):
         self.ui.refresh.clicked.connect(self.refresh_figure)
         self.ui.save_figure.clicked.connect(self.save_figure)
 
+        self.resize(400, 300)
+
         self.figure.tight_layout()
         self.figure.canvas.draw()
         self.repaint()
-        self.adjustSize()
+        # self.adjustSize()
 
     def add_subplots(self, *args, **kwargs) -> plt.Axes:
         ax = self.figure.add_subplot(*args, **kwargs)

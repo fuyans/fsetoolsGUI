@@ -281,6 +281,7 @@ class App(AppBaseClass):
             header_col=['time [s]', 'temperature [K]'],
             window_title='Parametric fire numerical results',
         )
+        self.activated_dialogs.append(self.__Table)
 
         self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
         self.__Table.TableView.resizeColumnsToContents()
@@ -295,6 +296,7 @@ class App(AppBaseClass):
         if self.__Figure is None:
             self.__Figure = PlotApp(self, title='Parametric fire plot')
             self.__Figure_ax = self.__Figure.add_subplots()
+            self.activated_dialogs.append(self.__Figure)
         else:
             self.__Figure_ax.clear()
 
