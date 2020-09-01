@@ -257,8 +257,10 @@ class AppBaseClass(QtWidgets.QMainWindow):
             self,
             grid: QGridLayout,
             row: Union[int, Counter],
-            name: str, description: str,
-            unit: str, min_width: int = 50,
+            name: str,
+            description: str,
+            unit: str = None,
+            min_width: int = 50,
             label_obj: str = 'QLabel',
             col: int = 0,
             unit_obj: str = 'QLabel',
@@ -270,19 +272,21 @@ class AppBaseClass(QtWidgets.QMainWindow):
         # instantiate objects: label, input box, unit label
         setattr(self.ui, f'{name}_label', getattr(QtWidgets, label_obj)(description))
         setattr(self.ui, f'{name}', getattr(QtWidgets, obj)())
-        setattr(self.ui, f'{name}_unit', getattr(QtWidgets, unit_obj)(unit))
+        if unit:
+            setattr(self.ui, f'{name}_unit', getattr(QtWidgets, unit_obj)(unit))
 
         # formatting
         getattr(self.ui, f'{name}').setMinimumWidth(min_width)
         if label_obj == 'QPushButton':
             getattr(self.ui, f'{name}_label').setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
-        if unit_obj == 'QPushButton':
+        if unit_obj == 'QPushButton' and unit:
             getattr(self.ui, f'{name}_unit').setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
 
         # add the created objects to the grid
         grid.addWidget(getattr(self.ui, f'{name}_label'), row, col, 1, 1)
         grid.addWidget(getattr(self.ui, f'{name}'), row, col + 1, 1, 1)
-        grid.addWidget(getattr(self.ui, f'{name}_unit'), row, col + 2, 1, 1)
+        if unit:
+            grid.addWidget(getattr(self.ui, f'{name}_unit'), row, col + 2, 1, 1)
 
     @property
     def activated_dialogs(self):
