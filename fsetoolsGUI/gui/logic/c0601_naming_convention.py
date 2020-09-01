@@ -2,9 +2,10 @@ import re
 from datetime import datetime
 
 from PySide2 import QtGui
+from PySide2.QtWidgets import QGridLayout, QLabel, QCheckBox
 
-from fsetoolsGUI.gui.layout.i0601_naming_convention import Ui_MainWindow
-from fsetoolsGUI.gui.logic.c0000_app_template_old import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
+from fsetoolsGUI.gui.logic.c0000_utilities import Counter
 
 
 class App(AppBaseClass):
@@ -16,46 +17,106 @@ class App(AppBaseClass):
     __re_project_stage = re.compile(r'.+')
     __re_project_title = re.compile(r'.+')
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, post_stats: bool = True):
         # init
-        super().__init__(parent=parent)
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
-        self.init()
+        super().__init__(parent=parent, post_stats=post_stats, ui=AppBaseClassUISimplified01)
 
-        self.ui.lineEdit_1_date.setToolTip('In format YYMMDD (e.g. 210131) or YYYYMMDD (e.g. 20210131)')
-        self.ui.lineEdit_5_title.setToolTip('In plain English')
-        self.ui.lineEdit_out_result.setReadOnly(True)
-        self.ui.lineEdit_out_result.setToolTip('Double click to select text')
+        # ==============
+        # Instantiate UI
+        # ==============
+        c = Counter()
+        self.ui.p2_layout = QGridLayout(self.ui.page_2)
+        self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
 
-        # default values
-        self.ui.comboBox_6_type.setCurrentIndex(4)
-        self.ui.checkBox_replace_spaces.setChecked(True)
-        self.ui.lineEdit_1_date.setText(datetime.today().strftime('%Y%m%d')[2:])
-        self.ui.lineEdit_3_project_no.setText(None)
-        self.ui.lineEdit_4_project_stage.setText(None)
-        self.ui.lineEdit_5_title.setText(None)
+        self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_date', 'Date', None, 180)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_revision', 'Revision', None, obj='QComboBox')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_project_no', 'Project no.', None)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_project_stage', 'Project stage', None)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_title', 'Document title', None)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_type', 'Document type', None, obj='QComboBox')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_security_status', 'Security status', None, obj='QComboBox')
 
-        # placeholder texts
-        self.ui.lineEdit_3_project_no.setPlaceholderText('XX00001')
-        self.ui.lineEdit_4_project_stage.setPlaceholderText('Stage 3')
-        self.ui.lineEdit_5_title.setPlaceholderText('Fire safety strategy')
+        self.ui.p2_in_revision.addItems([
+            "Q00: First issue for internal review",
+            "Q01: Reviewer's comments",
+            "Q02: Authoriser's comments",
+            "D00: First issue to others for comment",
+            "D01: Sub-sequent external reviews",
+            "R00: First issue",
+            "R01: Second issue",
+        ])
+        self.ui.p2_in_type.addItems([
+            "GA: General admin",
+            "MD: Marketing",
+            "FP: Fee proposal",
+            "LT: Letter",
+            "DN: Design note",
+            "OF: Outline strategy",
+            "DF: Detailed strategy",
+            "RF: Retrospective strategy",
+            "FA: Fire risk assessment",
+            "FS: Fire survey report",
+            "FN: File note",
+            "MN: Meeting notes",
+            "CS: Calculation sheet",
+            "SK: Sketch",
+            "DW: Drawing",
+            "XO: Expert opinion",
+        ])
+        self.ui.p2_in_security_status.addItems([
+            "CIC: Commercial in confidence",
+            "WPC: Without prejudice and confidential",
+            "SDS: Secure document",
+            "FID: Free issue document (no security status)",
+        ])
 
-        # signal and slots
-        self.ui.lineEdit_1_date.textChanged.connect(self.calculate)
-        self.ui.comboBox_2_revision.currentTextChanged.connect(self.calculate)
-        self.ui.lineEdit_3_project_no.textChanged.connect(self.calculate)
-        self.ui.lineEdit_4_project_stage.textChanged.connect(self.calculate)
-        self.ui.lineEdit_5_title.textChanged.connect(self.calculate)
-        self.ui.comboBox_6_type.currentTextChanged.connect(self.calculate)
-        self.ui.comboBox_7_security_status.currentTextChanged.connect(self.calculate)
-        self.ui.checkBox_replace_spaces.stateChanged.connect(self.calculate)
-        self.ui.pushButton_ok.clicked.connect(self.copy_file_name)
+        self.ui.p2_layout.addWidget(QLabel('<b>Options</b>'), c.count, 0, 1, 3)
+        self.ui.p2_in_replace_spaces = QCheckBox('Replace spaces with underscore')
+        self.ui.p2_layout.addWidget(self.ui.p2_in_replace_spaces, c.count, 0, 1, 3)
+
+        self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), c.count, 0, 1, 3)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_out_result', 'File name', None)
+
+        self.ui.p3_example.setHidden(True)
+        self.ui.p2_in_date.setToolTip('In format YYMMDD (e.g. 210131) or YYYYMMDD (e.g. 20210131)')
+        self.ui.p2_in_title.setToolTip('In plain English')
+        self.ui.p2_out_result.setReadOnly(True)
+        self.ui.p2_out_result.setToolTip('Double click to select text')
+
+        # ==================
+        # Set default values
+        # ==================
+        self.ui.p2_in_type.setCurrentIndex(4)
+        self.ui.p2_in_replace_spaces.setChecked(True)
+        self.ui.p2_in_date.setText(datetime.today().strftime('%Y%m%d')[2:])
+        self.ui.p2_in_project_no.setText(None)
+        self.ui.p2_in_project_stage.setText(None)
+        self.ui.p2_in_title.setText(None)
+
+        # =====================
+        # Set placeholder texts
+        # =====================
+        # self.ui.p2_in_revision.setPlaceholderText('Q00')
+        self.ui.p2_in_project_no.setPlaceholderText('XX00001')
+        self.ui.p2_in_project_stage.setPlaceholderText('WP1')
+        self.ui.p2_in_title.setPlaceholderText('Detailed Strategy')
+
+        # =====================
+        # Set signals and slots
+        # =====================
+        self.ui.p2_in_date.textChanged.connect(self.calculate)
+        self.ui.p2_in_revision.currentTextChanged.connect(self.calculate)
+        self.ui.p2_in_project_no.textChanged.connect(self.calculate)
+        self.ui.p2_in_project_stage.textChanged.connect(self.calculate)
+        self.ui.p2_in_title.textChanged.connect(self.calculate)
+        self.ui.p2_in_type.currentTextChanged.connect(self.calculate)
+        self.ui.p2_in_security_status.currentTextChanged.connect(self.calculate)
+        self.ui.p2_in_replace_spaces.stateChanged.connect(self.calculate)
 
         # clean up
-        self.calculate()  # make file name, do not leave the output slot empty
-        self.ui.pushButton_ok.setText('Copy')
-        self.ui.pushButton_ok.setToolTip('Click (or press Enter) to copy the generated file name')
+        # self.calculate()  # make file name, do not leave the output slot empty
+        self.ui.p3_submit.setText('Copy')
         self.repaint()
 
     @property
@@ -64,13 +125,13 @@ class App(AppBaseClass):
         # ====================
         # parse values from ui
         # ====================
-        date = self.ui.lineEdit_1_date.text()
-        revision = self.ui.comboBox_2_revision.currentText()[0:3]  # obtain the first three letters/digits, i.e. D00
-        project_no = self.ui.lineEdit_3_project_no.text().upper()  # capitalise office designation letters
-        project_stage = self.ui.lineEdit_4_project_stage.text()
-        title = self.ui.lineEdit_5_title.text()
-        type = self.ui.comboBox_6_type.currentText()[0:2]
-        security_status = self.ui.comboBox_7_security_status.currentText()[0:3]
+        date = self.ui.p2_in_date.text()
+        revision = self.ui.p2_in_revision.currentText()[0:3]  # obtain the first three letters/digits, i.e. D00
+        project_no = self.ui.p2_in_project_no.text().upper()  # capitalise office designation letters
+        project_stage = self.ui.p2_in_project_stage.text()
+        title = self.ui.p2_in_title.text()
+        type = self.ui.p2_in_type.currentText()[0:2]
+        security_status = self.ui.p2_in_security_status.currentText()[0:3]
 
         # =====================
         # validate input values
@@ -89,6 +150,7 @@ class App(AppBaseClass):
 
     def ok(self):
         self.calculate()
+        self.copy_file_name()
 
     def calculate(self):
 
@@ -116,7 +178,7 @@ class App(AppBaseClass):
         # make file name
         # ==============
         file_name = '-'.join([date, revision, project_no, project_stage, title, type, security_status])
-        if self.ui.checkBox_replace_spaces.isChecked():
+        if self.ui.p2_in_replace_spaces.isChecked():
             file_name = file_name.replace(' ', '_')
         output_parameters = dict(file_name=file_name)
 
@@ -128,10 +190,13 @@ class App(AppBaseClass):
         except Exception as e:
             self.statusBar().showMessage(f'{e}')
 
-        self.ui.lineEdit_out_result.selectAll()
+        self.ui.p2_out_result.selectAll()
         self.ui.statusbar.showMessage('File name is copied.')
 
         self.repaint()
+
+    def example(self):
+        pass
 
     @property
     def output_parameters(self):
@@ -144,28 +209,21 @@ class App(AppBaseClass):
         except KeyError:
             raise KeyError('Not enough output parameters provided to self.output_parameters')
 
-        self.ui.lineEdit_out_result.setText(file_name)
+        self.ui.p2_out_result.setText(file_name)
 
     def copy_file_name(self):
         clipboard = QtGui.QGuiApplication.clipboard()
-        clipboard.setText(self.ui.lineEdit_out_result.text())
-        self.ui.lineEdit_out_result.selectAll()
+        clipboard.setText(self.ui.p2_out_result.text())
+        self.ui.p2_out_result.selectAll()
 
         self.ui.statusbar.showMessage('File name is copied.')
 
 
 if __name__ == "__main__":
-    from PySide2 import QtWidgets, QtCore
-    import PySide2
+    from PySide2 import QtWidgets
     import sys
 
-    if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
-        PySide2.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-
-    if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
-        PySide2.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
-
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App()
+    app = App(post_stats=False)
     app.show()
     qapp.exec_()
