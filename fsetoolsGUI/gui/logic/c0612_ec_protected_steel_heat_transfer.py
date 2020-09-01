@@ -3,7 +3,7 @@ from collections import OrderedDict
 import numpy as np
 from PySide2 import QtCore
 from PySide2.QtWidgets import QGridLayout, QLabel
-from fsetools.lib.heat_transfer_protected_steel_ec import protected_steel_eurocode
+from fsetools.lib.fse_bs_en_1993_1_2_heat_transfer_c import protected_steel_eurocode
 from sfeprapy.mcs0.mcs0_calc import solve_time_equivalence
 
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
@@ -173,7 +173,7 @@ class App(AppBaseClass):
         return dict(
             time=fire_time,
             fire_temperature=fire_temperature,
-            steel_temperature=steel_temperature,
+            steel_temperature=np.array(steel_temperature),
             steel_max_temperature=np.amax(steel_temperature),
             steel_max_temperature_time=fire_time[np.argmax(steel_temperature)],
             time_equivalence=time_equivalence,
@@ -241,7 +241,6 @@ class App(AppBaseClass):
 
         output_parameters = self.output_parameters
 
-        # print results (for console enabled version only)
         ijk = zip(output_parameters['time'], output_parameters['fire_temperature'] - 273.15, output_parameters['steel_temperature'] - 273.15)
         list_content = [[float(i), float(j), float(k)] for i, j, k in ijk]
 
@@ -256,7 +255,7 @@ class App(AppBaseClass):
             parent=self,
             window_geometry=win_geo,
             data_list=list_content,
-            header_col=['Time [s]', 'Fire temperature [K]', 'Steep temperature [K]'],
+            header_col=['Time [°C]', 'Fire temperature [°C]', 'Steep temperature [°C]'],
             window_title='Steel temperature',
         )
 

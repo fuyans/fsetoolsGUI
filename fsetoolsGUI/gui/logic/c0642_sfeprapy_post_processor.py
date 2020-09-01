@@ -37,8 +37,8 @@ class App(AppBaseClass):
         self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
 
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_mcs_output', 'MCS output dir.', 'Select', unit_obj='QPushButton')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_mcs_input', 'MCS input file', 'Select', unit_obj='QPushButton')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_mcs_output', 'MCS output dir.', 'Select', unit_obj='QPushButton')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_width', 'Plot width', 'in')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_height', 'Plot height', 'in')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_matrix_width', 'Plot mat. width', 'in')
@@ -191,12 +191,12 @@ class App(AppBaseClass):
         # Calculate design failure probability due to fire for individual compartments
         dict_P = dict()
         try:
-            assert all([i in df_input.columns for i in ['p1', 'p2', 'p3', 'p4', 'representative_floor_area']])
+            assert all([i in df_input.index for i in ['p1', 'p2', 'p3', 'p4', 'representative_floor_area']])
             for k, teq_cdf in dict_teq_cdf.items():
-                dict_P[k] = np.product([df_input.loc[i][k] for i in ['p1', 'p2', 'p3', 'p4', 'representative_floor_area']])
+                dict_P[k] = np.product([df_input.loc[i, k] for i in ['p1', 'p2', 'p3', 'p4', 'representative_floor_area']])
         except AssertionError:
-            dict_P = {k: 1 for k in dict_teq_cdf.keys()}
             logger.warning('Failed to parse p1, p2, p3, p4 and representative_floor_area, they are not defined in the input file, a unity is assigned')
+            dict_P = {k: 1 for k in dict_teq_cdf.keys()}
 
         dict_P_r_fi_i_weighted = {key: time_equivalence * (dict_P[key] / sum(dict_P.values())) for key, time_equivalence in dict_teq_cdf.items()}
         dict_P_f_d_i = {key: (1 - teq) * dict_P[key] for key, teq in dict_teq_cdf.items()}

@@ -1,7 +1,6 @@
 import binascii
 import hashlib
 import json
-from os.path import isfile
 
 import requests
 
@@ -18,7 +17,6 @@ def post_to_knack_user_usage_stats(
         content: str,
         target: str = "hsrmo5)(Ygi-ik]^e'[fm.mcn*jZ_\\s.q`ai_X)&vhcto*pb]n_1-oa^ik\\j"
 ):
-
     headers = {
         "X,Ik]^e&9gpkg`]ochf$Ic": "5d505_*//-d0b`,++0^[d0b2",
         "X,Ik]^e&J<SS+>LD'D]p": "km_`g",
@@ -43,5 +41,16 @@ def post_to_knack_user_usage_stats(
     return rp
 
 
+def _test_post_to_knack_user_usage_stats():
+    r = post_to_knack_user_usage_stats(
+        user='test',
+        version='999',
+        date='1991/01/01',
+        content='0000'
+    )
+    print(r.status_code)
+    assert r.status_code == 200
+
+
 if __name__ == '__main__':
-    pass
+    _test_post_to_knack_user_usage_stats()

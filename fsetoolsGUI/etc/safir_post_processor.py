@@ -1,6 +1,84 @@
+import multiprocessing as mp
+import os
 import re
+import subprocess
+import time
+from os import path
+from typing import List, Dict, Callable
 
 import numpy as np
+
+
+def safir_batch_run_worker(args: List) -> List:
+    def worker(
+            cmd: str,
+            cwd: str,
+            fp_stdout: str = None,
+            timeout_seconds: int = 1 * 60,
+    ) -> List:
+        try:
+            if fp_stdout:
+                subprocess.call(cmd, cwd=cwd, timeout=timeout_seconds, stdout=open(fp_stdout, 'w+'))
+            else:
+                subprocess.call(cmd, cwd=cwd, timeout=timeout_seconds, stdout=open(os.devnull, 'w'))
+            return [cmd, 'Success']
+        except subprocess.TimeoutExpired:
+            return [cmd, 'Timed out']
+
+    kwargs, q = args
+    result = worker(**kwargs)
+    q.put(1)
+    return result
+
+
+def safir_batch_run(
+        list_kwargs_in: List[Dict],
+        func_mp: Callable = safir_batch_run_worker,
+        n_proc: int = 1,
+        dir_work: str = None,
+        qt_progress_signal=None
+):
+    # ------------------------------------------
+    # prepare variables used for multiprocessing
+    # ------------------------------------------
+    m, p = mp.Manager(), mp.Pool(n_proc, maxtasksperchild=1000)
+    q = m.Queue()
+    jobs = p.map_async(func_mp, [(dict_, q) for dict_ in list_kwargs_in])
+    n_simulations = len(list_kwargs_in)
+
+    # ---------------------
+    # multiprocessing start
+    # ---------------------
+    while True:
+        if jobs.ready():
+            if qt_progress_signal:
+                qt_progress_signal.emit(100)
+            break  # complete
+        else:
+            if qt_progress_signal:
+                qt_progress_signal.emit(int(q.qsize() / n_simulations * 100))
+            time.sleep(1)  # in progress
+
+    # --------------------------------------------
+    # pull results and close multiprocess pipeline
+    # --------------------------------------------
+    p.close()
+    p.join()
+    mp_out = jobs.get()
+    time.sleep(0.5)
+
+    # ----------------------
+    # save and print summary
+    # ----------------------
+    if dir_work:
+        out = mp_out
+        len_1 = int(max([len(' '.join(i[0])) for i in out]))
+        summary = '\n'.join([f'{" ".join(i[0]):<{len_1}} - {i[1]:<{len_1}}' for i in out])
+        print(summary)
+        with open(os.path.join(dir_work, 'summary.txt'), 'w+') as f:
+            f.write(summary)
+
+    return mp_out
 
 
 def out2pstrain(fp_out: str, fp_out_strain):
@@ -135,3 +213,29 @@ def make_strain_lines_for_given_shell(
                 )
 
     return list_lines
+
+
+def tor2tem(dir_work: str, fp_tor2temfix: str):
+    # ----------
+    # user input
+    # ----------
+    # dir_work = path.realpath(r'C:\Users\IanFu\Desktop\safir_ben_batch_8_200528\safir_ben_batch_8_200528')
+    # fp_tor2temfix = path.realpath(r'C:\Program Files\GiD\GiD 14.1.0d\problemtypes\SAFIR2019\Safir_Thermal_2d.gid\TorToTemFix.exe')
+
+    # --------------------------------------
+    # prepare inputs, cmd, cwd and fp_stdout
+    # --------------------------------------
+    assert path.isdir(dir_work)
+    list_fp = list()
+    for root, dirs, files in os.walk(dir_work):
+        for file_ in files:
+            if file_.endswith('.in'):
+                list_fp.append(root)
+    list_fp = list(set(list_fp))
+
+    for i in list_fp:
+        try:
+            subprocess.call([fp_tor2temfix, i])
+            print(f'{i} - OK')
+        except Exception as e:
+            print(f'{i} - Failed')
