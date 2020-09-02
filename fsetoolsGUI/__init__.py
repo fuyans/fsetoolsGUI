@@ -17,7 +17,7 @@ else:
 
 
 # setup logger
-def get_logger():
+def __get_logger():
     logger_ = logging.getLogger('gui')
 
     f_handler = logging.FileHandler(os.path.join(os.path.expanduser('~'), 'fsetoolsgui.log'))
@@ -35,7 +35,7 @@ def get_logger():
     return logger_
 
 
-logger = get_logger()
+logger = __get_logger()
 
 """
 VERSION IDENTIFICATION RULES DOCUMENTED IN PEP 440.
