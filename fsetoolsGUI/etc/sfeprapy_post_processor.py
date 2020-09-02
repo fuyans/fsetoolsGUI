@@ -47,6 +47,7 @@ def lineplot(
         ax.text(15, acceptable_reliability, f'{acceptable_reliability:.3f}', ha='left', va='bottom')
 
     # Update plot settings
+    ax.grid(which='major', linestyle=':', linewidth='0.5', color='black')
     if len(legend_labels) > 1:
         if legend_no_overlap:
             ax.legend(
