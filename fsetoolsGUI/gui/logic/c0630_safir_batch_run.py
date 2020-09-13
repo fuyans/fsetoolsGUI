@@ -4,8 +4,9 @@ from os import path
 
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtWidgets import QLabel, QGridLayout, QFileDialog
-from fsetools.etc.safir import safir_batch_run
 
+from fsetoolsGUI import logger
+from fsetoolsGUI.etc.safir import safir_batch_run
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.logic.c0000_utilities import Counter, ProgressBar
 
@@ -55,6 +56,10 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_input_root_dir', 'Input files root dir.', 'Select', 0, unit_obj='QPushButton')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_safir_exe', 'Safir exe file path', 'Select', 150, unit_obj='QPushButton')
+        _ = QLabel('There is an error SAFIR 2019 and later does not run torsion inputs, this program will automatically switch back to SAFIR 2016.c.0 and make sure this version '
+                   '`safir2016c0.exe` is available at the above selected folder.')
+        _.setWordWrap(True)
+        self.ui.p2_layout.addWidget(_, c.count, 0, 1, 3)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_n_mp', 'No. of processes', 'Integer')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_timeout', 'timeout', 's')
 
@@ -75,7 +80,7 @@ class App(AppBaseClass):
         self.calculate(**self.input_parameters)
 
     @staticmethod
-    def calculate(fp_safir_exe, fp_input_root_dir, timeout, n_mp, qt_progress_signal=None):
+    def calculate(fp_safir_exe, fp_input_root_dir, timeout, n_mp, qt_progress_signal=None, qt_progress_signal_label=None):
         list_fp_in = list()
         for root, dirs, files in os.walk(fp_input_root_dir):
             for file_ in files:
@@ -84,8 +89,17 @@ class App(AppBaseClass):
 
         list_kwargs_in = list()
         for i in list_fp_in:
+            with open(i, 'r') as f:
+                in_script = f.read()
+
+            if 'TORSION' in in_script:
+                logger.warning(f'Torsional analysis input file identified {i}')
+                fp_safir_exe_ = os.path.realpath(os.path.join(os.path.dirname(fp_safir_exe), 'safir2016c0.exe'))
+            else:
+                fp_safir_exe_ = fp_safir_exe
+
             list_kwargs_in.append(dict(
-                cmd=[fp_safir_exe, path.basename(i).replace('.in', '')],
+                cmd=[fp_safir_exe_, path.basename(i).replace('.in', '')],
                 cwd=path.dirname(i),
                 fp_stdout=path.join(path.dirname(i), path.basename(i).replace('.in', '.stdout.txt')),
                 timeout_seconds=timeout,
@@ -95,7 +109,8 @@ class App(AppBaseClass):
             list_kwargs_in=list_kwargs_in,
             n_proc=n_mp,
             dir_work=fp_input_root_dir,
-            qt_progress_signal=qt_progress_signal
+            qt_progress_signal=qt_progress_signal,
+            qt_progress_signal_label=qt_progress_signal_label,
         )
         t = threading.Thread(target=safir_batch_run, kwargs=kwargs)
         t.start()
@@ -113,7 +128,8 @@ class App(AppBaseClass):
             n_mp=str2int(self.ui.p2_in_n_mp.text()) if str2int(self.ui.p2_in_n_mp.text()) else 2,
             timeout=str2int(self.ui.p2_in_timeout.text()) if str2int(self.ui.p2_in_n_mp.text()) else 1800,
             fp_input_root_dir=self.ui.p2_in_fp_input_root_dir.text(),
-            qt_progress_signal=self.__progress_bar.Signals.progress
+            qt_progress_signal=self.__progress_bar.Signals.progress,
+            qt_progress_signal_label=self.__progress_bar.Signals.progress_label
         )
 
     @property
@@ -132,6 +148,4 @@ if __name__ == "__main__":
     qapp = QtWidgets.QApplication(sys.argv)
     app = App()
     app.show()
-    # app2 = ProgressBar('Progress bar')
-    # app2.show()
     qapp.exec_()

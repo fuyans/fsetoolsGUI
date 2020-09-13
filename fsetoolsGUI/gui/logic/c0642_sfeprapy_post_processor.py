@@ -60,10 +60,10 @@ class App(AppBaseClass):
         self.ui.p2_in_figure_matrix_height.setText('1.2')
         self.ui.p2_in_figure_matrix_width.setText('1.2')
         self.ui.p2_in_figure_matrix_cols.setText('9')
-        self.ui.p2_in_figure_xmin.setText('15')
+        self.ui.p2_in_figure_xmin.setText('0')
         self.ui.p2_in_figure_xmax.setText('180')
-        self.ui.p2_in_figure_xstep.setText('15')
-        self.ui.p2_in_figure_legend_cols.setText('4')
+        self.ui.p2_in_figure_xstep.setText('30')
+        self.ui.p2_in_figure_legend_cols.setText('1')
 
         # =================
         # signals and slots

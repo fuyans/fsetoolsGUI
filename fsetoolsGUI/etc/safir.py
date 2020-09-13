@@ -9,7 +9,9 @@ from typing import List, Dict, Callable
 import numpy as np
 
 
-def safir_batch_run_worker(args: List) -> List:
+def safir_batch_run_worker(
+        args: List
+) -> List:
     def worker(
             cmd: str,
             cwd: str,
@@ -18,9 +20,9 @@ def safir_batch_run_worker(args: List) -> List:
     ) -> List:
         try:
             if fp_stdout:
-                subprocess.call(cmd, cwd=cwd, timeout=timeout_seconds, stdout=open(fp_stdout, 'w+'))
+                subprocess.call(cmd, cwd=cwd, timeout=timeout_seconds, stdout=open(fp_stdout, 'w+'), creationflags=0x08000000)
             else:
-                subprocess.call(cmd, cwd=cwd, timeout=timeout_seconds, stdout=open(os.devnull, 'w'))
+                subprocess.call(cmd, cwd=cwd, timeout=timeout_seconds, stdout=open(os.devnull, 'w'), creationflags=0x08000000)
             return [cmd, 'Success']
         except subprocess.TimeoutExpired:
             return [cmd, 'Timed out']
@@ -36,7 +38,8 @@ def safir_batch_run(
         func_mp: Callable = safir_batch_run_worker,
         n_proc: int = 1,
         dir_work: str = None,
-        qt_progress_signal=None
+        qt_progress_signal=None,
+        qt_progress_signal_label=None,
 ):
     # ------------------------------------------
     # prepare variables used for multiprocessing
@@ -53,10 +56,14 @@ def safir_batch_run(
         if jobs.ready():
             if qt_progress_signal:
                 qt_progress_signal.emit(100)
+            if qt_progress_signal_label:
+                qt_progress_signal_label.emit(f'{len(list_kwargs_in)}/{len(list_kwargs_in)}')
             break  # complete
         else:
             if qt_progress_signal:
                 qt_progress_signal.emit(int(q.qsize() / n_simulations * 100))
+            if qt_progress_signal_label:
+                qt_progress_signal_label.emit(f'{q.qsize()}/{len(list_kwargs_in)}')
             time.sleep(1)  # in progress
 
     # --------------------------------------------
@@ -71,9 +78,10 @@ def safir_batch_run(
     # save and print summary
     # ----------------------
     if dir_work:
-        out = mp_out
-        len_1 = int(max([len(' '.join(i[0])) for i in out]))
-        summary = '\n'.join([f'{" ".join(i[0]):<{len_1}} - {i[1]:<{len_1}}' for i in out])
+        len_0 = int(max([len(i[0][0]) for i in mp_out]))
+        len_1 = int(max([len(i[0][1]) for i in mp_out]))
+        len_2 = int(max([len(i[1]) for i in mp_out]))
+        summary = '\n'.join([f'{i[0][0]:<{len_0}} {i[0][1]:<{len_1}} ({i[1]:<{len_2}})' for i in mp_out])
         print(summary)
         with open(os.path.join(dir_work, 'summary.txt'), 'w+') as f:
             f.write(summary)
@@ -81,7 +89,10 @@ def safir_batch_run(
     return mp_out
 
 
-def out2pstrain(fp_out: str, fp_out_strain):
+def out2pstrain(
+        fp_out: str,
+        fp_out_strain
+):
     """Convert Safir *.out file to a processed output file `fp_out_strain` containing strain data only."""
     count = 0
     with open(fp_out, 'r') as f, open(fp_out_strain, 'w+') as f_out_p1:
@@ -98,7 +109,9 @@ def out2pstrain(fp_out: str, fp_out_strain):
                 break
 
 
-def pstrain2dict(fp: str) -> dict:
+def pstrain2dict(
+        fp: str
+) -> dict:
     """Extract strain data from Safir *.out or processed output file containing strain data only and store in a dict.
     The resulting dict data structure:
     {
@@ -168,7 +181,15 @@ def pstrain2dict(fp: str) -> dict:
     )
 
 
-def save_csv(fp: str, list_time, list_shell, list_surf, list_rebar, list_strain, list_strain2):
+def save_csv(
+        fp: str,
+        list_time,
+        list_shell,
+        list_surf,
+        list_rebar,
+        list_strain,
+        list_strain2
+):
     data = zip(list_time, list_shell, list_surf, list_rebar, list_strain, list_strain2)
     data_list = [[j for j in i] for i in data]
     data_arr = np.array(data_list, dtype=float)
@@ -215,7 +236,10 @@ def make_strain_lines_for_given_shell(
     return list_lines
 
 
-def tor2tem(dir_work: str, fp_tor2temfix: str):
+def tor2tem(
+        dir_work: str,
+        fp_tor2temfix: str
+):
     # ----------
     # user input
     # ----------
@@ -225,7 +249,6 @@ def tor2tem(dir_work: str, fp_tor2temfix: str):
     # --------------------------------------
     # prepare inputs, cmd, cwd and fp_stdout
     # --------------------------------------
-    assert path.isdir(dir_work)
     list_fp = list()
     for root, dirs, files in os.walk(dir_work):
         for file_ in files:
@@ -239,3 +262,36 @@ def tor2tem(dir_work: str, fp_tor2temfix: str):
             print(f'{i} - OK')
         except Exception as e:
             print(f'{i} - Failed')
+
+
+def pull_tems(dir_work: str):
+    fps = list()
+    for root, dirs, files in os.walk(dir_work):
+        for file_ in files:
+            if file_.endswith('.tem'):
+                fps.append(path.join(root, file_))
+    fps = list(set(fps))
+
+    for fp in fps:
+        dir_name = path.dirname(path.dirname(path.dirname(fp)))
+        folder_name = path.basename(path.dirname(path.dirname(fp))) + '_tem'
+        file_name = path.basename(fp)
+        fp_new = path.join(dir_name, folder_name, file_name)
+
+        try:
+            os.makedirs(path.join(dir_name, folder_name))
+        except FileExistsError:
+            pass
+
+        print(fp, fp_new)
+        with open(fp, 'r') as f:
+            tem = f.read()
+        with open(fp_new, 'w+') as f:
+            f.write(tem)
+
+
+if __name__ == '__main__':
+    dir_work_ = r'E:\projects_FSE\!1CW\WP4\WP4_2\01_analysis\delta-2'
+    # fp_tor2temfix_ = r'C:\Program Files\GiD\GiD 14.1.0d\problemtypes\SAFIR2019\Safir_Thermal_2d.gid\TorToTemFix.exe'
+    # tor2tem(dir_work_, fp_tor2temfix_)
+    pull_tems(dir_work_)
