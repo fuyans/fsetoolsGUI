@@ -3,7 +3,7 @@ from collections import OrderedDict
 import numpy as np
 from PySide2 import QtCore
 from PySide2.QtWidgets import QGridLayout, QLabel
-from fsetools.lib.fse_travelling_fire import fire_backup
+from fsetools.lib.fse_travelling_fire import temperature_si as fire_temperature_si
 
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.logic.c0000_utilities import Counter
@@ -72,19 +72,7 @@ class App(AppBaseClass):
         input_parameters.pop('fire_time_duration')
         input_parameters.pop('fire_time_step')
 
-        '''
-        t
-        fire_load_density_MJm2
-        fire_hrr_density_MWm2
-        room_length_m
-        room_width_m
-        
-        
-        
-        
-        '''
-
-        temperature = fire_backup(
+        temperature = fire_temperature_si(
             t=input_parameters['t'],
             T_0=293.15,
             q_fd=input_parameters['fire_load_density_MJm2'] * 1e6,
