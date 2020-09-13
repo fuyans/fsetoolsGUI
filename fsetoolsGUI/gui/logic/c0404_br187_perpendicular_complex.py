@@ -86,7 +86,7 @@ class App(BR187ComplexBaseClass):
         # UA_solved, solved permissible unprotected area
         # msg, a message to indicate calculation status if successful.
 
-        w, h = -w, -h
+        w, h = -w, -h  # todo: 1. remove this; and 2. update the figures
         # ui convention is that w is the horizontal separation between the receiver and emitter
         # but the calculation function treats w as the x value and emitter has a positive x
 
