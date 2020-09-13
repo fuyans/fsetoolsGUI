@@ -44,8 +44,8 @@ setuptools.setup(
     install_requires=requirements,
     include_package_data=True,
     entry_points={"console_scripts": ["fsetoolsGUI=fsetoolsGUI.cli.__main__:main"]},
-    ext_modules=[
-        setuptools.extension.Extension("fsetoolsGUI.test1", ["fsetoolsGUI/etc/helloworld.c"]),
-        # setuptools.extension.Extension("superfastexample", ["fsetoolsGUI/etc/msexample.cpp"])
-    ],
+    # ext_modules=[
+    #     # setuptools.extension.Extension("fsetoolsGUI.test1", ["fsetoolsGUI/etc/helloworld.c"]),
+    #     # setuptools.extension.Extension("superfastexample", ["fsetoolsGUI/etc/msexample.cpp"])
+    # ],
 )
