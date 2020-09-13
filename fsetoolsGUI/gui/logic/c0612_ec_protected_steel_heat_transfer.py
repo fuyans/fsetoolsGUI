@@ -3,7 +3,7 @@ from collections import OrderedDict
 import numpy as np
 from PySide2 import QtCore
 from PySide2.QtWidgets import QGridLayout, QLabel
-from fsetools.lib.fse_bs_en_1993_1_2_heat_transfer_c import protected_steel_eurocode
+from fsetools.lib.fse_bs_en_1993_1_2_heat_transfer_c import temperature as protected_steel_eurocode
 from sfeprapy.mcs0.mcs0_calc import solve_time_equivalence
 
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
@@ -25,6 +25,8 @@ class App(AppBaseClass):
         super().__init__(parent, post_stats, ui=AppBaseClassUISimplified01)
 
         self.__fire = [AppParametricFire(self, post_stats=False), AppTravellingFire(self, post_stats=False)]
+        for i in self.__fire:
+            self.activated_dialogs.append(i)
 
         self.input_symbols: OrderedDict = OrderedDict(
             beam_rho=['Steel density', 'kg/m<sup>3</sup>'],
@@ -258,6 +260,7 @@ class App(AppBaseClass):
             header_col=['Time [°C]', 'Fire temperature [°C]', 'Steep temperature [°C]'],
             window_title='Steel temperature',
         )
+        self.activated_dialogs.append(self.__Table)
 
         self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
         self.__Table.TableView.resizeColumnsToContents()
@@ -272,6 +275,7 @@ class App(AppBaseClass):
         if self.__Figure is None:
             self.__Figure = PlotApp(self, title='Steel temperature plot')
             self.__Figure_ax = self.__Figure.add_subplots()
+            self.activated_dialogs.append(self.__Figure)
         else:
             self.__Figure_ax.clear()
 

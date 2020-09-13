@@ -241,8 +241,15 @@ class AppBaseClass(QtWidgets.QMainWindow):
             self.statusBar().showMessage(f'{e}')
 
     def closeEvent(self, event):
-        if self.__about_dialog is not None:
+        try:
             self.__about_dialog.close()
+        except:
+            pass
+        for dialog in self.activated_dialogs:
+            try:
+                dialog.close()
+            except:
+                pass
         event.accept()
 
     def message_box(self, msg: str, title: str):
