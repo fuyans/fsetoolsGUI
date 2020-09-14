@@ -68,12 +68,17 @@ class App(AppBaseClass):
         # =================
         # signals and slots
         # =================
+        def fp_mcs_input():
+            fp_input = QtWidgets.QFileDialog.getOpenFileName(self, 'Select an input file', '', '(*.csv *.xlsx)')[0]
+            fp_input = os.path.realpath(fp_input)
+            dir_mcs_output = os.path.join(os.path.dirname(fp_input), 'mcs.out')
+            self.ui.p2_in_fp_mcs_input.setText(fp_input)
+            if os.path.exists(dir_mcs_output):
+                self.ui.p2_in_fp_mcs_output.setText(dir_mcs_output)
+        self.ui.p2_in_fp_mcs_input_unit.clicked.connect(fp_mcs_input)
+
         self.ui.p2_in_fp_mcs_output_unit.clicked.connect(
             lambda: self.ui.p2_in_fp_mcs_output.setText(QtWidgets.QFileDialog.getExistingDirectory(self, 'Select an input file', ''))
-        )
-
-        self.ui.p2_in_fp_mcs_input_unit.clicked.connect(
-            lambda: self.ui.p2_in_fp_mcs_input.setText(QtWidgets.QFileDialog.getOpenFileName(self, 'Select an input file', '', '(*.csv *.xlsx)')[0])
         )
 
     def example(self):
@@ -123,7 +128,12 @@ class App(AppBaseClass):
 
     def ok(self):
         self.__progress_bar.show()
-        threading.Thread(target=self.calculate, kwargs=self.input_parameters).start()
+        try:
+            threading.Thread(target=self.calculate, kwargs=self.input_parameters).start()
+        except Exception as e:
+            logger.error(f'Failed to post process data, {e}')
+            self.statusBar().showMessage(f'Failed to post process data, {e}', timeout=60)
+        self.statusBar().showMessage('Successfully post process data')
 
     @staticmethod
     def calculate(
@@ -158,22 +168,25 @@ class App(AppBaseClass):
         # load output data
         # ================
         fp_csvs = [join(root, f) for root, dirs, files in os.walk(fp_mcs_output_dir) for f in files if f.endswith('.csv')]
-        df_output = pd.concat([pd.read_csv(fp) for fp in tqdm(fp_csvs)])
-        df_output = df_output.loc[:, ~df_output.columns.str.contains('^Unnamed')]
+        df_output: pd.DataFrame = pd.concat([pd.read_csv(fp) for fp in tqdm(fp_csvs)])
+        df_output = df_output.loc[:, ~df_output.columns.str.contains('^Unnamed')]  # remove potential index column
+        df_output.dropna(subset=['solver_time_equivalence_solved'], inplace=True)  # get rid of iterations without convergence for time equivalence
 
         # =================
         # clean output data
         # =================
 
+        df_output.replace('', np.inf, inplace=True)
         s = df_output['solver_time_equivalence_solved']
         assert all(s.values != np.nan)  # make sure all values are numerical
         df_output.loc[df_output['solver_time_equivalence_solved'] == np.inf, 'solver_time_equivalence_solved'] = np.amax(s[s < np.inf])
         df_output.loc[df_output['solver_time_equivalence_solved'] == -np.inf, 'solver_time_equivalence_solved'] = np.amin(s[s > -np.inf])
+        df_output.loc[df_output['solver_time_equivalence_solved'] == np.nan, 'solver_time_equivalence_solved'] = np.inf
         df_output.loc[df_output['solver_time_equivalence_solved'] > 18000, 'solver_time_equivalence_solved'] = 18000.
         df_output['solver_time_equivalence_solved'] = df_output['solver_time_equivalence_solved'] / 60.  # Unit from second to minute
-        assert np.amax(df_output['solver_time_equivalence_solved'].values) != np.inf
-        assert np.amax(df_output['solver_time_equivalence_solved'].values) <= 18000. / 60
-        assert np.amin(df_output['solver_time_equivalence_solved'].values) != -np.inf
+        assert df_output['solver_time_equivalence_solved'].max() != np.inf
+        assert df_output['solver_time_equivalence_solved'].max() <= 300.
+        assert df_output['solver_time_equivalence_solved'].min() != -np.inf
 
         # =========================
         # prepare intermediate data
