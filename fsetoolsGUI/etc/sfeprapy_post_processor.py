@@ -150,35 +150,3 @@ def lineplot_matrix(
         fig.savefig(fp_figure, dpi=300, bbox_inches='tight')
 
     return fig, axes1
-
-
-def influence_factors():
-    # calcualte CCDF fractile for each curve
-    fire_rating_target = 120  # @param {type:"number"}
-    list_teq_for_fr_target = list()
-    for i, case_name_ in enumerate(list_case_name):
-        teq_cdf = dict_teq_cdf[case_name_]
-        teq_cdf_120 = np.max(teq_cdf[x <= fire_rating_target])
-        list_teq_for_fr_target.append(teq_cdf_120)
-
-    list_teq_for_fr_target = np.asarray(list_teq_for_fr_target)
-    print(list_teq_for_fr_target)
-
-    # build all data into a dict before saving
-    # influence_factor = (np.max(list_teq_for_fr_target)-list_teq_for_fr_target) * np.array(list_weight)
-    influence_factor = (1 - list_teq_for_fr_target) * np.array(list_weight)
-    influence_factor = influence_factor / np.linalg.norm(influence_factor)
-
-    dict_data_influence_factor = {
-        'case name': list_case_name,
-        'probability weight': list_weight,
-        f'fractile at {fire_rating_target:.0f} minutes fire resistance rating': list_teq_for_fr_target,
-        'influence factor': influence_factor
-    }
-
-    print(influence_factor)
-
-    df_influence = pd.DataFrame(data=dict_data_influence_factor)
-
-    # save influence factor numerical data
-    df_influence.to_csv(os.path.join(path_work_directory, 'mcs.out.influence.csv'))
