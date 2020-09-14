@@ -7,7 +7,6 @@ def filter_objects_by_name(
         object_parent_widget: QtWidgets.QWidget,
         object_types: list,
         names: list = None):
-
     list_objects = list()
     for i in object_types:
         for j in object_parent_widget.findChildren(i):
@@ -24,11 +23,11 @@ def filter_objects_by_name(
 class GridDialog(QDialog):
     def __init__(
             self,
-            labels:list,
+            labels: list,
             grid_shape: tuple = None,
-            parent = None,
-            window_title = None,
-            signal_upon_selection:Signal = None):
+            parent=None,
+            window_title=None,
+            signal_upon_selection: Signal = None):
 
         self.labels = labels
         self.signal_upon_selection = signal_upon_selection
@@ -77,6 +76,7 @@ class GridDialog(QDialog):
 
 if __name__ == '__main__':
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     grid_dialog = GridDialog(labels=['a', 'b', 'c'])
     grid_dialog.show()
