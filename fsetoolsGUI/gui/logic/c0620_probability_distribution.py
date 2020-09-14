@@ -1,7 +1,5 @@
 import numpy as np
-import numpy as np
 import scipy.stats as stats
-from PySide2 import QtWidgets
 from PySide2.QtCore import Signal, Slot, QObject
 from PySide2.QtWidgets import QGridLayout, QLineEdit, QLabel, QPushButton
 
@@ -73,7 +71,7 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(QLabel('Distribution'), c.value, 0, 1, 1)
         self.ui.p2_in_distribution = QLineEdit()
         self.ui.p2_layout.addWidget(self.ui.p2_in_distribution, c.value, 1, 1, 1)
-        self.ui.p2_in_fp_inputs = QPushButton('Select dist.')
+        self.ui.p2_in_fp_inputs = QPushButton('Select')
         self.ui.p2_in_fp_inputs.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
         self.ui.p2_layout.addWidget(self.ui.p2_in_fp_inputs, c.count, 2, 1, 1)
 
@@ -83,6 +81,9 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), c.count, 0, 1, 3)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_cdf', 'CDF', '')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_sample_value', 'Sample value', '')
+
+        self.ui.p3_example.setVisible(False)
+        self.ui.p3_about.setVisible(False)
 
         # signals and slots
         self.ui.p2_in_cdf.textChanged.connect(self.__cdf_value_change)
@@ -102,13 +103,9 @@ class App(AppBaseClass):
             window_title='Select a distribution',
             parent=self
         )
+        self.activated_dialogs.append(self.distribution_selection_dialog)
         self.ui.p2_in_fp_inputs.clicked.connect(lambda: self.distribution_selection_dialog.show())
-        self.ui.p2_in_fp_inputs.adjustSize()
-
-    @Slot(int)
-    def upon_distribution_selection(self, distribution_index: int):
-        self.activateWindow()
-        self.ui.p2_in_distribution.setText(self.__dist_available[distribution_index][1])
+        self.adjustSize()
 
     def ok(self):
         """Placeholder method to be overridden by child classes.
@@ -155,6 +152,14 @@ class App(AppBaseClass):
         logger.info(f'Calculation complete')
         self.ui.statusbar.showMessage('Calculation complete')
         self.repaint()
+
+    def example(self):
+        pass
+
+    @Slot(int)
+    def upon_distribution_selection(self, distribution_index: int):
+        self.activateWindow()
+        self.ui.p2_in_distribution.setText(self.__dist_available[distribution_index][1])
 
     def save_figure(self):
         path_to_file, _ = QtWidgets.QFileDialog.getSaveFileName(
@@ -261,19 +266,13 @@ class App(AppBaseClass):
 
         if self._Figure is None:
             self._Figure = PlotApp(self, title='Distribution visualisation')
+            self.activated_dialogs.append(self._Figure)
             self._Figure_ax_pdf = self._Figure.figure.add_subplot(211)
             self._Figure_ax_cdf = self._Figure.figure.add_subplot(212, sharex=self._Figure_ax_pdf)
 
-            self._Figure_ax_pdf.set_xticklabels([])
             self._Figure_ax_pdf.tick_params(axis='both', which='both', labelsize=8)
             self._Figure_ax_cdf.tick_params(axis='both', which='both', labelsize=8)
 
-            # self._Figure_ax = self._Figure.add_subplots()
-
-            # self._Figure = plt.figure()
-            # self._Figure.set_facecolor('None')
-            # self._Figure_canvas = FigureCanvas(self._Figure)
-            # self._Figure_canvas.setStyleSheet("background-color:transparent;border:0px")  # set background transparent.
         else:
             self._Figure_ax_pdf.clear()
             self._Figure_ax_cdf.clear()
@@ -310,8 +309,6 @@ class App(AppBaseClass):
         # ----------------------
         self._Figure.figure.tight_layout(pad=0.25)
         self._Figure.figure_canvas.draw()
-        # self._Figure_canvas.draw()
-        self._Figure.show()
 
         return True
 
@@ -322,5 +319,4 @@ if __name__ == '__main__':
     qapp = QtWidgets.QApplication(sys.argv)
     app = App(post_stats=False)
     app.show()
-
     qapp.exec_()
