@@ -442,3 +442,10 @@ QSlider::handle:horizontal:disabled {
     border: 1px solid #aaa;
     border-radius: 4px;
 }
+
+/* ================================================== QSizeGrip ===================================================== */
+
+QSizeGrip{
+    background: white;
+    image: url(gui/icons/cil-size-grip.png);
+}
