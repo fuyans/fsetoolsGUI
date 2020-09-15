@@ -32,16 +32,7 @@ class App(AppBaseClass):
     def __init__(self, parent=None, post_stats: bool = True):
         super().__init__(parent=parent, post_stats=post_stats, ui=AppBaseClassUISimplified01)
 
-        self.__dict_out = None
-        self.__Table = None
-        self.__Figure = None
-        self.__Figure_ax = None
-        self.__fp_out = None
-        self.__fp_out_processed = None
-        self.__fp_out_strain_csv = None
-        self.__strain_lines = None
         self.__Signals = Signals()
-        self.__output_fire_curve = dict(time=None, temperature=None)
         self.__progress_bar = ProgressBar('Progress', parent=self, initial_value=0)
         self.activated_dialogs.append(self.__progress_bar)
 
@@ -54,9 +45,9 @@ class App(AppBaseClass):
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_input_root_dir', 'Input files root dir.', 'Select', 0, unit_obj='QPushButton')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_safir_exe', 'Safir exe file path', 'Select', 150, unit_obj='QPushButton')
-        _ = QLabel('There is an error SAFIR 2019 and later does not run torsion inputs, this program will automatically switch back to SAFIR 2016.c.0 and make sure this version '
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_input_root_dir', 'Input files root dir.', '...', 0, unit_obj='QPushButton')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_safir_exe', 'Safir exe file path', '...', 150, unit_obj='QPushButton')
+        _ = QLabel('SAFIR 2019.a.3 later do not run torsion files, this app will automatically switch back to SAFIR 2016.c.0 and make sure this version '
                    '`safir2016c0.exe` is available at the above selected folder.')
         _.setWordWrap(True)
         self.ui.p2_layout.addWidget(_, c.count, 0, 1, 3)
@@ -66,7 +57,7 @@ class App(AppBaseClass):
         # default parameters
         self.ui.p2_in_fp_safir_exe.setText(os.path.join('c:', os.sep, 'work', 'fem', 'SAFIR', 'safir.exe'))
         self.ui.p2_in_n_mp.setText('2')
-        self.ui.p2_in_timeout.setText('1800')
+        self.ui.p2_in_timeout.setText('3600')
 
         # signals and slots
         self.__progress_bar.Signals.progress.connect(self.__progress_bar.update_progress_bar)
@@ -75,12 +66,22 @@ class App(AppBaseClass):
         )
         self.ui.p2_in_fp_input_root_dir_unit.clicked.connect(lambda: self.ui.p2_in_fp_input_root_dir.setText(QtWidgets.QFileDialog.getExistingDirectory(self, 'Select folder')))
 
+    def example(self):
+        pass  # placeholder method to stop warning, not used.
+
     def ok(self):
         self.__progress_bar.show()
         self.calculate(**self.input_parameters)
 
     @staticmethod
-    def calculate(fp_safir_exe, fp_input_root_dir, timeout, n_mp, qt_progress_signal=None, qt_progress_signal_label=None):
+    def calculate(
+            fp_safir_exe,
+            fp_input_root_dir,
+            timeout,
+            n_mp,
+            qt_progress_signal=None,
+            qt_progress_signal_label=None,
+            *_, **__):
         list_fp_in = list()
         for root, dirs, files in os.walk(fp_input_root_dir):
             for file_ in files:
@@ -146,6 +147,6 @@ if __name__ == "__main__":
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App()
+    app = App(post_stats=False)
     app.show()
     qapp.exec_()

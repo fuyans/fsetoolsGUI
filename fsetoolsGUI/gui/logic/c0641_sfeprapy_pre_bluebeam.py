@@ -35,16 +35,18 @@ class App(AppBaseClass):
         # self.ui.p2_in_fp_database_unit = QPushButton('Select')
         # self.ui.p2_in_fp_database_unit.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
         # self.ui.p2_layout.addWidget(self.ui.p2_in_fp_database_unit, c.count, 2, 1, 1)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_database', 'Database file path', 'Select', 150, unit_obj='QPushButton')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_bluebeam_measurements', 'Measurements file path', 'Select', 150, unit_obj='QPushButton')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_database', 'Database file path', '...', 150, unit_obj='QPushButton')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_bluebeam_measurements', 'Measurements file path', '...', 150, unit_obj='QPushButton')
         data_description = QLabel(
-            'The measurement file should be in *.csv format containing the following columns:\n'
-            'Subject - indicates measurement type, e.g. COMPARTMENT, COMPARTMENT_LENGTH, WINDOW, DOOR & OCCUPANCY_TYPE\n'
-            'Label - indicates Case name;\n'
-            'Colour - indicates compartment occupancy type;\n'
-            'Area - compartment area;\n'
-            'Length - the longest compartment fire travelling path, door or window width; and\n'
-            'Depth - compartment height.'
+            'The measurement file should be in *.csv format containing the following columns:'
+            r'<ol>'
+            r'<li>Subject - indicates measurement type, e.g. COMPARTMENT, COMPARTMENT_LENGTH, WINDOW, DOOR & OCCUPANCY_TYPE'
+            r'<li>Label - indicates Case name;</li>'
+            r'<li>Colour - indicates compartment occupancy type;</li>'
+            r'<li>Area - compartment area;</li>'
+            r'<li>Length - the longest compartment fire travelling path, door or window width; and</li>'
+            r'<li>Depth - compartment height.</li>'
+            r'</ol>'
         )
         data_description.setWordWrap(True)
         self.ui.p2_layout.addWidget(data_description, c.count, 0, 1, 3)

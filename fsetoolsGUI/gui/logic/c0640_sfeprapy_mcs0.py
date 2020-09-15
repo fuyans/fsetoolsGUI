@@ -34,7 +34,7 @@ class App(AppBaseClass):
         self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
         self.ui.p2_in_fp_mcs_input = QLineEdit()
         self.ui.p2_in_fp_mcs_input.setMinimumWidth(150)
-        self.ui.p2_in_fp_mcs_input_unit = QPushButton('Select')
+        self.ui.p2_in_fp_mcs_input_unit = QPushButton('...')
         self.ui.p2_in_fp_mcs_input_unit.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
 
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
