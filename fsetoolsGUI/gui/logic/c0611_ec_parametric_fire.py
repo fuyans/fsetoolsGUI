@@ -11,8 +11,8 @@ from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 class App(AppBaseClass):
     app_id = '0611'
-    app_name_short = 'EC 1991\nparametric\nfire'
-    app_name_long = 'EC 1991-1-2 parametric fire generator'
+    app_name_short = 'BS EN 1991\nparametric\nfire'
+    app_name_long = 'BS EN 1991-1-2 parametric fire generator'
 
     def __init__(self, parent=None, post_stats: bool = True):
         self.__Table = None

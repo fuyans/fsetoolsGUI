@@ -240,6 +240,9 @@ class App(AppBaseClass):
             window_title='Numerical results',
         )
 
+        # added `self.__Table` to `activated_dialogs` so it closes upon parent app close event
+        self.activated_dialogs.append(self.__Table)
+
         self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
         self.__Table.TableView.resizeColumnsToContents()
         self.__Table.show()
@@ -252,6 +255,6 @@ if __name__ == '__main__':
     from PySide2 import QtWidgets
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App()
+    app = App(post_stats=False)
     app.show()
     qapp.exec_()

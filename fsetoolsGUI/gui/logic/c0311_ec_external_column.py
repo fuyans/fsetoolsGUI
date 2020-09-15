@@ -14,7 +14,7 @@ from fsetoolsGUI.gui.logic.c0000_utilities import Counter
 
 class App(AppBaseClass):
     app_id = '0311'
-    app_name_short = 'EC\nExternal\ncolumn temp.'
+    app_name_short = 'BS EN\nExternal\ncolumn temp.'
     app_name_long = 'BS EN 1993-1-2:2005 External column temperatures'
 
     def __init__(self, parent=None, post_stats: bool = True):
