@@ -236,7 +236,7 @@ def make_strain_lines_for_given_shell(
     return list_lines
 
 
-def tor2tem(
+def safir_tor2tem(
         dir_work: str,
         fp_tor2temfix: str
 ):
@@ -264,7 +264,7 @@ def tor2tem(
             print(f'{i} - Failed')
 
 
-def pull_tems(dir_work: str):
+def safir_pull_tems(dir_work: str):
     fps = list()
     for root, dirs, files in os.walk(dir_work):
         for file_ in files:
@@ -291,7 +291,7 @@ def pull_tems(dir_work: str):
 
 
 if __name__ == '__main__':
-    dir_work_ = r'E:\projects_FSE\!1CW\WP4\WP4_2\01_analysis\delta-2'
-    # fp_tor2temfix_ = r'C:\Program Files\GiD\GiD 14.1.0d\problemtypes\SAFIR2019\Safir_Thermal_2d.gid\TorToTemFix.exe'
-    # tor2tem(dir_work_, fp_tor2temfix_)
-    pull_tems(dir_work_)
+    dir_work_ = r'E:\projects_FSE\!1CW\WP4\WP4_2\01_analysis\delta-2\therm2d'
+    fp_tor2temfix_ = r'C:\Program Files\GiD\GiD 14.1.0d\problemtypes\SAFIR2019\Safir_Thermal_2d.gid\TorToTemFix.exe'
+    safir_tor2tem(dir_work_, fp_tor2temfix_)
+    safir_pull_tems(dir_work_)
