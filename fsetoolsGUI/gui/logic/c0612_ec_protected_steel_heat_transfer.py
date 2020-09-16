@@ -8,8 +8,8 @@ from sfeprapy.mcs0.mcs0_calc import solve_time_equivalence
 
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.logic.c0000_utilities import Counter
-from fsetoolsGUI.gui.logic.c0610_travelling_fire import App as AppTravellingFire
-from fsetoolsGUI.gui.logic.c0611_ec_parametric_fire import App as AppParametricFire
+from fsetoolsGUI.gui.logic.c0610_ec_parametric_fire import App as AppParametricFire
+from fsetoolsGUI.gui.logic.c0611_travelling_fire import App as AppTravellingFire
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 

@@ -16,8 +16,8 @@ from fsetoolsGUI.gui.logic.c0000_utilities import Counter, ProgressBar
 
 
 class App(AppBaseClass):
-    app_id = '0621'
-    app_name_short = 'SFEPRAPY\npost-proc.'
+    app_id = '0642'
+    app_name_short = 'SFEPRAPY\npost-proc.\nmake plots'
     app_name_long = 'SFEPRAPY post-processor'
 
     def __init__(self, parent=None, post_stats: bool = True):
@@ -137,7 +137,8 @@ class App(AppBaseClass):
 
     @staticmethod
     def calculate(
-            fp_mcs_input: str, fp_mcs_output_dir: str,
+            fp_mcs_input: str,
+            fp_mcs_output_dir: str,
             figure_height: float,
             figure_width: float,
             figure_matrix_height: float,
@@ -147,7 +148,8 @@ class App(AppBaseClass):
             figure_xmax: float,
             figure_xstep: float,
             figure_legend_cols: int,
-            qt_progress_signal_0=None, qt_progress_signal_1=None):
+            qt_progress_signal_0=None, qt_progress_signal_1=None
+    ):
 
         matplotlib.use('agg')  # this method will be called in a thread, no GUI allowed for matplotlib
         os.chdir(os.path.dirname(fp_mcs_output_dir))

@@ -3,14 +3,13 @@ from PySide2 import QtWidgets, QtCore
 from PySide2.QtWidgets import QGridLayout, QLabel
 from fsetools.libstd.bs_en_1991_1_2_2002_annex_a import appendix_a_parametric_fire
 
-# from fsetoolsGUI.gui.layout.i0611_parametric_fire import Ui_MainWindow
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 
 class App(AppBaseClass):
-    app_id = '0611'
+    app_id = '0610'
     app_name_short = 'BS EN 1991\nparametric\nfire'
     app_name_long = 'BS EN 1991-1-2 parametric fire generator'
 
@@ -180,11 +179,11 @@ class App(AppBaseClass):
         self.ui.p2_in_initial_temperature.setText(num2str(v['initial_temperature']))
 
     @property
-    def output_parameters(self):
+    def output_parameters(self) -> dict:
         return self.__output_fire_curve
 
     @output_parameters.setter
-    def output_parameters(self, v):
+    def output_parameters(self, v: dict):
         self.__output_fire_curve['time'] = v['time']
         self.__output_fire_curve['temperature'] = v['temperature']
 
@@ -264,7 +263,7 @@ class App(AppBaseClass):
 
         # print results (for console enabled version only)
         list_content = [
-            [float(i), float(j)] for i, j in zip(output_parameters['time'], output_parameters['temperature'])
+            [float(i), float(j)] for i, j in zip(output_parameters['time'], output_parameters['temperature'] - 273.15)
         ]
 
         try:
@@ -278,7 +277,7 @@ class App(AppBaseClass):
             parent=self,
             window_geometry=win_geo,
             data_list=list_content,
-            header_col=['time [s]', 'temperature [K]'],
+            header_col=['time [s]', 'temperature [°C]'],
             window_title='Parametric fire numerical results',
         )
         self.activated_dialogs.append(self.__Table)
@@ -300,7 +299,7 @@ class App(AppBaseClass):
         else:
             self.__Figure_ax.clear()
 
-        self.__Figure_ax.plot(output_parameters['time'] / 60, output_parameters['temperature'], c='k')
+        self.__Figure_ax.plot(output_parameters['time'] / 60, output_parameters['temperature'] - 273.15, c='k')
         self.__Figure_ax.set_xlabel('Time [minute]')
         self.__Figure_ax.set_ylabel('Temperature [°C]')
         self.__Figure.figure.tight_layout()
