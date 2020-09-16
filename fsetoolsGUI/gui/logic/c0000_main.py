@@ -100,7 +100,7 @@ class AppsCollection:
         with open(self.doc_file_path(code), 'r') as f:
             return f.read()
 
-    def print_all_app_info(self):
+    def print_all_app_info(self, sort_by:str='module_code', html:bool=True):
         module_code = list(self.__apps.keys())
         module_app_name_long = list()
 
@@ -113,7 +113,27 @@ class AppsCollection:
             if l2 < len(module_app_name_long[-1]):
                 l2 = len(module_app_name_long[-1])
 
-        return '\n'.join([f'{i:<{l1}}     {j:<{l2}}' for i, j in zip(module_code, module_app_name_long)])
+        if sort_by == 'module_code':
+            module_app_name_long = [x for _, x in sorted(zip(module_code, module_app_name_long))]
+            module_code = sorted(module_code)
+        elif sort_by == 'module_app_name_long':
+            module_code = [x for _, x in sorted(zip(module_app_name_long, module_code))]
+            module_app_name_long = sorted(module_app_name_long)
+        else:
+            raise ValueError('Unknown `sorted_by`, it can be either "module_code" or "module_app_name_long"')
+
+        if html:
+            table_html = ['<table style="float:left">']
+            table_html.append('<tr>'
+                              '<th style="text-align:left">Module Code    </th>'
+                              '<th style="text-align:left">Module Name</th>'
+                              '</tr>')
+            for i in range(len(module_code)):
+                table_html.append(f'<tr><td>{module_code[i]}</td><td>{module_app_name_long[i]}</td></tr>')
+            table_html.append('</table>')
+            return '\n'.join(table_html)
+        else:
+            return '\n'.join([f'{i:<{l1}}     {j:<{l2}}' for i, j in zip(module_code, module_app_name_long)])
 
     def activate_app(self, code: str, parent=None):
         def func():
@@ -250,8 +270,8 @@ class App(QMainWindow):
         if self.is_executable:
             txt, ok = QInputDialog.getText(
                 self,
-                f'Activate app by Module Code',
-                f'{self.__apps.print_all_app_info()}\n\nModule code:',
+                f'Activate App by Module Code',
+                f'{self.__apps.print_all_app_info(sort_by="module_app_name_long")}',
                 QLineEdit.Normal,
                 ""
             )
