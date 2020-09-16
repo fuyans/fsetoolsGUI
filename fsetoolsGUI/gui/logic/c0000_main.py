@@ -25,15 +25,16 @@ from fsetoolsGUI.gui.logic.c0407_tra_enclosure import App as App0407
 from fsetoolsGUI.gui.logic.c0411_ec_external_flame import App as App0411
 from fsetoolsGUI.gui.logic.c0601_naming_convention import App as App0601
 from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
-from fsetoolsGUI.gui.logic.c0610_travelling_fire import App as App0610
-from fsetoolsGUI.gui.logic.c0611_ec_parametric_fire import App as App0611
+from fsetoolsGUI.gui.logic.c0610_ec_parametric_fire import App as App0611
+from fsetoolsGUI.gui.logic.c0611_travelling_fire import App as App0610
 from fsetoolsGUI.gui.logic.c0612_ec_protected_steel_heat_transfer import App as App0612
 from fsetoolsGUI.gui.logic.c0620_probability_distribution import App as App0620
 from fsetoolsGUI.gui.logic.c0630_safir_batch_run import App as App0630
 from fsetoolsGUI.gui.logic.c0631_safir_tor2temfix import App as App0631
 from fsetoolsGUI.gui.logic.c0640_sfeprapy_mcs0 import App as App0640
 from fsetoolsGUI.gui.logic.c0641_sfeprapy_pre_bluebeam import App as App0641
-from fsetoolsGUI.gui.logic.c0642_sfeprapy_post_processor import App as App0642
+from fsetoolsGUI.gui.logic.c0642_sfeprapy_post_make_plots import App as App0642
+from fsetoolsGUI.gui.logic.c0643_sfeprapy_post_make_fire import App as App0643
 from fsetoolsGUI.gui.logic.c0701_aws_s3_uploader import App as App0701
 from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 
@@ -70,6 +71,7 @@ class AppsCollection:
         '0640': App0640,
         '0641': App0641,
         '0642': App0642,
+        '0643': App0643,
         '0701': App0701,
     }
 
@@ -204,7 +206,7 @@ class App(QMainWindow):
         button_collection = {
             'Miscellaneous': ['0601', '0602', '0611', '0407', '0620'],
             'B1 Means of escape': ['0101', '0102', '0104', '0103', '0111'],
-            'B3 Elements of structure': ['0311', '0630', '0640', '0641', '0642'],
+            'B3 Elements of structure': ['0311', '0630', '0640'],
             'B4 External fire spread': ['0403', '0404', '0411'],
         }
 
