@@ -346,6 +346,38 @@ class AppBaseClass(QtWidgets.QMainWindow):
             except AssertionError:
                 raise ValueError(err_msg)
 
+    def get_open_file_name(self, window_title: str, filter_str: str, dir_default: str = '', func_to_assign_fp=None):
+        fp = QtWidgets.QFileDialog.getOpenFileName(self, window_title, dir_default, filter_str)[0]
+        if fp:
+            fp = path.realpath(fp)
+            if func_to_assign_fp:
+                func_to_assign_fp(fp)
+            return fp
+        else:
+            return ''
+
+    def get_save_file_name(self, window_title: str, filter_str: str, dir_default: str = '', func_to_assign_fp=None):
+        fp = QtWidgets.QFileDialog.getSaveFileName(self, window_title, dir_default, filter_str)[0]
+        if fp:
+            fp = path.realpath(fp)
+            if func_to_assign_fp:
+                func_to_assign_fp(fp)
+            return fp
+        else:
+            func_to_assign_fp(fp)
+            return ''
+
+    def get_existing_dir(self, window_title: str, dir_default: str = '', func_to_assign_fp=None):
+        fp = QtWidgets.QFileDialog.getExistingDirectory(self, window_title, dir_default)
+        if fp:
+            fp = path.realpath(fp)
+            if func_to_assign_fp:
+                func_to_assign_fp(fp)
+            return fp
+        else:
+            func_to_assign_fp(fp)
+            return ''
+
 
 if __name__ == '__main__':
     class AppBaseClassTest(AppBaseClass):
