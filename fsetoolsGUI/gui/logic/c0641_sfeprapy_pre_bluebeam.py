@@ -10,8 +10,8 @@ from fsetoolsGUI.gui.logic.c0000_utilities import Counter
 
 class App(AppBaseClass):
     app_id = '0641'
-    app_name_short = 'SFEPRAPY\npre-proc.\nBluebeam'
-    app_name_long = 'SFEPRAPY Bluebeam exported data pre-processor'
+    app_name_short = 'PRAPY MCS0\npre-proc.\nBluebeam'
+    app_name_long = 'SFEPRAPY MCS0 Bluebeam exported data pre-processor'
 
     def __init__(self, parent=None, post_stats: bool = True):
 
@@ -55,12 +55,9 @@ class App(AppBaseClass):
         # =================
         # signals and slots
         # =================
-        def select_database():
-            self.ui.p2_in_fp_database.setText(
-                realpath(QtWidgets.QFileDialog.getOpenFileName(self, 'Select database', '', 'Spreadsheet (*.csv *.xlsx)')[0])
-            )
-
-        self.ui.p2_in_fp_database_unit.clicked.connect(select_database)
+        self.ui.p2_in_fp_database_unit.clicked.connect(
+            lambda: self.get_open_file_name('Select database', 'Spreadsheet (*.csv *.xlsx)', func_to_assign_fp=self.ui.p2_in_fp_database.setText)
+        )
 
     def example(self):
         from fsetoolsGUI.etc.sfeprapy_bluebeam_toolbox import xml
