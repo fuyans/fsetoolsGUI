@@ -17,8 +17,8 @@ from fsetoolsGUI.gui.logic.c0000_utilities import Counter, ProgressBar
 
 class App(AppBaseClass):
     app_id = '0642'
-    app_name_short = 'SFEPRAPY\npost-proc.\nmake plots'
-    app_name_long = 'SFEPRAPY post-processor'
+    app_name_short = 'PRAPY MCS0\npost-proc.\nmake plots'
+    app_name_long = 'SFEPRAPY MCS0 post-processor make plots'
 
     def __init__(self, parent=None, post_stats: bool = True):
         # ================================
@@ -37,7 +37,7 @@ class App(AppBaseClass):
         self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
 
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_mcs_input', 'MCS input file', '...', unit_obj='QPushButton')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_mcs_input', 'MCS input file', '...', unit_obj='QPushButton', min_width=200)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_mcs_output', 'MCS output dir.', '...', unit_obj='QPushButton')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_width', 'Plot width', 'in')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_height', 'Plot height', 'in')
@@ -68,17 +68,18 @@ class App(AppBaseClass):
         # =================
         # signals and slots
         # =================
-        def fp_mcs_input():
-            fp_input = QtWidgets.QFileDialog.getOpenFileName(self, 'Select an input file', '', '(*.csv *.xlsx)')[0]
-            fp_input = os.path.realpath(fp_input)
+        def _fp_mcs_input():
+            fp_input = self.get_open_file_name('Select a mcs0 input file', 'Spreadsheet (*.csv *.xlsx)', func_to_assign_fp=self.ui.p2_in_fp_mcs_input.setText)
+            if not fp_input:
+                return
             dir_mcs_output = os.path.join(os.path.dirname(fp_input), 'mcs.out')
-            self.ui.p2_in_fp_mcs_input.setText(fp_input)
             if os.path.exists(dir_mcs_output):
                 self.ui.p2_in_fp_mcs_output.setText(dir_mcs_output)
-        self.ui.p2_in_fp_mcs_input_unit.clicked.connect(fp_mcs_input)
+
+        self.ui.p2_in_fp_mcs_input_unit.clicked.connect(_fp_mcs_input)
 
         self.ui.p2_in_fp_mcs_output_unit.clicked.connect(
-            lambda: self.ui.p2_in_fp_mcs_output.setText(QtWidgets.QFileDialog.getExistingDirectory(self, 'Select an input file', ''))
+            lambda: self.get_existing_dir('Select a folder containing MCS0 output files', func_to_assign_fp=self.ui.p2_in_fp_mcs_output.setText)
         )
 
     def example(self):
@@ -133,7 +134,6 @@ class App(AppBaseClass):
         except Exception as e:
             logger.error(f'Failed to post process data, {e}')
             self.statusBar().showMessage(f'Failed to post process data, {e}', timeout=60)
-        self.statusBar().showMessage('Successfully post process data')
 
     @staticmethod
     def calculate(

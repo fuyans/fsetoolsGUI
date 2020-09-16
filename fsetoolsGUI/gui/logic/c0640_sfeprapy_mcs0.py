@@ -13,8 +13,8 @@ from fsetoolsGUI.gui.logic.c0000_utilities import Counter, ProgressBar
 
 class App(AppBaseClass):
     app_id = '0640'
-    app_name_short = 'SFEPRAPY\nMC0'
-    app_name_long = 'SFEPRAPY Monte Carlo Simulation (method 0)'
+    app_name_short = 'PRAPY\nMCS0\nsimulator'
+    app_name_long = 'SFEPRAPY MCS0 Monte Carlo Simulation method 0'
 
     def __init__(self, parent=None, post_stats: bool = True):
 
@@ -52,12 +52,9 @@ class App(AppBaseClass):
         # =================
         # signals and slots
         # =================
-        def select_fp_inputs():
-            self.ui.p2_in_fp_mcs_input.setText(
-                realpath(QtWidgets.QFileDialog.getOpenFileName(self, 'Select an input file', '', 'Spreadsheet (*.csv *.xlsx)')[0])
-            )
-
-        self.ui.p2_in_fp_mcs_input_unit.clicked.connect(select_fp_inputs)
+        self.ui.p2_in_fp_mcs_input_unit.clicked.connect(
+            lambda: self.get_open_file_name('Select a mcs0 input file', 'Spreadsheet (*.csv *.xlsx)', func_to_assign_fp=self.ui.p2_in_fp_mcs_input.setText)
+        )
 
     def example(self):
         logger.info('Saving a SFEPRAPY template input file ...')

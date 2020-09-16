@@ -14,8 +14,8 @@ from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
 class App(AppBaseClass):
     app_id = '0643'
-    app_name_short = 'SFEPRAPY\npost-proc.\nmake fires'
-    app_name_long = 'SFEPRAPY post-processor make fires'
+    app_name_short = 'PRAPY MCS0\npost-proc.\nmake fires'
+    app_name_long = 'SFEPRAPY MCS0 post-processor make fires'
 
     def __init__(self, parent=None, post_stats: bool = True):
         # ================================
@@ -50,18 +50,17 @@ class App(AppBaseClass):
         # =================
         # signals and slots
         # =================
-        def fp_mcs_input():
-            fp_input = QtWidgets.QFileDialog.getOpenFileName(self, 'Select an input file', '', '(*.csv *.xlsx)')[0]
-            fp_input = os.path.realpath(fp_input)
+        def _fp_mcs_input():
+            fp_input = self.get_open_file_name('Select an mcs0 input file', 'Spreadsheet (*.csv *.xlsx)', self.ui.p2_in_fp_mcs_input.setText)
+            if not fp_input:
+                return
             dir_mcs_output = os.path.join(os.path.dirname(fp_input), 'mcs.out')
-            self.ui.p2_in_fp_mcs_input.setText(fp_input)
             if os.path.exists(dir_mcs_output):
                 self.ui.p2_in_fp_mcs_output.setText(dir_mcs_output)
-
-        self.ui.p2_in_fp_mcs_input_unit.clicked.connect(fp_mcs_input)
+        self.ui.p2_in_fp_mcs_input_unit.clicked.connect(_fp_mcs_input)
 
         self.ui.p2_in_fp_mcs_output_unit.clicked.connect(
-            lambda: self.ui.p2_in_fp_mcs_output.setText(QtWidgets.QFileDialog.getExistingDirectory(self, 'Select an input file', ''))
+            lambda: self.get_existing_dir('Select a folder containing MCS0 output files', func_to_assign_fp=self.ui.p2_in_fp_mcs_output.setText)
         )
 
         def workout_index_and_case_name():
