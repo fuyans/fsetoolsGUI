@@ -47,11 +47,11 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_input_root_dir', 'Input files root dir.', '...', 0, unit_obj='QPushButton')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_safir_exe', 'Safir exe file path', '...', 150, unit_obj='QPushButton')
-        _ = QLabel('SAFIR 2019.a.3 later do not run torsion files, this app will automatically switch back to SAFIR 2016.c.0 and make sure this version '
-                   '`safir2016c0.exe` is available at the above selected folder.')
+        _ = QLabel('SAFIR 2019.a.3 later do not run torsion files. This app switches back to SAFIR 2016.c.0 for running torsion analysis, make sure `safir2016c0.exe` '
+                   'is available in the above selected folder.')
         _.setWordWrap(True)
         self.ui.p2_layout.addWidget(_, c.count, 0, 1, 3)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_n_mp', 'No. of processes', 'Integer')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_n_mp', 'No. of processes')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_timeout', 'timeout', 's')
 
         # default parameters
