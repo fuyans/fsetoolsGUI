@@ -51,12 +51,13 @@ class App(AppBaseClass):
         # signals and slots
         # =================
         def _fp_mcs_input():
-            fp_input = self.get_open_file_name('Select an mcs0 input file', 'Spreadsheet (*.csv *.xlsx)', self.ui.p2_in_fp_mcs_input.setText)
+            fp_input = self.get_open_file_name('Select an mcs0 input file', 'Spreadsheet (*.csv *.xlsx)', func_to_assign_fp=self.ui.p2_in_fp_mcs_input.setText)
             if not fp_input:
                 return
             dir_mcs_output = os.path.join(os.path.dirname(fp_input), 'mcs.out')
             if os.path.exists(dir_mcs_output):
                 self.ui.p2_in_fp_mcs_output.setText(dir_mcs_output)
+
         self.ui.p2_in_fp_mcs_input_unit.clicked.connect(_fp_mcs_input)
 
         self.ui.p2_in_fp_mcs_output_unit.clicked.connect(
@@ -114,10 +115,24 @@ class App(AppBaseClass):
         self.__output_parameters = v
 
     def ok(self):
-        self.output_parameters = self.calculate(**self.input_parameters)
+        try:
+            self.output_parameters = self.calculate(**self.input_parameters)
+        except Exception as e:
+            logger.error(f'Failed to analysis output data, {e}')
+            self.statusBar().showMessage(f'Failed to analysis output data, {e}', timeout=30)
+            raise e
 
-        self.show_results_in_table()
-        self.show_results_in_figure()
+        try:
+            self.show_results_in_table()
+        except Exception as e:
+            logger.error(f'Failed to show results, {e}')
+            self.statusBar().showMessage(f'Failed to show results, {e}', timeout=30)
+
+        try:
+            self.show_results_in_figure()
+        except Exception as e:
+            logger.error(f'Failed to plot figures, {e}')
+            self.statusBar().showMessage(f'Failed to plot figures, {e}', timeout=30)
 
     @staticmethod
     def calculate(

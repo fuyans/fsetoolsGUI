@@ -32,16 +32,9 @@ class App(AppBaseClass):
         c = Counter()
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
-        self.ui.p2_in_fp_mcs_input = QLineEdit()
-        self.ui.p2_in_fp_mcs_input.setMinimumWidth(150)
-        self.ui.p2_in_fp_mcs_input_unit = QPushButton('...')
-        self.ui.p2_in_fp_mcs_input_unit.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
-
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
-        self.ui.p2_layout.addWidget(QLabel('MCS input file'), c.value, 0, 1, 1)
-        self.ui.p2_layout.addWidget(self.ui.p2_in_fp_mcs_input, c.value, 1, 1, 1)
-        self.ui.p2_layout.addWidget(self.ui.p2_in_fp_mcs_input_unit, c.count, 2, 1, 1)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_n_mp', 'No. processes', '')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_mcs_input', 'MCS input file', '...', unit_obj='QPushButton', min_width=200)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_n_mp', 'No. of processes', '')
         self.ui.p3_example.setText('Input template')
 
         # ============
@@ -100,9 +93,13 @@ class App(AppBaseClass):
         pass
 
     def ok(self):
-
-        self.__progress_bar.show()
-        self.calculate(**self.input_parameters)
+        try:
+            self.__progress_bar.show()
+            self.calculate(**self.input_parameters)
+        except Exception as e:
+            logger.error(f'Failed to run simulation, {e}')
+            self.statusBar().showMessage(f'Failed to run simulation, {e}', timeout=60)
+            raise e
 
     @staticmethod
     def calculate(fp_mcs_input, n_mp, qt_prog_signal_0, qt_prog_signal_1):
