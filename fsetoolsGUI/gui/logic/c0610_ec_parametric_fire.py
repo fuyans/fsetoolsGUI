@@ -14,15 +14,16 @@ class App(AppBaseClass):
     app_name_long = 'BS EN 1991-1-2 parametric fire generator'
 
     def __init__(self, parent=None, post_stats: bool = True):
-        self.__Table = None
-        self.__Figure = None
-        self.__Figure_ax = None
-        self.__output_fire_curve = dict(time=None, temperature=None)
 
         # ================================
         # instantiation super and setup ui
         # ================================
         super().__init__(parent, post_stats, ui=AppBaseClassUISimplified01)
+
+        self.FigureApp = PlotApp(self, title='Parametric fire plot')
+        self.__figure_ax = self.FigureApp.add_subplots()
+        self.__Table = None
+        self.__output_fire_curve = dict(time=None, temperature=None)
 
         # ================
         # instantiation ui
@@ -248,6 +249,7 @@ class App(AppBaseClass):
             self.output_parameters = output_parameters
             assert self.show_results_in_table()
             assert self.show_results_in_figure()
+            self.FigureApp.figure.tight_layout()
         except Exception as e:
             self.statusBar().showMessage(f'Unable to show results. Error {str(e)}')
 
@@ -292,22 +294,15 @@ class App(AppBaseClass):
 
         output_parameters = self.output_parameters
 
-        if self.__Figure is None:
-            self.__Figure = PlotApp(self, title='Parametric fire plot')
-            self.__Figure_ax = self.__Figure.add_subplots()
-            self.activated_dialogs.append(self.__Figure)
-        else:
-            self.__Figure_ax.clear()
-
-        self.__Figure_ax.plot(output_parameters['time'] / 60, output_parameters['temperature'] - 273.15, c='k')
-        self.__Figure_ax.set_xlabel('Time [minute]')
-        self.__Figure_ax.set_ylabel('Temperature [°C]')
-        self.__Figure.figure.tight_layout()
-
-        self.__Figure.figure_canvas.draw()
-        self.__Figure.show()
-
-        return True
+        self.__figure_ax.clear()
+        self.__figure_ax.plot(output_parameters['time'] / 60, output_parameters['temperature'] - 273.15, c='k')
+        self.__figure_ax.set_xlabel('Time [minute]', fontsize='small')
+        self.__figure_ax.set_ylabel('Temperature [°C]', fontsize='small')
+        self.__figure_ax.tick_params(axis='both', labelsize='small')
+        self.__figure_ax.grid(which='major', linestyle=':', linewidth='0.5', color='black')
+        self.FigureApp.figure.tight_layout()
+        self.FigureApp.figure_canvas.draw()
+        self.FigureApp.show()
 
 
 if __name__ == "__main__":

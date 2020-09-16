@@ -44,8 +44,8 @@ class App(AppBaseClass):
             solved_time_equivalence=['Solved time equivalence', 'min'],
         )
 
-        self.__Figure = None
-        self.__Figure_ax = None
+        self.FigureApp = PlotApp(self, title='Steel temperature plot')
+        self.__figure_ax = self.FigureApp.add_subplots()
         self.__Table = None
         self.__output_parameters = None
 
@@ -272,24 +272,18 @@ class App(AppBaseClass):
 
         output_parameters = self.output_parameters
 
-        if self.__Figure is None:
-            self.__Figure = PlotApp(self, title='Steel temperature plot')
-            self.__Figure_ax = self.__Figure.add_subplots()
-            self.activated_dialogs.append(self.__Figure)
-        else:
-            self.__Figure_ax.clear()
+        self.__figure_ax.clear()
 
-        self.__Figure_ax.plot(output_parameters['time'] / 60, output_parameters['fire_temperature'] - 273.15, label='Fire', c='r')
-        self.__Figure_ax.plot(output_parameters['time'] / 60, output_parameters['steel_temperature'] - 273.15, label='Steel', c='k')
-        self.__Figure_ax.set_xlabel('Time [minute]')
-        self.__Figure_ax.set_ylabel('Temperature [°C]')
-        self.__Figure.figure.legend(shadow=False, edgecolor='k', fancybox=False, ncol=1, fontsize='small').set_visible(True)
-        self.__Figure.figure.tight_layout()
-
-        self.__Figure.figure_canvas.draw()
-        self.__Figure.show()
-
-        return True
+        self.__figure_ax.plot(output_parameters['time'] / 60, output_parameters['fire_temperature'] - 273.15, label='Fire', c='r')
+        self.__figure_ax.plot(output_parameters['time'] / 60, output_parameters['steel_temperature'] - 273.15, label='Steel', c='k')
+        self.__figure_ax.set_xlabel('Time [minute]', fontsize='small')
+        self.__figure_ax.set_ylabel('Temperature [°C]', fontsize='small')
+        self.__figure_ax.tick_params(axis='both', labelsize='small')
+        self.__figure_ax.legend(shadow=False, edgecolor='k', fancybox=False, ncol=1, fontsize='x-small').set_visible(True)
+        self.__figure_ax.grid(which='major', linestyle=':', linewidth='0.5', color='black')
+        self.FigureApp.figure.tight_layout()
+        self.FigureApp.figure_canvas.draw()
+        self.FigureApp.show()
 
 
 if __name__ == '__main__':

@@ -55,14 +55,14 @@ class App(AppBaseClass):
 
     def __init__(self, parent=None, post_stats: bool = True):
 
+        super().__init__(parent=parent, post_stats=post_stats, ui=AppBaseClassUISimplified01)
+
+        self.FigureApp = PlotApp(self, title='Distribution visualisation')
+        self.__figure_ax_pdf = self.FigureApp.figure.add_subplot(211)
+        self.__figure_ax_cdf = self.FigureApp.figure.add_subplot(212, sharex=self.__figure_ax_pdf)
         self.__input_parameters = None
         self.__output_parameters = None
-        self._Figure = None
-        self._Figure_ax_pdf = None
-        self._Figure_ax_cdf = None
         self.signals = Signals()
-
-        super().__init__(parent=parent, post_stats=post_stats, ui=AppBaseClassUISimplified01)
 
         c = Counter()
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
@@ -193,14 +193,14 @@ class App(AppBaseClass):
         self.ui.p2_in_cdf.textChanged.connect(self.__cdf_value_change)
 
     def __distribution_update(self):
-        if self._Figure_ax_pdf is not None and self._Figure_ax_cdf is not None:
-            if self._Figure_ax_pdf.lines or self._Figure_ax_cdf.lines:
-                self._Figure_ax_pdf.clear()
-                self._Figure_ax_pdf.set_yticks([])
-                self._Figure_ax_pdf.clear()
-                self._Figure_ax_pdf.set_xticks([])
-                self._Figure_ax_pdf.set_yticks([])
-                self._Figure.figure_canvas.draw()
+        if self.__figure_ax_pdf is not None and self.__figure_ax_cdf is not None:
+            if self.__figure_ax_pdf.lines or self.__figure_ax_cdf.lines:
+                self.__figure_ax_pdf.clear()
+                self.__figure_ax_pdf.set_yticks([])
+                self.__figure_ax_pdf.clear()
+                self.__figure_ax_pdf.set_xticks([])
+                self.__figure_ax_pdf.set_yticks([])
+                self.FigureApp.figure_canvas.draw()
 
         if self.ui.p2_in_cdf.text() != '':
             self.ui.p2_in_cdf.textChanged.disconnect()
@@ -264,36 +264,26 @@ class App(AppBaseClass):
     def show_results_in_figure(self):
         dist = self.output_parameters['dist']
 
-        if self._Figure is None:
-            self._Figure = PlotApp(self, title='Distribution visualisation')
-            self.activated_dialogs.append(self._Figure)
-            self._Figure_ax_pdf = self._Figure.figure.add_subplot(211)
-            self._Figure_ax_cdf = self._Figure.figure.add_subplot(212, sharex=self._Figure_ax_pdf)
-
-            self._Figure_ax_pdf.tick_params(axis='both', which='both', labelsize=8)
-            self._Figure_ax_cdf.tick_params(axis='both', which='both', labelsize=8)
-
-        else:
-            self._Figure_ax_pdf.clear()
-            self._Figure_ax_cdf.clear()
+        self.__figure_ax_pdf.clear()
+        self.__figure_ax_cdf.clear()
 
         # --------
         # plot pdf
         # --------
         x = np.linspace(dist.ppf(1e-3), dist.ppf(1 - 1e-3), 50)
         y_pdf = dist.pdf(x)
-        self._Figure_ax_pdf.plot(x, y_pdf, c='k')
-        self._Figure_ax_pdf.set_ylim(bottom=0)
-        self._Figure_ax_pdf.tick_params(axis='both', direction='in', labelbottom=False)
+        self.__figure_ax_pdf.plot(x, y_pdf, c='k')
+        self.__figure_ax_pdf.set_ylim(bottom=0)
+        self.__figure_ax_pdf.tick_params(axis='both', direction='in', labelbottom=False)
 
         # --------
         # plot cdf
         # --------
         y_cdf = dist.cdf(x)
-        self._Figure_ax_cdf.plot(x, y_cdf, c='k')
-        self._Figure_ax_cdf.set_ylim(bottom=0)
-        self._Figure_ax_cdf.set_yticks([0, 1])
-        self._Figure_ax_cdf.tick_params(axis='both', direction='in')
+        self.__figure_ax_cdf.plot(x, y_cdf, c='k')
+        self.__figure_ax_cdf.set_ylim(bottom=0)
+        self.__figure_ax_cdf.set_yticks([0, 1])
+        self.__figure_ax_cdf.tick_params(axis='both', direction='in')
 
         # -------------------------------------------------------------
         # highlight area under the pdf and cdf if `sample_value` exists
@@ -301,14 +291,19 @@ class App(AppBaseClass):
         if self.input_parameters['sample_value'] is not None:
             x_ = np.linspace(x[0], self.input_parameters['sample_value'], 50)
             y_pdf_, y_cdf_ = dist.pdf(x_), dist.cdf(x_)
-            self._Figure_ax_pdf.fill_between(x_, y_pdf_, np.zeros_like(x_), facecolor='grey', interpolate=True)
-            self._Figure_ax_cdf.fill_between(x_, y_cdf_, np.zeros_like(x_), facecolor='grey', interpolate=True)
+            self.__figure_ax_pdf.fill_between(x_, y_pdf_, np.zeros_like(x_), facecolor='grey', interpolate=True)
+            self.__figure_ax_cdf.fill_between(x_, y_cdf_, np.zeros_like(x_), facecolor='grey', interpolate=True)
 
         # ----------------------
         # finalise/format figure
         # ----------------------
-        self._Figure.figure.tight_layout(pad=0.25)
-        self._Figure.figure_canvas.draw()
+        self.__figure_ax_pdf.tick_params(axis='both', which='both', labelsize='xx-small')
+        self.__figure_ax_cdf.tick_params(axis='both', which='both', labelsize='xx-small')
+        self.__figure_ax_pdf.grid(which='major', linestyle=':', linewidth='0.5', color='black')
+        self.__figure_ax_cdf.grid(which='major', linestyle=':', linewidth='0.5', color='black')
+        self.FigureApp.figure.tight_layout()
+        self.FigureApp.figure_canvas.draw()
+        self.FigureApp.show()
 
         return True
 

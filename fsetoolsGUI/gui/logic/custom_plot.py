@@ -79,12 +79,7 @@ class App(QtWidgets.QMainWindow):
         self.ui.refresh.clicked.connect(self.refresh_figure)
         self.ui.save_figure.clicked.connect(self.save_figure)
 
-        self.resize(400, 300)
-
-        self.figure.tight_layout()
-        self.figure.canvas.draw()
-        self.repaint()
-        # self.adjustSize()
+        self.resize(380, 380)
 
     def add_subplots(self, *args, **kwargs) -> plt.Axes:
         ax = self.figure.add_subplot(*args, **kwargs)
@@ -119,6 +114,13 @@ if __name__ == '__main__':
     app.show()
 
     ax = app.add_subplots()
-    ax.plot([0, 1], [0, 1])
+    ax.plot([0, 1], [0, 1], label='line 1')
+    ax.plot([0, 1], [0, 0.5], label='line 2')
+    ax.set_xlabel('x label', fontsize='small')
+    ax.set_ylabel('y label', fontsize='small')
+    ax.tick_params(axis='both', labelsize='small')
+    ax.legend(shadow=False, edgecolor='k', fancybox=False, ncol=1, fontsize='x-small').set_visible(True)
+    ax.grid(which='major', linestyle=':', linewidth=0.5, color='black')
+    app.figure.tight_layout()
 
     qapp.exec_()
