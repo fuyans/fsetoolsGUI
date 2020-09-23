@@ -29,9 +29,9 @@ class MyDelegate(QtWidgets.QItemDelegate):
 class TableWindow(QtWidgets.QDialog):
     def __init__(
             self,
-            data_list: list,
-            header_col: list = None,
-            header_row: list = None,
+            content: list = None,
+            col_headers: list = None,
+            row_headers: list = None,
             window_title: str = None,
             window_geometry: Union[tuple, list, QtCore.QRect] = (),
             enable_sorting: bool = True,
@@ -65,8 +65,10 @@ class TableWindow(QtWidgets.QDialog):
         self.label_tip.wordWrap()
 
         delegate = MyDelegate()
-        self.TableModel = TableModel(self, data_list, header_col=header_col, header_row=header_row)
+        self.TableModel = TableModel(self)
         self.TableView = QtWidgets.QTableView()
+        if content is not None:
+            self.TableModel.update_model(content_data=content, row_headers=row_headers, col_headers=col_headers)
         self.TableView.setModel(self.TableModel)
         self.TableView.setItemDelegate(delegate)
 
@@ -75,6 +77,11 @@ class TableWindow(QtWidgets.QDialog):
         layout.addWidget(self.label_tip)
         self.setLayout(layout)
 
+        # default values
+
+        self.refresh_content_size(enable_sorting=enable_sorting)
+
+    def refresh_content_size(self, enable_sorting: bool = True):
         # ====================
         # set table properties
         # ====================
@@ -89,6 +96,10 @@ class TableWindow(QtWidgets.QDialog):
         # set column width to fit contents (set font first!)
         self.TableView.resizeColumnsToContents()
         self.TableView.resizeRowsToContents()
+
+    def update_table_content(self, content_data: list, row_headers: list = None, col_headers: list = None):
+        self.TableModel.update_model(content_data=content_data, row_headers=row_headers, col_headers=col_headers)
+        self.refresh_content_size()
 
     def copy_selection(self):
 
@@ -126,18 +137,28 @@ class TableWindow(QtWidgets.QDialog):
 
 
 class TableModel(QtCore.QAbstractTableModel):
-    def __init__(self, parent: QtWidgets.QTableView, content: list, header_row: list = None, header_col: list = None,
-                 *args):
-        super().__init__(parent=parent, *args)
+    def __init__(self, parent: QtWidgets.QTableView):
+        super().__init__(parent=parent)
 
-        if not header_col:
-            header_col = list(range(len(content[0])))
-        if not header_row:
-            header_row = list(range(len(content)))
+        self.row_headers = list()
+        self.col_headers = list()
+        self.content = list()
 
-        self.header_row = header_row
-        self.header_col = header_col
-        self.content = content
+    def update_model(self, content_data: list, row_headers=None, col_headers=None):
+
+        if col_headers is None:
+            # col_headers = list(range(len(content_data[0])))
+            col_headers = [''] * len(content_data[0])
+        if row_headers is None:
+            # row_headers = list(range(len(content_data)))
+            row_headers = [''] * len(content_data)
+
+        self.row_headers = row_headers
+        self.col_headers = col_headers
+        self.content = content_data
+        self.layoutAboutToBeChanged.emit()
+        self.dataChanged.emit(self.createIndex(0, 0), self.createIndex(self.rowCount(0), self.columnCount(0)))
+        self.layoutChanged.emit()
 
     def flags(self, index):
         return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEditable
@@ -160,10 +181,16 @@ class TableModel(QtCore.QAbstractTableModel):
             return True
 
     def rowCount(self, parent):
-        return len(self.content)
+        try:
+            return len(self.content)
+        except IndexError:
+            return False
 
     def columnCount(self, parent):
-        return len(self.content[0])
+        try:
+            return len(self.content[0])
+        except IndexError:
+            return False
 
     def data(self, index, role):
 
@@ -183,9 +210,15 @@ class TableModel(QtCore.QAbstractTableModel):
 
     def headerData(self, section, orientation, role):
         if orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
-            return self.header_col[section]
+            try:
+                return self.col_headers[section]
+            except IndexError:
+                return None
         elif orientation == QtCore.Qt.Vertical and role == QtCore.Qt.DisplayRole:
-            return self.header_row[section]
+            try:
+                return self.row_headers[section]
+            except IndexError:
+                return None
         return None
 
     def sort(self, col, order):
@@ -218,14 +251,23 @@ if __name__ == '__main__':
     row_header = ['1', '2', '3', '4']
     # use numbers for numeric data to sort properly
     content = [
-        ['ACETIC ACID', 117.9, 16.7, 1.049],
-        ['ACETIC ANHYDRIDE', 140.1, -73.1, 1.087],
-        ['ACETONE', 56.3, -94.7, 0.791],
-        ['ACETONITRILE', 81.6, -43.8, 0.789],
+        [11, 12, 13, 14],
+        [21, 22, 23, 24],
+        [31, 32, 33, 34],
+        [41, 42, 43, 44],
     ]
 
     app = QtWidgets.QApplication([])
-    win = TableWindow(content)
+    win = TableWindow(content, col_headers=['col 1', 'col 2', 'col 3', 'col 4'], row_headers=['row 1', 'row 2', 'row 3', 'row 4'])
+
+    content = [
+        [21, 12, 13, 14],
+        [21, 22, 23, 24],
+        [31, 32, 33, 34],
+        [41, 42, 43, 44],
+        [41, 42, 43, 44],
+    ]
+    win.TableModel.update_model(content, col_headers=['col 1', 'col 2', 'col 3', 'col 4'], row_headers=['row 1', 'row 2', 'row 3', 'row 4'])
 
     win.show()
     app.exec_()
