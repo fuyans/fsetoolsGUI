@@ -241,15 +241,18 @@ class AppBaseClass(QtWidgets.QMainWindow):
             self.statusBar().showMessage(f'{e}')
 
     def closeEvent(self, event):
-        try:
-            self.__about_dialog.close()
-        except:
-            pass
         for dialog in self.activated_dialogs:
             try:
                 dialog.close()
-            except:
-                pass
+            except Exception as e:
+                logger.debug(f'Failed to close {dialog:<10}, {e}')
+
+        for i in ['FigureApp', 'TableApp']:
+            try:
+                getattr(self, i).close()
+            except Exception as e:
+                logger.debug(f'{e}')
+
         event.accept()
 
     def message_box(self, msg: str, title: str):
