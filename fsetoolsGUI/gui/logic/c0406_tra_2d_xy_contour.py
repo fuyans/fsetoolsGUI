@@ -1,15 +1,15 @@
 import sys
 import threading
 
-import matplotlib.pyplot as plt
 import numpy as np
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtCore import Slot
+from PySide2.QtWidgets import QGridLayout, QLabel
 from fsetools.lib.fse_thermal_radiation_2d_parallel import main as tra_main
 from matplotlib import cm
 
-from fsetoolsGUI.gui.layout.i0406_tra_2d_xy_contour import Ui_MainWindow
-from fsetoolsGUI.gui.logic.c0000_app_template_old import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass
+from fsetoolsGUI.gui.logic.c0000_utilities import Counter
 from fsetoolsGUI.gui.logic.custom_table import TableModel
 
 try:
@@ -115,60 +115,27 @@ class Signals(QtCore.QObject):
 class App(AppBaseClass):
     app_id = '0406'
     app_name_short = 'TRA\n2D\nparallel'
-    app_name_long = 'TRA 2D parallel orientated contour plot'
+    app_name_long = 'TRA 2D parallel orientated emitters contour plot'
 
-    def __init__(self, parent=None):
-        super().__init__(parent=parent)
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
-        self.init()
+    def __init__(self, parent=None, post_stats: bool = True):
+        super().__init__(parent=parent, post_stats=post_stats)
 
-        # instantiate objects
-        self.figure = plt.figure()
-        self.figure.patch.set_facecolor('None')
-        self.Signals = Signals()
-        self.calculation_thread = None
+        # Instantiate UI objects
+        self.ui.p2_layout = QGridLayout(self.ui.page_2)
+        self.ui.p2_layout.setHorizontalSpacing(5), self.ui.p2_layout.setVerticalSpacing(5)
+        c = Counter()
+        self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_emitters', 'Emitters', '...', unit_obj='QPushButton')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_receivers', 'Receivers', '...', unit_obj='QPushButton')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_X', 'X', 'm, m', min_width=100)
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_Y', 'Y', 'm, m')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_Z', 'Z', 'm, m')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_figure_font_size', 'Figure font size', 'pt')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_figure_object_line_thickness', 'Figure object line thickness', 'pt')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_Q_crit', 'Q<sub>crit</sub>', 'kW/m<sup>2</sup>')
 
-        self.ax = self.figure.subplots()
-        self.ax.set_xticks([])
-        self.ax.set_yticks([])
-        self.figure_canvas = FigureCanvas(self.figure)
-        self.figure_canvas.setStyleSheet(
-            "background-color:transparent;")  # set the plt widget background from white to transparent.
-        self.ui.verticalLayout_plot.addWidget(self.figure_canvas)
-        # self.addToolBar(NavigationToolbar(self.figure_canvas, self))  # add plt default toolbar.
-
-        # instantiate tables
-        self.init_table()
-
-        # signals
-        self.ui.pushButton_ok.clicked.connect(self.calculate)
-        self.ui.pushButton_refresh.clicked.connect(self.update_plot)
-        self.ui.pushButton_save_figure.clicked.connect(self.save_figure)
-        self.ui.pushButton_example.clicked.connect(self.example)
-        self.ui.pushButton_emitter_list_append.clicked.connect(
-            lambda x=self.TableModel_emitters, y=self.ui.tableView_emitters: self.table_insert(x, y))
-        self.ui.pushButton_emitter_list_remove.clicked.connect(
-            lambda x=self.TableModel_emitters, y=self.ui.tableView_emitters: self.table_remove(x, y))
-        self.ui.pushButton_receiver_list_append.clicked.connect(
-            lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_insert(x, y))
-        self.ui.pushButton_receiver_list_remove.clicked.connect(
-            lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_remove(x, y))
-        self.ui.horizontalSlider_graphic_line_thickness.valueChanged.connect(
-            lambda: self.update_label(self.ui.label_graphic_line_thickness,
-                                      f'{self.ui.horizontalSlider_graphic_line_thickness.value():d} pt'))
-        self.ui.horizontalSlider_graphic_contour_font_size.valueChanged.connect(
-            lambda: self.update_label(self.ui.label_graphic_contour_label_font_size,
-                                      f'{self.ui.horizontalSlider_graphic_contour_font_size.value():d} pt'))
-        self.ui.doubleSpinBox_graphic_z.valueChanged.connect(self.update_graphic_z_plane)
-        self.Signals.update_progress_bar_signal.connect(self.ui.progressBar.setValue)
-        self.Signals.calculation_complete.connect(self.update_plot)
-        self.ui.checkBox_max_heat_flux.stateChanged.connect(self.graphics_max_heat_flux_check)
-
-        # containers
-        self.__is_first_submit: bool = True
-        self.__solver_parameters: dict = dict()
-        self.__solver_results: dict = dict()
+        # Assign default values
+        self.ui.p2_in_Q_crit.setText('12.6')
 
     def example(self):
 

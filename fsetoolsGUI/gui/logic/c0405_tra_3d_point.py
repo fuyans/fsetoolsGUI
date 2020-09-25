@@ -97,7 +97,7 @@ class App(AppBaseClass):
         self.ui.lineEdit_out_q.setText(f'{receiver_heat_flux / 1000:.2f}')
         self.ui.lineEdit_out_T.setText(f'{emitter_temperature:.2f}')
 
-        # refresh ui
+        # refresh_content_size ui
         self.repaint()
 
 

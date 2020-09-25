@@ -104,8 +104,8 @@ class App(AppBaseClass):
         self.__Table = TableWindow(
             parent=self,
             window_geometry=win_geo,
-            data_list=list_content,
-            header_col=['file path', 'file name', 'url'],
+            content=list_content,
+            col_headers=['file path', 'file name', 'url'],
             window_title='Uploaded files and corresponding URL',
         )
 

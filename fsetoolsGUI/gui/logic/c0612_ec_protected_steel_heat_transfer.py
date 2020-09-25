@@ -22,11 +22,14 @@ class App(AppBaseClass):
     def __init__(self, parent=None, post_stats: bool = True):
 
         # instantiation
-        super().__init__(parent, post_stats, ui=AppBaseClassUISimplified01)
+        super().__init__(parent, post_stats=post_stats, ui=AppBaseClassUISimplified01)
 
+        self.FigureApp = PlotApp(self, title='Steel temperature plot')
+        self.TableApp = TableWindow(parent=self, window_title='Steel temperature results')
+        self.__figure_ax = self.FigureApp.add_subplot()
+        self.__output_parameters = None
         self.__fire = [AppParametricFire(self, post_stats=False), AppTravellingFire(self, post_stats=False)]
-        for i in self.__fire:
-            self.activated_dialogs.append(i)
+        self.activated_dialogs.extend(self.__fire)
 
         self.input_symbols: OrderedDict = OrderedDict(
             beam_rho=['Steel density', 'kg/m<sup>3</sup>'],
@@ -43,11 +46,6 @@ class App(AppBaseClass):
             solved_protection_thickness=['Solved protection thickness', 'mm'],
             solved_time_equivalence=['Solved time equivalence', 'min'],
         )
-
-        self.FigureApp = PlotApp(self, title='Steel temperature plot')
-        self.__figure_ax = self.FigureApp.add_subplots()
-        self.__Table = None
-        self.__output_parameters = None
 
         # ==============
         # instantiate ui
@@ -106,7 +104,6 @@ class App(AppBaseClass):
         self.input_parameters = input_kwargs
 
     def ok(self):
-
         self.output_parameters = self.calculate(**self.input_parameters)
         self.show_results_in_table()
         self.show_results_in_figure()
@@ -240,33 +237,19 @@ class App(AppBaseClass):
             self.ui.p2_in_solved_time_equivalence.setText(float2str(v['time_equivalence'] / 60))
 
     def show_results_in_table(self):
-
         output_parameters = self.output_parameters
 
         ijk = zip(output_parameters['time'], output_parameters['fire_temperature'] - 273.15, output_parameters['steel_temperature'] - 273.15)
         list_content = [[float(i), float(j), float(k)] for i, j, k in ijk]
 
-        try:
-            win_geo = self.__Table.geometry()
-            self.__Table.destroy(destroyWindow=True, destroySubWindows=True)
-            del self.__Table
-        except AttributeError as e:
-            win_geo = None
-
-        self.__Table = TableWindow(
-            parent=self,
-            window_geometry=win_geo,
-            data_list=list_content,
-            header_col=['Time [°C]', 'Fire temperature [°C]', 'Steep temperature [°C]'],
-            window_title='Steel temperature',
+        self.TableApp.update_table_content(
+            content_data=list_content,
+            col_headers=['Time [°C]', 'Fire temperature [°C]', 'Steep temperature [°C]'],
         )
-        self.activated_dialogs.append(self.__Table)
 
         self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
         self.__Table.TableView.resizeColumnsToContents()
         self.__Table.show()
-
-        return True
 
     def show_results_in_figure(self):
 
@@ -281,9 +264,9 @@ class App(AppBaseClass):
         self.__figure_ax.tick_params(axis='both', labelsize='small')
         self.__figure_ax.legend(shadow=False, edgecolor='k', fancybox=False, ncol=1, fontsize='x-small').set_visible(True)
         self.__figure_ax.grid(which='major', linestyle=':', linewidth='0.5', color='black')
-        self.FigureApp.figure.tight_layout()
-        self.FigureApp.figure_canvas.draw()
         self.FigureApp.show()
+
+        self.FigureApp.refresh_figure()
 
 
 if __name__ == '__main__':

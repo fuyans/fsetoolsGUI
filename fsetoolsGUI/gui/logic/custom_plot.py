@@ -72,17 +72,15 @@ class App(QtWidgets.QDialog):
         self.figure_canvas.setStyleSheet("background-color:transparent;border:0px")  # set background transparent.
         self.p0_layout.addWidget(self.figure_canvas)
 
-        if show_toolbar:
-            self.toolbar = NavigationToolbar(self.figure_canvas, self)
-            self.frame_layout.addWidget(self.toolbar)
-
         self.p3_layout = QHBoxLayout()
         self.p3_refresh = QPushButton('Refresh')
-        # self.p3_refresh.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
         self.p3_save_figure = QPushButton('Save')
-        # self.p3_save_figure.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
 
-        if show_xy:
+        if show_toolbar:
+            self.p3_layout.addSpacing(15)
+            self.toolbar = NavigationToolbar(self.figure_canvas, self)
+            self.p3_layout.addWidget(self.toolbar)
+        elif show_xy:
             self.p3_layout.addSpacing(15)
             in_xy = QLabel('')
             self.p3_layout.addWidget(in_xy)
@@ -104,7 +102,7 @@ class App(QtWidgets.QDialog):
     def resizeEvent(self, event):
         self.refresh_figure()
 
-    def add_subplots(self, *args, **kwargs) -> plt.Axes:
+    def add_subplot(self, *args, **kwargs) -> plt.Axes:
         ax = self.figure.add_subplot(*args, **kwargs)
         return ax
 
@@ -129,14 +127,14 @@ class App(QtWidgets.QDialog):
         event.accept()
 
 
-if __name__ == '__main__':
+def _test_1():
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = App(title='Example', show_xy=True)
+    app = App(title='Example', show_xy=True, show_toolbar=True)
     app.show()
 
-    ax = app.add_subplots()
+    ax = app.add_subplot()
     ax.fill_between([0, 1], [0, 1], [0, 0.5], facecolor='grey', alpha=0.2, label='area between lines')
     ax.plot([0, 1], [0, 1], label='line 1')
     ax.plot([0, 1], [0, 0.5], label='line 2')
@@ -149,3 +147,43 @@ if __name__ == '__main__':
     app.refresh_figure()
 
     qapp.exec_()
+
+
+def _test_2():
+    import sys
+    import numpy as np
+
+    qapp = QtWidgets.QApplication(sys.argv)
+    app = App(title='Example', show_xy=True)
+    app.show()
+
+    ax1 = app.add_subplot(121)
+    ax1.fill_between([0, 1], [0, 1], [0, 0.5], facecolor='grey', alpha=0.2, label='area between line 1 and 2')
+    ax1.plot([0, 1], [0, 1], label='line 1')
+    ax1.plot([0, 1], [0, 0.5], label='line 2')
+    ax1.set_xlabel('x label', fontsize='small')
+    ax1.set_ylabel('y label', fontsize='small')
+    ax1.tick_params(axis='both', labelsize='small')
+    ax1.legend(shadow=False, edgecolor='k', fancybox=False, ncol=1, fontsize='x-small').set_visible(True)
+    ax1.grid(which='major', linestyle=':', linewidth=0.5, color='black')
+
+    X, Y = np.meshgrid(np.arange(-3.0, 3.01, 0.1), np.arange(-3.0, 3.01, 0.1))
+    Z1 = np.exp(-X ** 2 - Y ** 2)
+    Z2 = np.exp(-(X - 1) ** 2 - (Y - 1) ** 2)
+    Z = (Z1 - Z2) * 2
+
+    ax2 = app.add_subplot(122)
+    ax2.contourf(X, Y, Z)
+    ax2.set_xlabel('x label', fontsize='small')
+    ax2.set_ylabel('y label', fontsize='small')
+    ax2.tick_params(axis='both', labelsize='small')
+    ax2.grid(which='major', linestyle=':', linewidth=0.5, color='black')
+
+    app.resize(680, 380)
+    app.refresh_figure()
+
+    qapp.exec_()
+
+
+if __name__ == '__main__':
+    _test_2()

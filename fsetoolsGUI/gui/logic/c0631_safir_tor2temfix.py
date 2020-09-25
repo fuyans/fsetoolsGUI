@@ -1,7 +1,7 @@
 import os
 
 from PySide2 import QtWidgets
-from PySide2.QtWidgets import QLabel, QGridLayout, QFileDialog, QCheckBox
+from PySide2.QtWidgets import QLabel, QGridLayout, QCheckBox
 
 from fsetoolsGUI.etc.safir import safir_tor2tem, safir_pull_tems
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
@@ -25,7 +25,7 @@ class App(AppBaseClass):
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_input_root_dir', 'Input files root dir.', '...', 0, unit_obj='QPushButton')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_input_root_dir', 'Input files root dir.', '...', unit_obj='QPushButton', min_width=200)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_tor2temfix', 'TorToTemFix.exe file path', '...', unit_obj='QPushButton')
         self.ui.p2_in_pull_tem = QCheckBox('Pull all *.tem files?')
         self.ui.p2_layout.addWidget(self.ui.p2_in_pull_tem, c.count, 0, 1, 3)
@@ -36,8 +36,11 @@ class App(AppBaseClass):
         # signals and slots
         self.ui.p2_in_fp_input_root_dir_unit.clicked.connect(lambda: self.ui.p2_in_fp_input_root_dir.setText(QtWidgets.QFileDialog.getExistingDirectory(self, 'Select folder')))
         self.ui.p2_in_fp_tor2temfix_unit.clicked.connect(
-            lambda: self.ui.p2_in_fp_tor2tem.setText(
-                os.path.realpath(QFileDialog.getOpenFileName(self, 'Select TorToTemFix executable', self.ui.p2_in_fp_tor2tem.text(), '(*.exe)')[0])
+            lambda: self.get_open_file_name(
+                'Select TorToTemFix executable',
+                '(*.exe)',
+                dir_default=self.ui.p2_in_fp_tor2temfix.text(),
+                func_to_assign_fp=self.ui.p2_in_fp_tor2temfix.setText
             )
         )
 
@@ -58,12 +61,6 @@ class App(AppBaseClass):
 
     @property
     def input_parameters(self):
-        def str2int(v_):
-            try:
-                return int(v_)
-            except ValueError:
-                return 0
-
         return dict(
             fp_input_root_dir=self.ui.p2_in_fp_input_root_dir.text(),
             fp_tor2temfix=self.ui.p2_in_fp_tor2temfix.text(),

@@ -212,14 +212,6 @@ class App(AppBaseClass):
             self.ui.p2_in_sample_value.textChanged.connect(self.__sample_value_change)
 
     @property
-    def figure(self):
-        return self.__fig
-
-    @figure.setter
-    def figure(self, fig):
-        self.__fig = fig
-
-    @property
     def input_parameters(self) -> dict:
 
         def str2float(v):
@@ -274,6 +266,7 @@ class App(AppBaseClass):
         y_pdf = dist.pdf(x)
         self.__figure_ax_pdf.plot(x, y_pdf, c='k')
         self.__figure_ax_pdf.set_ylim(bottom=0)
+        self.__figure_ax_pdf.set_ylabel('PDF', fontsize='xx-small')
         self.__figure_ax_pdf.tick_params(axis='both', direction='in', labelbottom=False)
 
         # --------
@@ -282,7 +275,8 @@ class App(AppBaseClass):
         y_cdf = dist.cdf(x)
         self.__figure_ax_cdf.plot(x, y_cdf, c='k')
         self.__figure_ax_cdf.set_ylim(bottom=0)
-        self.__figure_ax_cdf.set_yticks([0, 1])
+        self.__figure_ax_cdf.set_ylabel('CDF', fontsize='xx-small')
+        self.__figure_ax_cdf.set_yticks([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
         self.__figure_ax_cdf.tick_params(axis='both', direction='in')
 
         # -------------------------------------------------------------
@@ -301,11 +295,9 @@ class App(AppBaseClass):
         self.__figure_ax_cdf.tick_params(axis='both', which='both', labelsize='xx-small')
         self.__figure_ax_pdf.grid(which='major', linestyle=':', linewidth='0.5', color='black')
         self.__figure_ax_cdf.grid(which='major', linestyle=':', linewidth='0.5', color='black')
-        self.FigureApp.figure.tight_layout()
-        self.FigureApp.figure_canvas.draw()
         self.FigureApp.show()
 
-        return True
+        self.FigureApp.refresh_figure()
 
 
 if __name__ == '__main__':

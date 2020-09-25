@@ -258,7 +258,7 @@ def safir_tor2tem(
 
     for i in list_fp:
         try:
-            subprocess.call([fp_tor2temfix, i])
+            subprocess.call([fp_tor2temfix, i], creationflags=0x08000000)
             print(f'{i} - OK')
         except Exception as e:
             print(f'{i} - Failed')
@@ -274,7 +274,7 @@ def safir_pull_tems(dir_work: str):
 
     for fp in fps:
         dir_name = path.dirname(path.dirname(path.dirname(fp)))
-        folder_name = path.basename(path.dirname(path.dirname(fp))) + '_tem'
+        folder_name = 'tem_' + path.basename(path.dirname(path.dirname(fp)))
         file_name = path.basename(fp)
         fp_new = path.join(dir_name, folder_name, file_name)
 
@@ -291,7 +291,7 @@ def safir_pull_tems(dir_work: str):
 
 
 if __name__ == '__main__':
-    dir_work_ = r'E:\projects_FSE\!1CW\WP4\WP4_2\01_analysis\delta-2\therm2d'
+    dir_work_ = r'E:\projects_FSE\!1CW\WP4_2\01_analysis\epsilon-2\therm2d'
     fp_tor2temfix_ = r'C:\Program Files\GiD\GiD 14.1.0d\problemtypes\SAFIR2019\Safir_Thermal_2d.gid\TorToTemFix.exe'
-    safir_tor2tem(dir_work_, fp_tor2temfix_)
+    # safir_tor2tem(dir_work_, fp_tor2temfix_)
     safir_pull_tems(dir_work_)

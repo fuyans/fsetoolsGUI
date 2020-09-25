@@ -19,7 +19,7 @@ class App(AppBaseClass):
     def __init__(self, parent=None, post_stats: bool = True):
 
         # instantiation
-        super().__init__(parent, post_stats, ui=AppBaseClassUISimplified01)
+        super().__init__(parent, post_stats=post_stats, ui=AppBaseClassUISimplified01)
 
         self.input_symbols: OrderedDict = OrderedDict(
             fire_time_duration=['Duration', 'min'],
@@ -35,8 +35,8 @@ class App(AppBaseClass):
         )
 
         self.FigureApp = PlotApp(self, title='Travelling fire plot')
-        self.__figure_ax = self.FigureApp.add_subplots()
-        self.__Table = None
+        self.TableApp = TableWindow(parent=self, window_title='Travelling fire numerical results')
+        self.__figure_ax = self.FigureApp.add_subplot()
         self.__output_parameters = None
 
         c = Counter()
@@ -131,26 +131,14 @@ class App(AppBaseClass):
             [float(i), float(j)] for i, j in zip(output_parameters['time'], output_parameters['temperature'] - 273.15)
         ]
 
-        try:
-            win_geo = self.__Table.geometry()
-            self.__Table.destroy(destroyWindow=True, destroySubWindows=True)
-            del self.__Table
-        except AttributeError as e:
-            win_geo = None
-
-        self.__Table = TableWindow(
-            parent=self,
-            window_geometry=win_geo,
-            data_list=list_content,
-            header_col=['time [s]', 'temperature [°C]'],
-            window_title='Travelling fire numerical results',
+        self.TableApp.update_table_content(
+            content_data=list_content,
+            col_headers=['time [s]', 'temperature [°C]'],
         )
 
-        self.activated_dialogs.append(self.__Table)
-
-        self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
-        self.__Table.TableView.resizeColumnsToContents()
-        self.__Table.show()
+        self.TableApp.TableModel.sort(0, QtCore.Qt.AscendingOrder)
+        self.TableApp.TableView.resizeColumnsToContents()
+        self.TableApp.show()
 
         return True
 
@@ -159,15 +147,14 @@ class App(AppBaseClass):
         output_parameters = self.output_parameters
 
         self.__figure_ax.clear()
-
         self.__figure_ax.plot(output_parameters['time'] / 60, output_parameters['temperature'] - 273.15, c='k')
         self.__figure_ax.set_xlabel('Time [minute]', fontsize='small')
         self.__figure_ax.set_ylabel('Temperature [°C]', fontsize='small')
         self.__figure_ax.tick_params(axis='both', labelsize='small')
         self.__figure_ax.grid(which='major', linestyle=':', linewidth='0.5', color='black')
-        self.FigureApp.figure.tight_layout()
-        self.FigureApp.figure_canvas.draw()
         self.FigureApp.show()
+
+        self.FigureApp.refresh_figure()
 
 
 if __name__ == '__main__':

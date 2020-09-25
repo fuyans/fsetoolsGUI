@@ -68,6 +68,8 @@ def main():
 
 
 if __name__ == '__main__':
+    from buildscript.pyinstaller_build import main as pyinstaller_build_main
+    pyinstaller_build_main()
     make_nsi_file()
     make_nsh_files()
     main()

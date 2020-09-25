@@ -1,5 +1,5 @@
 import numpy as np
-from PySide2 import QtWidgets, QtCore
+from PySide2 import QtWidgets
 from PySide2.QtWidgets import QGridLayout, QLabel
 from fsetools.libstd.bs_en_1991_1_2_2002_annex_a import appendix_a_parametric_fire
 
@@ -20,9 +20,9 @@ class App(AppBaseClass):
         # ================================
         super().__init__(parent, post_stats, ui=AppBaseClassUISimplified01)
 
-        self.FigureApp = PlotApp(self, title='Parametric fire plot')
-        self.__figure_ax = self.FigureApp.add_subplots()
-        self.__Table = None
+        self.FigureApp = PlotApp(parent=self, title='Parametric fire plot')
+        self.TableApp = TableWindow(parent=self, window_title='Parametric fire results')
+        self.__figure_ax = self.FigureApp.add_subplot()
         self.__output_fire_curve = dict(time=None, temperature=None)
 
         # ================
@@ -60,7 +60,8 @@ class App(AppBaseClass):
         self.ui.p2_in_fire_limiting_time.setToolTip(
             'Associated with fire growth rate.\n'
             'Slow: 25 minutes\n'
-            'Medium: 20 minutes\nFast: 15 minutes')
+            'Medium: 20 minutes\nFast: 15 minutes'
+        )
         self.ui.p2_in_initial_temperature.setToolTip('Initial or ambient temperature')
 
     def example(self):
@@ -124,11 +125,9 @@ class App(AppBaseClass):
         self.validate(room_total_surface_area, 'unsigned float', 'Room total surface area must be a positive number')
         self.validate(room_floor_area, 'unsigned float', 'Room floor area must be a positive number')
         self.validate(ventilation_area, 'unsigned float', 'Ventilation opening area must be a positive number')
-        self.validate(ventilation_opening_height, 'unsigned float',
-                      'Ventilation opening height must be a positive number')
+        self.validate(ventilation_opening_height, 'unsigned float', 'Ventilation opening height must be a positive number')
         self.validate(fuel_density, 'unsigned float', 'Fuel density must be a positive number')
-        self.validate(lining_thermal_conductivity, 'unsigned float',
-                      'Lining thermal conductivity must be a positive number')
+        self.validate(lining_thermal_conductivity, 'unsigned float', 'Lining thermal conductivity must be a positive number')
         self.validate(lining_density, 'unsigned float', 'Lining density must be a positive number')
         self.validate(lining_thermal_heat_capacity, 'unsigned float', 'Lining heat capacity must be a positive number')
         self.validate(fire_limiting_time, 'unsigned float', 'Limiting time must be a positive number')
@@ -156,11 +155,11 @@ class App(AppBaseClass):
             elif isinstance(num, float):
                 return f'{num:.3f}'.rstrip('0').rstrip('.')
             elif isinstance(num, str):
-                return v
+                return num
             elif num is None:
                 return ''
             else:
-                return str(v)
+                return str(num)
 
         # units conversion
         v['duration'] /= 60  # seconds -> minutes
@@ -254,10 +253,12 @@ class App(AppBaseClass):
             self.statusBar().showMessage(f'Unable to show results. Error {str(e)}')
 
         self.statusBar().showMessage('Calculation complete')
-        self.repaint()
 
     def ok(self):
-        self.calculate()
+        # self.calculate()
+        self.output_parameters = self.__calculate_ec_parametric_fire_curve(**self.input_parameters)
+        self.show_results_in_table()
+        self.show_results_in_figure()
 
     def show_results_in_table(self):
 
@@ -268,27 +269,11 @@ class App(AppBaseClass):
             [float(i), float(j)] for i, j in zip(output_parameters['time'], output_parameters['temperature'] - 273.15)
         ]
 
-        try:
-            win_geo = self.__Table.geometry()
-            self.__Table.destroy(destroyWindow=True, destroySubWindows=True)
-            del self.__Table
-        except AttributeError as e:
-            win_geo = None
-
-        self.__Table = TableWindow(
-            parent=self,
-            window_geometry=win_geo,
-            data_list=list_content,
-            header_col=['time [s]', 'temperature [°C]'],
-            window_title='Parametric fire numerical results',
+        self.TableApp.update_table_content(
+            content_data=list_content,
+            col_headers=['time [s]', 'temperature [°C]'],
         )
-        self.activated_dialogs.append(self.__Table)
-
-        self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
-        self.__Table.TableView.resizeColumnsToContents()
-        self.__Table.show()
-
-        return True
+        self.TableApp.show()
 
     def show_results_in_figure(self):
 
@@ -300,9 +285,9 @@ class App(AppBaseClass):
         self.__figure_ax.set_ylabel('Temperature [°C]', fontsize='small')
         self.__figure_ax.tick_params(axis='both', labelsize='small')
         self.__figure_ax.grid(which='major', linestyle=':', linewidth='0.5', color='black')
-        self.FigureApp.figure.tight_layout()
-        self.FigureApp.figure_canvas.draw()
+
         self.FigureApp.show()
+        self.FigureApp.refresh_figure()
 
 
 if __name__ == "__main__":
