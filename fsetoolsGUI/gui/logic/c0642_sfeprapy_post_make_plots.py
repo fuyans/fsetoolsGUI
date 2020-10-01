@@ -204,14 +204,15 @@ class App(AppBaseClass):
         dict_teq_cdf = {k: np.cumsum(v) for k, v in dict_teq_pdf.items()}
 
         # Calculate design failure probability due to fire for individual compartments
-        dict_P = dict()
+        dict_P, is_probabilities_defined = dict(), False
         try:
             assert all([i in df_input.index for i in ['p1', 'p2', 'p3', 'p4', 'general_room_floor_area']])
             for k, teq_cdf in dict_teq_cdf.items():
                 dict_P[k] = np.product([df_input.loc[i, k] for i in ['p1', 'p2', 'p3', 'p4', 'general_room_floor_area']])
+            is_probabilities_defined = True
         except AssertionError:
             logger.warning('Failed to parse p1, p2, p3, p4 and general_room_floor_area, they are not defined in the input file, a unity is assigned')
-            dict_P = {k: 1 for k in dict_teq_cdf.keys()}
+            dict_P = {k: 1 for k in dict_teq_cdf.keys()}  # this is to prevent error in following codes
 
         dict_P_r_fi_i_weighted = {key: time_equivalence * (dict_P[key] / sum(dict_P.values())) for key, time_equivalence in dict_teq_cdf.items()}
         dict_P_f_d_i = {key: (1 - teq) * dict_P[key] for key, teq in dict_teq_cdf.items()}
@@ -250,7 +251,7 @@ class App(AppBaseClass):
             xlim_step=figure_xstep,
         )
         fig.savefig('2-P_r_fi_i.png', dpi=300, bbox_inches='tight', transparent=True)
-        P_r_fi_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in [30.1, 60.1, 90.1, 120.1, 150.1, 180.1, 210.1, 240.1]]].to_csv('1-P_r_fi_i.csv')
+        P_r_fi_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in [30.1, 60.1, 90.1, 120.1, 150.1, 180.1, 210.1, 240.1]]].to_csv('2-P_r_fi_i.csv')
 
         fig, ax = lineplot(
             x=[x],
@@ -271,18 +272,19 @@ class App(AppBaseClass):
             qt_progress_signal_1.emit('3/7')
 
         # plot failure probability due to structurally significant fire
-        fig, ax = lineplot(
-            x=[x] * len(case_names),
-            y=[1 - dict_teq_cdf[i] for i in case_names],
-            legend_labels=case_names,
-            n_legend_col=figure_legend_cols,
-            xlabel='Equivalent of Time Exposure [$min$]',
-            ylabel='$P_{f,fi}$ [-]',
-            figsize=(figure_width, figure_height),
-            xlim=(figure_xmin, figure_xmax),
-            xlim_step=figure_xstep,
-        )
-        fig.savefig('3-P_f_fi_i.png', dpi=300, bbox_inches='tight', transparent=True)
+        if is_probabilities_defined:
+            fig, ax = lineplot(
+                x=[x] * len(case_names),
+                y=[1 - dict_teq_cdf[i] for i in case_names],
+                legend_labels=case_names,
+                n_legend_col=figure_legend_cols,
+                xlabel='Equivalent of Time Exposure [$min$]',
+                ylabel='$P_{f,fi}$ [-]',
+                figsize=(figure_width, figure_height),
+                xlim=(figure_xmin, figure_xmax),
+                xlim_step=figure_xstep,
+            )
+            fig.savefig('3-P_f_fi_i.png', dpi=300, bbox_inches='tight', transparent=True)
 
         if qt_progress_signal_0:
             qt_progress_signal_0.emit(25 + 15 + 15 + 15)
@@ -290,20 +292,21 @@ class App(AppBaseClass):
             qt_progress_signal_1.emit('4/7')
 
         # plot failure probability due to fire
-        fig, ax = lineplot(
-            x=[x] * len(case_names),
-            y=[dict_P_f_d_i[i] for i in case_names],
-            legend_labels=case_names,
-            n_legend_col=figure_legend_cols,
-            xlabel='Equivalent of Time Exposure [$min$]',
-            ylabel='Failure Probability [$year^{-1}$]',
-            figsize=(figure_width, figure_height),
-            xlim=(figure_xmin, figure_xmax),
-            xlim_step=figure_xstep,
-        )
-        fig.savefig('4-P_fd_i.png', dpi=300, bbox_inches='tight', transparent=True)
+        if is_probabilities_defined:
+            fig, ax = lineplot(
+                x=[x] * len(case_names),
+                y=[dict_P_f_d_i[i] for i in case_names],
+                legend_labels=case_names,
+                n_legend_col=figure_legend_cols,
+                xlabel='Equivalent of Time Exposure [$min$]',
+                ylabel='Failure Probability [$year^{-1}$]',
+                figsize=(figure_width, figure_height),
+                xlim=(figure_xmin, figure_xmax),
+                xlim_step=figure_xstep,
+            )
+            fig.savefig('4-P_fd_i.png', dpi=300, bbox_inches='tight', transparent=True)
 
-        P_f_d_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in [30.1, 60.1, 90.1, 120.1, 150.1, 180.1, 210.1, 240.1]]].to_csv('4-P_f_d_i.csv')
+            P_f_d_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in [30.1, 60.1, 90.1, 120.1, 150.1, 180.1, 210.1, 240.1]]].to_csv('4-P_f_d_i.csv')
 
         if qt_progress_signal_0:
             qt_progress_signal_0.emit(25 + 15 + 15 + 15 + 15)
@@ -311,18 +314,19 @@ class App(AppBaseClass):
             qt_progress_signal_1.emit('6/7')
 
         # plot combined failure probability due to fire
-        fig, ax = lineplot(
-            x=[x],
-            y=[np.sum([v for k, v in dict_P_f_d_i.items()], axis=0)],
-            legend_labels=[None],
-            n_legend_col=figure_legend_cols,
-            xlabel='Equivalent of Time Exposure [$min$]',
-            ylabel='Failure Probability [$year^{-1}$]',
-            figsize=(figure_width, figure_height),
-            xlim=(figure_xmin, figure_xmax),
-            xlim_step=figure_xstep,
-        )
-        fig.savefig('5-P_fd.png', dpi=300, bbox_inches='tight', transparent=True)
+        if is_probabilities_defined:
+            fig, ax = lineplot(
+                x=[x],
+                y=[np.sum([v for k, v in dict_P_f_d_i.items()], axis=0)],
+                legend_labels=[None],
+                n_legend_col=figure_legend_cols,
+                xlabel='Equivalent of Time Exposure [$min$]',
+                ylabel='Failure Probability [$year^{-1}$]',
+                figsize=(figure_width, figure_height),
+                xlim=(figure_xmin, figure_xmax),
+                xlim_step=figure_xstep,
+            )
+            fig.savefig('5-P_fd.png', dpi=300, bbox_inches='tight', transparent=True)
 
         if qt_progress_signal_0:
             qt_progress_signal_0.emit(100)
