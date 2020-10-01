@@ -215,7 +215,7 @@ class App(AppBaseClass):
             cls = self.calculate(self.input_parameters)
             self.output_parameters = cls.output_kwargs
             logger.info('Successfully completed calculation')
-            self.statusBar().showMessage('Calculation complete')
+            self.statusBar().showMessage('Calculation complete', timeout=10 * 1e3)
         except Exception as e:
             logger.error(f'Failed to complete calculation, {e}')
             self.statusBar().showMessage(f'{e}', timeout=10 * 1e3)
@@ -223,6 +223,7 @@ class App(AppBaseClass):
 
         if self.ui.p2_in_make_pdf.isChecked():
             logger.info('Making local PDF ...')
+            self.statusBar().showMessage('Making local PDF ...', timeout=10 * 1e3)
             try:
                 if shutil.which('latexmk'):
                     temp = tempfile.NamedTemporaryFile(suffix='.pdf')

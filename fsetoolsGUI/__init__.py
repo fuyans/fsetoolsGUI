@@ -28,9 +28,8 @@ def __get_logger():
     c_handler = logging.StreamHandler()
     c_handler.setLevel(logging.INFO)
     c_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s'))
+    c_handler.setLevel(logging.DEBUG)
     logger_.addHandler(c_handler)
-
-    logger_.setLevel(logging.DEBUG)
 
     return logger_
 

@@ -31,6 +31,7 @@ from fsetoolsGUI.gui.logic.c0612_ec_protected_steel_heat_transfer import App as 
 from fsetoolsGUI.gui.logic.c0620_probability_distribution import App as App0620
 from fsetoolsGUI.gui.logic.c0630_safir_batch_run import App as App0630
 from fsetoolsGUI.gui.logic.c0631_safir_tor2temfix import App as App0631
+from fsetoolsGUI.gui.logic.c0639_safir_post_processor_old import App as App0639
 from fsetoolsGUI.gui.logic.c0640_sfeprapy_mcs0 import App as App0640
 from fsetoolsGUI.gui.logic.c0641_sfeprapy_pre_bluebeam import App as App0641
 from fsetoolsGUI.gui.logic.c0642_sfeprapy_post_make_plots import App as App0642
@@ -68,6 +69,7 @@ class AppsCollection:
         '0620': App0620,
         '0630': App0630,
         '0631': App0631,
+        '0639': App0639,
         '0640': App0640,
         '0641': App0641,
         '0642': App0642,

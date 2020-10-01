@@ -66,6 +66,7 @@ class ProgressBar(QtWidgets.QDialog):
         # ======================
         self.Signals.progress.connect(self.update_progress_bar)
         self.Signals.progress_label.connect(self.update_progress_label)
+        self.Signals.complete.connect(self.complete)
 
         self.resize(300, 50)
 
@@ -76,6 +77,12 @@ class ProgressBar(QtWidgets.QDialog):
     @QtCore.Slot(str)
     def update_progress_label(self, text: str):
         self.progress_label.setText(text)
+
+    @QtCore.Slot(bool)
+    def complete(self, status: bool):
+        if status:
+            self.progressbar.setValue(100)
+            self.progress_label.setText('Complete')
 
 
 class Counter:
