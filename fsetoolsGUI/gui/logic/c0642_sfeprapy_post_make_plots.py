@@ -164,61 +164,74 @@ class App(AppBaseClass):
         # ===============
         # load input data
         # ===============
-        df_input = pd.read_excel(fp_mcs_input, index_col=0)
+        try:
+            df_input = pd.read_excel(fp_mcs_input, index_col=0)
+        except Exception as e:
+            logger.error(f'{e}')
 
         # ================
         # load output data
         # ================
-        fp_csvs = [join(root, f) for root, dirs, files in os.walk(fp_mcs_output_dir) for f in files if f.endswith('.csv')]
-        df_output: pd.DataFrame = pd.concat([pd.read_csv(fp) for fp in tqdm(fp_csvs)])
-        df_output = df_output.loc[:, ~df_output.columns.str.contains('^Unnamed')]  # remove potential index column
-        df_output.dropna(subset=['solver_time_equivalence_solved'], inplace=True)  # get rid of iterations without convergence for time equivalence
+        try:
+            fp_csvs = [join(root, f) for root, dirs, files in os.walk(fp_mcs_output_dir) for f in files if f.endswith('.csv')]
+            df_output: pd.DataFrame = pd.concat([pd.read_csv(fp) for fp in tqdm(fp_csvs)])
+            df_output = df_output.loc[:, ~df_output.columns.str.contains('^Unnamed')]  # remove potential index column
+            df_output.dropna(subset=['solver_time_equivalence_solved'], inplace=True)  # get rid of iterations without convergence for time equivalence
+        except Exception as e:
+            logger.error(f'{e}')
+            return
 
         # =================
         # clean output data
         # =================
-
-        df_output.replace('', np.inf, inplace=True)
-        s = df_output['solver_time_equivalence_solved']
-        assert all(s.values != np.nan)  # make sure all values are numerical
-        df_output.loc[df_output['solver_time_equivalence_solved'] == np.inf, 'solver_time_equivalence_solved'] = np.amax(s[s < np.inf])
-        df_output.loc[df_output['solver_time_equivalence_solved'] == -np.inf, 'solver_time_equivalence_solved'] = np.amin(s[s > -np.inf])
-        df_output.loc[df_output['solver_time_equivalence_solved'] == np.nan, 'solver_time_equivalence_solved'] = np.inf
-        df_output.loc[df_output['solver_time_equivalence_solved'] > 18000, 'solver_time_equivalence_solved'] = 18000.
-        df_output['solver_time_equivalence_solved'] = df_output['solver_time_equivalence_solved'] / 60.  # Unit from second to minute
-        assert df_output['solver_time_equivalence_solved'].max() != np.inf
-        assert df_output['solver_time_equivalence_solved'].max() <= 300.
-        assert df_output['solver_time_equivalence_solved'].min() != -np.inf
+        try:
+            df_output.replace('', np.inf, inplace=True)
+            s = df_output['solver_time_equivalence_solved']
+            assert all(s.values != np.nan)  # make sure all values are numerical
+            df_output.loc[df_output['solver_time_equivalence_solved'] == np.inf, 'solver_time_equivalence_solved'] = np.amax(s[s < np.inf])
+            df_output.loc[df_output['solver_time_equivalence_solved'] == -np.inf, 'solver_time_equivalence_solved'] = np.amin(s[s > -np.inf])
+            df_output.loc[df_output['solver_time_equivalence_solved'] == np.nan, 'solver_time_equivalence_solved'] = np.inf
+            df_output.loc[df_output['solver_time_equivalence_solved'] > 18000, 'solver_time_equivalence_solved'] = 18000.
+            df_output['solver_time_equivalence_solved'] = df_output['solver_time_equivalence_solved'] / 60.  # Unit from second to minute
+            assert df_output['solver_time_equivalence_solved'].max() != np.inf
+            assert df_output['solver_time_equivalence_solved'].max() <= 300.
+            assert df_output['solver_time_equivalence_solved'].min() != -np.inf
+        except Exception as e:
+            logger.error(f'{e}')
+            return
 
         # =========================
         # prepare intermediate data
         # =========================
-
-        case_names = sorted(set(df_output['case_name']))
-        edges = np.arange(0, 300 + bin_width, bin_width)
-        x = (edges[1:] + edges[:-1]) / 2  # make x-axis values, i.e. time equivalence
-
-        # Calculate the PDF and CDF of time equivalence, based upon the x-axis array
-        dict_teq = {case_name: s[df_output['case_name'] == case_name].values for case_name in set(df_output['case_name'])}
-        dict_teq_pdf = {k: np.histogram(v, edges)[0] / len(v) for k, v in dict_teq.items()}
-        dict_teq_cdf = {k: np.cumsum(v) for k, v in dict_teq_pdf.items()}
-
-        # Calculate design failure probability due to fire for individual compartments
-        dict_P, is_probabilities_defined = dict(), False
         try:
-            assert all([i in df_input.index for i in ['p1', 'p2', 'p3', 'p4', 'general_room_floor_area']])
-            for k, teq_cdf in dict_teq_cdf.items():
-                dict_P[k] = np.product([df_input.loc[i, k] for i in ['p1', 'p2', 'p3', 'p4', 'general_room_floor_area']])
-            is_probabilities_defined = True
-        except AssertionError:
-            logger.warning('Failed to parse p1, p2, p3, p4 and general_room_floor_area, they are not defined in the input file, a unity is assigned')
-            dict_P = {k: 1 for k in dict_teq_cdf.keys()}  # this is to prevent error in following codes
+            case_names = sorted(set(df_output['case_name']))
+            edges = np.arange(0, 300 + bin_width, bin_width)
+            x = (edges[1:] + edges[:-1]) / 2  # make x-axis values, i.e. time equivalence
 
-        dict_P_r_fi_i_weighted = {key: time_equivalence * (dict_P[key] / sum(dict_P.values())) for key, time_equivalence in dict_teq_cdf.items()}
-        dict_P_f_d_i = {key: (1 - teq) * dict_P[key] for key, teq in dict_teq_cdf.items()}
+            # Calculate the PDF and CDF of time equivalence, based upon the x-axis array
+            dict_teq = {case_name: s[df_output['case_name'] == case_name].values for case_name in set(df_output['case_name'])}
+            dict_teq_pdf = {k: np.histogram(v, edges)[0] / len(v) for k, v in dict_teq.items()}
+            dict_teq_cdf = {k: np.cumsum(v) for k, v in dict_teq_pdf.items()}
 
-        P_r_fi_i = pd.DataFrame.from_dict({'TIME [min]': x, **dict_teq_cdf}).set_index('TIME [min]')
-        P_f_d_i = pd.DataFrame.from_dict({'TIME [min]': x, **dict_P_f_d_i}).set_index('TIME [min]')
+            # Calculate design failure probability due to fire for individual compartments
+            dict_P, is_probabilities_defined = dict(), False
+            try:
+                assert all([i in df_input.index for i in ['p1', 'p2', 'p3', 'p4', 'general_room_floor_area']])
+                for k, teq_cdf in dict_teq_cdf.items():
+                    dict_P[k] = np.product([df_input.loc[i, k] for i in ['p1', 'p2', 'p3', 'p4', 'general_room_floor_area']])
+                is_probabilities_defined = True
+            except AssertionError:
+                logger.warning('Failed to parse p1, p2, p3, p4 and general_room_floor_area, they are not defined in the input file, a unity is assigned')
+                dict_P = {k: 1 for k in dict_teq_cdf.keys()}  # this is to prevent error in following codes
+
+            dict_P_r_fi_i_weighted = {key: time_equivalence * (dict_P[key] / sum(dict_P.values())) for key, time_equivalence in dict_teq_cdf.items()}
+            dict_P_f_d_i = {key: (1 - teq) * dict_P[key] for key, teq in dict_teq_cdf.items()}
+
+            P_r_fi_i = pd.DataFrame.from_dict({'TIME [min]': x, **dict_teq_cdf}).set_index('TIME [min]')
+            P_f_d_i = pd.DataFrame.from_dict({'TIME [min]': x, **dict_P_f_d_i}).set_index('TIME [min]')
+        except Exception as e:
+            logger.error(f'{e}')
+            return
 
         if qt_progress_signal_0:
             qt_progress_signal_0.emit(25)
@@ -230,41 +243,54 @@ class App(AppBaseClass):
         # =====================
 
         # plot time equivalence in subplots matrix
-        fig, ax = lineplot_matrix(dict_teq, n_cols=figure_matrix_cols, figsize=(figure_matrix_width, figure_matrix_height))
-        fig.savefig('1-P_r_fi_i.png', dpi=300, bbox_inches='tight')
+        try:
+            if len(dict_teq) > 1:
+                fig, ax = lineplot_matrix(dict_teq, n_cols=figure_matrix_cols, figsize=(figure_matrix_width, figure_matrix_height))
+                fig.savefig('1-P_r_fi_i.png', dpi=300, bbox_inches='tight')
+            else:
+                logger.warning('Skipped P_r_fi_i matrix line plot as only one dataset is provided')
 
-        if qt_progress_signal_0:
-            qt_progress_signal_0.emit(25 + 15)
-        if qt_progress_signal_1:
-            qt_progress_signal_1.emit('2/7')
+            if qt_progress_signal_0:
+                qt_progress_signal_0.emit(25 + 15)
+            if qt_progress_signal_1:
+                qt_progress_signal_1.emit('2/7')
+        except Exception as e:
+            logger.error(f'{e}')
 
         # plot and save time equivalence in one figure
-        fig, ax = lineplot(
-            x=[x] * len(case_names),
-            y=[dict_teq_cdf[i] for i in case_names],
-            legend_labels=case_names,
-            n_legend_col=figure_legend_cols,
-            xlabel='Equivalent of Time Exposure [$min$]',
-            ylabel='$P_{r,fi}$ [-]',
-            figsize=(figure_width, figure_height),
-            xlim=(figure_xmin, figure_xmax),
-            xlim_step=figure_xstep,
-        )
-        fig.savefig('2-P_r_fi_i.png', dpi=300, bbox_inches='tight', transparent=True)
-        P_r_fi_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in [30.1, 60.1, 90.1, 120.1, 150.1, 180.1, 210.1, 240.1]]].to_csv('2-P_r_fi_i.csv')
+        try:
+            fig, ax = lineplot(
+                x=[x] * len(case_names),
+                y=[dict_teq_cdf[i] for i in case_names],
+                legend_labels=case_names,
+                n_legend_col=figure_legend_cols,
+                xlabel='Equivalent of Time Exposure [$min$]',
+                ylabel='$P_{r,fi}$ [-]',
+                figsize=(figure_width, figure_height),
+                xlim=(figure_xmin, figure_xmax),
+                xlim_step=figure_xstep,
+            )
+            fig.savefig('2-P_r_fi_i.png', dpi=300, bbox_inches='tight', transparent=True)
+            _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
+            P_r_fi_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in _]].to_csv('2-P_r_fi_i.csv')
+        except Exception as e:
+            logger.error(f'{e}')
 
-        fig, ax = lineplot(
-            x=[x],
-            y=[np.sum([v for k, v in dict_P_r_fi_i_weighted.items()], axis=0)],
-            legend_labels=[None],
-            n_legend_col=figure_legend_cols,
-            xlabel='Equivalent of Time Exposure [$min$]',
-            ylabel='Combined $P_{r,fi}$ [-]',
-            figsize=(figure_width, figure_height),
-            xlim=(figure_xmin, figure_xmax),
-            xlim_step=figure_xstep,
-        )
-        fig.savefig('2-P_r_fi_i_combined.png', dpi=300, bbox_inches='tight', transparent=True)
+        try:
+            fig, ax = lineplot(
+                x=[x],
+                y=[np.sum([v for k, v in dict_P_r_fi_i_weighted.items()], axis=0)],
+                legend_labels=[None],
+                n_legend_col=figure_legend_cols,
+                xlabel='Equivalent of Time Exposure [$min$]',
+                ylabel='Combined $P_{r,fi}$ [-]',
+                figsize=(figure_width, figure_height),
+                xlim=(figure_xmin, figure_xmax),
+                xlim_step=figure_xstep,
+            )
+            fig.savefig('2-P_r_fi_i_combined.png', dpi=300, bbox_inches='tight', transparent=True)
+        except Exception as e:
+            logger.error(f'{e}')
 
         if qt_progress_signal_0:
             qt_progress_signal_0.emit(25 + 15 + 15)
@@ -272,19 +298,22 @@ class App(AppBaseClass):
             qt_progress_signal_1.emit('3/7')
 
         # plot failure probability due to structurally significant fire
-        if is_probabilities_defined:
-            fig, ax = lineplot(
-                x=[x] * len(case_names),
-                y=[1 - dict_teq_cdf[i] for i in case_names],
-                legend_labels=case_names,
-                n_legend_col=figure_legend_cols,
-                xlabel='Equivalent of Time Exposure [$min$]',
-                ylabel='$P_{f,fi}$ [-]',
-                figsize=(figure_width, figure_height),
-                xlim=(figure_xmin, figure_xmax),
-                xlim_step=figure_xstep,
-            )
-            fig.savefig('3-P_f_fi_i.png', dpi=300, bbox_inches='tight', transparent=True)
+        try:
+            if is_probabilities_defined:
+                fig, ax = lineplot(
+                    x=[x] * len(case_names),
+                    y=[1 - dict_teq_cdf[i] for i in case_names],
+                    legend_labels=case_names,
+                    n_legend_col=figure_legend_cols,
+                    xlabel='Equivalent of Time Exposure [$min$]',
+                    ylabel='$P_{f,fi}$ [-]',
+                    figsize=(figure_width, figure_height),
+                    xlim=(figure_xmin, figure_xmax),
+                    xlim_step=figure_xstep,
+                )
+                fig.savefig('3-P_f_fi_i.png', dpi=300, bbox_inches='tight', transparent=True)
+        except Exception as e:
+            logger.error(f'{e}')
 
         if qt_progress_signal_0:
             qt_progress_signal_0.emit(25 + 15 + 15 + 15)
@@ -292,21 +321,24 @@ class App(AppBaseClass):
             qt_progress_signal_1.emit('4/7')
 
         # plot failure probability due to fire
-        if is_probabilities_defined:
-            fig, ax = lineplot(
-                x=[x] * len(case_names),
-                y=[dict_P_f_d_i[i] for i in case_names],
-                legend_labels=case_names,
-                n_legend_col=figure_legend_cols,
-                xlabel='Equivalent of Time Exposure [$min$]',
-                ylabel='Failure Probability [$year^{-1}$]',
-                figsize=(figure_width, figure_height),
-                xlim=(figure_xmin, figure_xmax),
-                xlim_step=figure_xstep,
-            )
-            fig.savefig('4-P_fd_i.png', dpi=300, bbox_inches='tight', transparent=True)
+        try:
+            if is_probabilities_defined:
+                fig, ax = lineplot(
+                    x=[x] * len(case_names),
+                    y=[dict_P_f_d_i[i] for i in case_names],
+                    legend_labels=case_names,
+                    n_legend_col=figure_legend_cols,
+                    xlabel='Equivalent of Time Exposure [$min$]',
+                    ylabel='Failure Probability [$year^{-1}$]',
+                    figsize=(figure_width, figure_height),
+                    xlim=(figure_xmin, figure_xmax),
+                    xlim_step=figure_xstep,
+                )
+                fig.savefig('4-P_fd_i.png', dpi=300, bbox_inches='tight', transparent=True)
 
-            P_f_d_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in [30.1, 60.1, 90.1, 120.1, 150.1, 180.1, 210.1, 240.1]]].to_csv('4-P_f_d_i.csv')
+                P_f_d_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in [30.1, 60.1, 90.1, 120.1, 150.1, 180.1, 210.1, 240.1]]].to_csv('4-P_f_d_i.csv')
+        except Exception as e:
+            logger.error(f'{e}')
 
         if qt_progress_signal_0:
             qt_progress_signal_0.emit(25 + 15 + 15 + 15 + 15)
@@ -314,19 +346,22 @@ class App(AppBaseClass):
             qt_progress_signal_1.emit('6/7')
 
         # plot combined failure probability due to fire
-        if is_probabilities_defined:
-            fig, ax = lineplot(
-                x=[x],
-                y=[np.sum([v for k, v in dict_P_f_d_i.items()], axis=0)],
-                legend_labels=[None],
-                n_legend_col=figure_legend_cols,
-                xlabel='Equivalent of Time Exposure [$min$]',
-                ylabel='Failure Probability [$year^{-1}$]',
-                figsize=(figure_width, figure_height),
-                xlim=(figure_xmin, figure_xmax),
-                xlim_step=figure_xstep,
-            )
-            fig.savefig('5-P_fd.png', dpi=300, bbox_inches='tight', transparent=True)
+        try:
+            if is_probabilities_defined:
+                fig, ax = lineplot(
+                    x=[x],
+                    y=[np.sum([v for k, v in dict_P_f_d_i.items()], axis=0)],
+                    legend_labels=[None],
+                    n_legend_col=figure_legend_cols,
+                    xlabel='Equivalent of Time Exposure [$min$]',
+                    ylabel='Failure Probability [$year^{-1}$]',
+                    figsize=(figure_width, figure_height),
+                    xlim=(figure_xmin, figure_xmax),
+                    xlim_step=figure_xstep,
+                )
+                fig.savefig('5-P_fd.png', dpi=300, bbox_inches='tight', transparent=True)
+        except Exception as e:
+            logger.error(f'{e}')
 
         if qt_progress_signal_0:
             qt_progress_signal_0.emit(100)
