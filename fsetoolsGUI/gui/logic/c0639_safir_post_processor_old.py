@@ -60,7 +60,7 @@ class ProgressBar(QtWidgets.QDialog):
 
 
 class App(AppBaseClass):
-    app_id = '0630'
+    app_id = '0639'
     app_name_short = 'Safir\npost\nprocsser'
     app_name_long = 'Safir post processor'
 
@@ -427,8 +427,8 @@ class App(AppBaseClass):
         self.__Table = TableWindow(
             parent=self,
             window_geometry=win_geo,
-            data_list=list_content,
-            header_col=['time'] + list_label,
+            content=list_content,
+            col_headers=['time'] + list_label,
             window_title='Table',
         )
 
@@ -444,7 +444,7 @@ class App(AppBaseClass):
 
         if self.__Figure is None:
             self.__Figure = PlotApp(self, title='Figure')
-            self.__Figure_ax = self.__Figure.add_subplots()
+            self.__Figure_ax = self.__Figure.add_subplot()
             self.activated_dialogs = self.__Figure
             self.activated_dialogs = self.__Figure_ax
         else:
