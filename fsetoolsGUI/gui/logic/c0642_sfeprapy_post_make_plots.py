@@ -168,6 +168,7 @@ class App(AppBaseClass):
             df_input = pd.read_excel(fp_mcs_input, index_col=0)
         except Exception as e:
             logger.error(f'{e}')
+            return
 
         # ================
         # load output data
@@ -216,6 +217,11 @@ class App(AppBaseClass):
             # Calculate design failure probability due to fire for individual compartments
             dict_P, is_probabilities_defined = dict(), False
             try:
+                _ = df_input.index.tolist()
+                if 'representative_floor_area' in _:
+                    _[_.index('representative_floor_area')] = 'general_room_floor_area'
+                    df_input.index = _
+
                 assert all([i in df_input.index for i in ['p1', 'p2', 'p3', 'p4', 'general_room_floor_area']])
                 for k, teq_cdf in dict_teq_cdf.items():
                     dict_P[k] = np.product([df_input.loc[i, k] for i in ['p1', 'p2', 'p3', 'p4', 'general_room_floor_area']])
@@ -335,8 +341,8 @@ class App(AppBaseClass):
                     xlim_step=figure_xstep,
                 )
                 fig.savefig('4-P_fd_i.png', dpi=300, bbox_inches='tight', transparent=True)
-
-                P_f_d_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in [30.1, 60.1, 90.1, 120.1, 150.1, 180.1, 210.1, 240.1]]].to_csv('4-P_f_d_i.csv')
+                _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
+                P_f_d_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in _]].to_csv('4-P_f_d_i.csv')
         except Exception as e:
             logger.error(f'{e}')
 
