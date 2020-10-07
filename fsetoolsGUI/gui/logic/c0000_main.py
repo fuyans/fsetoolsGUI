@@ -1,3 +1,4 @@
+import logging
 import threading
 from os import path
 
@@ -43,6 +44,33 @@ try:
     qt_css = open(path.join(__root_dir__, 'gui', 'style.css'), "r").read()
 except FileNotFoundError:
     raise FileNotFoundError('UI style file not found')
+
+
+class QPlainTextEditLogger(logging.Handler):
+    def __init__(self, parent):
+        super().__init__()
+        self.widget = QtWidgets.QPlainTextEdit(parent)
+        self.widget.setReadOnly(True)
+
+    def emit(self, record):
+        msg = self.format(record)
+        self.widget.appendPlainText(msg)
+
+
+class QDialogLogger(QtWidgets.QDialog, QPlainTextEditLogger):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        self.setWindowFlag(QtCore.Qt.WindowContextHelpButtonHint, False)
+
+        qt_logger = QPlainTextEditLogger(self)
+        qt_logger.setLevel(logging.DEBUG)
+        qt_logger.setFormatter(logging.Formatter('%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s'))
+        logger.addHandler(qt_logger)
+
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(qt_logger.widget)
+        self.setLayout(layout)
 
 
 class AppsCollection:
@@ -102,7 +130,7 @@ class AppsCollection:
         with open(self.doc_file_path(code), 'r') as f:
             return f.read()
 
-    def print_all_app_info(self, sort_by:str='module_code', html:bool=True):
+    def print_all_app_info(self, sort_by: str = 'module_code', html: bool = True):
         module_code = list(self.__apps.keys())
         module_app_name_long = list()
 
@@ -203,6 +231,9 @@ class App(QMainWindow):
         self.setWindowIcon(QtGui.QPixmap(path.join(__root_dir__, 'gui', 'icons', 'LOGO_1_80_80.png')))
         # self.setWindowFlag(QtCore.Qt.MSWindowsFixedSizeDialogHint)
 
+        self.LoggerApp = QDialogLogger(parent=self)
+        self.LoggerApp.hide()
+
         self.add_buttons()
 
         # check update
@@ -246,7 +277,11 @@ class App(QMainWindow):
         layout.addWidget(QLabel(f'<b>{label}</b>'), row_i.count, col_0, 1, cols)
         for v in button_id_list:
             act_app = self.__apps.activate_app(v, self)
-            setattr(self.ui, f'p2_in_{v}', QPushButton(self.__apps.app_name_short(v)))
+            btn = QPushButton(self.__apps.app_name_short(v))
+            btn.setAutoDefault(True)  # click button upon Enter
+            # remove button padding to maximum text area
+            btn.setStyleSheet("QPushButton {padding-left: 1px; padding-right: 1px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #d2d1d2; border-radius: 3px}")
+            setattr(self.ui, f'p2_in_{v}', btn)
             getattr(self.ui, f'p2_in_{v}').clicked.connect(act_app)
             getattr(self.ui, f'p2_in_{v}').setFixedSize(76, 76)
             layout.addWidget(getattr(self.ui, f'p2_in_{v}'), row_i.value, col_i.count, 1, 1)
@@ -268,7 +303,6 @@ class App(QMainWindow):
                 pushButton.setEnabled(v)
 
     def activate_app_module_id(self):
-
         if self.is_executable:
             txt, ok = QInputDialog.getText(
                 self,
@@ -292,7 +326,7 @@ class App(QMainWindow):
         target = ''.join([chr(ord(v) + i % 10) for i, v in enumerate(__remote_version_url__)])
         try:
             self.update_data = requests.get(target).json()
-            logger.info(f'Successfully parsed update data.')
+            logger.info(f'Successfully parsed update data')
             logger.debug(f'{str(self.update_data)}.')
         except Exception as e:
             self.update_data = {}  # assign an empty dict if failed to parse remote version info
@@ -421,9 +455,12 @@ class App(QMainWindow):
         self.__activated_dialogs.append(d)
 
     def keyPressEvent(self, event):
-        logger.info(f'{event.key()} key pressed.')
+        # logger.info(f'{event.key()} key pressed.')
         if event.modifiers() & QtCore.Qt.ShiftModifier and event.key() == QtCore.Qt.Key_D:
             self.activate_app_module_id()
+        elif event.modifiers() & QtCore.Qt.ShiftModifier and event.key() == QtCore.Qt.Key_L:
+            self.LoggerApp.show()
+            self.LoggerApp.adjustSize()
         event.accept()
 
 
