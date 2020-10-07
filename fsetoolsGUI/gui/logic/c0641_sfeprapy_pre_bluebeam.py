@@ -6,6 +6,7 @@ from PySide2.QtWidgets import QGridLayout, QLabel
 
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.logic.c0000_utilities import Counter
+from fsetoolsGUI import logger
 
 
 class App(AppBaseClass):
@@ -19,6 +20,8 @@ class App(AppBaseClass):
         # instantiation super and setup ui
         # ================================
         super().__init__(parent, post_stats, ui=AppBaseClassUISimplified01)
+        self.__database = None
+        self.__measurements = None
 
         # ================
         # instantiation ui
@@ -27,13 +30,6 @@ class App(AppBaseClass):
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
-        # self.ui.p2_layout.addWidget(QLabel('Database'), c.value, 0, 1, 1)
-        # self.ui.p2_in_fp_database = QLineEdit()
-        # self.ui.p2_in_fp_database.setMinimumWidth(150)
-        # self.ui.p2_layout.addWidget(self.ui.p2_in_fp_database, c.value, 1, 1, 1)
-        # self.ui.p2_in_fp_database_unit = QPushButton('Select')
-        # self.ui.p2_in_fp_database_unit.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
-        # self.ui.p2_layout.addWidget(self.ui.p2_in_fp_database_unit, c.count, 2, 1, 1)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_database', 'Database file path', '...', 150, unit_obj='QPushButton')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_bluebeam_measurements', 'Measurements file path', '...', 150, unit_obj='QPushButton')
         data_description = QLabel(
@@ -57,6 +53,9 @@ class App(AppBaseClass):
         # =================
         self.ui.p2_in_fp_database_unit.clicked.connect(
             lambda: self.get_open_file_name('Select database', 'Spreadsheet (*.csv *.xlsx)', func_to_assign_fp=self.ui.p2_in_fp_database.setText)
+        )
+        self.ui.p2_in_fp_bluebeam_measurements_unit.clicked.connect(
+            lambda: self.get_open_file_name('Select measurements file', 'Spreadsheet (*.csv *.xlsx)', func_to_assign_fp=self.ui.p2_in_fp_bluebeam_measurements.setText)
         )
 
     def example(self):
@@ -84,13 +83,16 @@ class App(AppBaseClass):
 
     def ok(self):
 
-        fp_measurements = realpath(QtWidgets.QFileDialog.getOpenFileName(self, 'Select output directory', '', 'measurements (*.csv)')[0])
+        fp_measurements = realpath(self.ui.p2_in_fp_bluebeam_measurements.text())
+        fp_database = realpath(self.ui.p2_in_fp_database.text())
 
-        df_database = pd.read_excel(join(dirname(fp_measurements), 'database.xlsx'), index_col=0)
+        df_database = pd.read_excel(fp_database, index_col=0)
         df_database.columns = map(str.strip, map(str.lower, df_database.columns))
         database = df_database.to_dict()
 
-        df = pd.read_csv(join(dirname(fp_measurements), 'measurements.csv'))
+        df = pd.read_csv(fp_measurements, thousands=r',')
+
+        df[['Length', 'Area', 'Depth']] = df[['Length', 'Area', 'Depth']].apply(pd.to_numeric)
 
         df[df['Subject'] == 'KEY'].to_dict(orient='records')
         colour2occ_dict = {v['Colour']: v['Label'] for v in df[df['Subject'] == 'OCCUPANCY_TYPE'].to_dict(orient='records')}
