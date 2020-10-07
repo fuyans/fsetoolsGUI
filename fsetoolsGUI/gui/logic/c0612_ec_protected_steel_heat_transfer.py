@@ -247,9 +247,9 @@ class App(AppBaseClass):
             col_headers=['Time [°C]', 'Fire temperature [°C]', 'Steep temperature [°C]'],
         )
 
-        self.__Table.TableModel.sort(0, QtCore.Qt.AscendingOrder)
-        self.__Table.TableView.resizeColumnsToContents()
-        self.__Table.show()
+        self.TableApp.TableModel.sort(0, QtCore.Qt.AscendingOrder)
+        self.TableApp.TableView.resizeColumnsToContents()
+        self.TableApp.show()
 
     def show_results_in_figure(self):
 
