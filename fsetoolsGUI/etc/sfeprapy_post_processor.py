@@ -40,7 +40,7 @@ def lineplot(
         fig, ax = plt.subplots(1, 1, figsize=figsize, sharex=True)
 
     for i in range(len(y)):
-        sns.lineplot(x[i], y[i], label=legend_labels[i], ax=ax, palette=sns.color_palette("husl", n_colors=20))
+        sns.lineplot(x=x[i], y=y[i], label=legend_labels[i], ax=ax, palette=sns.color_palette("husl", n_colors=20))
 
     if isinstance(acceptable_reliability, (float, int)):
         ax.axhline(acceptable_reliability, ls='--', c='k')
@@ -72,7 +72,7 @@ def lineplot(
         ax_ins = zoomed_inset_axes(parent_axes=ax, zoom=plot_in_set_zoom, loc=1)  # zoom-factor: 2.5, location: upper-left
 
         for i in range(len(y)):
-            sns.lineplot(x, y[i], ax=ax_ins, palette=sns.color_palette("husl", n_colors=20))
+            sns.lineplot(x=x, y=y[i], ax=ax_ins, palette=sns.color_palette("husl", n_colors=20))
         ax_ins.axhline(acceptable_reliability, ls='--', c='k')
 
         ax_ins.set_xlim(plot_in_set_x - plot_in_set_x_tol, plot_in_set_x + plot_in_set_x_tol)
@@ -121,9 +121,9 @@ def lineplot_matrix(
         ax1 = axes1[i]
         ax2 = ax1.twinx()
 
-        sns.distplot(v, label='PDF', ax=ax2, bins=edges, kde=False, hist=True,
+        sns.histplot(v, label='PDF', ax=ax2, bins=edges, kde=False, hist=True,
                      hist_kws=dict(cumulative=False, density=True, color='grey'))
-        sns.lineplot(centres, np.cumsum(hist) / len(v), label='CDF', ax=ax1, color='k')
+        sns.lineplot(x=centres, y=np.cumsum(hist) / len(v), label='CDF', ax=ax1, color='k')
 
         ax1.set_ylim((0, 1))
         ax1.set_yticks([0, 1])
