@@ -51,15 +51,17 @@ def lineplot(
     if len(legend_labels) > 1:
         if legend_no_overlap:
             ax.legend(
-                shadow=False, edgecolor='k', fancybox=False, ncol=n_legend_col, fontsize='small', bbox_to_anchor=(1.04, 1.018), loc="upper left"
+                shadow=False, edgecolor='k', fancybox=False, ncol=n_legend_col, fontsize='xx-small', bbox_to_anchor=(1.04, 1.018), loc="upper left"
             ).set_visible(True)
         else:
-            ax.legend(shadow=False, edgecolor='k', fancybox=False, ncol=n_legend_col, fontsize='small').set_visible(True)
+            ax.legend(shadow=False, edgecolor='k', fancybox=False, ncol=n_legend_col, fontsize='xx-small').set_visible(True)
     else:
         ax.legend().set_visible(False)
     ax.set_xticks(np.arange(xlim[0], xlim[1] + xlim_step, xlim_step))
     ax.set_xlim(*xlim)
-    # ax.set_ylim(-0.01, 1.01)
+    ax.set_yticks(np.arange(0, 1.05, 0.1))
+    ax.set_ylim(-0.01, 1.01)
+    ax.tick_params(axis='both', which='both', labelsize='x-small')
     if xlabel:
         ax.set_xlabel(xlabel)
     if ylabel:
@@ -110,7 +112,8 @@ def lineplot_matrix(
         pass
 
     i = 0
-    for k, v in dict_teq.items():
+    for k in sorted(dict_teq.keys()):
+        v = dict_teq[k]
         v[v == np.inf] = np.max(v[v != np.inf])
         v[v == -np.inf] = np.min(v[v != -np.inf])
 
@@ -121,20 +124,20 @@ def lineplot_matrix(
         ax1 = axes1[i]
         ax2 = ax1.twinx()
 
-        sns.histplot(v, label='PDF', ax=ax2, bins=edges, kde=False, hist=True,
-                     hist_kws=dict(cumulative=False, density=True, color='grey'))
-        sns.lineplot(x=centres, y=np.cumsum(hist) / len(v), label='CDF', ax=ax1, color='k')
+        # Below is removed on 08/10/2020 due to a matplotlib error:
+        # AttributeError: 'PolyCollection' object has no property 'hist'
+        # sns.histplot(v, label='PDF', ax=ax2, bins=edges, kde=False, hist=True,
+        #              hist_kws=dict(cumulative=False, density=True, color='grey'))
+        sns.lineplot(x=centres, y=np.cumsum(hist) / len(v), ax=ax1, color='k')
 
         ax1.set_ylim((0, 1))
         ax1.set_yticks([0, 1])
-        ax1.legend().set_visible(False)
         ax1.text(0.95, 0.5, k, transform=ax2.transAxes, ha='right', va='center')
         ax1.tick_params(axis='y', direction='in')
 
         ax2.set_xlabel('')
         ax2.set_yticks([])
         ax2.set_ylim(0, 0.2)
-        ax2.legend().set_visible(False)
         ax2.tick_params(axis='both', direction='in')
 
         i = i + 1
