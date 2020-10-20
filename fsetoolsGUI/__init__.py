@@ -7,23 +7,31 @@ import os
 if os.path.exists(os.path.dirname(__file__)):
     # this path should be used when running the app as a Python package (non compiled) and/or pyinstaller at compiling
     # stage.
-    __root_dir__ = os.path.dirname(__file__)
+    __root_dir__ = os.path.realpath(os.path.dirname(__file__))
 elif os.path.exists(os.path.dirname(os.path.dirname(__file__))):
     # the path will become invalid when the app run after compiled as the dirname `fsetoolsGUI` will disappear.
     # instead, the parent folder of the project dir will be used.
-    __root_dir__ = os.path.dirname(os.path.dirname(__file__))
+    __root_dir__ = os.path.realpath(os.path.dirname(os.path.dirname(__file__)))
 else:
-    __root_dir__ = None
+    raise IsADirectoryError(
+        f'Project root directory undefined: '
+        f'{os.path.dirname(__file__)} nor '
+        f'{os.path.dirname(os.path.dirname(__file__))}'
+    )
 
 
 # setup logger
 def __get_logger():
     logger_ = logging.getLogger('gui')
 
-    f_handler = logging.FileHandler(os.path.join(os.path.expanduser('~'), 'fsetoolsgui.log'))
-    f_handler.setLevel(logging.WARNING)
-    f_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s'))
-    logger_.addHandler(f_handler)
+    # DEPRECIATED 8th Oct 2020 - Removed file handler as now the GUI has an integrated log display module
+    # fp_log = os.path.realpath(os.path.join(os.path.expanduser('~'), 'fsetools', 'fsetoolsgui.log'))
+    # if not os.path.exists(os.path.dirname(fp_log)):
+    #     os.makedirs(os.path.dirname(fp_log))
+    # f_handler = logging.FileHandler(fp_log)
+    # f_handler.setLevel(logging.WARNING)
+    # f_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s'))
+    # logger_.addHandler(f_handler)
 
     c_handler = logging.StreamHandler()
     c_handler.setLevel(logging.DEBUG)
@@ -36,6 +44,7 @@ def __get_logger():
 
 
 logger = __get_logger()
+
 
 """
 VERSION IDENTIFICATION RULES DOCUMENTED IN PEP 440.
@@ -73,9 +82,11 @@ Public version identifiers are separated into up to five segments:
 
 """
 
-__version__ = "0.0.6"
-__date_released__ = datetime.datetime(2020, 8, 28)
-__expiry_period_days__ = 360
+__version__ = "0.0.7"
+# __date_released__ = datetime.datetime(2020, 8, 28)
+__build__ = '2010201245'
+__date_released__ = datetime.datetime.strptime(__build__, '%y%m%d%H%M')
+__expiry_period_days__ = 365
 __remote_version_url__ = r'hsrmo5)(jXw-efpco[mjeqaljo_gl%cnk,bpsZfj/ucoodigk&m`qqam)_k\tnmioBOBWFFQ,gojh'
 
 if __name__ == "__main__":
@@ -93,3 +104,5 @@ if __name__ == "__main__":
 
 
     assert is_canonical(__version__)
+
+    print(__build__)
