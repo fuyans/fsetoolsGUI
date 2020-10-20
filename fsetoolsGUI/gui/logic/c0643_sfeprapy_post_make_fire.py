@@ -95,10 +95,16 @@ class App(AppBaseClass):
             except ValueError:
                 return 0
 
+        index = self.ui.p2_in_index.text()
+        if ',' in index:
+            index = index.split(',')
+        else:
+            index = [index]
+
         return dict(
             fp_mcs_input=self.ui.p2_in_fp_mcs_input.text(),
             fp_mcs_output_dir=self.ui.p2_in_fp_mcs_output.text(),
-            index=str2int(self.ui.p2_in_index.text()),
+            indexes=[str2int(i.strip()) for i in index],
             case_name=self.ui.p2_in_case_name.currentText(),
         )
 
@@ -138,25 +144,37 @@ class App(AppBaseClass):
     def calculate(
             fp_mcs_input: str,
             fp_mcs_output_dir: str,
-            index: int,
+            indexes: list,
             case_name: str,
     ):
-        return mcs0_make_fires(
-            fp_mcs_input=fp_mcs_input,
-            fp_mcs_output_dir=fp_mcs_output_dir,
-            index=index,
-            case_name=case_name,
-        )
+        outputs = dict(time=None)
+        for index in indexes:
+            _ = mcs0_make_fires(
+                fp_mcs_input=fp_mcs_input,
+                fp_mcs_output_dir=fp_mcs_output_dir,
+                index=index,
+                case_name=case_name,
+            )
+            outputs[f'temperature {index}'] = _['temperature']
+        outputs['time'] = _['time']
+        return outputs
 
     def show_results_in_table(self):
         output_parameters = self.output_parameters
 
         # print results (for console enabled version only)
-        list_content = [[float(i), float(j)] for i, j in zip(output_parameters['time'], output_parameters['temperature'] - 273.15)]
+        headers_raw = list()
+        for i in output_parameters.keys():
+            if 'time' in i or 'temperature' in i:
+                headers_raw.append(i)
+        list_content = zip(*[output_parameters[i] for i in headers_raw])
+        list_content = [[float(j) for j in list(i)] for i in list_content]
+        # list_content = [[float(i), float(j)] for i, j in zip(output_parameters['time'], output_parameters['temperature'] - 273.15)]
 
         self.TableApp.update_table_content(
             content_data=list_content,
-            col_headers=['time [s]', 'temperature [°C]'],
+            # col_headers=['time [s]', 'temperature [°C]'],
+            col_headers=headers_raw,
         )
 
         self.TableApp.TableModel.sort(0, QtCore.Qt.AscendingOrder)
@@ -169,11 +187,18 @@ class App(AppBaseClass):
         output_parameters = self.output_parameters
 
         self.__figure_ax.clear()
-        self.__figure_ax.plot(output_parameters['time'] / 60, output_parameters['temperature'] - 273.15, c='k')
+
+        time = output_parameters['time'] / 60.
+
+        for i in output_parameters:
+            if 'temperature' in i:
+                self.__figure_ax.plot(time, output_parameters[i] - 273.15, label=i.replace('temperature ', ''))
+
         self.__figure_ax.set_xlabel('Time [minute]')
         self.__figure_ax.set_ylabel('Temperature [°C]')
         self.__figure_ax.tick_params(axis='both', labelsize='small')
         self.__figure_ax.grid(which='major', linestyle=':', linewidth='0.5', color='black')
+        self.__figure_ax.legend(shadow=False, edgecolor='k', fancybox=False, fontsize='xx-small').set_visible(True)
         self.FigureApp.show()
 
         self.FigureApp.refresh_figure()
