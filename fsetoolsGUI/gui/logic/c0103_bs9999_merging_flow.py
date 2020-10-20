@@ -13,7 +13,7 @@ from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass
 class App(AppBaseClass):
     app_id = '0103'
     app_name_short = 'BS 9999\nmerging\nflow'
-    app_name_long = 'BS 9999 merging flow at final exit level'
+    app_name_long = 'BS 9999 Merging flow at final exit level'
 
     def __init__(self, parent=None, post_stats: bool = True):
 

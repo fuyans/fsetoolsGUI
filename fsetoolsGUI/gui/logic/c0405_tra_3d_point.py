@@ -23,12 +23,11 @@ class App(AppBaseClass):
         self.ui.setupUi(self)
         self.init()
 
-        from fsetoolsGUI.gui.logic.common import filter_objects_by_name
-        for i in filter_objects_by_name(self.ui.groupBox_out, object_types=[QtWidgets.QLineEdit]):
-            try:
-                i.setReadOnly(True)
-            except AttributeError:
-                i.setEnabled(False)
+        # for i in filter_objects_by_name(self.ui.groupBox_out, object_types=[QtWidgets.QLineEdit]):
+        #     try:
+        #         i.setReadOnly(True)
+        #     except AttributeError:
+        #         i.setEnabled(False)
 
         # set up radiation figure
         ba = QtCore.QByteArray.fromBase64(image_figure)

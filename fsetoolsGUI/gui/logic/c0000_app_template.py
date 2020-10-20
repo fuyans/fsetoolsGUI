@@ -2,6 +2,7 @@ import threading
 from datetime import datetime
 from os import getlogin, path
 from typing import Union
+import sys
 
 from PySide2.QtWidgets import QLabel, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy, QGroupBox, QWidget, QStatusBar, QVBoxLayout, QTextBrowser, QScrollArea
 
@@ -114,6 +115,7 @@ class AppBaseClassUI(object):
         self.p3_layout.addWidget(self.p3_example)
         self.p3_layout.addStretch(1)
         self.p3_submit = QPushButton('Submit')
+        self.p3_submit.setAutoDefault(True)
         self.p3_submit.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
         self.p3_layout.addWidget(self.p3_submit)
 
@@ -217,21 +219,22 @@ class AppBaseClass(QtWidgets.QMainWindow):
         assert_attr('app_name_long')
 
     def keyPressEvent(self, event):
-        logger.info(f'{event.key()} key pressed.')
+        # logger.info(f'{event.key()} key pressed.')
 
         if event.key() == QtCore.Qt.Key_Escape:
             self.close()
-        elif event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
+        elif event.modifiers() & QtCore.Qt.ControlModifier and (event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter):
             try:
                 getattr(self, 'ok')()
             except Exception as e:
-                raise e
+                module_name = sys.modules[self.__module__].__name__
+                logger.warning(f'Failed to call `ok` attribute from {module_name}, {e}')
         elif event.modifiers() & QtCore.Qt.ControlModifier and event.modifiers() & QtCore.Qt.ShiftModifier and event.key() == QtCore.Qt.Key_C:
             try:
                 self.__clipboard.setPixmap(self.ui.central_widget.grab())
-                logger.info('Successfully set image to clipboard.')
+                logger.info('Successfully copied image to clipboard.')
             except Exception as e:
-                logger.warning(f'Failed to set image to clipboard, {e}.')
+                logger.warning(f'Failed to copied image to clipboard, {e}.')
         event.accept()
 
     def validate_show_statusBar_msg(self, var, type, err_msg: str):

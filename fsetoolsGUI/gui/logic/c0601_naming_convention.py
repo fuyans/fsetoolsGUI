@@ -11,7 +11,7 @@ from fsetoolsGUI.gui.logic.c0000_utilities import Counter
 class App(AppBaseClass):
     app_id = '0601'
     app_name_short = 'OFR\nfile naming\nconvention'
-    app_name_long = 'OFR file name generator'
+    app_name_long = 'OFR File name generator'
     __re_date = re.compile(r'[0-9]{4,6}')
     __re_project_no = re.compile(r'[a-zA-Z]{2}[0-9]{5,6}')
     __re_project_stage = re.compile(r'.+')

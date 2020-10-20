@@ -16,7 +16,7 @@ from fsetoolsGUI.gui.logic.custom_table import TableWindow
 class App(AppBaseClass):
     app_id = '0407'
     app_name_short = 'TRA\ncuboid\nenclosure\nmodel'
-    app_name_long = 'TRA cuboid enclosure model'
+    app_name_long = 'TRA Cuboid enclosure model'
 
     def __init__(self, parent=None, post_stats: bool = True):
 

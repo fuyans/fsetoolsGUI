@@ -29,7 +29,7 @@ class Signals(QtCore.QObject):
 class App(AppBaseClass):
     app_id = '0406'
     app_name_short = 'TRA\n2D\nparallel'
-    app_name_long = 'TRA 2D parallel orientated emitters contour plot'
+    app_name_long = 'TRA 2D Parallel orientated emitters contour plot'
 
     def __init__(self, parent=None, post_stats: bool = True):
         super().__init__(parent=parent, post_stats=post_stats, ui=AppBaseClassUISimplified01)

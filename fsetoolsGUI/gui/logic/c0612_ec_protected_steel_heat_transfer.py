@@ -17,7 +17,7 @@ from fsetoolsGUI.gui.logic.custom_table import TableWindow
 class App(AppBaseClass):
     app_id = '0612'
     app_name_short = 'BS EN\nHT\nprotected'
-    app_name_long = 'BS EN 1993-1-2 Protected steel heat transfer'
+    app_name_long = 'BS EN 1993-1-2:2005 Protected steel heat transfer'
 
     def __init__(self, parent=None, post_stats: bool = True):
 

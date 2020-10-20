@@ -11,7 +11,7 @@ from fsetoolsGUI.gui.logic.c0000_utilities import Counter
 class App(AppBaseClass):
     app_id = '0631'
     app_name_short = 'Safir\ntor to tem'
-    app_name_long = 'Safir tor to tem batch processor'
+    app_name_long = "Safir 'tor' to 'tem' batch processor"
 
     def __init__(self, parent=None, post_stats: bool = True):
         super().__init__(parent=parent, post_stats=post_stats, ui=AppBaseClassUISimplified01)

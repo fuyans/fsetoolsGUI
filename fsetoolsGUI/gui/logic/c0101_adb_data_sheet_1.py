@@ -9,7 +9,7 @@ from fsetoolsGUI.gui.logic.custom_scrollable import AppBaseClassScrollableConten
 class App(AppBaseClassScrollableContent):
     app_id = '0101'
     app_name_short = 'ADB\ndata sheet\n1'
-    app_name_long = 'ADB vol. 2 data sheet no. 1 - means of escape'
+    app_name_long = 'ADB vol. 2 Data sheet no. 1 - means of escape'
 
     def __init__(self, parent=None, post_stats: bool = True):
         super().__init__(

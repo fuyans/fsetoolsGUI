@@ -20,7 +20,7 @@ class App(BR187SimpleBaseClass):
     """
     app_id = '0401'
     app_name_short = 'BR 187\nparallel'
-    app_name_long = 'BR 187 parallel oriented rectangle emitter and receiver'
+    app_name_long = 'BR 187 Parallel oriented rectangle emitter and receiver'
 
     def __init__(self, parent=None, post_stats: bool = True):
         super().__init__(parent, post_stats)

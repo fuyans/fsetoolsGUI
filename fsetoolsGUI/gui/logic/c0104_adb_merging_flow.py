@@ -23,7 +23,7 @@ def clause_2_23_merging_flow(N: float, S: float, D: float, W_SE: float) -> tuple
 class App(AppBaseClass):
     app_id = '0104'
     app_name_short = 'ADB\nmerging\nflow'
-    app_name_long = 'ADB merging flow at final exit level'
+    app_name_long = 'ADB Merging flow at final exit level'
 
     def __init__(self, parent=None, post_stats: bool = True):
 

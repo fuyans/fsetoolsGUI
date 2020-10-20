@@ -2,8 +2,10 @@ from os import getlogin
 
 import requests
 from PySide2 import QtWidgets, QtGui, QtCore
+from fsetoolsGUI.etc.util import hash_simple, get_machine_uid
 
 import fsetoolsGUI
+
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
 
 
@@ -13,27 +15,27 @@ class App(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        # ui elements instantiation
-        self.label = QtWidgets.QLabel(
-            f'FSETOOLS {fsetoolsGUI.__version__} released on {fsetoolsGUI.__date_released__.strftime("%Y %B %d")} is expired.\n\n'
-            f'Either to download the latest version (link provided in the box below) or enter a pass code.\n\n'
-            f'Your login name is {getlogin()}\n'
-        )
-        self.label.setWordWrap(True)
-
-        self.edit = QtWidgets.QLineEdit()
-
         try:
             target = ''.join([chr(ord(v) + i % 10) for i, v in enumerate(fsetoolsGUI.__remote_version_url__)])
-
             version_dict = requests.get(target).json()
             latest_version_url = version_dict['latest_executable_download_url']
-            self.edit.setText(latest_version_url)
         except Exception as e:
-            if isinstance(e, requests.exceptions.ConnectionError):
-                self.edit.setText(f'Connection error, failed to reach {fsetoolsGUI.__remote_version_url__}.')
-            else:
-                self.edit.setText(str(e))
+            latest_version_url = f'Failed to parse `latest_executable_download_url`, {e}'
+
+        # ui elements instantiation
+        self.label = QtWidgets.QPlainTextEdit(
+            f'FSETOOLS {fsetoolsGUI.__version__} (build {fsetoolsGUI.__build__}) released on {fsetoolsGUI.__date_released__.strftime("%Y %B %d")} is expired.\n\n'
+            f'Either to download the latest version (link below) or enter a passcode. '
+            f'Passcode can be requested from the developer by quoting your Machine ID and FSETOOLS version.\n\n'
+            f'Latest version url:\n{latest_version_url}\n\n'
+            f'FSETools version:\n{fsetoolsGUI.__version__}\n\n'
+            f'Machine ID:\n{get_machine_uid()}'
+        )
+        # self.label.setWordWrap(True)
+        self.label.setReadOnly(True)
+        self.label.setMinimumWidth(360)
+
+        self.edit = QtWidgets.QLineEdit()
 
         self.button = QtWidgets.QPushButton('OK')
         self.button.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)

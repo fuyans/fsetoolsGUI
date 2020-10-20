@@ -99,7 +99,7 @@ class App(AppBaseClass):
 
         case_names = list(set(df[df['Subject'] == 'COMPARTMENT']['Label'].values))
         case_names.sort()
-        case_names = [i for i in case_names if '_' not in i]
+        case_names = [i for i in case_names if not i.endswith('_')]
 
         # df[(df['Subject'] == 'COMPARTMENT') & (df['Label'] == '1F01')].to_dict(orient='records')
         # df[(df['Subject'] == 'COMPARTMENT_DEPTH') & (df['Label'] == '1F01')].to_dict(orient='records')
@@ -125,16 +125,20 @@ class App(AppBaseClass):
             return weighted_height, total_width
 
         for case_name in case_names:
+            logger.info(f'Processing {case_name} ...')
+
             # --------------------------------------------
             # calculate compartment and compartment length
             # --------------------------------------------
             compartment = df[(df['Subject'] == 'COMPARTMENT') & (df['Label'] == case_name)].to_dict(orient='records')
-            compartment_length = df[(df['Subject'] == 'COMPARTMENT_LENGTH') & (df['Label'] == case_name)].to_dict(orient='records')
             try:
-                assert len(compartment) == 1 and len(compartment_length) == 1
+                assert len(compartment) == 1
             except AssertionError:
-                print(case_name, len(compartment), len(compartment_length))
-            compartment, compartment_length = compartment[0], compartment_length[0]
+                logger.warning(f'Duplicated compartment name detected: {case_name} = {len(compartment)}')
+            compartment = compartment[0]
+
+            room_length = df[(df['Subject'] == 'COMPARTMENT_LENGTH') & (df['Label'] == case_name)].to_dict(orient='records')
+            room_length = sum([v['Length'] for v in room_length])
 
             # ------------------------------------------
             # calculation ventilation opening dimensions
@@ -148,9 +152,9 @@ class App(AppBaseClass):
             )
             doors_heq, doors_wt = opening_height_and_width([i['Length'] for i in doors], [i['Depth'] for i in doors])
 
-            # -----------------------------------
-            # calculate representative floor area
-            # -----------------------------------
+            # ----------------------------
+            # calculate general floor area
+            # ----------------------------
             compartment_with_duplicates = df[(df['Subject'] == 'COMPARTMENT') & ((df['Label'] == case_name) | (df['Label'] == f'{case_name}_'))].to_dict(orient='records')
 
             # print(f'case_name:         {case_name}')
@@ -170,7 +174,7 @@ class App(AppBaseClass):
                 'n_simulations': 10000,
                 'probability_weight': 0,
 
-                'room_depth': compartment_length['Length'],
+                'room_depth': room_length,
                 'room_height': compartment['Depth'],
                 'room_floor_area': compartment['Area'],
                 'room_wall_thermal_inertia': 700,
@@ -178,7 +182,7 @@ class App(AppBaseClass):
                 'window_height': opening_heq,
                 'window_width': opening_wt,
                 'window_open_fraction_permanent': (doors_heq * doors_wt) / (opening_heq * opening_wt),
-                'representative_floor_area': sum([i['Area'] for i in compartment_with_duplicates]),
+                'general_room_floor_area': sum([i['Area'] for i in compartment_with_duplicates]),
 
                 # variable values obtained from `database` based upon `occupancy_type`
                 'fire_hrr_density:dist': database[occupancy_type]['fire_hrr_density:dist'],
@@ -214,8 +218,8 @@ class App(AppBaseClass):
                 'window_open_fraction:mean': 0.2,
                 'window_open_fraction:sd': 0.2,
                 'beam_position_horizontal:dist': 'uniform_',
-                'beam_position_horizontal:ubound': compartment_length['Length'] * 0.9,
-                'beam_position_horizontal:lbound': compartment_length['Length'] * 0.6,
+                'beam_position_horizontal:ubound': room_length * 0.9,
+                'beam_position_horizontal:lbound': room_length * 0.6,
                 'beam_position_vertical': min(3.3, compartment['Depth']),
                 'beam_cross_section_area': 0.017,
                 'beam_rho': 7850,
@@ -226,12 +230,12 @@ class App(AppBaseClass):
                 'solver_temperature_goal': 893.15,
                 'solver_max_iter': 20,
                 'solver_thickness_lbound': 0.0001,
-                'solver_thickness_ubound': 0.05,
+                'solver_thickness_ubound': 0.0300,
                 'solver_tol': 1,
                 'fire_mode': 3,
                 'fire_gamma_fi_q': 1,
                 'fire_t_alpha': 300,
-                'room_breadth': compartment['Area'] / compartment_length['Length'],
+                'room_breadth': compartment['Area'] / room_length,
                 'phi_teq:dist': 'lognorm_',
                 'phi_teq:lbound': 0.0001,
                 'phi_teq:ubound': 3.,

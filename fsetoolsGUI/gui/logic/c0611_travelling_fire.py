@@ -14,7 +14,7 @@ from fsetoolsGUI.gui.logic.custom_table import TableWindow
 class App(AppBaseClass):
     app_id = '0611'
     app_name_short = 'Travelling\nfire'
-    app_name_long = 'Travelling fire'
+    app_name_long = 'SFE Travelling fire'
 
     def __init__(self, parent=None, post_stats: bool = True):
 

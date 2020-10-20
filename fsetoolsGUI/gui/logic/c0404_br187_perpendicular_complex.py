@@ -11,7 +11,7 @@ from fsetoolsGUI.gui.logic.c0400_br187_base_class import BR187ComplexBaseClass
 class App(BR187ComplexBaseClass):
     app_id = '0404'
     app_name_short = 'BR 187\nperp.'
-    app_name_long = 'BR 187 perpendicular oriented rectangle emitter and eccentric receiver'
+    app_name_long = 'BR 187 Perpendicular oriented rectangle emitter and eccentric receiver'
 
     def __init__(self, parent=None, post_stats: bool = True):
         super().__init__(parent, post_stats)

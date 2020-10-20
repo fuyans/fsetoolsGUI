@@ -50,7 +50,7 @@ def make_nsi_file():
     except IndexError:
         dict_var['version_build'] = 0
 
-    dict_var['fn_installer'] = f'FSETOOLS {".".join(fsetoolsGUI.__version__.split("."))}.exe'
+    dict_var['fn_installer'] = f'FSETOOLS {".".join(fsetoolsGUI.__version__.split("."))} {fsetoolsGUI.__build__}.exe'
 
     with open(join(dirname(realpath(__file__)), 'nsis_build.nsi'), 'w+') as f:
         f.write(nsis_build_nsi.nsi_script.format(**dict_var))

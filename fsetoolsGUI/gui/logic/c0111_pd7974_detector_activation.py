@@ -16,7 +16,7 @@ from fsetoolsGUI.gui.logic.custom_table import TableWindow
 class App(AppBaseClass):
     app_id = '0111'
     app_name_short = 'PD 7974\nheat\ndetector\nactivation'
-    app_name_long = 'PD 7974 heat detector device activation time calculator'
+    app_name_long = 'PD 7974 Heat detector device activation time calculator'
 
     def __init__(self, parent=None, post_stats: bool = True):
 

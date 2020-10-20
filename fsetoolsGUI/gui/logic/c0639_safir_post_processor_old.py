@@ -62,7 +62,7 @@ class ProgressBar(QtWidgets.QDialog):
 class App(AppBaseClass):
     app_id = '0639'
     app_name_short = 'Safir\npost\nprocsser'
-    app_name_long = 'Safir post processor'
+    app_name_long = 'Safir Post processor'
 
     def __init__(self, parent=None, mode=None):
         super().__init__(parent=parent)

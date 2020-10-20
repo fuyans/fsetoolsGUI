@@ -3,6 +3,7 @@ import os
 import subprocess
 import sys
 from os.path import join, realpath, dirname, relpath
+from datetime import datetime
 
 from fsetoolsGUI import __version__, __root_dir__, logger
 
@@ -12,6 +13,13 @@ try:
     key = key_()
 except ModuleNotFoundError:
     key = None
+
+
+def make_build_info():
+    build_info = datetime.now().strftime('%y%m%d%H%M')
+    with open(os.path.join(__root_dir__, 'build.txt'), 'w+') as f:
+        f.write(build_info)
+    return build_info
 
 
 def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build_entry.py', options: list = None):
@@ -53,11 +61,11 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
             f.write(c)
 
 
-def find_fp(dirwork: str, endswith: list) -> list:
+def find_fp(dir_work: str, endswith: list) -> list:
     list_fp = list()
     list_fp_append = list_fp.append
 
-    for dirpath, dirnames, filenames in os.walk(join(__root_dir__, 'gui')):
+    for dirpath, dirnames, filenames in os.walk(dir_work):
 
         for fn in filenames:
             if any([fn.endswith(suffix) for suffix in endswith]):
@@ -77,11 +85,12 @@ def main():
 
     # include fsetoolsGUI/gui/*, i.e. image, icon, stylesheet and documentation (in html format) files
     options.extend([
-        f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=__root_dir__)}' for fp in find_fp(dirwork=join(__root_dir__, 'gui'), endswith=['.png', '.ico', '.css', '.html'])
+        f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=__root_dir__)}' for fp in find_fp(dir_work=join(__root_dir__, 'gui'), endswith=['.png', '.ico', '.css', '.html'])
     ])
 
     build_gui(options=options)
 
 
 if __name__ == "__main__":
+    # make_build_info()
     main()
