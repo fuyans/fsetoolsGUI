@@ -1,14 +1,13 @@
+import datetime
 import logging
-import threading
 from os import path
 
 import requests
-from PySide2.QtCore import Slot
 from PySide2.QtWidgets import QErrorMessage, QPushButton, QLineEdit, QInputDialog
 from PySide2.QtWidgets import QMainWindow, QSizePolicy, QWidget, QGridLayout, QGroupBox, QLabel
 from packaging import version
 
-from fsetoolsGUI import __version__, __remote_version_url__, __root_dir__, logger
+from fsetoolsGUI import __version__, __build__, __date_released__, __expiry_period_days__, __remote_version_url__, __root_dir__, logger
 from fsetoolsGUI.gui.logic.c0000_utilities import *
 from fsetoolsGUI.gui.logic.c0101_adb_data_sheet_1 import App as App0101
 from fsetoolsGUI.gui.logic.c0102_bs9999_data_sheet_1 import App as App0102
@@ -37,8 +36,6 @@ from fsetoolsGUI.gui.logic.c0640_sfeprapy_mcs0 import App as App0640
 from fsetoolsGUI.gui.logic.c0641_sfeprapy_pre_bluebeam import App as App0641
 from fsetoolsGUI.gui.logic.c0642_sfeprapy_post_make_plots import App as App0642
 from fsetoolsGUI.gui.logic.c0643_sfeprapy_post_make_fire import App as App0643
-from fsetoolsGUI.gui.logic.c0701_aws_s3_uploader import App as App0701
-from fsetoolsGUI.gui.logic.common import filter_objects_by_name
 
 try:
     qt_css = open(path.join(__root_dir__, 'gui', 'style.css'), "r").read()
@@ -62,6 +59,7 @@ class QDialogLogger(QtWidgets.QDialog, QPlainTextEditLogger):
         super().__init__(parent)
 
         self.setWindowFlag(QtCore.Qt.WindowContextHelpButtonHint, False)
+        self.setWindowTitle('Log')
 
         qt_logger = QPlainTextEditLogger(self)
         qt_logger.setLevel(logging.DEBUG)
@@ -70,7 +68,9 @@ class QDialogLogger(QtWidgets.QDialog, QPlainTextEditLogger):
 
         layout = QtWidgets.QVBoxLayout()
         layout.addWidget(qt_logger.widget)
+
         self.setLayout(layout)
+        self.resize(600, 400)
 
 
 class AppsCollection:
@@ -102,7 +102,6 @@ class AppsCollection:
         '0641': App0641,
         '0642': App0642,
         '0643': App0643,
-        '0701': App0701,
     }
 
     def __init__(self):
@@ -231,14 +230,38 @@ class App(QMainWindow):
         self.setWindowIcon(QtGui.QPixmap(path.join(__root_dir__, 'gui', 'icons', 'LOGO_1_80_80.png')))
         # self.setWindowFlag(QtCore.Qt.MSWindowsFixedSizeDialogHint)
 
+        # ------------------------
+        # Instantiate Logger panel
+        # ------------------------
         self.LoggerApp = QDialogLogger(parent=self)
         self.LoggerApp.hide()
 
+        # ------------------------
+        # Logs showing app summary
+        # ------------------------
+        logger.info('=' * 23)
+        logger.info('FSETOOLS')
+        logger.info(f'VERSION: {__version__}.')
+        logger.info(f'BUILD: {__build__}.')
+        logger.info(f'RELEASED: {__date_released__}.')
+        _exp = __date_released__ + datetime.timedelta(days=__expiry_period_days__) - datetime.datetime.now()
+        _exp_d, _ = divmod(_exp.total_seconds(), 24 * 60 * 60)
+        _exp_h, _ = divmod(_, 60 * 60)
+        _exp_m, _ = divmod(_, 60)
+        logger.info(f'EXPIRES IN: {_exp_d:.0f} day(s), {_exp_h:.0f} hour(s) and {_exp_m:.0f} minute(s).')
+        logger.info('=' * 23)
+
+        # --------------------------------
+        # Instantiate buttons for sub-apps
+        # --------------------------------
         self.add_buttons()
 
-        # check update
-        self.Signals.check_update_complete.connect(self.setEnabled_all_buttons)
-        threading.Timer(0, self.check_update).start()
+        # ------------
+        # Check update
+        # ------------
+        # DEPRECIATED 20th Oct 2020. Checked updated moved to fsetoolsgui.gui.__main__
+        # self.Signals.check_update_complete.connect(self.setEnabled_all_buttons)
+        # threading.Timer(0, self.check_update).start()
 
         # window properties
         self.ui.label_version.setText(f'Version {__version__}')
@@ -255,6 +278,7 @@ class App(QMainWindow):
         self.__new_version_update_url = None
         self.__dialog_opened = list()
 
+
     def add_buttons(self):
         button_collection = {
             'Miscellaneous': ['0601', '0602', '0611', '0407', '0620'],
@@ -267,11 +291,49 @@ class App(QMainWindow):
         self.ui.p2_layout.setHorizontalSpacing(5), self.ui.p2_layout.setVerticalSpacing(5)
 
         self.add_button_set_to_grid(self.ui.p2_layout, 'Miscellaneous', button_collection['Miscellaneous'], 0, 0, 5)
-        self.add_button_set_to_grid(self.ui.p2_layout, 'B1 Means of escape', button_collection['B1 Means of escape'], 2, 0, 5)
-        self.add_button_set_to_grid(self.ui.p2_layout, 'B3 Elements of structure', button_collection['B3 Elements of structure'], 4, 0, 5)
-        self.add_button_set_to_grid(self.ui.p2_layout, 'B4 External fire spread', button_collection['B4 External fire spread'], 6, 0, 5)
+        self.add_button_set_to_grid(self.ui.p2_layout, 'B1 Means of escape', button_collection['B1 Means of escape'], 2,
+                                    0, 5)
+        self.add_button_set_to_grid(self.ui.p2_layout, 'B3 Elements of structure',
+                                    button_collection['B3 Elements of structure'], 4, 0, 5)
+        self.add_button_set_to_grid(self.ui.p2_layout, 'B4 External fire spread',
+                                    button_collection['B4 External fire spread'], 6, 0, 5)
 
-    def add_button_set_to_grid(self, layout: QGridLayout, label: str, button_id_list: list, row_0: int, col_0: int, cols: int):
+    def add_button_set_to_grid(self, layout: QGridLayout, label: str, button_id_list: list, row_0: int, col_0: int,
+                               cols: int):
+
+        btn_stylesheet = '''
+        QPushButton {
+            background-color: #ffffff;
+            Text-align: center;
+            /*color: #000000;*/
+            padding: 0px;
+            padding-left: 1px;
+            padding-right: 1px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            border: 1px solid #d2d1d2;
+            border-radius: 3px;
+        }
+        QPushButton:hover {
+            background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
+            color: #ffffff;
+            border: 1.5px solid #56aafb;
+        }
+        QPushButton:focus {
+            border: 1.5px solid #3295fd;
+        }
+        QPushButton:pressed {
+            background-color: #106bfd;
+        }
+        QPushButton:disabled {
+            background-color: #ecf0f1;
+            /*font: 11px;*/
+            padding: 3px;
+            color: #98989d;
+            border: 1px solid #d2d1d2;
+        }
+        '''
+
         row_i, col_i = Counter(), Counter()
         row_i.reset(row_0), col_i.reset(col_0)
         layout.addWidget(QLabel(f'<b>{label}</b>'), row_i.count, col_0, 1, cols)
@@ -280,7 +342,7 @@ class App(QMainWindow):
             btn = QPushButton(self.__apps.app_name_short(v))
             btn.setAutoDefault(True)  # click button upon Enter
             # remove button padding to maximum text area
-            btn.setStyleSheet("QPushButton {padding-left: 1px; padding-right: 1px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #d2d1d2; border-radius: 3px}")
+            btn.setStyleSheet(btn_stylesheet)
             setattr(self.ui, f'p2_in_{v}', btn)
             getattr(self.ui, f'p2_in_{v}').clicked.connect(act_app)
             getattr(self.ui, f'p2_in_{v}').setFixedSize(76, 76)
@@ -288,19 +350,20 @@ class App(QMainWindow):
         row_i.add()
         col_i.reset()
 
-    @Slot(bool)
-    def setEnabled_all_buttons(self, v: bool):
-        """
-        To disable/enable all buttons in `groupBox` depending on `v`.
-        Used as Slot to disable all buttons depend on remote version data `is_executable`.
-        """
-        if not self.is_executable:
-            all_push_buttons = filter_objects_by_name(
-                object_parent_widget=self.ui.page_2,
-                object_types=[QPushButton]
-            )
-            for pushButton in all_push_buttons:
-                pushButton.setEnabled(v)
+    # DEPRECIATED 20th Oct 2020. Checked updated moved to fsetoolsgui.gui.__main__
+    # @Slot(bool)
+    # def setEnabled_all_buttons(self, v: bool):
+    #     """
+    #     To disable/enable all buttons in `groupBox` depending on `v`.
+    #     Used as Slot to disable all buttons depend on remote version data `is_executable`.
+    #     """
+    #     if not self.is_executable:
+    #         all_push_buttons = filter_objects_by_name(
+    #             object_parent_widget=self.ui.page_2,
+    #             object_types=[QPushButton]
+    #         )
+    #         for pushButton in all_push_buttons:
+    #             pushButton.setEnabled(v)
 
     def activate_app_module_id(self):
         if self.is_executable:
@@ -362,7 +425,8 @@ class App(QMainWindow):
         '''
 
         try:
-            specific_remote_version_data = self.update_data[__version__.split('.dev')[0] if '.dev' in __version__ else __version__]
+            specific_remote_version_data = self.update_data[
+                __version__.split('.dev')[0] if '.dev' in __version__ else __version__]
             logger.info(f'Successfully parsed local version from update data')
             logger.debug(f'{specific_remote_version_data}')
         except Exception as e:
@@ -412,7 +476,6 @@ class App(QMainWindow):
         elif is_local_version_upgradable:
             version_label_text = f'This version {__version__} is disabled. A new version {latest_version} is available. Click here to download.'
         else:
-
             version_label_text = None
             self.ui.label_version.setStyleSheet('color: grey;')
 
@@ -460,7 +523,6 @@ class App(QMainWindow):
             self.activate_app_module_id()
         elif event.modifiers() & QtCore.Qt.ShiftModifier and event.key() == QtCore.Qt.Key_L:
             self.LoggerApp.show()
-            self.LoggerApp.adjustSize()
         event.accept()
 
 
