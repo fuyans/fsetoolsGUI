@@ -1,12 +1,15 @@
 import binascii
 import hashlib
 import json
+import subprocess
 
 import requests
 
 
-def hash_simple(key: bytes, string: bytes, algorithm: str = 'sha512', length: int = 20):
-    cipher = int(binascii.hexlify(hashlib.pbkdf2_hmac(algorithm, string, key, 100000)), 16) % (10 ** length)
+def hash_simple(key: bytes, string: bytes, algorithm: str = 'sha512', length: int = 20) -> int:
+    hash_ = hashlib.pbkdf2_hmac(algorithm, string, key, 100000)
+    hex_ = binascii.hexlify(hash_)
+    cipher = int(hex_, 16) % (10 ** length)
     return cipher
 
 
@@ -50,6 +53,12 @@ def _test_post_to_knack_user_usage_stats():
     )
     print(r.status_code)
     assert r.status_code == 200
+
+
+def get_machine_uid() -> str:
+    uid_bytes: bytes = subprocess.check_output('wmic csproduct get uuid')
+    uid_str: str = uid_bytes.decode('utf-8').replace('UUID', '').strip()
+    return uid_str
 
 
 if __name__ == '__main__':
