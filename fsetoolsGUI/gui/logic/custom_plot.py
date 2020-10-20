@@ -8,6 +8,8 @@ from matplotlib.backend_bases import NavigationToolbar2
 
 import fsetoolsGUI
 
+plt.style.use('seaborn-paper')
+
 try:
     qt_css = open(path.join(fsetoolsGUI.__root_dir__, 'gui', 'style.css'), "r").read()
 except FileNotFoundError:
