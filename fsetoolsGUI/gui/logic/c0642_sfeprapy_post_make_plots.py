@@ -62,7 +62,7 @@ class App(AppBaseClass):
         self.ui.p2_in_figure_matrix_cols.setText('9')
         self.ui.p2_in_figure_xmin.setText('0')
         self.ui.p2_in_figure_xmax.setText('180')
-        self.ui.p2_in_figure_xstep.setText('30')
+        self.ui.p2_in_figure_xstep.setText('15')
         self.ui.p2_in_figure_legend_cols.setText('1')
 
         # =================
@@ -150,6 +150,7 @@ class App(AppBaseClass):
             figure_legend_cols: int,
             qt_progress_signal_0=None, qt_progress_signal_1=None
     ):
+        figure_ystep = 0.1
 
         matplotlib.use('agg')  # this method will be called in a thread, no GUI allowed for matplotlib
         os.chdir(os.path.dirname(fp_mcs_output_dir))
@@ -191,8 +192,8 @@ class App(AppBaseClass):
             assert all(s.values != np.nan)  # make sure all values are numerical
             df_output.loc[df_output['solver_time_equivalence_solved'] == np.inf, 'solver_time_equivalence_solved'] = np.amax(s[s < np.inf])
             df_output.loc[df_output['solver_time_equivalence_solved'] == -np.inf, 'solver_time_equivalence_solved'] = np.amin(s[s > -np.inf])
-            df_output.loc[df_output['solver_time_equivalence_solved'] == np.nan, 'solver_time_equivalence_solved'] = np.inf
-            df_output.loc[df_output['solver_time_equivalence_solved'] > 18000, 'solver_time_equivalence_solved'] = 18000.
+            df_output.loc[df_output['solver_time_equivalence_solved'] >= 18000., 'solver_time_equivalence_solved'] = 18000. - 1e-3
+            df_output.loc[df_output['solver_time_equivalence_solved'] < 0., 'solver_time_equivalence_solved'] = 0. + 1e-3
             df_output['solver_time_equivalence_solved'] = df_output['solver_time_equivalence_solved'] / 60.  # Unit from second to minute
             assert df_output['solver_time_equivalence_solved'].max() != np.inf
             assert df_output['solver_time_equivalence_solved'].max() <= 300.
@@ -223,8 +224,8 @@ class App(AppBaseClass):
                     df_input.index = _
 
                 assert all([i in df_input.index for i in ['p1', 'p2', 'p3', 'p4', 'general_room_floor_area']])
-                for k, teq_cdf in dict_teq_cdf.items():
-                    dict_P[k] = np.product([df_input.loc[i, k] for i in ['p1', 'p2', 'p3', 'p4', 'general_room_floor_area']])
+                for case_name, teq_cdf in dict_teq_cdf.items():
+                    dict_P[case_name] = np.product([df_input.loc[i, case_name] for i in ['p1', 'p2', 'p3', 'p4', 'general_room_floor_area']])
                 is_probabilities_defined = True
             except AssertionError:
                 logger.warning('Failed to parse p1, p2, p3, p4 and general_room_floor_area, they are not defined in the input file, a unity is assigned')
@@ -283,18 +284,23 @@ class App(AppBaseClass):
             logger.error(f'{e}')
 
         try:
-            fig, ax = lineplot(
-                x=[x],
-                y=[np.sum([v for k, v in dict_P_r_fi_i_weighted.items()], axis=0)],
-                legend_labels=[None],
-                n_legend_col=figure_legend_cols,
-                xlabel='Equivalent of Time Exposure [$min$]',
-                ylabel='Combined $P_{r,fi}$ [-]',
-                figsize=(figure_width, figure_height),
-                xlim=(figure_xmin, figure_xmax),
-                xlim_step=figure_xstep,
-            )
-            fig.savefig('2-P_r_fi_i_combined.png', dpi=300, bbox_inches='tight', transparent=True)
+            if is_probabilities_defined:
+                fig, ax = lineplot(
+                    x=[x],
+                    y=[np.sum([v for k, v in dict_P_r_fi_i_weighted.items()], axis=0)],
+                    legend_labels=[None],
+                    n_legend_col=figure_legend_cols,
+                    xlabel='Equivalent of Time Exposure [$min$]',
+                    ylabel='Combined $P_{r,fi}$ [-]',
+                    figsize=(figure_width, figure_height),
+                    xlim=(figure_xmin, figure_xmax),
+                    xlim_step=figure_xstep,
+                )
+                fig.savefig('2-P_r_fi_i_combined.png', dpi=300, bbox_inches='tight', transparent=True)
+                _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
+
+                P_r_fi_combined = pd.DataFrame.from_dict({'TIME [min]': x, **dict_P_r_fi_i_weighted}).set_index('TIME [min]')
+                P_r_fi_combined.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in _]].to_csv('2-P_r_fi_i_weighted.csv')
         except Exception as e:
             logger.error(f'{e}')
 
