@@ -23,9 +23,9 @@ def md2md_embedded_img(fp_md: str):
             img = Image.open(fp_img)
         except FileNotFoundError:
             print('Missing file ', fp_img)
-        img_width, img_height = img.size
-        img_width, img_height = 700, (img_height * 700 / img_width)
-        img = img.resize((img_width, int(img_height)), resample=Image.LANCZOS)
+        # img_width, img_height = img.size
+        # img_width, img_height = 635, (img_height * 635 / img_width)
+        # img = img.resize((img_width, int(img_height)), resample=Image.LANCZOS)
 
         img_buffer = io.BytesIO()
         img.save(img_buffer, format='png')
@@ -33,7 +33,7 @@ def md2md_embedded_img(fp_md: str):
         img_base64 = base64.b64encode(img_buffer.getvalue()).decode('utf-8')
 
         # make embedded image url
-        img_html_embedded = f"<img src='data:image/png;base64,{img_base64}'>"
+        img_html_embedded = f"<img width='{635}' src='data:image/png;base64,{img_base64}'>"
 
         # replace ref img with embedded img
         md = md.replace(ref_img, img_html_embedded)
