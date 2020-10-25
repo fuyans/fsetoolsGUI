@@ -15,18 +15,21 @@ def lineplot(
         fig=None,
         ax=None,
         fp_figure: str = None,
+        xlabel: str = None,
         xlim: Tuple[float, float] = (15, 180),
-        xlim_step: float = 15,
+        xticks: Union[list, np.ndarray] = None,
+        ylabel: str = None,
+        ylim: Tuple[float, float] = None,
+        yticks: Union[list, np.ndarray] = None,
         n_legend_col: int = 1,
         legend_no_overlap: bool = True,
-        xlabel: str = None,
-        ylabel: str = None,
         plot_in_set=False,  # @param {type:"boolean"}
         plot_in_set_zoom=20,  # @param {type:"number"}
         plot_in_set_x=75,  # @param {type:"number"}
         plot_in_set_x_tol=1,  # @param {type:"number"}
         plot_in_set_y=0,  # acceptable_reliability
         plot_in_set_y_tol=0.01,  # @param {type:"number"}
+        qt_progress_signal=None,
 ):
     # Calculate the maximum time equivalence value (i.e. x-axis limit)
 
@@ -40,6 +43,8 @@ def lineplot(
         fig, ax = plt.subplots(1, 1, figsize=figsize, sharex=True)
 
     for i in range(len(y)):
+        if qt_progress_signal is not None:
+            qt_progress_signal.emit(int((i + 1) / len(y) * 100))
         sns.lineplot(x=x[i], y=y[i], label=legend_labels[i], ax=ax, palette=sns.color_palette("husl", n_colors=20))
 
     if isinstance(acceptable_reliability, (float, int)):
@@ -55,17 +60,23 @@ def lineplot(
             ).set_visible(True)
         else:
             ax.legend(shadow=False, edgecolor='k', fancybox=False, ncol=n_legend_col, fontsize='xx-small').set_visible(True)
-    else:
-        ax.legend().set_visible(False)
-    ax.set_xticks(np.arange(xlim[0], xlim[1] + xlim_step, xlim_step))
-    ax.set_xlim(*xlim)
-    ax.set_yticks(np.arange(0, 1.05, 0.1))
-    ax.set_ylim(-0.01, 1.01)
-    ax.tick_params(axis='both', which='both', labelsize='x-small')
+
+    # format axis
     if xlabel:
         ax.set_xlabel(xlabel)
+    if xticks is not None:
+        ax.set_xticks(xticks)
+    if xlim is not None:
+        ax.set_xlim(*xlim)
+
+    if yticks is not None:
+        ax.set_yticks(yticks)
+    if ylim is not None:
+        ax.set_ylim(*ylim)
     if ylabel:
         ax.set_ylabel(ylabel)
+
+    ax.tick_params(axis='both', which='both', labelsize='xx-small')
 
     # plot inset
     if plot_in_set:
@@ -100,7 +111,8 @@ def lineplot_matrix(
         fp_figure: str = None,
         xlim: Tuple[float, float] = (0, 120),
         bin_width: float = 2.5,
-        figsize: Tuple[float, float] = (1.2, 1.2)
+        figsize: Tuple[float, float] = (1.2, 1.2),
+        qt_progress_signal=None
 ):
     n_rows = int(np.ceil(len(dict_teq.keys()) / n_cols))
     figsize = (n_cols * figsize[0], n_rows * figsize[1])
@@ -111,8 +123,8 @@ def lineplot_matrix(
     except:
         pass
 
-    i = 0
-    for k in sorted(dict_teq.keys()):
+    for i, k in enumerate(sorted(dict_teq.keys())):
+
         v = dict_teq[k]
         v[v == np.inf] = np.max(v[v != np.inf])
         v[v == -np.inf] = np.min(v[v != -np.inf])
@@ -140,7 +152,8 @@ def lineplot_matrix(
         ax2.set_ylim(0, 0.2)
         ax2.tick_params(axis='both', direction='in')
 
-        i = i + 1
+        if qt_progress_signal is not None:
+            qt_progress_signal.emit(int((i + 1) / len(dict_teq) * 100))
 
     ax1.set_xticks(np.arange(xlim[0], xlim[1] + 1, 30))
     ax1.set_xlim(*xlim)

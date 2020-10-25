@@ -45,7 +45,40 @@ class NavigationToolbarFake(NavigationToolbar2):
         pass
 
 
-class App(QtWidgets.QDialog):
+class FigureBaseClass(QtWidgets.QWidget):
+    def __init__(self, parent=None, show_toolbar: bool = False, show_xy: bool = False):
+        super().__init__(parent=parent)
+
+        # self.figure = plt.figure()
+        # self.figure.patch.set_facecolor('None')
+        #
+        # self.figure_canvas = FigureCanvas(self.figure)
+        # self.figure_canvas.setStyleSheet("background-color:transparent;border:0px")  # set background transparent.
+
+    def resizeEvent(self, event):
+        self.refresh_figure()
+
+    def add_subplot(self, *args, **kwargs) -> plt.Axes:
+        ax = self.figure.add_subplot(*args, **kwargs)
+        return ax
+
+    def save_figure(self):
+        path_to_file, _ = QtWidgets.QFileDialog.getSaveFileName(
+            parent=self,
+            caption='Save figure',
+            dir='image.png'
+        )
+
+        if path_to_file:
+            self.figure.savefig(path_to_file, dpi=100, transparent=True)
+
+    def refresh_figure(self):
+        self.figure.tight_layout()
+        self.figure.canvas.draw()
+        self.repaint()
+
+
+class App(QtWidgets.QDialog, FigureBaseClass):
     def __init__(self, parent=None, title: str = None, show_toolbar: bool = False, show_xy: bool = True):
 
         super().__init__(parent=parent)
@@ -100,33 +133,6 @@ class App(QtWidgets.QDialog):
 
         self.p3_refresh.clicked.connect(self.refresh_figure)
         self.p3_save_figure.clicked.connect(self.save_figure)
-
-    def resizeEvent(self, event):
-        self.refresh_figure()
-
-    def add_subplot(self, *args, **kwargs) -> plt.Axes:
-        ax = self.figure.add_subplot(*args, **kwargs)
-        return ax
-
-    def save_figure(self):
-        path_to_file, _ = QtWidgets.QFileDialog.getSaveFileName(
-            parent=self,
-            caption='Save figure',
-            dir='image.png'
-        )
-
-        if path_to_file:
-            self.figure.savefig(path_to_file, dpi=100, transparent=True)
-
-    def refresh_figure(self):
-        self.figure.tight_layout()
-        self.figure.canvas.draw()
-        self.repaint()
-
-    def keyPressEvent(self, event):
-        if event.key() == QtCore.Qt.Key_Escape:
-            self.close()
-        event.accept()
 
 
 def _test_1():

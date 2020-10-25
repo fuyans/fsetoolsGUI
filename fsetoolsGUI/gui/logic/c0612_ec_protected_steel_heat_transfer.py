@@ -4,7 +4,7 @@ import numpy as np
 from PySide2 import QtCore
 from PySide2.QtWidgets import QGridLayout, QLabel
 from fsetools.lib.fse_bs_en_1993_1_2_heat_transfer_c import temperature as protected_steel_eurocode
-from sfeprapy.mcs0.mcs0_calc import solve_time_equivalence
+from sfeprapy.mcs0.mcs0_calc import solve_time_equivalence_iso834
 
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.logic.c0000_utilities import Counter
@@ -129,7 +129,7 @@ class App(AppBaseClass):
             **__,
     ):
         if solver_temperature_goal:
-            teq_output = solve_time_equivalence(
+            teq_output = solve_time_equivalence_iso834(
                 fire_time=fire_time,
                 fire_temperature=fire_temperature,
                 beam_cross_section_area=beam_cross_section_area,

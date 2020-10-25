@@ -35,11 +35,6 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
         '--exclude-module=' + 'docopt',
         '--exclude-module=' + 'setuptools',
     ]
-    if 'dev' in __version__:
-        logger.info('Dev. build is enabled.')
-    else:
-        cmd_option_list.append('--windowed')
-        logger.info('Dev. build is not enabled.')
 
     if options:
         cmd_option_list.extend(options)
@@ -78,6 +73,7 @@ def main():
     options = [
         "--onedir",  # output unpacked dist to one directory, including an .exe file
         "--noconfirm",  # replace output directory without asking for confirmation
+        "--windowed",
         # "--console",
         "--clean",  # clean pyinstaller cache and remove temporary files
         f'--add-data={realpath(join("etc", "ofr_logo_1_80_80.ico"))}{os.pathsep}etc',  # include icon file
