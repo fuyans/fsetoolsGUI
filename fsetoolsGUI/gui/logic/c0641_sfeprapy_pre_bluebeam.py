@@ -3,10 +3,12 @@ from os.path import realpath, dirname, join
 import pandas as pd
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QGridLayout, QLabel
+from sfeprapy.func.mcs_gen import dict_flatten
+from sfeprapy.mcs0 import EXAMPLE_INPUT_DICT
 
+from fsetoolsGUI import logger
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.logic.c0000_utilities import Counter
-from fsetoolsGUI import logger
 
 
 class App(AppBaseClass):
@@ -97,14 +99,13 @@ class App(AppBaseClass):
         df[df['Subject'] == 'KEY'].to_dict(orient='records')
         colour2occ_dict = {v['Colour']: v['Label'] for v in df[df['Subject'] == 'OCCUPANCY_TYPE'].to_dict(orient='records')}
 
-        case_names = list(set(df[df['Subject'] == 'COMPARTMENT']['Label'].values))
-        case_names.sort()
-        case_names = [i for i in case_names if not i.endswith('_')]
+        case_names = list()
+        for case_name in sorted(list(set(df[df['Subject'] == 'COMPARTMENT']['Label'].values))):
+            if not case_name.endswith('_'):
+                case_names.append(case_name)
 
         # df[(df['Subject'] == 'COMPARTMENT') & (df['Label'] == '1F01')].to_dict(orient='records')
         # df[(df['Subject'] == 'COMPARTMENT_DEPTH') & (df['Label'] == '1F01')].to_dict(orient='records')
-
-        data = dict()
 
         def opening_height_and_width(ws: list, hs: list):
             if len(ws) == 0 and len(hs) == 0:
@@ -137,30 +138,32 @@ class App(AppBaseClass):
                 logger.warning(f'Duplicated compartment name detected: {case_name} = {len(compartment)}')
             compartment = compartment[0]
 
-            room_length = df[(df['Subject'] == 'COMPARTMENT_LENGTH') & (df['Label'] == case_name)].to_dict(orient='records')
-            room_length = sum([v['Length'] for v in room_length])
-
             # ------------------------------------------
             # calculation ventilation opening dimensions
             # ------------------------------------------
             windows = df[(df['Subject'] == 'WINDOW') & (df['Label'] == case_name)].to_dict(orient='records')
             doors = df[(df['Subject'] == 'DOOR') & (df['Label'] == case_name)].to_dict(orient='records')
+            logger.info(f'Total number of glazed openings: {len(windows)}')
+            logger.info(f'Total number of doors: {len(doors)}')
 
             opening_heq, opening_wt = opening_height_and_width(
                 [i['Length'] for i in windows] + [i['Length'] for i in doors],
                 [i['Depth'] for i in windows] + [i['Depth'] for i in doors]
             )
+            logger.info(f'Total glazed opening height: {opening_heq}')
+            logger.info(f'Total glazed opening width: {opening_wt}')
+
             doors_heq, doors_wt = opening_height_and_width([i['Length'] for i in doors], [i['Depth'] for i in doors])
+            logger.info(f'Total door opening height: {doors_heq}')
+            logger.info(f'Total door opening width: {doors_wt}')
+
+            window_open_fraction_permanent = (doors_heq * doors_wt) / (opening_heq * opening_wt)
+            logger.info(f'Permanent ventilation opening fraction: {window_open_fraction_permanent}')
 
             # ----------------------------
             # calculate general floor area
             # ----------------------------
             compartment_with_duplicates = df[(df['Subject'] == 'COMPARTMENT') & ((df['Label'] == case_name) | (df['Label'] == f'{case_name}_'))].to_dict(orient='records')
-
-            # print(f'case_name:         {case_name}')
-            # print(f'no. duplicates:    {len(compartment_with_duplicates)-1}')
-            # print(f'no. windows:       {len(windows)}')
-            # print(f'no. doors:         {len(doors)}')
 
             # ----------------
             # assign variables
@@ -168,97 +171,51 @@ class App(AppBaseClass):
             # data_ = OrderedDict()
             occupancy_type = colour2occ_dict[compartment['Colour']].lower().strip()  # strip and convert to lower case to avoid potential human errors
 
-            data_ = {
-                'case_name': case_name,
-                'occupancy_type': occupancy_type[0].upper() + occupancy_type[1:].lower(),
-                'n_simulations': 10000,
-                'probability_weight': 0,
+            room_length = df[(df['Subject'] == 'COMPARTMENT_LENGTH') & (df['Label'] == case_name)].to_dict(orient='records')
+            room_length = sum([v['Length'] for v in room_length])
 
-                'room_depth': room_length,
-                'room_height': compartment['Depth'],
-                'room_floor_area': compartment['Area'],
-                'room_wall_thermal_inertia': 700,
+            room_floor_area = compartment['Area']
+            room_height = compartment['Depth']
+            room_breadth = room_floor_area / room_height
 
-                'window_height': opening_heq,
-                'window_width': opening_wt,
-                'window_open_fraction_permanent': (doors_heq * doors_wt) / (opening_heq * opening_wt),
-                'general_room_floor_area': sum([i['Area'] for i in compartment_with_duplicates]),
+            general_room_floor_area = sum([i['Area'] for i in compartment_with_duplicates])
 
-                # variable values obtained from `database` based upon `occupancy_type`
-                'fire_hrr_density:dist': database[occupancy_type]['fire_hrr_density:dist'],
-                'fire_hrr_density:lbound': database[occupancy_type]['fire_hrr_density:lbound'],
-                'fire_hrr_density:ubound': database[occupancy_type]['fire_hrr_density:ubound'],
-                'fire_load_density:dist': database[occupancy_type]['fire_load_density:dist'],
-                'fire_load_density:lbound': database[occupancy_type]['fire_load_density:lbound'],
-                'fire_load_density:ubound': database[occupancy_type]['fire_load_density:ubound'],
-                'fire_load_density:mean': database[occupancy_type]['fire_load_density:mean'],
-                'fire_load_density:sd': database[occupancy_type]['fire_load_density:sd'],
-                'fire_tlim': database[occupancy_type]['fire_tlim'],
-                'p1': database[occupancy_type]['p1'],
-                'p2': database[occupancy_type]['p2'],
-                'p3': database[occupancy_type]['p3'],
-                'p4': database[occupancy_type]['p4'],
+            data_ = EXAMPLE_INPUT_DICT['Standard Case 1']
 
-                'fire_time_step': 10,
-                'fire_time_duration': 10800,
-                'fire_spread_speed:dist': 'uniform_',
-                'fire_spread_speed:lbound': 0.005,
-                'fire_spread_speed:ubound': 0.036,
-                'fire_nft_limit:dist': 'norm_',
-                'fire_nft_limit:lbound': 623.15,
-                'fire_nft_limit:ubound': 1473.15,
-                'fire_nft_limit:mean': 1323.15,
-                'fire_nft_limit:sd': 93,
-                'fire_combustion_efficiency:dist': 'uniform_',
-                'fire_combustion_efficiency:lbound': 0.8,
-                'fire_combustion_efficiency:ubound': 1,
-                'window_open_fraction:dist': 'lognorm_mod_',
-                'window_open_fraction:ubound': 0.9999,
-                'window_open_fraction:lbound': 0.0001,
-                'window_open_fraction:mean': 0.2,
-                'window_open_fraction:sd': 0.2,
-                'beam_position_horizontal:dist': 'uniform_',
-                'beam_position_horizontal:ubound': room_length * 0.9,
-                'beam_position_horizontal:lbound': room_length * 0.6,
-                'beam_position_vertical': min(3.3, compartment['Depth']),
-                'beam_cross_section_area': 0.017,
-                'beam_rho': 7850,
-                'protection_c': 1700,
-                'protection_k': 0.2,
-                'protection_protected_perimeter': 2.14,
-                'protection_rho': 800,
-                'solver_temperature_goal': 893.15,
-                'solver_max_iter': 20,
-                'solver_thickness_lbound': 0.0001,
-                'solver_thickness_ubound': 0.0300,
-                'solver_tol': 1,
-                'fire_mode': 3,
-                'fire_gamma_fi_q': 1,
-                'fire_t_alpha': 300,
-                'room_breadth': compartment['Area'] / room_length,
-                'phi_teq:dist': 'lognorm_',
-                'phi_teq:lbound': 0.0001,
-                'phi_teq:ubound': 3.,
-                'phi_teq:mean': 1.,
-                'phi_teq:sd': 0.25,
-                'timber_charring_rate': 0.0,
-                'timber_hc': 0.,
-                'timber_density': 0.,
-                'timber_exposed_area': 0.,
-                'timber_solver_ilim': 0.,
-                'timber_solver_tol': 0.,
-            }
+            data_.update(dict(
+                case_name=case_name,
+                occupancy_type=occupancy_type[0].upper() + occupancy_type[1:].lower(),
+                room_depth=room_length,
+                room_breadth=room_breadth,
+                room_height=room_height,
+                room_floor_area=room_floor_area,
+                window_height=opening_heq,
+                window_width=opening_wt,
+                window_open_fraction_permanent=window_open_fraction_permanent,
+                general_room_floor_area=general_room_floor_area,
+                fire_hrr_density=dict(
+                    dist=database[occupancy_type]['fire_hrr_density:dist'],
+                    ubound=database[occupancy_type]['fire_hrr_density:ubound'],
+                    lbound=database[occupancy_type]['fire_hrr_density:lbound'],
+                ),
+                fire_load_density=dict(
+                    dist=database[occupancy_type]['fire_load_density:dist'],
+                    ubound=database[occupancy_type]['fire_load_density:ubound'],
+                    lbound=database[occupancy_type]['fire_load_density:lbound'],
+                    mean=database[occupancy_type]['fire_load_density:mean'],
+                    sd=database[occupancy_type]['fire_load_density:sd'],
+                ),
+                p1=1,
+                p2=1,
+                p3=1,
+                p4=1,
+                beam_position_horizontal=dict(dist='uniform_', ubound=0.9 * room_length, lbound=0.6 * room_length),
+                beam_position_vertical=min(3.3, room_height),
+            ))
 
-            data[case_name] = data_
+            data_ = dict_flatten(data_)
 
-            # if 0 < data[case_name]['window_open_fraction_permanent'] < 1:
-            #     print(f'permenant o. frac.: {data[case_name]["window_open_fraction_permanent"]}')
-            #     print(f'windows:            {windows}')
-            #     print(f'doors:              {doors}')
-            # print('.\n')
-
-        data_df = pd.DataFrame.from_dict(data)
-        # data_df.to_csv(join(dirname(fp_measurements), 'measurements.out.csv'))
+        data_df = pd.DataFrame.from_dict(dict(case_name=data_))
         data_df.to_excel(join(dirname(fp_measurements), 'mcs0.xlsx'))
 
 
