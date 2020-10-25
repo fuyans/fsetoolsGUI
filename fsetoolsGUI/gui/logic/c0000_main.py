@@ -1,8 +1,10 @@
 import datetime
 import logging
+import threading
 from os import path
 
 import requests
+from PySide2.QtCore import Slot
 from PySide2.QtWidgets import QErrorMessage, QPushButton, QLineEdit, QInputDialog
 from PySide2.QtWidgets import QMainWindow, QSizePolicy, QWidget, QGridLayout, QGroupBox, QLabel
 from packaging import version
@@ -260,8 +262,8 @@ class App(QMainWindow):
         # Check update
         # ------------
         # DEPRECIATED 20th Oct 2020. Checked updated moved to fsetoolsgui.gui.__main__
-        # self.Signals.check_update_complete.connect(self.setEnabled_all_buttons)
-        # threading.Timer(0, self.check_update).start()
+        self.Signals.check_update_complete.connect(self.setEnabled_all_buttons)
+        threading.Timer(0, self.check_update).start()
 
         # window properties
         self.ui.label_version.setText(f'Version {__version__}')
@@ -270,14 +272,17 @@ class App(QMainWindow):
         self.ui.label_version.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
 
         # signals
-        self.ui.label_version.mousePressEvent = lambda event: QtGui.QDesktopServices.openUrl(QtCore.QUrl(self.new_version_update_url)) if event else None
+        def label_version_mouse_click(event=None):
+            if event and self.new_version_update_url is not None:
+                QtGui.QDesktopServices.openUrl(QtCore.QUrl(self.new_version_update_url))
+
+        self.ui.label_version.mousePressEvent = label_version_mouse_click
 
         # default values
         self.ui.dialog_error = QErrorMessage(self)
         self.ui.dialog_error.setWindowTitle('Message')
         self.__new_version_update_url = None
         self.__dialog_opened = list()
-
 
     def add_buttons(self):
         button_collection = {
@@ -291,12 +296,9 @@ class App(QMainWindow):
         self.ui.p2_layout.setHorizontalSpacing(5), self.ui.p2_layout.setVerticalSpacing(5)
 
         self.add_button_set_to_grid(self.ui.p2_layout, 'Miscellaneous', button_collection['Miscellaneous'], 0, 0, 5)
-        self.add_button_set_to_grid(self.ui.p2_layout, 'B1 Means of escape', button_collection['B1 Means of escape'], 2,
-                                    0, 5)
-        self.add_button_set_to_grid(self.ui.p2_layout, 'B3 Elements of structure',
-                                    button_collection['B3 Elements of structure'], 4, 0, 5)
-        self.add_button_set_to_grid(self.ui.p2_layout, 'B4 External fire spread',
-                                    button_collection['B4 External fire spread'], 6, 0, 5)
+        self.add_button_set_to_grid(self.ui.p2_layout, 'B1 Means of escape', button_collection['B1 Means of escape'], 2, 0, 5)
+        self.add_button_set_to_grid(self.ui.p2_layout, 'B3 Elements of structure', button_collection['B3 Elements of structure'], 4, 0, 5)
+        self.add_button_set_to_grid(self.ui.p2_layout, 'B4 External fire spread', button_collection['B4 External fire spread'], 6, 0, 5)
 
     def add_button_set_to_grid(self, layout: QGridLayout, label: str, button_id_list: list, row_0: int, col_0: int,
                                cols: int):
@@ -350,20 +352,18 @@ class App(QMainWindow):
         row_i.add()
         col_i.reset()
 
-    # DEPRECIATED 20th Oct 2020. Checked updated moved to fsetoolsgui.gui.__main__
-    # @Slot(bool)
-    # def setEnabled_all_buttons(self, v: bool):
-    #     """
-    #     To disable/enable all buttons in `groupBox` depending on `v`.
-    #     Used as Slot to disable all buttons depend on remote version data `is_executable`.
-    #     """
-    #     if not self.is_executable:
-    #         all_push_buttons = filter_objects_by_name(
-    #             object_parent_widget=self.ui.page_2,
-    #             object_types=[QPushButton]
-    #         )
-    #         for pushButton in all_push_buttons:
-    #             pushButton.setEnabled(v)
+    @Slot(bool)
+    def setEnabled_all_buttons(self, v: bool):
+        """
+        To disable/enable all buttons in `groupBox` depending on `v`.
+        Used as Slot to disable all buttons depend on remote version data `is_executable`.
+        """
+        for button in self.ui.page_2.findChildren(QPushButton):
+            try:
+                if button.isEnabled() != v:
+                    button.setEnabled(False)
+            except Exception as e:
+                logger.error(f'Failed to disable button, {e}')
 
     def activate_app_module_id(self):
         if self.is_executable:
@@ -460,6 +460,8 @@ class App(QMainWindow):
         try:
             try:
                 upgrade_executable_url = specific_remote_version_data['executable_download_url']
+                if upgrade_executable_url is None:
+                    raise KeyError
                 logger.info(f'Successfully parsed `executable_download_url`, {upgrade_executable_url}')
             except KeyError:
                 upgrade_executable_url = self.update_data['latest_executable_download_url']
