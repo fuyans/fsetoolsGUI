@@ -315,14 +315,14 @@ class AppBaseClass(QtWidgets.QMainWindow):
             logger.debug(f'Post usage stats ignored for dev version, {content}')
             return
         try:
-            logger.info(f'Post usage stats started {content} ...')
+            logger.debug(f'Post usage stats started {content} ...')
             rp = post_to_knack_user_usage_stats(
                 user=str(getlogin()),  # user indicator
                 version=__version__,  # current app version
                 date=datetime.now().strftime("%d%m%Y %H:%M%p"),  # example "03/28/2014 10:30pm"
                 content=content  # action is the current app id
             )
-            logger.info(f'Successfully posted usage stats, {rp}')
+            logger.debug(f'Successfully posted usage stats, {rp}')
             logger.debug(f'{rp.text}')
         except Exception as e:
             logger.error(f'Failed to post usage stats, {e}')

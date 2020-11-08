@@ -38,6 +38,7 @@ from fsetoolsGUI.gui.logic.c0640_sfeprapy_mcs0 import App as App0640
 from fsetoolsGUI.gui.logic.c0641_sfeprapy_pre_bluebeam import App as App0641
 from fsetoolsGUI.gui.logic.c0642_sfeprapy_post_make_plots import App as App0642
 from fsetoolsGUI.gui.logic.c0643_sfeprapy_post_make_fire import App as App0643
+from fsetoolsGUI.gui.logic.c0660_ht1d_inexplicit import App as App0660
 
 try:
     qt_css = open(path.join(__root_dir__, 'gui', 'style.css'), "r").read()
@@ -64,8 +65,8 @@ class QDialogLogger(QtWidgets.QDialog, QPlainTextEditLogger):
         self.setWindowTitle('Log')
 
         qt_logger = QPlainTextEditLogger(self)
-        qt_logger.setLevel(logging.DEBUG)
-        qt_logger.setFormatter(logging.Formatter('%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s'))
+        qt_logger.setLevel(logging.INFO)
+        qt_logger.setFormatter(logging.Formatter('%(levelname)-8s [%(filename).5s:%(lineno)d] %(message)s'))
         logger.addHandler(qt_logger)
 
         layout = QtWidgets.QVBoxLayout()
@@ -104,6 +105,7 @@ class AppsCollection:
         '0641': App0641,
         '0642': App0642,
         '0643': App0643,
+        '0660': App0660,
     }
 
     def __init__(self):
@@ -220,7 +222,7 @@ class App(QMainWindow):
         self.Signals = Signals()
         self.__activated_dialogs = list()
 
-        self.__apps = AppsCollection()
+        self.AppsCollection = AppsCollection()
 
         # ui setup
         super().__init__()
@@ -288,7 +290,7 @@ class App(QMainWindow):
         button_collection = {
             'Miscellaneous': ['0601', '0602', '0611', '0407', '0620'],
             'B1 Means of escape': ['0101', '0102', '0104', '0103', '0111'],
-            'B3 Elements of structure': ['0311', '0630', '0640'],
+            'B3 Elements of structure': ['0311', '0630', '0640', '0660'],
             'B4 External fire spread': ['0403', '0404', '0411'],
         }
 
@@ -340,8 +342,8 @@ class App(QMainWindow):
         row_i.reset(row_0), col_i.reset(col_0)
         layout.addWidget(QLabel(f'<b>{label}</b>'), row_i.count, col_0, 1, cols)
         for v in button_id_list:
-            act_app = self.__apps.activate_app(v, self)
-            btn = QPushButton(self.__apps.app_name_short(v))
+            act_app = self.AppsCollection.activate_app(v, self)
+            btn = QPushButton(self.AppsCollection.app_name_short(v))
             btn.setAutoDefault(True)  # click button upon Enter
             # remove button padding to maximum text area
             btn.setStyleSheet(btn_stylesheet)
@@ -370,14 +372,13 @@ class App(QMainWindow):
             txt, ok = QInputDialog.getText(
                 self,
                 f'Activate App by Module Code',
-                f'{self.__apps.print_all_app_info(sort_by="module_app_name_long")}',
+                f'{self.AppsCollection.print_all_app_info(sort_by="module_app_name_long")}',
                 QLineEdit.Normal,
                 ""
             )
             if ok and txt:
-                app = self.__apps.activate_app(code=txt, parent=self)
+                app = self.AppsCollection.activate_app(code=txt, parent=self)
                 app()
-                self.activated_dialogs.append(app)
 
     def check_update(self):
         """
@@ -500,14 +501,14 @@ class App(QMainWindow):
 
     def closeEvent(self, event):
 
-        logger.debug('Terminating activated dialogs/mainwindows ...')
+        logger.debug('Terminating activated dialogs ...')
         for i in self.activated_dialogs:
             try:
                 i.close()
             except Exception as e:
-                logger.error(f'{str(e)}')
+                logger.warning(f'Unable to close {type(i).__name__}, {str(e)}')
 
-        logger.debug('All activated widgets are terminated')
+        logger.debug('All activated dialogs are terminated')
 
         event.accept()
 

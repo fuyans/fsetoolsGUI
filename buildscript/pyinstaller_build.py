@@ -2,10 +2,10 @@
 import os
 import subprocess
 import sys
-from os.path import join, realpath, dirname, relpath
 from datetime import datetime
+from os.path import join, realpath, dirname, relpath
 
-from fsetoolsGUI import __version__, __root_dir__, logger
+from fsetoolsGUI import __root_dir__, logger
 
 try:
     from buildscript.__key__ import key as key_
@@ -74,7 +74,7 @@ def main():
         "--onedir",  # output unpacked dist to one directory, including an .exe file
         "--noconfirm",  # replace output directory without asking for confirmation
         "--windowed",
-        # "--console",
+        "--noconsole",
         "--clean",  # clean pyinstaller cache and remove temporary files
         f'--add-data={realpath(join("etc", "ofr_logo_1_80_80.ico"))}{os.pathsep}etc',  # include icon file
     ]

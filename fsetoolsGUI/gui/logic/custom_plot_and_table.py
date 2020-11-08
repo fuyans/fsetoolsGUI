@@ -128,7 +128,10 @@ class App(QtWidgets.QDialog):
         self.TableView.setItemDelegate(delegate)
 
         self.p1_layout_table.addWidget(self.TableView)
-        self.p1_layout_table.addWidget(QTextEdit('Ctrl+A to select all, Ctrl+C to copy selected cells.'))
+        # table_tip_text = QLabel('Ctrl+A to select all, Ctrl+C to copy selected cells.')
+        # table_tip_text.setWordWrap(True)
+        # table_tip_text.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        # self.p1_layout_table.addWidget(table_tip_text)
 
         # Instantiate splitter and add figure and table
         # ---------------------------------------------

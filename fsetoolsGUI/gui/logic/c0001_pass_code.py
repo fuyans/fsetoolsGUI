@@ -1,11 +1,8 @@
-from os import getlogin
-
 import requests
 from PySide2 import QtWidgets, QtGui, QtCore
-from fsetoolsGUI.etc.util import hash_simple, get_machine_uid
 
 import fsetoolsGUI
-
+from fsetoolsGUI.etc.util import get_machine_uid
 from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
 
 

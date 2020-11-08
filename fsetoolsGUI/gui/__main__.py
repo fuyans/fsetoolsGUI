@@ -2,7 +2,6 @@
 # coding:utf-8
 
 import datetime
-import os
 import sys
 import time
 
@@ -10,7 +9,6 @@ import PySide2
 from PySide2 import QtCore, QtWidgets
 
 import fsetoolsGUI
-from fsetoolsGUI import logger
 from fsetoolsGUI.gui.logic.c0000_main import App
 
 # load key which is used when the expiry date is passed
@@ -40,7 +38,6 @@ def main_core():
 
 
 def main():
-
     # ---------------------------------------------
     # Check expiry date and pass code if applicable
     # ---------------------------------------------
@@ -49,6 +46,7 @@ def main():
     if date_current >= date_expiration:
 
         app = QtWidgets.QApplication(sys.argv)
+
         if KEY is not None:
             from fsetoolsGUI.gui.logic.c0001_pass_code import App
 
