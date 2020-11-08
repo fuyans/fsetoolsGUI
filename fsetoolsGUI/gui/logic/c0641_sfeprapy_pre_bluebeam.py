@@ -101,7 +101,7 @@ class App(AppBaseClass):
 
         case_names = list()
         for case_name in sorted(list(set(df[df['Subject'] == 'COMPARTMENT']['Label'].values))):
-            if not case_name.endswith('_'):
+            if not str(case_name).endswith('_'):
                 case_names.append(case_name)
 
         # df[(df['Subject'] == 'COMPARTMENT') & (df['Label'] == '1F01')].to_dict(orient='records')
@@ -125,6 +125,7 @@ class App(AppBaseClass):
 
             return weighted_height, total_width
 
+        data_dict:dict = dict()
         for case_name in case_names:
             logger.info(f'Processing {case_name} ...')
 
@@ -171,12 +172,12 @@ class App(AppBaseClass):
             # data_ = OrderedDict()
             occupancy_type = colour2occ_dict[compartment['Colour']].lower().strip()  # strip and convert to lower case to avoid potential human errors
 
-            room_length = df[(df['Subject'] == 'COMPARTMENT_LENGTH') & (df['Label'] == case_name)].to_dict(orient='records')
-            room_length = sum([v['Length'] for v in room_length])
+            room_depth = df[(df['Subject'] == 'COMPARTMENT_LENGTH') & (df['Label'] == case_name)].to_dict(orient='records')
+            room_depth = sum([v['Length'] for v in room_depth])
 
             room_floor_area = compartment['Area']
             room_height = compartment['Depth']
-            room_breadth = room_floor_area / room_height
+            room_breadth = room_floor_area / room_depth
 
             general_room_floor_area = sum([i['Area'] for i in compartment_with_duplicates])
 
@@ -185,7 +186,7 @@ class App(AppBaseClass):
             data_.update(dict(
                 case_name=case_name,
                 occupancy_type=occupancy_type[0].upper() + occupancy_type[1:].lower(),
-                room_depth=room_length,
+                room_depth=room_depth,
                 room_breadth=room_breadth,
                 room_height=room_height,
                 room_floor_area=room_floor_area,
@@ -209,13 +210,13 @@ class App(AppBaseClass):
                 p2=1,
                 p3=1,
                 p4=1,
-                beam_position_horizontal=dict(dist='uniform_', ubound=0.9 * room_length, lbound=0.6 * room_length),
+                beam_position_horizontal=dict(dist='uniform_', ubound=0.9 * room_depth, lbound=0.6 * room_depth),
                 beam_position_vertical=min(3.3, room_height),
             ))
 
-            data_ = dict_flatten(data_)
+            data_dict[case_name] = dict_flatten(data_)
 
-        data_df = pd.DataFrame.from_dict(dict(case_name=data_))
+        data_df = pd.DataFrame.from_dict(data_dict)
         data_df.to_excel(join(dirname(fp_measurements), 'mcs0.xlsx'))
 
 
