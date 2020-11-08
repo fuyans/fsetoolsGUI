@@ -3,7 +3,8 @@ from typing import Tuple, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
-import seaborn as sns
+
+plt.style.use('seaborn-paper')
 
 
 def lineplot(
@@ -45,7 +46,8 @@ def lineplot(
     for i in range(len(y)):
         if qt_progress_signal is not None:
             qt_progress_signal.emit(int((i + 1) / len(y) * 100))
-        sns.lineplot(x=x[i], y=y[i], label=legend_labels[i], ax=ax, palette=sns.color_palette("husl", n_colors=20))
+        # sns.lineplot(x=x[i], y=y[i], label=legend_labels[i], ax=ax, palette=sns.color_palette("husl", n_colors=20))
+        ax.plot(x[i], y[i], label=legend_labels[i])
 
     if isinstance(acceptable_reliability, (float, int)):
         ax.axhline(acceptable_reliability, ls='--', c='k')
@@ -53,13 +55,6 @@ def lineplot(
 
     # Update plot settings
     ax.grid(which='major', linestyle=':', linewidth='0.5', color='black')
-    if len(legend_labels) > 1:
-        if legend_no_overlap:
-            ax.legend(
-                shadow=False, edgecolor='k', fancybox=False, ncol=n_legend_col, fontsize='xx-small', bbox_to_anchor=(1.04, 1.018), loc="upper left"
-            ).set_visible(True)
-        else:
-            ax.legend(shadow=False, edgecolor='k', fancybox=False, ncol=n_legend_col, fontsize='xx-small').set_visible(True)
 
     # format axis
     if xlabel:
@@ -85,7 +80,8 @@ def lineplot(
         ax_ins = zoomed_inset_axes(parent_axes=ax, zoom=plot_in_set_zoom, loc=1)  # zoom-factor: 2.5, location: upper-left
 
         for i in range(len(y)):
-            sns.lineplot(x=x, y=y[i], ax=ax_ins, palette=sns.color_palette("husl", n_colors=20))
+            # sns.lineplot(x=x, y=y[i], ax=ax_ins, palette=sns.color_palette("husl", n_colors=20))
+            ax.plot(x, y[i])
         ax_ins.axhline(acceptable_reliability, ls='--', c='k')
 
         ax_ins.set_xlim(plot_in_set_x - plot_in_set_x_tol, plot_in_set_x + plot_in_set_x_tol)
@@ -97,6 +93,21 @@ def lineplot(
         ax_ins.legend().set_visible(False)
 
         mark_inset(parent_axes=ax, inset_axes=ax_ins, loc1=2, loc2=3, ec='k', fc='w', zorder=3)
+
+    if len(legend_labels) > 1:
+        if legend_no_overlap:
+            ax.legend().get_frame().set_linewidth(2.)
+            ax.legend(
+                shadow=False,
+                edgecolor='k',
+                fancybox=False,
+                ncol=n_legend_col,
+                fontsize='xx-small',
+                bbox_to_anchor=(1.04, 1.015),
+                loc="upper left"
+            ).set_visible(True)
+        else:
+            ax.legend(shadow=False, edgecolor='k', fancybox=False, ncol=n_legend_col, fontsize='xx-small').set_visible(True)
 
     # Save plot
     if fp_figure and fig:
@@ -140,7 +151,9 @@ def lineplot_matrix(
         # AttributeError: 'PolyCollection' object has no property 'hist'
         # sns.histplot(v, label='PDF', ax=ax2, bins=edges, kde=False, hist=True,
         #              hist_kws=dict(cumulative=False, density=True, color='grey'))
-        sns.lineplot(x=centres, y=np.cumsum(hist) / len(v), ax=ax1, color='k')
+        # sns.lineplot(x=centres, y=np.cumsum(hist) / len(v), ax=ax1, color='k')
+        ax1.plot(centres, np.cumsum(hist) / len(v), color='k')
+        ax2.hist(x=v, bins=edges, density=True, color='k', alpha=0.5)
 
         ax1.set_ylim((0, 1))
         ax1.set_yticks([0, 1])
@@ -160,7 +173,7 @@ def lineplot_matrix(
     fig.text(-0.01, 0.5, 'CDF [-]', ha='center', va='top', rotation=90)
     fig.text(0.5, 0, 'Equivalent of time exposure [$min$]', ha='center', va='top')
 
-    fig.tight_layout(pad=0.1)
+    # fig.tight_layout(pad=0.1)
 
     if fp_figure:
         fig.savefig(fp_figure, dpi=300, bbox_inches='tight')
