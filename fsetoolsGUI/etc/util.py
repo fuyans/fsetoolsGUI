@@ -2,6 +2,7 @@ import binascii
 import hashlib
 import json
 import subprocess
+from datetime import datetime
 
 import requests
 
@@ -42,6 +43,15 @@ def post_to_knack_user_usage_stats(
     )
 
     return rp
+
+
+def build_write(datetime_cls: datetime = datetime.now()):
+    datetime_current = datetime.now()
+    datetime_current.strftime('%y')
+
+
+def build_read(datetime_str: str):
+    pass
 
 
 def _test_post_to_knack_user_usage_stats():
