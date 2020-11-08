@@ -1,6 +1,6 @@
 import os
 import threading
-from os.path import join
+from os.path import join, realpath
 
 import matplotlib
 import numpy as np
@@ -25,8 +25,8 @@ class App(AppBaseClass):
         # ================================
         super().__init__(parent, post_stats, ui=AppBaseClassUISimplified01)
 
-        self.__progress_bar = ProgressBar('Progress', parent=self)
-        self.activated_dialogs.append(self.__progress_bar)
+        self.ProgressBar = ProgressBar('Progress', parent=self)
+        self.activated_dialogs.append(self.ProgressBar)
 
         # ================
         # instantiation ui
@@ -59,7 +59,7 @@ class App(AppBaseClass):
         self.ui.p2_in_figure_matrix_height.setText('1.2')
         self.ui.p2_in_figure_matrix_width.setText('1.2')
         self.ui.p2_in_figure_matrix_cols.setText('9')
-        self.ui.p2_in_figure_xmin.setText('0')
+        self.ui.p2_in_figure_xmin.setText('15')
         self.ui.p2_in_figure_xmax.setText('180')
         self.ui.p2_in_figure_xstep.setText('15')
         self.ui.p2_in_figure_legend_cols.setText('1')
@@ -110,8 +110,8 @@ class App(AppBaseClass):
             figure_xmax=str2float(self.ui.p2_in_figure_xmax.text()),
             figure_xstep=str2float(self.ui.p2_in_figure_xstep.text()),
             figure_legend_cols=str2int(self.ui.p2_in_figure_legend_cols.text()),
-            qt_progress_signal_0=self.__progress_bar.Signals.progress,
-            qt_progress_signal_1=self.__progress_bar.Signals.progress_label,
+            qt_progress_signal_0=self.ProgressBar.Signals.progress,
+            qt_progress_signal_1=self.ProgressBar.Signals.progress_label,
         )
 
     @input_parameters.setter
@@ -127,7 +127,7 @@ class App(AppBaseClass):
         pass
 
     def ok(self):
-        self.__progress_bar.show()
+        self.ProgressBar.show()
         try:
             threading.Thread(target=self.calculate, kwargs=self.input_parameters).start()
         except Exception as e:
@@ -167,7 +167,7 @@ class App(AppBaseClass):
         # ===============
         # load input data
         # ===============
-        logger.info('Started to read SFEPRAPY MCS0 input data ...')
+        logger.info('Start to read SFEPRAPY MCS0 input data ...')
         try:
             df_input = pd.read_excel(fp_mcs_input, index_col=0)
         except Exception as e:
@@ -177,7 +177,7 @@ class App(AppBaseClass):
         # ================
         # load output data
         # ================
-        logger.info('Started to read SFEPRAPY MCS0 simulation output data ...')
+        logger.info('Start to read SFEPRAPY MCS0 simulation output data ...')
         update_progress(0, '1/7 Reading data')
         try:
             fp_csvs = [join(root, f) for root, dirs, files in os.walk(fp_mcs_output_dir) for f in files if f.endswith('.csv')]
@@ -195,7 +195,7 @@ class App(AppBaseClass):
         # =================
         # clean output data
         # =================
-        logger.info('Started to clean data ...')
+        logger.info('Start to clean data ...')
         try:
             df_output.replace('', np.inf, inplace=True)
             s = df_output['solver_time_equivalence_solved']
@@ -215,7 +215,7 @@ class App(AppBaseClass):
         # =========================
         # prepare intermediate data
         # =========================
-        logger.info("Started to analyse data ...")
+        logger.info("Start to analyse data ...")
         try:
             case_names = sorted(set(df_output['case_name']))
             edges = np.arange(0, 300 + bin_width, bin_width)
@@ -243,12 +243,13 @@ class App(AppBaseClass):
                 dict_P = {k: 1 for k in dict_teq_cdf.keys()}  # this is to prevent error in following codes
 
             dict_P_r_fi_i_weighted = {key: time_equivalence * (dict_P[key] / sum(dict_P.values())) for key, time_equivalence in dict_teq_cdf.items()}
-            # dict_P_f_d_i = {key: (1 - teq) * dict_P[key] for key, teq in dict_teq_cdf.items()}
             dict_P_f_d_i = dict()
             for key, teq in dict_teq_cdf.items():
                 dict_P_f_d_i[key] = (1 - teq) * dict_P[key]
 
             P_r_fi_i = pd.DataFrame.from_dict({'TIME [min]': x, **dict_teq_cdf}).set_index('TIME [min]')
+            P_r_fi_i_weighted = pd.DataFrame.from_dict({'TIME [min]': x, **dict_P_r_fi_i_weighted}).set_index('TIME [min]')
+            P_r_fi_combined = pd.DataFrame.from_dict({'TIME [min]': x, **dict_P_r_fi_i_weighted}).set_index('TIME [min]')
             P_f_d_i = pd.DataFrame.from_dict({'TIME [min]': x, **dict_P_f_d_i}).set_index('TIME [min]')
         except Exception as e:
             logger.error(f'{e}')
@@ -258,29 +259,31 @@ class App(AppBaseClass):
         # plot and save results
         # =====================
         # plot time equivalence in subplots matrix
-        logger.info('Started to plot time equivalence (subplots) ...')
+        logger.info('Start to plot time equivalence (subplots) ...')
         update_progress(0, '2/7 P_r_fi_i')
         try:
-            if len(dict_teq) > 1:
+            if len(dict_teq) > 6:
                 fig, ax = lineplot_matrix(
                     dict_teq,
                     n_cols=figure_matrix_cols,
                     figsize=(figure_matrix_width, figure_matrix_height),
                     qt_progress_signal=qt_progress_signal_0,
                 )
-                # fig.savefig('1-P_r_fi_i.png', dpi=300, bbox_inches='tight')
-                threading.Thread(target=lambda: fig.savefig('1-P_r_fi_i.png', dpi=300, bbox_inches='tight')).start()
+                fig.savefig('1-P_r_fi_i.png', dpi=300, bbox_inches='tight')
             else:
-                logger.warning('Skipped P_r_fi_i matrix line plot as only one dataset is provided')
+                logger.info('Skipped P_r_fi_i matrix line plot as only less than six dataset is provided')
 
         except Exception as e:
             logger.error(f'{e}')
 
         # plot and save time equivalence in one figure
-        logger.info('Started to plot time equivalence ...')
+        logger.info('Start to plot time equivalence ...')
         update_progress(0, '3/7 P_r_fi_i')
         try:
-            fig, ax = lineplot(
+            _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
+            P_r_fi_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in _]].to_csv('2-P_r_fi_i.csv')
+
+            lineplot(
                 x=[x] * len(case_names),
                 y=[dict_teq_cdf[i] for i in case_names],
                 legend_labels=case_names,
@@ -289,23 +292,25 @@ class App(AppBaseClass):
                 ylabel='$P_{r,fi}$ [-]',
                 figsize=(figure_width, figure_height),
                 xlim=(figure_xmin, figure_xmax),
-                xticks=np.arange(0, figure_xmax + 15, 15),
+                xticks=np.arange(0, figure_xmax + figure_xstep/2., figure_xstep),
+                ylim=(-0.01, 1.01),
+                yticks=np.arange(0, 1.+0.05, 0.1),
                 qt_progress_signal=qt_progress_signal_0,
+                fp_figure=realpath('2-P_r_fi_i.png')
             )
-            # fig.savefig('2-P_r_fi_i.png', dpi=300, bbox_inches='tight', transparent=True)
-            threading.Thread(target=lambda: fig.savefig('2-P_r_fi_i.png', dpi=300, bbox_inches='tight', transparent=True)).start()
-            _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
-            # P_r_fi_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in _]].to_csv('2-P_r_fi_i.csv')
-            threading.Thread(target=lambda: P_r_fi_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in _]].to_csv('2-P_r_fi_i.csv')).start()
         except Exception as e:
-            logger.error(f'{e}')
+            logger.error(f'Failed to plot time equivalence, {e}')
 
         if is_probabilities_defined:
 
-            logger.info('Started to plot combined time equivalence ...')
+            logger.info('Start to plot combined time equivalence ...')
             update_progress(0, '3/7 P_r_fi_i_combined')
             try:
-                fig, ax = lineplot(
+                _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
+                P_r_fi_i_weighted.iloc[[P_r_fi_i_weighted.index.get_loc(i, method='nearest') for i in _]].to_csv('3-P_r_fi_i_weighted.csv')
+                P_r_fi_combined.iloc[[P_r_fi_combined.index.get_loc(i, method='nearest') for i in _]].to_csv('3-P_r_fi_i_combined.csv')
+
+                lineplot(
                     x=[x],
                     y=[np.sum([v for k, v in dict_P_r_fi_i_weighted.items()], axis=0)],
                     legend_labels=[None],
@@ -314,71 +319,66 @@ class App(AppBaseClass):
                     ylabel='Combined $P_{r,fi}$ [-]',
                     figsize=(figure_width, figure_height),
                     xlim=(figure_xmin, figure_xmax),
-                    xticks=np.arange(0, figure_xmax + 15, 15),
+                    xticks=np.arange(0, figure_xmax + figure_xstep / 2., figure_xstep),
+                    ylim=(-0.01, 1.01),
+                    yticks=np.arange(0, 1.+0.05, 0.1),
                     qt_progress_signal=qt_progress_signal_0,
+                    fp_figure=realpath('3-P_r_fi_i_combined.png'),
                 )
-                # fig.savefig('2-P_r_fi_i_combined.png', dpi=300, bbox_inches='tight', transparent=True)
-                threading.Thread(target=lambda: fig.savefig('2-P_r_fi_i_combined.png', dpi=300, bbox_inches='tight', transparent=True)).start()
-                _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
-                P_r_fi_combined = pd.DataFrame.from_dict({'TIME [min]': x, **dict_P_r_fi_i_weighted}).set_index('TIME [min]')
-                # P_r_fi_combined.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in _]].to_csv('2-P_r_fi_i_weighted.csv')
-                threading.Thread(
-                    target=lambda: P_r_fi_combined.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in _]].to_csv('2-P_r_fi_i_combined.csv')
-                ).start()
             except Exception as e:
-                logger.error(f'{e}')
+                logger.error(f'Failed to plot combined time equivalence, {e}')
 
             # plot failure probability due to structurally significant fire
             logger.info('Started to plot failure probability ...')
             update_progress(0, '4/7 P_f_fi_i')
             try:
-                fig, ax = lineplot(
+                lineplot(
                     x=[x] * len(case_names),
                     y=[1 - dict_teq_cdf[i] for i in case_names],
                     legend_labels=case_names,
                     n_legend_col=figure_legend_cols,
                     xlabel='Equivalent of Time Exposure [$min$]',
-                    ylabel='$P_{f,fi}$ [-]',
+                    ylabel='$Failure Probability $P_{f,fi}$ [-]',
                     figsize=(figure_width, figure_height),
                     xlim=(figure_xmin, figure_xmax),
-                    xticks=np.arange(0, figure_xmax + 15, 15),
+                    xticks=np.arange(0, figure_xmax + figure_xstep / 2., figure_xstep),
+                    ylim=(-0.01, 1.01),
+                    yticks=np.arange(0, 1.+0.05, 0.1),
                     qt_progress_signal=qt_progress_signal_0,
+                    fp_figure=realpath('4-P_f_fi_i.png')
                 )
-                # fig.savefig('3-P_f_fi_i.png', dpi=300, bbox_inches='tight', transparent=True)
-                threading.Thread(target=lambda: fig.savefig('3-P_f_fi_i.png', dpi=300, bbox_inches='tight', transparent=True)).start()
             except Exception as e:
-                logger.error(f'{e}')
+                logger.error(f'Failed to plot failure probability, {e}')
 
             # plot failure probability due to fire
             logger.info('Started to plot design failure probability ...')
             update_progress(0, '5/7 P_fd_i')
             try:
-                fig, ax = lineplot(
+                _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
+                P_f_d_i.iloc[[P_f_d_i.index.get_loc(i, method='nearest') for i in _]].to_csv('5-P_f_d_i.csv')
+
+                lineplot(
                     x=[x] * len(case_names),
                     y=[dict_P_f_d_i[i] for i in case_names],
                     legend_labels=case_names,
                     n_legend_col=figure_legend_cols,
                     xlabel='Equivalent of Time Exposure [$min$]',
-                    ylabel='Failure Probability [$year^{-1}$]',
+                    ylabel='Failure probability [$year^{-1}$]',
                     figsize=(figure_width, figure_height),
                     xlim=(figure_xmin, figure_xmax),
-                    xticks=np.arange(0, figure_xmax + 15, 15),
+                    xticks=np.arange(0, figure_xmax + figure_xstep / 2., figure_xstep),
                     qt_progress_signal=qt_progress_signal_0,
+                    fp_figure=realpath('5-P_fd_i.png')
                 )
-                # fig.savefig('4-P_fd_i.png', dpi=300, bbox_inches='tight', transparent=True)
-                threading.Thread(target=lambda: fig.savefig('4-P_fd_i.png', dpi=300, bbox_inches='tight', transparent=True)).start()
 
-                _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
-                # P_f_d_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in _]].to_csv('4-P_f_d_i.csv')
-                threading.Thread(target=lambda: P_f_d_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in _]].to_csv('4-P_f_d_i.csv')).start()
             except Exception as e:
-                logger.error(f'{e}')
+                logger.error(f'Failed to plot design failure probability, {e}')
 
             # plot combined failure probability due to fire
             logger.info('Started to plot combined design failure probability ...')
-            update_progress(0, '7/7 P_fd')
+            update_progress(0, '6/7 P_fd')
             try:
-                fig, ax = lineplot(
+                lineplot(
                     x=[x],
                     y=[np.sum([v for k, v in dict_P_f_d_i.items()], axis=0)],
                     legend_labels=[None],
@@ -387,16 +387,14 @@ class App(AppBaseClass):
                     ylabel='Failure Probability [$year^{-1}$]',
                     figsize=(figure_width, figure_height),
                     xlim=(figure_xmin, figure_xmax),
-                    xticks=np.arange(0, figure_xmax + 15, 15),
+                    xticks=np.arange(0, figure_xmax + figure_xstep / 2., figure_xstep),
                     qt_progress_signal=qt_progress_signal_0,
+                    fp_figure=realpath('6-P_fd.png')
                 )
-                # fig.savefig('5-P_fd.png', dpi=300, bbox_inches='tight', transparent=True)
-                threading.Thread(target=lambda: fig.savefig('5-P_fd.png', dpi=300, bbox_inches='tight', transparent=True)).start()
             except Exception as e:
-                logger.error(f'{e}')
+                logger.error(f'Failed to plot combined design failure probability, {e}')
 
-        else:
-            update_progress(100, '7/7')
+        update_progress(100, '7/7 Complete')
 
 
 if __name__ == "__main__":
