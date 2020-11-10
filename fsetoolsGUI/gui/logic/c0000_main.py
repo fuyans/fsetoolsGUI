@@ -30,6 +30,7 @@ from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
 from fsetoolsGUI.gui.logic.c0610_ec_parametric_fire import App as App0611
 from fsetoolsGUI.gui.logic.c0611_travelling_fire import App as App0610
 from fsetoolsGUI.gui.logic.c0612_ec_protected_steel_heat_transfer import App as App0612
+from fsetoolsGUI.gui.logic.c0614_travelling_fire_flux import App as App0614
 from fsetoolsGUI.gui.logic.c0620_probability_distribution import App as App0620
 from fsetoolsGUI.gui.logic.c0630_safir_batch_run import App as App0630
 from fsetoolsGUI.gui.logic.c0631_safir_tor2temfix import App as App0631
@@ -97,6 +98,7 @@ class AppsCollection:
         '0610': App0610,
         '0611': App0611,
         '0612': App0612,
+        '0614': App0614,
         '0620': App0620,
         '0630': App0630,
         '0631': App0631,
