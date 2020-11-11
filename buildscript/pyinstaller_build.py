@@ -6,6 +6,7 @@ from datetime import datetime
 from os.path import join, realpath, dirname, relpath
 
 from fsetoolsGUI import __root_dir__, logger
+from fsetoolsGUI.etc.util import build_write
 
 try:
     from buildscript.__key__ import key as key_
@@ -70,6 +71,8 @@ def find_fp(dir_work: str, endswith: list) -> list:
 
 
 def main():
+    build_write(fp=os.path.join(__root_dir__, 'build'))
+
     options = [
         "--onedir",  # output unpacked dist to one directory, including an .exe file
         "--noconfirm",  # replace output directory without asking for confirmation
@@ -83,6 +86,9 @@ def main():
     options.extend([
         f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=__root_dir__)}' for fp in find_fp(dir_work=join(__root_dir__, 'gui'), endswith=['.png', '.ico', '.css', '.html'])
     ])
+    options.extend(
+        [f'--add-data={join(__root_dir__, "build")}{os.pathsep}{relpath(__root_dir__, start=__root_dir__)}']
+    )
 
     build_gui(options=options)
 

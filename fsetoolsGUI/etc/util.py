@@ -2,6 +2,8 @@ import binascii
 import hashlib
 import json
 import subprocess
+import zlib
+from base64 import urlsafe_b64encode, urlsafe_b64decode
 from datetime import datetime
 
 import requests
@@ -45,13 +47,21 @@ def post_to_knack_user_usage_stats(
     return rp
 
 
-def build_write(datetime_cls: datetime = datetime.now()):
-    datetime_current = datetime.now()
-    datetime_current.strftime('%y')
+def build_write(fp, date_cls: datetime = datetime.now(), date_format: str = '%Y%m%d%H%M') -> str:
+    datetime_str = date_cls.strftime(date_format)
+    datetime_str = zlib.compress(datetime_str.encode(), 0)
+    datetime_str = urlsafe_b64encode(datetime_str)
+    datetime_str = datetime_str.decode()
+    with open(fp, 'w+') as f:
+        f.write(datetime_str)
+    return datetime_str
 
 
-def build_read(datetime_str: str):
-    pass
+def build_read(fp: str):
+    with open(fp, 'r') as f:
+        date_str = f.read()
+    date_str = zlib.decompress(urlsafe_b64decode(date_str))
+    return date_str.decode()
 
 
 def _test_post_to_knack_user_usage_stats():
@@ -72,4 +82,9 @@ def get_machine_uid() -> str:
 
 
 if __name__ == '__main__':
-    _test_post_to_knack_user_usage_stats()
+    # _test_post_to_knack_user_usage_stats()
+    from os import path
+    from fsetoolsGUI import __root_dir__
+
+    build_write(fp=path.join(__root_dir__, 'build'))
+    print(build_read(fp=path.join(__root_dir__, 'build')))

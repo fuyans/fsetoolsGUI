@@ -248,7 +248,7 @@ class App(QMainWindow):
         logger.info('=' * 23)
         logger.info('FSETOOLS')
         logger.info(f'VERSION: {__version__}.')
-        logger.info(f'BUILD: {__build__}.')
+        logger.info(f'BUILD: {__build__[2:10]}.')
         logger.info(f'RELEASED: {__date_released__}.')
         _exp = __date_released__ + datetime.timedelta(days=__expiry_period_days__) - datetime.datetime.now()
         _exp_d, _ = divmod(_exp.total_seconds(), 24 * 60 * 60)

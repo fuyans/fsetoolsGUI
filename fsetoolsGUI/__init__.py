@@ -2,6 +2,8 @@ import datetime
 import logging
 import os
 
+from fsetoolsGUI.etc.util import build_read
+
 # make root directory of this app which will be used 1. when running the app; 2. pyinstaller at compiling the app.
 if os.path.exists(os.path.dirname(__file__)):
     # this path should be used when running the app as a Python package (non compiled) and/or pyinstaller at compiling
@@ -81,9 +83,8 @@ Public version identifiers are separated into up to five segments:
 """
 
 __version__ = "0.0.7"
-# __date_released__ = datetime.datetime(2020, 8, 28)
-__build__ = '2011041354'
-__date_released__ = datetime.datetime.strptime(__build__, '%y%m%d%H%M')
+__build__ = build_read(os.path.join(__root_dir__, 'build'))
+__date_released__ = datetime.datetime.strptime(__build__, '%Y%m%d%H%M')
 __expiry_period_days__ = 365
 __remote_version_url__ = r'hsrmo5)(jXw-efpco[mjeqaljo_gl%cnk,bpsZfj/ucoodigk&m`qqam)_k\tnmioBOBWFFQ,gojh'
 

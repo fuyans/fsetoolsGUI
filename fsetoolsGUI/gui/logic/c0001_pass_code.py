@@ -21,7 +21,7 @@ class App(QtWidgets.QDialog):
 
         # ui elements instantiation
         self.label = QtWidgets.QPlainTextEdit(
-            f'FSETOOLS {fsetoolsGUI.__version__} (build {fsetoolsGUI.__build__}) released on {fsetoolsGUI.__date_released__.strftime("%Y %B %d")} is expired.\n\n'
+            f'FSETOOLS {fsetoolsGUI.__version__} (build {fsetoolsGUI.__build__[2:12]}) released on {fsetoolsGUI.__date_released__.strftime("%Y %B %d")} is expired.\n\n'
             f'Either to download the latest version (link below) or enter a passcode. '
             f'Passcode can be requested from the developer by quoting your Machine ID and FSETOOLS version.\n\n'
             f'Latest version url:\n{latest_version_url}\n\n'
