@@ -88,8 +88,8 @@ class App(AppBaseClass):
         l=dict(description='<i>l</i>, room depth', unit='m', default=40),
         w=dict(description='<i>w</i>, room breadth', unit='m', default=16),
         s_fire=dict(description='<i>s<sub>fire</sub></i>, fire spread speed', unit='m/s', default=0.018),
-        e_h=dict(description='<i>e<sub>h</sub></i>, structural element height', unit='m', default=3.),
-        e_l=dict(description='<i>e<sub>l</sub></i>, structural element depth', unit='m', default=24.),
+        e_h=dict(description='<i>e<sub>h</sub></i>, beam vertical location', unit='m', default=3.),
+        e_l=dict(description='<i>e<sub>l</sub></i>, beam horizontal location', unit='m', default=24.),
         q_lim=dict(description='<i>q<sub>lim</sub></i>, max. near field heat flux', unit='kW', default=120.),
         q_crit=dict(description='<i>q<sub>crit</sub></i>, critical heat flux', unit='kW', default=12.6),
     )

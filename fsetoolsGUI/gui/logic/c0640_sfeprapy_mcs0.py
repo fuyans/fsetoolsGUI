@@ -1,9 +1,9 @@
 import threading
-from os.path import realpath, dirname
+from os.path import dirname
 
 import pandas as pd
 from PySide2 import QtWidgets
-from PySide2.QtWidgets import QGridLayout, QLabel, QPushButton, QLineEdit
+from PySide2.QtWidgets import QGridLayout, QLabel
 from sfeprapy.mcs0.mcs0_calc import MCS0
 
 from fsetoolsGUI import logger
