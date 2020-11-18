@@ -10,6 +10,8 @@ from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassU
 from fsetoolsGUI.gui.logic.c0000_utilities import Counter
 from fsetoolsGUI.gui.logic.c0610_ec_parametric_fire import App as AppParametricFire
 from fsetoolsGUI.gui.logic.c0611_travelling_fire import App as AppTravellingFire
+from fsetoolsGUI.gui.logic.c0613_din_en_parametric_fire import App as AppDinParametricFire
+from fsetoolsGUI.gui.logic.c0615_iso_834_fire import App as AppISO834Fire
 from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.logic.custom_table import TableWindow
 
@@ -28,7 +30,12 @@ class App(AppBaseClass):
         self.TableApp = TableWindow(parent=self, window_title='Steel temperature results')
         self.__figure_ax = self.FigureApp.add_subplot()
         self.__output_parameters = None
-        self.__fire = [AppParametricFire(self, post_stats=False), AppTravellingFire(self, post_stats=False)]
+        self.__fire = [
+            AppISO834Fire(self, post_stats=False, ),
+            AppParametricFire(self, post_stats=False),
+            AppTravellingFire(self, post_stats=False),
+            AppDinParametricFire(self, post_stats=False)
+        ]
         self.activated_dialogs.extend(self.__fire)
 
         self.input_symbols: OrderedDict = OrderedDict(
@@ -64,6 +71,7 @@ class App(AppBaseClass):
         for k, v in self.output_symbols.items():
             self.add_lineedit_set_to_grid(self.ui.p2_layout, c, f'p2_in_{k}', v[0], v[1])
 
+        self.ui.p2_in_fire_type.setToolTip('0: ISO 834; 1: BS EN 1991-1-2; 2: Travelling; 3: DIN EN 1991-1-2')
         # ==============
         # default values
         # ==============
