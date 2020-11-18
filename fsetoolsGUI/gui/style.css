@@ -276,7 +276,7 @@ QRadioButton:focus{
 /* https://stackoverflow.com/questions/37232302/centering-the-text-of-a-vertical-header-in-a-qtableview */
 /* https://doc.qt.io/qt-5/stylesheet-syntax.html#setting-qobject-properties */
 QHeaderView {
-    font: 10px;
+    /*font: 10px;*/
     qproperty-defaultAlignment: AlignLeft;
 }
 
@@ -289,8 +289,6 @@ QHeaderView::section:checked
 {
     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
 }
-
-/* Table */
 
 QTableView {
     selection-background-color: grey;

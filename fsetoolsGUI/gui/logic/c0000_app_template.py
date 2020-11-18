@@ -106,8 +106,8 @@ class AppBaseClassUI(object):
         # instantiate buttons etc
         self.p3_layout = QHBoxLayout(self.page_3)
         self.p3_layout.setContentsMargins(0, 0, 0, 0)
-        self.p3_about = QPushButton('About')
-        self.p3_about.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.p3_about = QPushButton('i')
+        self.p3_about.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;font: bold italic;')
         self.p3_layout.addWidget(self.p3_about)
         self.p3_layout.addSpacing(5)
         self.p3_example = QPushButton('Example')
@@ -118,6 +118,8 @@ class AppBaseClassUI(object):
         self.p3_submit.setAutoDefault(True)
         self.p3_submit.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
         self.p3_layout.addWidget(self.p3_submit)
+
+        self.p3_about.setToolTip('About this app')
 
         self.page_1.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.page_2.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
@@ -145,8 +147,8 @@ class AppBaseClassUISimplified01(object):
         # instantiate buttons etc
         self.p3_layout = QHBoxLayout(self.page_3)
         self.p3_layout.setContentsMargins(0, 0, 0, 0)
-        self.p3_about = QPushButton('About')
-        self.p3_about.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.p3_about = QPushButton('i')
+        self.p3_about.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;font: bold italic;')
         self.p3_layout.addWidget(self.p3_about)
         self.p3_layout.addSpacing(5)
         self.p3_example = QPushButton('Example')
@@ -156,6 +158,8 @@ class AppBaseClassUISimplified01(object):
         self.p3_submit = QPushButton('Submit')
         self.p3_submit.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
         self.p3_layout.addWidget(self.p3_submit)
+
+        self.p3_about.setToolTip('About this app')
 
         self.page_2.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.page_3.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
@@ -386,7 +390,7 @@ class AppBaseClass(QtWidgets.QMainWindow):
 
 
 if __name__ == '__main__':
-    class AppBaseClassTest(AppBaseClass):
+    class AppBaseClassTest_(AppBaseClass):
         app_id = '0000'
         app_name_short = 'example name short'
         app_name_long = 'example name long'
@@ -435,10 +439,12 @@ if __name__ == '__main__':
         def example(self):
             pass
 
+        def about(self):
+            pass
 
     import sys
 
     qapp = QtWidgets.QApplication(sys.argv)
-    app = AppBaseClassTest()
+    app = AppBaseClassTest_()
     app.show()
     qapp.exec_()
