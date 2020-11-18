@@ -4,7 +4,7 @@ import numpy as np
 from PySide2 import QtCore
 from PySide2.QtWidgets import QGridLayout, QLabel
 from fsetools.lib.fse_bs_en_1993_1_2_heat_transfer_c import temperature as protected_steel_eurocode
-from sfeprapy.mcs0.mcs0_calc import solve_time_equivalence_iso834
+from sfeprapy.mcs0.mcs0_calc import solve_time_equivalence_iso834, solve_protection_thickness
 
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.logic.c0000_utilities import Counter
@@ -100,7 +100,7 @@ class App(AppBaseClass):
         input_kwargs = dict(
             # solve_crit_temp_check=False,
             beam_critical_temperature=550,
-            fire_type=0,
+            fire_type=1,
             beam_rho=7850,
             beam_cross_section_area=0.017,
             protection_k=0.2,
@@ -137,6 +137,22 @@ class App(AppBaseClass):
             **__,
     ):
         if solver_temperature_goal:
+            solve_protection_thickness_output = solve_protection_thickness(
+                fire_time=fire_time,
+                fire_temperature=fire_temperature,
+                beam_cross_section_area=beam_cross_section_area,
+                beam_rho=beam_rho,
+                protection_k=protection_k,
+                protection_rho=protection_rho,
+                protection_c=protection_c,
+                protection_protected_perimeter=protection_protected_perimeter,
+                solver_temperature_goal=solver_temperature_goal,
+                solver_max_iter=solver_max_iter,
+                solver_thickness_ubound=solver_thickness_ubound,
+                solver_thickness_lbound=solver_thickness_lbound,
+                solver_tol=solver_tol,
+            )
+
             teq_output = solve_time_equivalence_iso834(
                 fire_time=fire_time,
                 fire_temperature=fire_temperature,
@@ -148,18 +164,19 @@ class App(AppBaseClass):
                 protection_protected_perimeter=protection_protected_perimeter,
                 fire_time_iso834=fire_time,
                 fire_temperature_iso834=(345.0 * np.log10((fire_time / 60.0) * 8.0 + 1.0) + 20.0) + 273.15,  # in [K],
+                solver_protection_thickness=solve_protection_thickness_output['solver_protection_thickness'],
                 solver_temperature_goal=solver_temperature_goal,
                 solver_max_iter=solver_max_iter,
                 solver_thickness_ubound=solver_thickness_ubound,
                 solver_thickness_lbound=solver_thickness_lbound,
                 solver_tol=solver_tol,
-                phi_teq=1
+                phi_teq=1,
             )
 
-            if not teq_output['solver_convergence_status']:
+            if not solve_protection_thickness_output['solver_convergence_status']:
                 raise ValueError('No convergence')
 
-            protection_thickness = teq_output['solver_protection_thickness']
+            protection_thickness = solve_protection_thickness_output['solver_protection_thickness']
             time_equivalence = teq_output['solver_time_equivalence_solved']
         else:
             time_equivalence = 0
