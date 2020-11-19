@@ -82,7 +82,7 @@ Public version identifiers are separated into up to five segments:
 
 """
 
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 __build__ = build_read(os.path.join(__root_dir__, 'build'))
 __date_released__ = datetime.datetime.strptime(__build__, '%Y%m%d%H%M')
 __expiry_period_days__ = 365
