@@ -1,13 +1,13 @@
 import numpy as np
-from PySide2 import QtWidgets
+import pyqtgraph as pg
+from PySide2 import QtWidgets, QtCore
 from PySide2.QtWidgets import QGridLayout, QLabel
 from fsetools.lib.fse_travelling_fire_flux import heat_flux as travelling_fire_flux
 
+from fsetoolsGUI import logger
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.logic.c0000_utilities import Counter
-from fsetoolsGUI import logger
-from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
-from fsetoolsGUI.gui.logic.custom_table import TableWindow
+from fsetoolsGUI.gui.logic.custom_plot_pyqtgraph import App as PlotApp2
 
 
 def calculate_worker(
@@ -60,8 +60,10 @@ def calculate_worker(
     )
 
     t_crit_array = t[heat_flux_ >= q_crit]
+    t_1 = min(t_crit_array)
+    t_2 = max(t_crit_array)
 
-    t_crit = (max(t_crit_array) - min(t_crit_array)) / 60.
+    t_crit = (t_2 - t_1) / 60.
     l_crit = s_fire * t_crit * 60.
     A_crit = l_crit * w
 
@@ -71,6 +73,8 @@ def calculate_worker(
         t_crit=t_crit,
         l_crit=l_crit,
         A_crit=A_crit,
+        t_1=t_1,
+        t_2=t_2,
     )
 
 
@@ -78,6 +82,8 @@ class App(AppBaseClass):
     app_id = '0614'
     app_name_short = 'Travelling\nfire\n(heat flux)'
     app_name_long = 'SFE Travelling fire (heat flux)'
+
+    __pen_q_crit = pg.mkPen(color=(251, 128, 114), style=QtCore.Qt.DashLine, width=2)  # pen for drawing critical heat flux in figure
 
     # Keys to match signature of `heat_flux_wrapper`
     symbols_inputs = dict(
@@ -107,12 +113,11 @@ class App(AppBaseClass):
         # ================================
         super().__init__(parent, post_stats, ui=AppBaseClassUISimplified01)
 
-        self.FigureApp = PlotApp(parent=self, title='Travelling fire (heat flux) plot')
-        self.TableApp = TableWindow(parent=self, window_title='Travelling fire (heat flux) results')
-        self.__figure_ax = self.FigureApp.add_subplot()
-        self.__output_parameters = dict(time=None, temperature=None)
         self.__input_parameters: dict = dict()
         self.__output_parameters: dict = dict()
+
+        self.FigureApp = PlotApp2(parent=self, title='Travelling fire (heat flux)')
+        self.__figure_ax = self.FigureApp.add_subplot(0, 0, x_label='Time [min]', y_label='Heat flux [kW]')
 
         # ================
         # instantiation ui
@@ -127,7 +132,7 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), c.count, 0, 1, 3)
         for k, v in self.symbols_outputs.items():
             self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_out_' + k, v['description'], v['unit'])
-            getattr(self.ui, 'p2_out_'+k).setReadOnly(True)
+            getattr(self.ui, 'p2_out_' + k).setReadOnly(True)
 
     def example(self):
         self.input_parameters = {k: v['default'] for k, v in self.symbols_inputs.items()}
@@ -195,7 +200,6 @@ class App(AppBaseClass):
             self.statusBar().showMessage('Preparing results')
             self.repaint()
             self.output_parameters = output_parameters
-            assert self.show_results_in_table()
             assert self.show_results_in_figure()
         except Exception as e:
             self.statusBar().showMessage(f'Unable to show results, {str(e)}')
@@ -203,53 +207,15 @@ class App(AppBaseClass):
 
         self.statusBar().showMessage('Calculation complete')
 
-    def show_results_in_table(self):
-
-        output_parameters = self.output_parameters
-
-        # print results (for console enabled version only)
-        list_content = [
-            [float(i), float(j)] for i, j in zip(output_parameters['time'], output_parameters['heat_flux'])
-        ]
-
-        self.TableApp.update_table_content(
-            content_data=list_content,
-            col_headers=['time [s]', 'heat flux [kW]'],
-        )
-        self.TableApp.show()
-
-        return True
-
     def show_results_in_figure(self):
-
         output_parameters = self.output_parameters
         input_parameters = self.input_parameters
-
-        self.__figure_ax.clear()
-        self.__figure_ax.plot(output_parameters['time'] / 60., output_parameters['heat_flux'], c='k')
-        self.__figure_ax.axhline(input_parameters['q_crit'], c='r', ls='--')
-        self.__figure_ax.set_xlabel('Time [minute]', fontsize='small')
-        self.__figure_ax.set_ylabel('Heat flux [kW]', fontsize='small')
-        self.__figure_ax.tick_params(axis='both', labelsize='small')
-        self.__figure_ax.grid(which='major', linestyle=':', linewidth='0.5', color='black')
-
+        self.__figure_ax.getPlotItem().clear()
+        self.FigureApp.plot(output_parameters['time'] / 60., output_parameters['heat_flux'])
+        self.FigureApp.plot([output_parameters[i] / 60. for i in ['t_1', 't_2']], [input_parameters[i] for i in ['q_crit', 'q_crit']], pen=self.__pen_q_crit)
         self.FigureApp.show()
-        self.FigureApp.refresh_figure()
 
         return True
-
-    @staticmethod
-    def num2str(num):
-        if isinstance(num, int):
-            return f'{num:g}'
-        elif isinstance(num, float):
-            return f'{num:.3f}'.rstrip('0').rstrip('.')
-        elif isinstance(num, str):
-            return num
-        elif num is None:
-            return ''
-        else:
-            return str(num)
 
 
 if __name__ == "__main__":

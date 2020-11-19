@@ -4,8 +4,62 @@ from PySide2.QtWidgets import QGridLayout, QLabel
 from fsetools.libstd.bs_en_1991_1_2_2002_annex_a import appendix_a_parametric_fire
 
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
-from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
-from fsetoolsGUI.gui.logic.custom_table import TableWindow
+from fsetoolsGUI.gui.logic.c0000_utilities import Counter
+from fsetoolsGUI.gui.logic.custom_plot_pyqtgraph import App as PlotApp
+
+
+def bs_en_1991_1_2_parametric_fire(
+        t_end: float,
+        t_step: float,
+        A_v: float,
+        A_t: float,
+        A_f: float,
+        h_eq: float,
+        q_fd: float,
+        lambda_: float,
+        rho: float,
+        c: float,
+        t_lim: float,
+        temperature_initial: float,
+):
+    """
+
+    :param t_end:
+    :param t_step:
+    :param A_v:
+    :param A_t:
+    :param A_f:
+    :param h_eq:
+    :param q_fd:
+    :param lambda_:
+    :param rho:
+    :param c:
+    :param t_lim:
+    :param temperature_initial:
+    :return:
+    """
+    t_end *= 60.  # min -> s
+    q_fd *= 1e6  # MJ/m2 -> J/m2
+    t_lim *= 60.  # min -> s
+    temperature_initial += 273.15  # deg.C -> K
+
+    t = np.arange(0, t_end + t_step / 2., t_step)
+
+    T = appendix_a_parametric_fire(
+        t=t,
+        A_v=A_v,
+        A_t=A_t,
+        A_f=A_f,
+        h_eq=h_eq,
+        q_fd=q_fd,
+        lambda_=lambda_,
+        rho=rho,
+        c=c,
+        t_lim=t_lim,
+        temperature_initial=temperature_initial,
+    )
+
+    return dict(time=t, temperature=T)
 
 
 class App(AppBaseClass):
@@ -13,74 +67,45 @@ class App(AppBaseClass):
     app_name_short = 'BS EN 1991\nparametric\nfire'
     app_name_long = 'BS EN 1991-1-2:2002 Parametric fire'
 
+    input_items = dict(
+        t_end=dict(description='t<sub>end</sub>, duration', unit='min', default=180., tip='Fire duration'),
+        t_step=dict(description='t<sub>step</sub>, time step', unit='s', default=10.),
+        A_t=dict(description='A<sub>t</sub>, room total surface area', unit='m<sup>2</sup>', default=360),
+        A_f=dict(description='Af, room floor area', unit='m<sup>2</sup>', default=100),
+        A_v=dict(description='Av, ventilation area', unit='m<sup>2</sup>', default=36),
+        h_eq=dict(description='heq, entilation opening height', unit='m', default=1),
+        q_fd=dict(description='qfd, uel load density', unit='MJ/m<sup>2</sup>', default=600),
+        lambda_=dict(description='lambda, ining thermal conductivity', unit='K/kg/m', default=1.13),
+        rho=dict(description='Lining density', unit='kg/m<sup>3</sup>', default=2000),
+        c=dict(description='Lining thermal heat capacity', unit='J/K/kg', default=1000),
+        t_lim=dict(description='Limiting time t<sub>lim</sub>', unit='min', default=20),
+        temperature_initial=dict(description='Initial temperature', unit='<sup>o</sup>C', default=20),
+    )
+
     def __init__(self, parent=None, post_stats: bool = True):
+
+        self.__input_parameters: dict = dict()
+        self.__output_parameters: dict = dict()
 
         # ================================
         # instantiation super and setup ui
         # ================================
         super().__init__(parent, post_stats, ui=AppBaseClassUISimplified01)
-
-        self.FigureApp = PlotApp(parent=self, title='Parametric fire plot')
-        self.TableApp = TableWindow(parent=self, window_title='Parametric fire results')
-        self.__figure_ax = self.FigureApp.add_subplot()
-        self.__output_fire_curve = dict(time=None, temperature=None)
+        self.FigureApp = PlotApp(parent=self, title='Parametric fire')
+        self.__figure_ax = self.FigureApp.add_subplot(0, 0, x_label='Time [minute]', y_label='Temperature [°C]')
 
         # ================
         # instantiation ui
         # ================
+        c = Counter()
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setHorizontalSpacing(5), self.ui.p2_layout.setVerticalSpacing(5)
-        self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), 0, 0, 1, 3)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 1, 'p2_in_duration', 'Duration', 'min')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 2, 'p2_in_room_total_surface_area', 'Room total surface area', 'm<sup>2</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 3, 'p2_in_room_floor_area', 'Room floor area', 'm<sup>2</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 4, 'p2_in_ventilation_area', 'Ventilation area', 'm<sup>2</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 5, 'p2_in_ventilation_opening_height', 'Ventilation opening height', 'm<sup>2</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 6, 'p2_in_fuel_density', 'Fuel density', 'MJ/m<sup>2</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 7, 'p2_in_lining_thermal_conductivity', 'Lining thermal conductivity', 'K/kg/m')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 8, 'p2_in_lining_density', 'Lining density', 'kg/m<sup>3</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 9, 'p2_in_lining_thermal_heat_capacity', 'Lining thermal heat capacity', 'J/K/kg')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 10, 'p2_in_fire_limiting_time', 'Limiting time t<sub>lim</sub>', 'min')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 11, 'p2_in_initial_temperature', 'Initial temperature', '<sup>o</sup>C')
-
-        self.ui.p2_in_initial_temperature.setText('20')
-
-        # =================
-        # lineEdit tip text
-        # =================
-        self.ui.p2_in_duration.setToolTip('Fire duration')
-        self.ui.p2_in_room_total_surface_area.setToolTip('Room total interior surface area, including opening')
-        self.ui.p2_in_room_floor_area.setToolTip('Room floor area')
-        self.ui.p2_in_ventilation_area.setToolTip('Room ventilation opening area')
-        self.ui.p2_in_ventilation_opening_height.setToolTip('Room ventilation opening weighted height')
-        self.ui.p2_in_fuel_density.setToolTip('Fuel load density')
-        self.ui.p2_in_lining_thermal_conductivity.setToolTip('Room wall/ceiling thermal conductivity')
-        self.ui.p2_in_lining_density.setToolTip('Room wall/ceiling density')
-        self.ui.p2_in_lining_thermal_heat_capacity.setToolTip('Room wall/ceiling heat capacity')
-        self.ui.p2_in_fire_limiting_time.setToolTip(
-            'Associated with fire growth rate.\n'
-            'Slow: 25 minutes\n'
-            'Medium: 20 minutes\nFast: 15 minutes'
-        )
-        self.ui.p2_in_initial_temperature.setToolTip('Initial or ambient temperature')
+        self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
+        for k, v in self.input_items.items():
+            self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_' + k, v['description'], v['unit'], min_width=70)
 
     def example(self):
-
-        self.input_parameters = dict(
-            room_total_surface_area=360,
-            room_floor_area=100,
-            ventilation_area=36,
-            ventilation_opening_height=1,
-            fuel_density=600e6,
-            lining_thermal_conductivity=1.13,
-            lining_density=2000,
-            lining_thermal_heat_capacity=1000,
-            fire_limiting_time=20 * 60,
-            duration=2 * 60 * 60,
-            initial_temperature=293.15,
-        )
-
-        self.repaint()
+        self.input_parameters = {k: v['default'] for k, v in self.input_items.items()}
 
     @property
     def input_parameters(self):
@@ -91,139 +116,33 @@ class App(AppBaseClass):
             except:
                 return None
 
-        # ====================
-        # parse values from ui
-        # ====================
-        duration = str2float(self.ui.p2_in_duration.text())
-        room_total_surface_area = str2float(self.ui.p2_in_room_total_surface_area.text())
-        room_floor_area = str2float(self.ui.p2_in_room_floor_area.text())
-        ventilation_area = str2float(self.ui.p2_in_ventilation_area.text())
-        ventilation_opening_height = str2float(self.ui.p2_in_ventilation_opening_height.text())
-        fuel_density = str2float(self.ui.p2_in_fuel_density.text()) * 1e6
-        lining_thermal_conductivity = str2float(self.ui.p2_in_lining_thermal_conductivity.text())
-        lining_density = str2float(self.ui.p2_in_lining_density.text())
-        lining_thermal_heat_capacity = str2float(self.ui.p2_in_lining_thermal_heat_capacity.text())
-        fire_limiting_time = str2float(self.ui.p2_in_fire_limiting_time.text())
-        initial_temperature = str2float(self.ui.p2_in_initial_temperature.text())
+        input_parameters = dict()
+        for k, v in self.input_items.items():
+            input_parameters[k] = str2float(getattr(self.ui, 'p2_in_' + k).text())
 
-        # ======================================================
-        # check if necessary inputs are provided for calculation
-        # ======================================================
         try:
-            assert all([i is not None for i in [
-                duration, room_total_surface_area, room_floor_area, ventilation_area, ventilation_opening_height,
-                fuel_density, lining_thermal_conductivity, lining_thermal_heat_capacity, fire_limiting_time,
-                initial_temperature
-            ]])
-        except AssertionError:
-            raise ValueError('Not enough input parameters to compute')
+            self.__input_parameters.update(input_parameters)
+        except TypeError:
+            self.__input_parameters = input_parameters
 
-        # ==============================
-        # validate individual parameters
-        # ==============================
-        self.validate(duration, 'unsigned float', 'Fire duration must be a positive number')
-        self.validate(room_total_surface_area, 'unsigned float', 'Room total surface area must be a positive number')
-        self.validate(room_floor_area, 'unsigned float', 'Room floor area must be a positive number')
-        self.validate(ventilation_area, 'unsigned float', 'Ventilation opening area must be a positive number')
-        self.validate(ventilation_opening_height, 'unsigned float', 'Ventilation opening height must be a positive number')
-        self.validate(fuel_density, 'unsigned float', 'Fuel density must be a positive number')
-        self.validate(lining_thermal_conductivity, 'unsigned float', 'Lining thermal conductivity must be a positive number')
-        self.validate(lining_density, 'unsigned float', 'Lining density must be a positive number')
-        self.validate(lining_thermal_heat_capacity, 'unsigned float', 'Lining heat capacity must be a positive number')
-        self.validate(fire_limiting_time, 'unsigned float', 'Limiting time must be a positive number')
-
-        # ================
-        # units conversion
-        # ================
-        duration *= 60  # minutes -> seconds
-        fire_limiting_time *= 60  # minutes -> seconds
-        initial_temperature += 273.15  # degree Celsius -> degree Kelvin
-
-        return dict(duration=duration, room_total_surface_area=room_total_surface_area,
-                    room_floor_area=room_floor_area, ventilation_area=ventilation_area,
-                    ventilation_opening_height=ventilation_opening_height, fuel_density=fuel_density,
-                    lining_thermal_conductivity=lining_thermal_conductivity, lining_density=lining_density,
-                    lining_thermal_heat_capacity=lining_thermal_heat_capacity, fire_limiting_time=fire_limiting_time,
-                    initial_temperature=initial_temperature)
+        return self.__input_parameters
 
     @input_parameters.setter
     def input_parameters(self, v):
 
-        def num2str(num):
-            if isinstance(num, int):
-                return f'{num:g}'
-            elif isinstance(num, float):
-                return f'{num:.3f}'.rstrip('0').rstrip('.')
-            elif isinstance(num, str):
-                return num
-            elif num is None:
-                return ''
-            else:
-                return str(num)
-
-        # units conversion
-        v['duration'] /= 60  # seconds -> minutes
-        v['fire_limiting_time'] /= 60  # seconds -> minutes
-        v['initial_temperature'] -= 273.15  # degree Kelvin -> degree Celsius
-
-        self.ui.p2_in_duration.setText(num2str(v['duration']))
-        self.ui.p2_in_room_total_surface_area.setText(num2str(v['room_total_surface_area']))
-        self.ui.p2_in_room_floor_area.setText(num2str(v['room_floor_area']))
-        self.ui.p2_in_ventilation_area.setText(num2str(v['ventilation_area']))
-        self.ui.p2_in_ventilation_opening_height.setText(num2str(v['ventilation_opening_height']))
-        self.ui.p2_in_fuel_density.setText(num2str(v['fuel_density'] / 1e6))
-        self.ui.p2_in_lining_thermal_conductivity.setText(num2str(v['lining_thermal_conductivity']))
-        self.ui.p2_in_lining_density.setText(num2str(v['lining_density']))
-        self.ui.p2_in_lining_thermal_heat_capacity.setText(num2str(v['lining_thermal_heat_capacity']))
-        self.ui.p2_in_fire_limiting_time.setText(num2str(v['fire_limiting_time']))
-        self.ui.p2_in_initial_temperature.setText(num2str(v['initial_temperature']))
+        for k, v_ in self.input_items.items():
+            getattr(self.ui, 'p2_in_' + k).setText(self.num2str(v[k]))
 
     @property
     def output_parameters(self) -> dict:
-        return self.__output_fire_curve
+        return self.__output_parameters
 
     @output_parameters.setter
     def output_parameters(self, v: dict):
-        self.__output_fire_curve['time'] = v['time']
-        self.__output_fire_curve['temperature'] = v['temperature']
+        self.__output_parameters = v
 
-    @staticmethod
-    def __calculate_ec_parametric_fire_curve(
-            duration,
-            room_total_surface_area,
-            room_floor_area,
-            ventilation_area,
-            ventilation_opening_height,
-            fuel_density,
-            lining_thermal_conductivity,
-            lining_density,
-            lining_thermal_heat_capacity,
-            fire_limiting_time,
-            initial_temperature,
-    ):
-        t = np.arange(0, duration + 1, 1)
-        T = appendix_a_parametric_fire(
-            t=t,
-            A_v=ventilation_area,
-            A_t=room_total_surface_area,
-            A_f=room_floor_area,
-            h_eq=ventilation_opening_height,
-            q_fd=fuel_density,
-            lambda_=lining_thermal_conductivity,
-            rho=lining_density,
-            c=lining_thermal_heat_capacity,
-            t_lim=fire_limiting_time,
-            temperature_initial=initial_temperature,
-        )
-
-        return dict(time=t, temperature=T)
-
-    def calculate(self):
-
-        # clear ui output fields
-        # none
-
-        # parse inputs from ui
+    def ok(self):
+        # parse inputs
         try:
             self.statusBar().showMessage('Parsing inputs from UI')
             self.repaint()
@@ -236,58 +155,26 @@ class App(AppBaseClass):
         try:
             self.statusBar().showMessage('Calculation started')
             self.repaint()
-            output_parameters = self.__calculate_ec_parametric_fire_curve(**input_parameters)
+            self.output_parameters = bs_en_1991_1_2_parametric_fire(**input_parameters)
         except Exception as e:
             self.statusBar().showMessage(f'Calculation failed. Error {str(e)}')
             return
 
-        # cast outputs to ui
+        # outputs
         try:
             self.statusBar().showMessage('Preparing results')
             self.repaint()
-            self.output_parameters = output_parameters
-            assert self.show_results_in_table()
             assert self.show_results_in_figure()
-            self.FigureApp.figure.tight_layout()
         except Exception as e:
             self.statusBar().showMessage(f'Unable to show results. Error {str(e)}')
 
         self.statusBar().showMessage('Calculation complete')
 
-    def ok(self):
-        # self.calculate()
-        self.output_parameters = self.__calculate_ec_parametric_fire_curve(**self.input_parameters)
-        self.show_results_in_table()
-        self.show_results_in_figure()
-
-    def show_results_in_table(self):
-
-        output_parameters = self.output_parameters
-
-        # print results (for console enabled version only)
-        list_content = [
-            [float(i), float(j)] for i, j in zip(output_parameters['time'], output_parameters['temperature'] - 273.15)
-        ]
-
-        self.TableApp.update_table_content(
-            content_data=list_content,
-            col_headers=['time [s]', 'temperature [°C]'],
-        )
-        self.TableApp.show()
-
     def show_results_in_figure(self):
-
         output_parameters = self.output_parameters
-
-        self.__figure_ax.clear()
-        self.__figure_ax.plot(output_parameters['time'] / 60, output_parameters['temperature'] - 273.15, c='k')
-        self.__figure_ax.set_xlabel('Time [minute]', fontsize='small')
-        self.__figure_ax.set_ylabel('Temperature [°C]', fontsize='small')
-        self.__figure_ax.tick_params(axis='both', labelsize='small')
-        self.__figure_ax.grid(which='major', linestyle=':', linewidth='0.5', color='black')
-
+        self.__figure_ax.getPlotItem().clear()
+        self.FigureApp.plot(output_parameters['time'] / 60, output_parameters['temperature'] - 273.15, ax=self.__figure_ax)
         self.FigureApp.show()
-        self.FigureApp.refresh_figure()
 
 
 if __name__ == "__main__":

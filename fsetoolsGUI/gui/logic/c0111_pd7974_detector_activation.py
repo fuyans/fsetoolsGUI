@@ -10,21 +10,94 @@ from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_1 as image_figure_1
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_2 as image_figure_2
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass
 from fsetoolsGUI.gui.logic.c0000_utilities import Counter
-from fsetoolsGUI.gui.logic.custom_table import TableWindow
+from fsetoolsGUI.gui.logic.custom_plot_pyqtgraph import App as PlotApp
+from fsetoolsGUI import  logger
+
+
+def pd_7974_1_heat_detector_activation(
+        plume_type: str,
+        t_end: float,
+        t_step: float,
+        alpha: float,
+        H: float,
+        R: float,
+        RTI: float,
+        C: float,
+        HRRPUA: float,
+        C_conv: float,
+        T_act: float,
+):
+    t_end *= 60.  # min -> s
+    T_act += 273.15  # deg.C -> K
+    C_conv /= 100.  # % -> fraction
+
+    # calculate all sorts of things
+    t = np.arange(0, t_end + t_step / 2., t_step)
+    gas_hrr_kW = alpha * (t ** 2)
+
+    res = heat_detector_temperature_pd7974(
+        gas_time=t,
+        gas_hrr_kW=gas_hrr_kW,
+        detector_to_fire_vertical_distance=H,
+        detector_to_fire_horizontal_distance=R,
+        detector_response_time_index=RTI,
+        detector_conduction_factor=C,
+        fire_hrr_density_kWm2=HRRPUA,
+        fire_convection_fraction=C_conv,
+        force_plume_temperature_correlation='fire plume' == plume_type
+    )
+
+    # work out activation time
+    res.update(dict(
+        time=t,
+        gas_hrr_kW=gas_hrr_kW,
+        t_act=t[np.argmin(np.abs(res['detector_temperature'] - T_act))],
+        T_g_act=res['jet_temperature'][np.argmin(np.abs(res['detector_temperature'] - T_act))],
+    ))
+
+    return res
 
 
 class App(AppBaseClass):
     app_id = '0111'
     app_name_short = 'PD 7974\nheat\ndetector\nactivation'
-    app_name_long = 'PD 7974 Heat detector device activation time calculator'
+    app_name_long = 'PD 7974 heat detector device activation time'
+
+    input_items = dict(
+        t_end=dict(description='<i>t<sub>end</sub></i>, duration', unit='min', default=10),
+        t_step=dict(description='<i>t<sub>step</sub></i>, time step', unit='s', default=1),
+        alpha=dict(description='<i>α</i>, fire growth factor', unit='kW/s<sup>2</sup>', default=0.0117),
+        H=dict(description='<i>H</i>, height', unit='m', default=2.4),
+        R=dict(description='<i>R</i>, radial distance', unit='m', default=2.5),
+        RTI=dict(description='<i>RTI</i>, response time index', unit='m<sup>0.5</sup>s<sup>0.5</sup>', default=115),
+        C=dict(description='<i>C</i>, conduction factor', unit='m<sup>0.5</sup>/s<sup>0.5</sup>', default=0.4),
+        HRRPUA=dict(description='HRR density', unit='kW/m<sup>2</sup>', default=510),
+        C_conv=dict(description='<i>C<sub>conv</sub></i>, convection HRR', unit='%', default=66.7),
+        T_act=dict(description='<i>T<sub>act</sub></i>, detector act. temp.', unit='<sup>o</sup>C', default=68),
+    )
+    output_items = dict(
+        t_act=dict(description='<i>t<sub>act</sub></i>, activation time', unit='<sup>o</sup>C', default=''),
+        T_g_act=dict(description='<i>T<sub>g,act</sub></i>, gas temp. at act.', unit='<sup>o</sup>C', default=''),
+    )
 
     def __init__(self, parent=None, post_stats: bool = True):
 
         super().__init__(parent, post_stats)
 
         # containers, variables etc
-        self.TableApp = TableWindow(parent=self, window_title='Numerical results')
-        self.__output_parameters = None
+        self.__input_parameters = dict()
+        self.__output_parameters = dict()
+
+        self.FigureApp = PlotApp(parent=self, title='PD 7974 heat detector device activation time', antialias=True)
+        self.FigureApp.resize(300, 800)
+        self.__figure_ax_1 = self.FigureApp.add_subplot(0, 0, x_label='Time [s]', y_label='Temperature [<sup>o</sup>C]', name='p1')
+        self.__figure_ax_2 = self.FigureApp.add_subplot(1, 0, x_label='Time [s]', y_label='HRR [kW]', name='p2')
+        self.__figure_ax_3 = self.FigureApp.add_subplot(2, 0, x_label='Time [s]', y_label='Jet velocity [m/s]', name='p3')
+        self.__figure_ax_4 = self.FigureApp.add_subplot(3, 0, x_label='Time [s]', y_label='Virtual origin [m]', name='p4')
+        self.__figure_ax_1.addLegend()
+        self.__figure_ax_2.setXLink(self.__figure_ax_1)
+        self.__figure_ax_3.setXLink(self.__figure_ax_1)
+        self.__figure_ax_4.setXLink(self.__figure_ax_1)
 
         # ==============
         # Instantiate UI
@@ -55,19 +128,12 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(self.ui.p2_in_fire_plume, c.count, 0, 1, 3)
 
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_t', 't, fire duration', 's')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_alpha', 'α, fire growth factor', 'kW/m<sup>2</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_H', 'H, height', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_R', 'R, radial distance', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_RTI', 'RTI, response time index', 'm<sup>0.5</sup>s<sup>0.5</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_C', 'C, conduction factor', 'm<sup>0.5</sup>/s<sup>0.5</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_HRRPUA', 'HRR per unit area', 'kW/m<sup>2</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_C_conv', 'C<sub>conv</sub> convection HRR', '%')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_in_T_act', 'T<sub>act</sub> detector act. temp.', '<sup>o</sup>C')
+        for k, v in self.input_items.items():
+            self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_' + k, v['description'], v['unit'], min_width=70)
 
         self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), c.count, 0, 1, 3)
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_out_T_g_act', 'T<sub>g</sub>, gas temp.', '<sup>o</sup>C')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c, 'p2_out_t_act', 't<sub>act</sub>, detector act. time', 's')
+        for k, v in self.output_items.items():
+            self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_out_' + k, v['description'], v['unit'], min_width=70)
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(
@@ -90,106 +156,57 @@ class App(AppBaseClass):
         # ========================
         self.ui.p2_in_fire_plume.toggled.connect(self.set_temperature_correlation)
 
-    def error(self, msg: str, stop: bool = False):
-        self.statusBar().showMessage(msg)
-        self.repaint()
-        if stop:
-            raise ValueError
-
     def set_temperature_correlation(self):
 
         # clear output
-        self.ui.p2_out_t_act.setText('')
-        self.ui.p2_out_T_g_act.setText('')
-
-        self._numerical_results = dict()
+        for i in self.output_items.keys():
+            getattr(self.ui, f'p2_out_{i}').setText('')
 
         """Set figures, disable and enable UI items accordingly."""
         if self.ui.p2_in_fire_plume.isChecked():  # plume temperature and velocity
             self.ui.p2_in_R.setEnabled(False)
             self.ui.p1_figure.setPixmap(self.dict_images_pixmap['image_figure_2'])
-            self.__table_header = [
-                'Time [s]', 'HRR [kW]', 'V. Origin [m]', 'Plume T. [°C]', 'Plume Vel. [m/s]', 'Detector T. [°C]'
-            ]
         else:  # ceiling jet temperature and velocity
             self.ui.p2_in_R.setEnabled(True)
             self.ui.p1_figure.setPixmap(self.dict_images_pixmap['image_figure_1'])
-            self.__table_header = [
-                'Time [s]', 'HRR [kW]', 'V. Origin [m]', 'Jet T. [°C]', 'Jet Vel. [m/s]', 'Detector T. [°C]'
-            ]
 
     def example(self):
-
-        self.ui.p2_in_t.setText('600')
-        self.ui.p2_in_alpha.setText('0.0117')
-        self.ui.p2_in_H.setText('2.4')
-        self.ui.p2_in_R.setText('2.5')
-        self.ui.p2_in_RTI.setText('115')
-        self.ui.p2_in_C.setText('0.4')
-        self.ui.p2_in_HRRPUA.setText('510')
-        self.ui.p2_in_C_conv.setText('66.7')
-        self.ui.p2_in_T_act.setText('68')
-
-        self.repaint()
+        input_parameters = {k: v['default'] for k, v in self.input_items.items()}
+        input_parameters.update(dict(plume_type='ceiling jet'))
+        self.input_parameters = input_parameters
 
     def ok(self):
-        self.output_parameters = self.calculate(**self.input_parameters)
-        self.show_results_in_table(self.output_parameters)
-
-    @staticmethod
-    def calculate(
-            plume_type: str,
-            t: float,
-            alpha: float,
-            H: float,
-            R: float,
-            RTI: float,
-            C: float,
-            HRRPUA: float,
-            C_conv: float,
-            T_act: float,
-    ):
-        # calculate all sorts of things
-        t = np.arange(0, t + 1., 1.)
-        gas_hrr_kW = alpha * (t ** 2)
-
-        res = heat_detector_temperature_pd7974(
-            gas_time=t,
-            gas_hrr_kW=gas_hrr_kW,
-            detector_to_fire_vertical_distance=H,
-            detector_to_fire_horizontal_distance=R,
-            detector_response_time_index=RTI,
-            detector_conduction_factor=C,
-            fire_hrr_density_kWm2=HRRPUA,
-            fire_convection_fraction=C_conv,
-            force_plume_temperature_correlation='fire plume' == plume_type
-        )
-
-        # work out activation time
-        T_diff = np.abs((res['detector_temperature'] - 273.15) - T_act)
-        res.update(dict(
-            time=t,
-            gas_hrr_kW=gas_hrr_kW,
-            activation_time=t[np.argmin(T_diff)],
-            activation_gas_temperature=res['jet_temperature'][np.argmin(T_diff)] - 273.15,
-        ))
-
-        return res
+        self.output_parameters = pd_7974_1_heat_detector_activation(**self.input_parameters)
+        self.show_results_in_figure()
 
     @property
     def input_parameters(self):
-        return dict(
-            plume_type='ceiling jet' if self.ui.p2_in_ceiling_jet.isChecked() else 'fire plume',
-            t=self.str2float(self.ui.p2_in_t.text()),
-            alpha=self.str2float(self.ui.p2_in_alpha.text()),
-            H=self.str2float(self.ui.p2_in_H.text()),
-            R=self.str2float(self.ui.p2_in_R.text()),
-            RTI=self.str2float(self.ui.p2_in_RTI.text()),
-            C=self.str2float(self.ui.p2_in_C.text()),
-            HRRPUA=self.str2float(self.ui.p2_in_HRRPUA.text()),
-            C_conv=self.str2float(self.ui.p2_in_C_conv.text()) * 1e-2,
-            T_act=self.str2float(self.ui.p2_in_T_act.text()),
-        )
+
+        def str2float(v):
+            try:
+                return float(v)
+            except:
+                return None
+
+        input_parameters = dict()
+        for k, v in self.input_items.items():
+            input_parameters[k] = str2float(getattr(self.ui, 'p2_in_' + k).text())
+
+        if self.ui.p2_in_fire_plume.isChecked():
+            input_parameters['plume_type'] = 'fire plume'
+        elif self.ui.p2_in_ceiling_jet.isChecked():
+            input_parameters['plume_type'] = 'ceiling jet'
+        else:
+            errmsg = f'Unknown correlation type, it can be either `fire plume` or `ceiling jet`'
+            logger.error(errmsg)
+            raise ValueError(errmsg)
+
+        try:
+            self.__input_parameters.update(input_parameters)
+        except TypeError:
+            self.__input_parameters = input_parameters
+
+        return self.__input_parameters
 
     @input_parameters.setter
     def input_parameters(self, v: dict):
@@ -199,17 +216,12 @@ class App(AppBaseClass):
         elif 'ceiling jet' == v['plume_type']:
             self.ui.p2_in_ceiling_jet.setChecked(True)
         else:
-            raise ValueError(f'Unknown correlation type, it can be either `plume` or `ceiling jet`, `{v["type"]}` is given')
+            errmsg = f'Unknown correlation type, it can be either `plume` or `ceiling jet`, `{v["type"]}` is given'
+            logger.error(errmsg)
+            raise ValueError(errmsg)
 
-        self.ui.p2_in_t.setText(self.num2str(v['t']))
-        self.ui.p2_in_alpha.setText(self.num2str(v['alpha']))
-        self.ui.p2_in_H.setText(self.num2str(v['H']))
-        self.ui.p2_in_R.setText(self.num2str(v['R']))
-        self.ui.p2_in_RTI.setText(self.num2str(v['RTI']))
-        self.ui.p2_in_C.setText(self.num2str(v['C']))
-        self.ui.p2_in_HRRPUA.setText(self.num2str(v['HRRPUA']))
-        self.ui.p2_in_C_conv.setText(self.num2str(v['C_conv']))
-        self.ui.p2_in_T_act.setText(self.num2str(v['T_act']))
+        for k, v_ in self.input_items.items():
+            getattr(self.ui, 'p2_in_' + k).setText(self.num2str(v[k]))
 
     @property
     def output_parameters(self):
@@ -218,30 +230,24 @@ class App(AppBaseClass):
     @output_parameters.setter
     def output_parameters(self, v: dict):
         self.__output_parameters = v
+        for k, v_ in self.output_items.items():
+            getattr(self.ui, 'p2_out_' + k).setText(self.num2str(v[k]))
 
-        self.ui.p2_out_T_g_act.setText(self.num2str(v['activation_gas_temperature']))
-        self.ui.p2_out_t_act.setText(self.num2str(v['activation_time']))
+    def show_results_in_figure(self):
+        out = self.output_parameters
 
-    def show_results_in_table(self, v: dict):
+        self.__figure_ax_1.getPlotItem().clear()
+        self.__figure_ax_2.getPlotItem().clear()
+        self.__figure_ax_3.getPlotItem().clear()
+        self.__figure_ax_4.getPlotItem().clear()
 
-        v['jet_temperature'] -= 273.15
-        v['detector_temperature'] -= 273.15
+        self.FigureApp.plot(x=out['time'], y=out['detector_temperature'] - 273.15, ax=self.__figure_ax_1, name='Detector temp.')
+        self.FigureApp.plot(x=out['time'], y=out['jet_temperature'] - 273.15, ax=self.__figure_ax_1, name='Gas temp.')
+        self.FigureApp.plot(x=out['time'], y=out['gas_hrr_kW'], ax=self.__figure_ax_2)
+        self.FigureApp.plot(x=out['time'], y=out['jet_velocity'], ax=self.__figure_ax_3)
+        self.FigureApp.plot(x=out['time'], y=out['virtual_origin'], ax=self.__figure_ax_4)
 
-        # print results (for console enabled version only)
-        list_param = ['time', 'gas_hrr_kW', 'virtual_origin', 'jet_temperature', 'jet_velocity', 'detector_temperature']
-        list_units = ['s', 'kW', 'm', 'K', 'm/s', 'K']
-        list_content = list()
-        for i, time_ in enumerate(v['time']):
-            list_content_ = list()
-            for i_, param in enumerate(list_param):
-                list_content_.append(float(v[param][i]))
-            list_content.append(list_content_)
-
-        self.TableApp.update_table_content(
-            content_data=list_content,
-            col_headers=[f'{i1.replace("_", " ")} [{i2}]' for i1, i2 in zip(list_param, list_units)]
-        )
-        self.TableApp.show()
+        self.FigureApp.show()
 
     @staticmethod
     def str2float(v):
@@ -249,19 +255,6 @@ class App(AppBaseClass):
             return float(v)
         except:
             return None
-
-    @staticmethod
-    def num2str(v):
-        if isinstance(v, int):
-            return f'{v:g}'
-        elif isinstance(v, float):
-            return f'{v:.3f}'.rstrip('0').rstrip('.')
-        elif isinstance(v, str):
-            return v
-        elif v is None:
-            return ''
-        else:
-            return str(v)
 
 
 if __name__ == '__main__':
