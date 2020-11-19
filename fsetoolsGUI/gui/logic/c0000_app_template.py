@@ -208,6 +208,19 @@ class AppBaseClass(QtWidgets.QMainWindow):
 
         self.adjustSize()
 
+    @staticmethod
+    def num2str(num):
+        if isinstance(num, int):
+            return f'{num:g}'
+        elif isinstance(num, float):
+            return f'{num:.3f}'.rstrip('0').rstrip('.')
+        elif isinstance(num, str):
+            return num
+        elif num is None:
+            return ''
+        else:
+            return str(num)
+
     def __init_subclass__(cls, **kwargs):
         def assert_attr(attr_: str):
             try:

@@ -27,8 +27,8 @@ from fsetoolsGUI.gui.logic.c0407_tra_enclosure import App as App0407
 from fsetoolsGUI.gui.logic.c0411_ec_external_flame import App as App0411
 from fsetoolsGUI.gui.logic.c0601_naming_convention import App as App0601
 from fsetoolsGUI.gui.logic.c0602_pd7974_flame_height import App as App0602
-from fsetoolsGUI.gui.logic.c0610_ec_parametric_fire import App as App0611
-from fsetoolsGUI.gui.logic.c0611_travelling_fire import App as App0610
+from fsetoolsGUI.gui.logic.c0610_ec_parametric_fire import App as App0610
+from fsetoolsGUI.gui.logic.c0611_travelling_fire import App as App0611
 from fsetoolsGUI.gui.logic.c0612_ec_protected_steel_heat_transfer import App as App0612
 from fsetoolsGUI.gui.logic.c0613_din_en_parametric_fire import App as App0613
 from fsetoolsGUI.gui.logic.c0614_travelling_fire_flux import App as App0614
