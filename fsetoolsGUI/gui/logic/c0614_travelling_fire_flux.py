@@ -86,8 +86,8 @@ class App(AppBaseClass):
     __pen_q_crit = pg.mkPen(color=(251, 128, 114), style=QtCore.Qt.DashLine, width=2)  # pen for drawing critical heat flux in figure
 
     # Keys to match signature of `heat_flux_wrapper`
-    symbols_inputs = dict(
-        t_end=dict(description='<i>t<sub>end</sub></i>, fire time duration', unit='min', default=120.),
+    input_items = dict(
+        t_end=dict(description='<i>t<sub>end</sub></i>, fire time duration', unit='min', default=75.),
         t_step=dict(description='<i>t<sub>step</sub></i>, fire time step', unit='s', default=1.),
         Q_fd=dict(description='<i>Q<sub>fd</sub></i>, fuel load density', unit='MJ/m<sup>2</sup>', default=780.),
         q_pua=dict(description='<i>q<sub>pua</sub></i>, heat release rate density', unit='MW/m<sup>2</sup>', default=0.5),
@@ -100,7 +100,7 @@ class App(AppBaseClass):
         q_crit=dict(description='<i>q<sub>crit</sub></i>, critical heat flux', unit='kW', default=12.6),
     )
     # Keys to match output keys of `heat_flux_wrapper`
-    symbols_outputs = dict(
+    output_items = dict(
         t_crit=dict(description='<i>t<sub>crit</sub></i>, critical heat flux duration', unit='min'),
         l_crit=dict(description='<i>l<sub>crit</sub></i>, critical heat flux length', unit='m'),
         A_crit=dict(description='<i>A<sub>crit</sub></i>, critical heat flux area', unit='m<sup>2</sup>'),
@@ -126,16 +126,16 @@ class App(AppBaseClass):
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setHorizontalSpacing(5), self.ui.p2_layout.setVerticalSpacing(5)
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
-        for k, v in self.symbols_inputs.items():
+        for k, v in self.input_items.items():
             self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_' + k, v['description'], v['unit'], min_width=70)
 
         self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), c.count, 0, 1, 3)
-        for k, v in self.symbols_outputs.items():
+        for k, v in self.output_items.items():
             self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_out_' + k, v['description'], v['unit'])
             getattr(self.ui, 'p2_out_' + k).setReadOnly(True)
 
     def example(self):
-        self.input_parameters = {k: v['default'] for k, v in self.symbols_inputs.items()}
+        self.input_parameters = {k: v['default'] for k, v in self.input_items.items()}
 
     @property
     def input_parameters(self):
@@ -150,7 +150,7 @@ class App(AppBaseClass):
         # parse values from ui
         # ====================
         input_parameters = dict()
-        for k, v in self.symbols_inputs.items():
+        for k, v in self.input_items.items():
             input_parameters[k] = str2float(getattr(self.ui, 'p2_in_' + k).text())
 
         try:
@@ -162,7 +162,7 @@ class App(AppBaseClass):
 
     @input_parameters.setter
     def input_parameters(self, v):
-        for k, v_ in self.symbols_inputs.items():
+        for k, v_ in self.input_items.items():
             getattr(self.ui, 'p2_in_' + k).setText(self.num2str(v[k]))
 
     @property
@@ -173,7 +173,7 @@ class App(AppBaseClass):
     def output_parameters(self, v: dict):
         self.__output_parameters = v
 
-        for k, v_ in self.symbols_outputs.items():
+        for k, v_ in self.output_items.items():
             getattr(self.ui, 'p2_out_' + k).setText(self.num2str(v[k]))
 
     def ok(self):

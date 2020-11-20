@@ -6,12 +6,12 @@ from PySide2.QtWidgets import QVBoxLayout, QGridLayout, QLabel, QRadioButton
 from fsetools.lib.fse_activation_hd import heat_detector_temperature_pd7974
 
 import fsetoolsGUI
+from fsetoolsGUI import logger
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_1 as image_figure_1
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_2 as image_figure_2
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass
 from fsetoolsGUI.gui.logic.c0000_utilities import Counter
 from fsetoolsGUI.gui.logic.custom_plot_pyqtgraph import App as PlotApp
-from fsetoolsGUI import  logger
 
 
 def pd_7974_1_heat_detector_activation(
@@ -89,11 +89,11 @@ class App(AppBaseClass):
         self.__output_parameters = dict()
 
         self.FigureApp = PlotApp(parent=self, title='PD 7974 heat detector device activation time', antialias=True)
-        self.FigureApp.resize(300, 800)
+        self.FigureApp.resize(600, 400)
         self.__figure_ax_1 = self.FigureApp.add_subplot(0, 0, x_label='Time [s]', y_label='Temperature [<sup>o</sup>C]', name='p1')
         self.__figure_ax_2 = self.FigureApp.add_subplot(1, 0, x_label='Time [s]', y_label='HRR [kW]', name='p2')
-        self.__figure_ax_3 = self.FigureApp.add_subplot(2, 0, x_label='Time [s]', y_label='Jet velocity [m/s]', name='p3')
-        self.__figure_ax_4 = self.FigureApp.add_subplot(3, 0, x_label='Time [s]', y_label='Virtual origin [m]', name='p4')
+        self.__figure_ax_3 = self.FigureApp.add_subplot(0, 1, x_label='Time [s]', y_label='Jet velocity [m/s]', name='p3')
+        self.__figure_ax_4 = self.FigureApp.add_subplot(1, 1, x_label='Time [s]', y_label='Virtual origin [m]', name='p4')
         self.__figure_ax_1.addLegend()
         self.__figure_ax_2.setXLink(self.__figure_ax_1)
         self.__figure_ax_3.setXLink(self.__figure_ax_1)

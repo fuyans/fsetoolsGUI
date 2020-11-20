@@ -1,4 +1,5 @@
 import numpy as np
+import pyqtgraph as pg
 import scipy.stats as stats
 from PySide2.QtCore import Signal, Slot, QObject, Qt
 from PySide2.QtWidgets import QGridLayout, QLineEdit, QLabel, QPushButton, QDialog, QRadioButton
@@ -7,7 +8,7 @@ from fsetoolsGUI import logger
 from fsetoolsGUI.etc.probability_distribution import solve_dist_for_mean_std
 from fsetoolsGUI.gui.logic.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.logic.c0000_utilities import *
-from fsetoolsGUI.gui.logic.custom_plot import App as PlotApp
+from fsetoolsGUI.gui.logic.custom_plot_pyqtgraph import App as FigureApp
 
 
 class Signals(QObject):
@@ -110,9 +111,11 @@ class App(AppBaseClass):
 
         super().__init__(parent=parent, post_stats=post_stats, ui=AppBaseClassUISimplified01)
 
-        self.FigureApp = PlotApp(self, title='Distribution visualisation')
-        self.__figure_ax_pdf = self.FigureApp.figure.add_subplot(211)
-        self.__figure_ax_cdf = self.FigureApp.figure.add_subplot(212, sharex=self.__figure_ax_pdf)
+        self.FigureApp = FigureApp(parent=self, title='Distribution', antialias=True)
+        self.__figure_ax_pdf = self.FigureApp.add_subplot(row=0, col=0, x_label='Sample value', y_label='PDF')
+        self.__figure_ax_cdf = self.FigureApp.add_subplot(row=1, col=0, x_label='Sample value', y_label='CDF')
+        self.__figure_ax_cdf.setXLink(self.__figure_ax_pdf)
+
         self.__input_parameters = None
         self.__output_parameters = None
         self.signals = Signals()
@@ -191,8 +194,9 @@ class App(AppBaseClass):
             self.statusBar().showMessage(f'Failed to output results, {e}')
             return e
 
+        # Step 4. Make plots
         try:
-            self.show_results_in_figure()
+            self.show_results_in_figure_2()
         except Exception as e:
             logger.error(f'Failed to make plots, {e}')
             self.statusBar().showMessage(f'Failed to make plots, {e}')
@@ -214,47 +218,33 @@ class App(AppBaseClass):
         self.activateWindow()
         self.ui.p2_in_distribution.setText(self.__dist_available[distribution_index][1])
 
-    def save_figure(self):
-        path_to_file, _ = QtWidgets.QFileDialog.getSaveFileName(
-            parent=self,
-            caption='Save figure',
-            dir='image.png'
-        )
-
-        self.figure.savefig(path_to_file, dpi=100, transparent=True)
-
     def __cdf_value_change(self):
-
+        """Called upon change of CDF value in the output parameters"""
         cdf_value = self.input_parameters['cdf_value']
         dist = self.output_parameters['dist']
-
         sample_value = dist.ppf(cdf_value)
-
         self.ui.p2_in_sample_value.textChanged.disconnect()
         self.ui.p2_in_sample_value.setText(f'{sample_value:.5g}')
         self.ui.p2_in_sample_value.textChanged.connect(self.__sample_value_change)
 
     def __sample_value_change(self):
-
+        """Called upon change of sample value in the output parameters"""
         sample_value = self.input_parameters['sample_value']
         dist = self.output_parameters['dist']
-
         cdf_value = dist.cdf(sample_value)
-
         self.ui.p2_in_cdf.textChanged.disconnect()
         self.ui.p2_in_cdf.setText(f'{cdf_value:.5g}')
         self.ui.p2_in_cdf.textChanged.connect(self.__cdf_value_change)
 
     def __distribution_update(self):
-        if self.__figure_ax_pdf is not None and self.__figure_ax_cdf is not None:
-            if self.__figure_ax_pdf.lines or self.__figure_ax_cdf.lines:
-                self.__figure_ax_pdf.clear()
-                self.__figure_ax_pdf.set_yticks([])
-                self.__figure_ax_pdf.clear()
-                self.__figure_ax_pdf.set_xticks([])
-                self.__figure_ax_pdf.set_yticks([])
-                self.FigureApp.figure_canvas.draw()
+        """Called upon change of distribution type"""
 
+        # Clear plots
+        if self.__figure_ax_pdf is not None and self.__figure_ax_cdf is not None:
+            self.__figure_ax_pdf.getPlotItem().clear()
+            self.__figure_ax_cdf.getPlotItem().clear()
+
+        # clear outputs
         if self.ui.p2_in_cdf.text() != '':
             self.ui.p2_in_cdf.textChanged.disconnect()
             self.ui.p2_in_cdf.clear()
@@ -285,10 +275,8 @@ class App(AppBaseClass):
 
     @staticmethod
     def solve_dist(dist_name, mean, sd, sample_value, pdf_value, cdf_value) -> dict:
-
         result = solve_dist_for_mean_std(dist_name, mean, sd)
         dist = getattr(stats, dist_name)(*result.x)
-
         return dict(dist=dist, sample_value=sample_value, pdf_value=pdf_value, cdf_value=cdf_value)
 
     @property
@@ -306,51 +294,48 @@ class App(AppBaseClass):
         geo.setY(self.normalGeometry().y())
         self.distribution_selection_dialog.setGeometry(geo)
 
-    def show_results_in_figure(self):
+    def show_results_in_figure_2(self):
         dist = self.output_parameters['dist']
 
-        self.__figure_ax_pdf.clear()
-        self.__figure_ax_cdf.clear()
+        self.__figure_ax_pdf.getPlotItem().clear()
+        self.__figure_ax_cdf.getPlotItem().clear()
 
         # --------
         # plot pdf
         # --------
         x = np.linspace(dist.ppf(1e-3), dist.ppf(1 - 1e-3), 50)
         y_pdf = dist.pdf(x)
-        self.__figure_ax_pdf.plot(x, y_pdf, c='k')
-        self.__figure_ax_pdf.set_ylim(bottom=0)
-        self.__figure_ax_pdf.set_ylabel('PDF', fontsize='xx-small')
-        self.__figure_ax_pdf.tick_params(axis='both', direction='in', labelbottom=False)
+        self.FigureApp.plot(x, y_pdf, self.__figure_ax_pdf)
 
         # --------
         # plot cdf
         # --------
         y_cdf = dist.cdf(x)
-        self.__figure_ax_cdf.plot(x, y_cdf, c='k')
-        self.__figure_ax_cdf.set_ylim(bottom=0)
-        self.__figure_ax_cdf.set_ylabel('CDF', fontsize='xx-small')
-        self.__figure_ax_cdf.set_yticks([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
-        self.__figure_ax_cdf.tick_params(axis='both', direction='in')
+        self.FigureApp.plot(x, y_cdf, self.__figure_ax_cdf)
 
         # -------------------------------------------------------------
         # highlight area under the pdf and cdf if `sample_value` exists
         # -------------------------------------------------------------
         if self.input_parameters['sample_value'] is not None:
             x_ = np.linspace(x[0], self.input_parameters['sample_value'], 50)
+            y_ = np.zeros_like(x_)
             y_pdf_, y_cdf_ = dist.pdf(x_), dist.cdf(x_)
-            self.__figure_ax_pdf.fill_between(x_, y_pdf_, np.zeros_like(x_), facecolor='grey', interpolate=True)
-            self.__figure_ax_cdf.fill_between(x_, y_cdf_, np.zeros_like(x_), facecolor='grey', interpolate=True)
 
-        # ----------------------
-        # finalise/format figure
-        # ----------------------
-        self.__figure_ax_pdf.tick_params(axis='both', which='both', labelsize='xx-small')
-        self.__figure_ax_cdf.tick_params(axis='both', which='both', labelsize='xx-small')
-        self.__figure_ax_pdf.grid(which='major', linestyle=':', linewidth='0.5', color='black')
-        self.__figure_ax_cdf.grid(which='major', linestyle=':', linewidth='0.5', color='black')
+            fill_pdf = pg.FillBetweenItem(
+                self.FigureApp.plot(x_, y_pdf_, ax=self.__figure_ax_pdf, pen_width=0, pen_colour=(0, 0, 0, 1)),
+                self.FigureApp.plot(x_, y_, ax=self.__figure_ax_pdf, pen_width=0, pen_colour=(0, 0, 0, 1)),
+                brush=0.8
+            )
+            self.__figure_ax_pdf.addItem(fill_pdf)
+
+            fill_cdf = pg.FillBetweenItem(
+                self.FigureApp.plot(x_, y_cdf_, ax=self.__figure_ax_cdf, pen_width=0, pen_colour=(0, 0, 0, 1)),
+                self.FigureApp.plot(x_, y_, ax=self.__figure_ax_cdf, pen_width=0, pen_colour=(0, 0, 0, 1)),
+                brush=0.8
+            )
+            self.__figure_ax_cdf.addItem(fill_cdf)
+
         self.FigureApp.show()
-
-        self.FigureApp.refresh_figure()
 
 
 if __name__ == '__main__':

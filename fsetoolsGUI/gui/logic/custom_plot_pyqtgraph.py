@@ -59,7 +59,17 @@ class App(QtWidgets.QDialog):
 
         self.setLayout(self.layout)
 
-    def plot(self, x: np.ndarray, y: np.ndarray, ax: pg.PlotWidget = None, pen: QtGui.QPen = None, pen_colour: tuple = None, *args, **kwargs):
+    def plot(
+            self,
+            x: np.ndarray,
+            y: np.ndarray,
+            ax: pg.PlotWidget = None,
+            pen: QtGui.QPen = None,
+            pen_colour: tuple = None,
+            pen_width: float = None,
+            *args,
+            **kwargs
+    ):
 
         if ax is None:
             ax = self.axes[-1]
@@ -67,9 +77,11 @@ class App(QtWidgets.QDialog):
         if pen is None:
             if pen_colour is None:
                 pen_colour = self.cm[len(ax.getPlotItem().items) % len(self.cm)]
-            pen = pg.mkPen(color=pen_colour, style=QtCore.Qt.SolidLine, width=2)
+            if pen_width is None:
+                pen_width = 2
+            pen = pg.mkPen(color=pen_colour, style=QtCore.Qt.SolidLine, width=pen_width)
 
-        ax.plot(x=x, y=y, pen=pen, *args, **kwargs)
+        return ax.plot(x=x, y=y, pen=pen, *args, **kwargs)
 
     def add_subplot(
             self,
