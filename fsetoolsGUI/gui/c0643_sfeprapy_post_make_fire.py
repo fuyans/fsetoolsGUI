@@ -6,9 +6,9 @@ from PySide2.QtWidgets import QGridLayout, QLabel
 
 from fsetoolsGUI import logger
 from fsetoolsGUI.etc.sfeprapy_make_fires import mcs0_make_fires
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
-from fsetoolsGUI.gui.c0000_utilities import Counter
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.custom_plot_pyqtgraph import App as FigureApp
+from fsetoolsGUI.gui.custom_utilities import Counter
 
 
 def str2indexes(str_: str) -> list:

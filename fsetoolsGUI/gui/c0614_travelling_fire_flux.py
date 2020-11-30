@@ -5,8 +5,8 @@ from PySide2.QtWidgets import QGridLayout, QLabel
 from fsetools.lib.fse_travelling_fire_flux import heat_flux as travelling_fire_flux
 
 from fsetoolsGUI import logger
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
-from fsetoolsGUI.gui.c0000_utilities import Counter
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass, AppBaseClassUISimplified01
+from fsetoolsGUI.gui.custom_utilities import Counter
 from fsetoolsGUI.gui.custom_plot_pyqtgraph import App as PlotApp2
 
 

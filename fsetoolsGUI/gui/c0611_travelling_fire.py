@@ -1,14 +1,12 @@
 from collections import OrderedDict
 
 import numpy as np
-from PySide2 import QtCore
 from PySide2.QtWidgets import QGridLayout, QLabel
 from fsetools.lib.fse_travelling_fire import temperature_si as fire_temperature_si
 
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
-from fsetoolsGUI.gui.c0000_utilities import Counter
-from fsetoolsGUI.gui.custom_plot import App as PlotApp
-from fsetoolsGUI.gui.custom_table import TableWindow
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass, AppBaseClassUISimplified01
+from fsetoolsGUI.gui.custom_plot_pyqtgraph import App as FigureApp
+from fsetoolsGUI.gui.custom_utilities import Counter
 
 
 class App(AppBaseClass):
@@ -16,34 +14,32 @@ class App(AppBaseClass):
     app_name_short = 'Travelling\nfire'
     app_name_long = 'SFE Travelling fire'
 
-    def __init__(self, parent=None, post_stats: bool = True):
+    __input_symbols: OrderedDict = OrderedDict(
+        fire_time_duration=['Duration', 'min'],
+        fire_time_step=['Time step', 's'],
+        fire_load_density_MJm2=['Fuel load density', 'MJ/m<sup>2</sup>'],
+        fire_hrr_density_MWm2=['HRR density', 'MW/m<sup>2</sup>'],
+        room_length_m=['Room length', 'm'],
+        room_width_m=['Room width', 'm'],
+        fire_spread_rate_ms=['Fire spread speed', 'm/s'],
+        beam_location_height_m=['Beam height', 'm'],
+        beam_location_length_m=['Beam length', 'm'],
+        fire_nft_limit_c=['Near field temp.', '<sup>o</sup>C'],
+    )
 
+    def __init__(self, parent=None, post_stats: bool = True):
         # instantiation
         super().__init__(parent, post_stats=post_stats, ui=AppBaseClassUISimplified01)
 
-        self.input_symbols: OrderedDict = OrderedDict(
-            fire_time_duration=['Duration', 'min'],
-            fire_time_step=['Time step', 's'],
-            fire_load_density_MJm2=['Fuel load density', 'MJ/m<sup>2</sup>'],
-            fire_hrr_density_MWm2=['HRR density', 'MW/m<sup>2</sup>'],
-            room_length_m=['Room length', 'm'],
-            room_width_m=['Room width', 'm'],
-            fire_spread_rate_ms=['Fire spread speed', 'm/s'],
-            beam_location_height_m=['Beam height', 'm'],
-            beam_location_length_m=['Beam length', 'm'],
-            fire_nft_limit_c=['Near field temp.', '<sup>o</sup>C'],
-        )
-
-        self.FigureApp = PlotApp(self, title='Travelling fire plot')
-        self.TableApp = TableWindow(parent=self, window_title='Travelling fire numerical results')
-        self.__figure_ax = self.FigureApp.add_subplot()
+        self.FigureApp = FigureApp(parent=self, title='Travelling fire')
+        self.__figure_ax = self.FigureApp.add_subplot(0, 0, x_label='Time [minute]', y_label='Temperature [°C]')
         self.__output_parameters = None
 
         c = Counter()
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
-        for k, v in self.input_symbols.items():
+        for k, v in self.__input_symbols.items():
             self.add_lineedit_set_to_grid(self.ui.p2_layout, c, f'p2_in_{k}', v[0], v[1])
 
     def example(self):
@@ -62,7 +58,6 @@ class App(AppBaseClass):
 
     def ok(self):
         self.output_parameters = self.calculate(self.input_parameters)
-        self.show_results_in_table()
         self.show_results_in_figure()
 
     @staticmethod
@@ -87,7 +82,6 @@ class App(AppBaseClass):
 
         return dict(
             time=input_parameters['t'],
-            # temperature=fire(**input_parameters),
             temperature=temperature,
         )
 
@@ -99,7 +93,7 @@ class App(AppBaseClass):
             except ValueError:
                 return None
 
-        input_parameters = {k: str2float(getattr(self.ui, f'p2_in_{k}').text()) for k in list(self.input_symbols.keys())}
+        input_parameters = {k: str2float(getattr(self.ui, f'p2_in_{k}').text()) for k in list(self.__input_symbols.keys())}
         input_parameters['t'] = np.arange(0, input_parameters['fire_time_duration'] * 60, input_parameters['fire_time_step'])
         return input_parameters
 
@@ -122,39 +116,12 @@ class App(AppBaseClass):
     def output_parameters(self, v: dict):
         self.__output_parameters = v
 
-    def show_results_in_table(self):
-
-        output_parameters = self.output_parameters
-
-        # print results (for console enabled version only)
-        list_content = [
-            [float(i), float(j)] for i, j in zip(output_parameters['time'], output_parameters['temperature'] - 273.15)
-        ]
-
-        self.TableApp.update_table_content(
-            content_data=list_content,
-            col_headers=['time [s]', 'temperature [°C]'],
-        )
-
-        self.TableApp.TableModel.sort(0, QtCore.Qt.AscendingOrder)
-        self.TableApp.TableView.resizeColumnsToContents()
-        self.TableApp.show()
-
-        return True
-
     def show_results_in_figure(self):
-
         output_parameters = self.output_parameters
 
-        self.__figure_ax.clear()
-        self.__figure_ax.plot(output_parameters['time'] / 60, output_parameters['temperature'] - 273.15, c='k')
-        self.__figure_ax.set_xlabel('Time [minute]', fontsize='small')
-        self.__figure_ax.set_ylabel('Temperature [°C]', fontsize='small')
-        self.__figure_ax.tick_params(axis='both', labelsize='small')
-        self.__figure_ax.grid(which='major', linestyle=':', linewidth='0.5', color='black')
+        self.__figure_ax.getPlotItem().clear()
+        self.FigureApp.plot(output_parameters['time'] / 60, output_parameters['temperature'] - 273.15, ax=self.__figure_ax, name='Fire')
         self.FigureApp.show()
-
-        self.FigureApp.refresh_figure()
 
 
 if __name__ == '__main__':

@@ -1,24 +1,22 @@
 from collections import OrderedDict
 
 import numpy as np
-from PySide2 import QtCore
 from PySide2.QtWidgets import QGridLayout, QLabel
 from fsetools.lib.fse_bs_en_1993_1_2_heat_transfer_c import temperature as protected_steel_eurocode
 from sfeprapy.mcs0.mcs0_calc import solve_time_equivalence_iso834, solve_protection_thickness
 
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
-from fsetoolsGUI.gui.c0000_utilities import Counter
 from fsetoolsGUI.gui.c0610_ec_parametric_fire import App as AppParametricFire
 from fsetoolsGUI.gui.c0611_travelling_fire import App as AppTravellingFire
 from fsetoolsGUI.gui.c0613_din_en_parametric_fire import App as AppDinParametricFire
 from fsetoolsGUI.gui.c0615_iso_834_fire import App as AppISO834Fire
-from fsetoolsGUI.gui.custom_plot import App as PlotApp
-from fsetoolsGUI.gui.custom_table import TableWindow
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass, AppBaseClassUISimplified01
+from fsetoolsGUI.gui.custom_plot_pyqtgraph import App as FigureApp
+from fsetoolsGUI.gui.custom_utilities import Counter
 
 
 class App(AppBaseClass):
     app_id = '0612'
-    app_name_short = 'BS EN\nHT\nprotected'
+    app_name_short = 'BS EN 1993\nprot. steel\nheat transfer'
     app_name_long = 'BS EN 1993-1-2:2005 Protected steel heat transfer'
 
     def __init__(self, parent=None, post_stats: bool = True):
@@ -26,9 +24,9 @@ class App(AppBaseClass):
         # instantiation
         super().__init__(parent, post_stats=post_stats, ui=AppBaseClassUISimplified01)
 
-        self.FigureApp = PlotApp(self, title='Steel temperature plot')
-        self.TableApp = TableWindow(parent=self, window_title='Steel temperature results')
-        self.__figure_ax = self.FigureApp.add_subplot()
+        self.FigureApp = FigureApp(self, title='Steel temperature plot')
+        self.__figure_ax = self.FigureApp.add_subplot(0, 0, x_label='Time [minute]', y_label='Temperature [°C]')
+        self.__figure_ax.addLegend()
         self.__output_parameters = None
         self.__fire = [
             AppISO834Fire(self, post_stats=False, ),
@@ -98,7 +96,6 @@ class App(AppBaseClass):
 
     def example(self):
         input_kwargs = dict(
-            # solve_crit_temp_check=False,
             beam_critical_temperature=550,
             fire_type=1,
             beam_rho=7850,
@@ -113,7 +110,6 @@ class App(AppBaseClass):
 
     def ok(self):
         self.output_parameters = self.calculate(**self.input_parameters)
-        self.show_results_in_table()
         self.show_results_in_figure()
 
     @staticmethod
@@ -261,37 +257,14 @@ class App(AppBaseClass):
             self.ui.p2_in_solved_protection_thickness.setText(float2str(v['protection_thickness'] * 1000))
             self.ui.p2_in_solved_time_equivalence.setText(float2str(v['time_equivalence'] / 60))
 
-    def show_results_in_table(self):
-        output_parameters = self.output_parameters
-
-        ijk = zip(output_parameters['time'], output_parameters['fire_temperature'] - 273.15, output_parameters['steel_temperature'] - 273.15)
-        list_content = [[float(i), float(j), float(k)] for i, j, k in ijk]
-
-        self.TableApp.update_table_content(
-            content_data=list_content,
-            col_headers=['Time [°C]', 'Fire temperature [°C]', 'Steep temperature [°C]'],
-        )
-
-        self.TableApp.TableModel.sort(0, QtCore.Qt.AscendingOrder)
-        self.TableApp.TableView.resizeColumnsToContents()
-        self.TableApp.show()
-
     def show_results_in_figure(self):
 
         output_parameters = self.output_parameters
 
-        self.__figure_ax.clear()
-
-        self.__figure_ax.plot(output_parameters['time'] / 60, output_parameters['fire_temperature'] - 273.15, label='Fire', c='r')
-        self.__figure_ax.plot(output_parameters['time'] / 60, output_parameters['steel_temperature'] - 273.15, label='Steel', c='k')
-        self.__figure_ax.set_xlabel('Time [minute]', fontsize='small')
-        self.__figure_ax.set_ylabel('Temperature [°C]', fontsize='small')
-        self.__figure_ax.tick_params(axis='both', labelsize='small')
-        self.__figure_ax.legend(shadow=False, edgecolor='k', fancybox=False, ncol=1, fontsize='x-small').set_visible(True)
-        self.__figure_ax.grid(which='major', linestyle=':', linewidth='0.5', color='black')
+        self.__figure_ax.getPlotItem().clear()
+        self.FigureApp.plot(output_parameters['time'] / 60, output_parameters['fire_temperature'] - 273.15, ax=self.__figure_ax, name='Fire')
+        self.FigureApp.plot(output_parameters['time'] / 60, output_parameters['steel_temperature'] - 273.15, ax=self.__figure_ax, name='Steel')
         self.FigureApp.show()
-
-        self.FigureApp.refresh_figure()
 
 
 if __name__ == '__main__':

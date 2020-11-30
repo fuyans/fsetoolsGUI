@@ -4,6 +4,7 @@ import threading
 from os import path
 
 import requests
+from PySide2 import QtWidgets
 from PySide2.QtCore import Slot
 from PySide2.QtWidgets import QErrorMessage, QPushButton, QLineEdit, QInputDialog
 from PySide2.QtWidgets import QMainWindow, QSizePolicy, QWidget, QGridLayout, QGroupBox, QLabel
@@ -11,7 +12,6 @@ from packaging import version
 
 from fsetoolsGUI import __version__, __build__, __date_released__, __expiry_period_days__, __remote_version_url__, __root_dir__, logger
 from fsetoolsGUI.gui import qt_css
-from fsetoolsGUI.gui.c0000_utilities import *
 from fsetoolsGUI.gui.c0101_adb_data_sheet_1 import App as App0101
 from fsetoolsGUI.gui.c0102_bs9999_data_sheet_1 import App as App0102
 from fsetoolsGUI.gui.c0103_bs9999_merging_flow import App as App0103
@@ -43,6 +43,7 @@ from fsetoolsGUI.gui.c0641_sfeprapy_pre_bluebeam import App as App0641
 from fsetoolsGUI.gui.c0642_sfeprapy_post_make_plots import App as App0642
 from fsetoolsGUI.gui.c0643_sfeprapy_post_make_fire import App as App0643
 from fsetoolsGUI.gui.c0660_ht1d_inexplicit import App as App0660
+from fsetoolsGUI.gui.custom_utilities import *
 
 
 class QPlainTextEditLogger(logging.Handler):
@@ -290,9 +291,9 @@ class App(QMainWindow):
 
     def add_buttons(self):
         button_collection = {
-            'Miscellaneous': ['0601', '0602', '0611', '0407', '0620'],
+            'Miscellaneous': ['0601', '0610', '0611', '0602', '0620'],
             'B1 Means of escape': ['0101', '0102', '0104', '0103', '0111'],
-            'B3 Elements of structure': ['0311', '0630', '0640', '0660'],
+            'B3 Elements of structure': ['0311', '0612','0630', '0640', '0660'],
             'B4 External fire spread': ['0403', '0404', '0411'],
         }
 
@@ -307,39 +308,6 @@ class App(QMainWindow):
     def add_button_set_to_grid(self, layout: QGridLayout, label: str, button_id_list: list, row_0: int, col_0: int,
                                cols: int):
 
-        btn_stylesheet = '''
-        QPushButton {
-            background-color: #ffffff;
-            Text-align: center;
-            /*color: #000000;*/
-            padding: 0px;
-            padding-left: 1px;
-            padding-right: 1px;
-            padding-top: 2px;
-            padding-bottom: 2px;
-            border: 1px solid #d2d1d2;
-            border-radius: 3px;
-        }
-        QPushButton:hover {
-            background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
-            color: #ffffff;
-            border: 1.5px solid #56aafb;
-        }
-        QPushButton:focus {
-            border: 1.5px solid #3295fd;
-        }
-        QPushButton:pressed {
-            background-color: #106bfd;
-        }
-        QPushButton:disabled {
-            background-color: #ecf0f1;
-            /*font: 11px;*/
-            padding: 3px;
-            color: #98989d;
-            border: 1px solid #d2d1d2;
-        }
-        '''
-
         row_i, col_i = Counter(), Counter()
         row_i.reset(row_0), col_i.reset(col_0)
         layout.addWidget(QLabel(f'<b>{label}</b>'), row_i.count, col_0, 1, cols)
@@ -348,7 +316,7 @@ class App(QMainWindow):
             btn = QPushButton(self.AppsCollection.app_name_short(v))
             btn.setAutoDefault(True)  # click button upon Enter
             # remove button padding to maximum text area
-            btn.setStyleSheet(btn_stylesheet)
+            # btn.setStyleSheet(main_dialog_btn_css)
             setattr(self.ui, f'p2_in_{v}', btn)
             getattr(self.ui, f'p2_in_{v}').clicked.connect(act_app)
             getattr(self.ui, f'p2_in_{v}').setFixedSize(76, 76)

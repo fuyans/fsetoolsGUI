@@ -8,13 +8,13 @@ from fsetools.lib.fse_bs_en_1991_1_2_external_flame import ExternalFlame
 from fsetools.lib.fse_bs_en_1991_1_2_external_flame_forced_draught import ExternalFlameForcedDraught
 
 from fsetoolsGUI import __root_dir__, logger
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass
-from fsetoolsGUI.gui.c0000_utilities import Counter
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass
+from fsetoolsGUI.gui.custom_utilities import Counter
 
 
 class App(AppBaseClass):
     app_id = '0411'
-    app_name_short = 'BS EN\nExternal\nflame'
+    app_name_short = 'BS EN 1991\nExternal\nflame'
     app_name_long = 'BS EN 1991-1-2:2002 External flame'
 
     def __init__(self, parent=None, post_stats: bool = True):

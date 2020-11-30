@@ -8,7 +8,7 @@ from fsetools.lib.fse_thermal_radiation_2d_ortho import CuboidRoomModel
 from matplotlib import cm
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass
 from fsetoolsGUI.gui.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.custom_table import TableWindow
 

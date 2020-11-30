@@ -3,12 +3,13 @@ from datetime import datetime
 from os import getlogin, path
 from typing import Union
 
+from PySide2 import QtWidgets
 from PySide2.QtWidgets import QLabel, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy, QGroupBox, QWidget, QStatusBar, QVBoxLayout, QTextBrowser, QScrollArea
 
 from fsetoolsGUI import __root_dir__, __version__, logger
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
 from fsetoolsGUI.gui import qt_css
-from fsetoolsGUI.gui.c0000_utilities import *
+from fsetoolsGUI.gui.custom_utilities import *
 
 
 class AboutDialogUI(object):
@@ -100,7 +101,7 @@ class AppBaseClassUI(object):
         # instantiate buttons etc
         self.p3_layout = QHBoxLayout(self.page_3)
         self.p3_layout.setContentsMargins(0, 0, 0, 0)
-        self.p3_about = QPushButton('i')
+        self.p3_about = QPushButton(' i ')
         self.p3_about.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;font: bold italic;')
         self.p3_layout.addWidget(self.p3_about)
         self.p3_layout.addSpacing(5)
@@ -141,7 +142,7 @@ class AppBaseClassUISimplified01(object):
         # instantiate buttons etc
         self.p3_layout = QHBoxLayout(self.page_3)
         self.p3_layout.setContentsMargins(0, 0, 0, 0)
-        self.p3_about = QPushButton('i')
+        self.p3_about = QPushButton(' i ')
         self.p3_about.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;font: bold italic;')
         self.p3_layout.addWidget(self.p3_about)
         self.p3_layout.addSpacing(5)

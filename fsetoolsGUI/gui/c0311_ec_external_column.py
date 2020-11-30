@@ -8,13 +8,13 @@ from PySide2.QtWidgets import QVBoxLayout, QGridLayout, QLabel, QSpacerItem, QSi
 from fsetools.lib.fse_bs_en_1993_1_2_external_column import ExternalSteelTemperatureFullyEngulfedColumn
 
 from fsetoolsGUI import __root_dir__, logger
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass
-from fsetoolsGUI.gui.c0000_utilities import Counter
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass
+from fsetoolsGUI.gui.custom_utilities import Counter
 
 
 class App(AppBaseClass):
     app_id = '0311'
-    app_name_short = 'BS EN\nExternal\ncolumn temp.'
+    app_name_short = 'BS EN 1993\nExternal\ncolumn temp.'
     app_name_long = 'BS EN 1993-1-2:2005 External column temperatures'
 
     def __init__(self, parent=None, post_stats: bool = True):

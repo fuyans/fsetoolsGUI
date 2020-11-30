@@ -6,9 +6,9 @@ from PySide2.QtWidgets import QGridLayout, QLineEdit, QLabel, QPushButton, QDial
 
 from fsetoolsGUI import logger
 from fsetoolsGUI.etc.probability_distribution import solve_dist_for_mean_std
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
-from fsetoolsGUI.gui.c0000_utilities import *
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.custom_plot_pyqtgraph import App as FigureApp
+from fsetoolsGUI.gui.custom_utilities import *
 
 
 class Signals(QObject):
@@ -138,7 +138,6 @@ class App(AppBaseClass):
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_cdf', 'CDF', '')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_sample_value', 'Sample value', '')
 
-        self.ui.p3_example.setVisible(False)
         self.ui.p3_about.setVisible(False)
 
         # signals and slots
@@ -211,7 +210,9 @@ class App(AppBaseClass):
         self.repaint()
 
     def example(self):
-        pass
+        self.ui.p2_in_distribution.setText('gumbel_r')
+        self.ui.p2_in_mean.setText('100')
+        self.ui.p2_in_sd.setText('10')
 
     @Slot(int)
     def upon_distribution_selection(self, distribution_index: int):
@@ -340,6 +341,7 @@ class App(AppBaseClass):
 
 if __name__ == '__main__':
     import sys
+    from PySide2 import QtWidgets
 
     qapp = QtWidgets.QApplication(sys.argv)
     app = App(post_stats=False)

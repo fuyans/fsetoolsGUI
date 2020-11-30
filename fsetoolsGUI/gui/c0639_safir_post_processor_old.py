@@ -11,7 +11,7 @@ from PySide2.QtCore import Slot
 from fsetoolsGUI.etc.safir import out2pstrain, pstrain2dict, save_csv, make_strain_lines_for_given_shell
 from fsetoolsGUI.etc.safir import safir_batch_run
 from fsetoolsGUI.gui.layout.i0630_safir_postprocessor import Ui_MainWindow
-from fsetoolsGUI.gui.c0000_app_template_old import AppBaseClass
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass
 from fsetoolsGUI.gui.custom_plot import App as PlotApp
 from fsetoolsGUI.gui.custom_table import TableWindow
 
@@ -481,18 +481,6 @@ class App(AppBaseClass):
         fp_out = self.ui.lineEdit_in_fp_out.text()
         unique_shell = str2int(self.ui.lineEdit_in_shell.text())
 
-        # ======================================================
-        # check if necessary inputs are provided for calculation
-        # ======================================================
-
-        # ==============================
-        # validate individual parameters
-        # ==============================
-
-        # ================
-        # units conversion
-        # ================
-
         return dict(fp_out=fp_out, unique_shell=unique_shell)
 
     @property
@@ -511,6 +499,4 @@ if __name__ == "__main__":
     qapp = QtWidgets.QApplication(sys.argv)
     app = App()
     app.show()
-    # app2 = ProgressBar('Progress bar')
-    # app2.show()
     qapp.exec_()
