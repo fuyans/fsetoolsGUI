@@ -3,12 +3,13 @@ from datetime import datetime
 from os import getlogin, path
 from typing import Union
 
+from PySide2 import QtWidgets
 from PySide2.QtWidgets import QLabel, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy, QGroupBox, QWidget, QStatusBar, QVBoxLayout, QTextBrowser, QScrollArea
 
 from fsetoolsGUI import __root_dir__, __version__, logger
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
 from fsetoolsGUI.gui import qt_css
-from fsetoolsGUI.gui.c0000_utilities import *
+from fsetoolsGUI.gui.custom_utilities import *
 
 
 class AboutDialogUI(object):

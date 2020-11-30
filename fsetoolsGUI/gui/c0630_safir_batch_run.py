@@ -7,8 +7,9 @@ from PySide2.QtWidgets import QLabel, QGridLayout, QFileDialog
 
 from fsetoolsGUI import logger
 from fsetoolsGUI.etc.safir import safir_batch_run
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
-from fsetoolsGUI.gui.c0000_utilities import Counter, ProgressBar
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass, AppBaseClassUISimplified01
+from fsetoolsGUI.gui.custom_progressbar import ProgressBar
+from fsetoolsGUI.gui.custom_utilities import Counter
 
 
 class Signals(QtCore.QObject):

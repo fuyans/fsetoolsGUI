@@ -8,8 +8,8 @@ from sfeprapy.func.mcs_gen import dict_flatten
 from sfeprapy.mcs0 import EXAMPLE_INPUT_DICT
 
 from fsetoolsGUI import logger
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
-from fsetoolsGUI.gui.c0000_utilities import Counter
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass, AppBaseClassUISimplified01
+from fsetoolsGUI.gui.custom_utilities import Counter
 
 
 class App(AppBaseClass):
@@ -225,7 +225,7 @@ def measurements_to_inputs(
         df_measurements: pd.DataFrame,
         df_predefined: pd.DataFrame
 ):
-    def str2float(str_:str):
+    def str2float(str_: str):
         try:
             return float(str_)
         except ValueError:

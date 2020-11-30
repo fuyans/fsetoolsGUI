@@ -7,11 +7,11 @@ from fsetools.lib.fse_activation_hd import heat_detector_temperature_pd7974
 
 import fsetoolsGUI
 from fsetoolsGUI import logger
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass
+from fsetoolsGUI.gui.custom_plot_pyqtgraph import App as PlotApp
+from fsetoolsGUI.gui.custom_utilities import Counter
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_1 as image_figure_1
 from fsetoolsGUI.gui.images_base64 import dialog_0111_figure_2 as image_figure_2
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass
-from fsetoolsGUI.gui.c0000_utilities import Counter
-from fsetoolsGUI.gui.custom_plot_pyqtgraph import App as PlotApp
 
 
 def pd_7974_1_heat_detector_activation(
@@ -66,9 +66,9 @@ class App(AppBaseClass):
     input_items = dict(
         t_end=dict(description='<i>t<sub>end</sub></i>, duration', unit='min', default=10),
         t_step=dict(description='<i>t<sub>step</sub></i>, time step', unit='s', default=1),
-        alpha=dict(description='<i>α</i>, fire growth factor', unit='kW/s<sup>2</sup>', default=0.0117),
+        alpha=dict(description='<i>α</i>, fire growth factor', unit='kW/s<sup>2</sup>', default=0.012),
         H=dict(description='<i>H</i>, height', unit='m', default=2.4),
-        R=dict(description='<i>R</i>, radial distance', unit='m', default=2.5),
+        R=dict(description='<i>R</i>, radial distance', unit='m', default=2.75),
         RTI=dict(description='<i>RTI</i>, response time index', unit='m<sup>0.5</sup>s<sup>0.5</sup>', default=115),
         C=dict(description='<i>C</i>, conduction factor', unit='m<sup>0.5</sup>/s<sup>0.5</sup>', default=0.4),
         HRRPUA=dict(description='HRR density', unit='kW/m<sup>2</sup>', default=510),
@@ -76,7 +76,7 @@ class App(AppBaseClass):
         T_act=dict(description='<i>T<sub>act</sub></i>, detector act. temp.', unit='<sup>o</sup>C', default=68),
     )
     output_items = dict(
-        t_act=dict(description='<i>t<sub>act</sub></i>, activation time', unit='<sup>o</sup>C', default=''),
+        t_act=dict(description='<i>t<sub>act</sub></i>, activation time', unit='s', default=''),
         T_g_act=dict(description='<i>T<sub>g,act</sub></i>, gas temp. at act.', unit='<sup>o</sup>C', default=''),
     )
 

@@ -4,7 +4,7 @@ from PySide2 import QtWidgets, QtGui, QtCore
 from PySide2.QtWidgets import QLabel, QGridLayout, QGroupBox, QWidget, QScrollArea
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass
 
 
 class UI(object):
@@ -120,10 +120,6 @@ class AppBaseClassScrollableContent(AppBaseClass):
 
 
 class AppTest(AppBaseClassScrollableContent):
-    # app_id = 'test'
-    # app_name_short = 'ADB\ndata sheet\n1'
-    # app_name_long = 'ADB vol. 2 data sheet no. 1 - means of escape'
-
     def __init__(self, parent=None, post_stats: bool = True):
         super().__init__(
             fp_image=path.join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0101-0.png'),
@@ -131,12 +127,10 @@ class AppTest(AppBaseClassScrollableContent):
             ui=UI,
             post_stats=post_stats
         )
-        # self.resize(1000, 600)
 
 
 if __name__ == '__main__':
     import sys
-
     qapp = QtWidgets.QApplication(sys.argv)
     app = AppTest(post_stats=False)
     app.show()

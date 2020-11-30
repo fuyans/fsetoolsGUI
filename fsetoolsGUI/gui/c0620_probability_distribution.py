@@ -6,9 +6,9 @@ from PySide2.QtWidgets import QGridLayout, QLineEdit, QLabel, QPushButton, QDial
 
 from fsetoolsGUI import logger
 from fsetoolsGUI.etc.probability_distribution import solve_dist_for_mean_std
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
-from fsetoolsGUI.gui.c0000_utilities import *
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.custom_plot_pyqtgraph import App as FigureApp
+from fsetoolsGUI.gui.custom_utilities import *
 
 
 class Signals(QObject):
@@ -340,6 +340,7 @@ class App(AppBaseClass):
 
 if __name__ == '__main__':
     import sys
+    from PySide2 import QtWidgets
 
     qapp = QtWidgets.QApplication(sys.argv)
     app = App(post_stats=False)

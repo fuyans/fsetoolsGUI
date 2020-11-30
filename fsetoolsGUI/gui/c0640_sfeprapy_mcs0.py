@@ -7,14 +7,15 @@ from PySide2.QtWidgets import QGridLayout, QLabel
 from sfeprapy.mcs0.mcs0_calc import MCS0
 
 from fsetoolsGUI import logger
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
-from fsetoolsGUI.gui.c0000_utilities import Counter, ProgressBar
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass, AppBaseClassUISimplified01
+from fsetoolsGUI.gui.custom_progressbar import ProgressBar
+from fsetoolsGUI.gui.custom_utilities import Counter
 
 
 class App(AppBaseClass):
     app_id = '0640'
-    app_name_short = 'PRAPY\nMCS0\nsimulator'
-    app_name_long = 'SFEPRAPY MCS0 Monte Carlo Simulation method 0'
+    app_name_short = 'SFEPRAPY\nMCS0\nprocessor'
+    app_name_long = 'SFEPRAPY Monte Carlo Simulation 0'
 
     def __init__(self, parent=None, post_stats: bool = True):
 

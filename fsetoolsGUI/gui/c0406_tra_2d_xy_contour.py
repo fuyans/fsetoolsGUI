@@ -8,9 +8,9 @@ from PySide2.QtCore import Slot
 from fsetools.lib.fse_thermal_radiation_2d_parallel import main as tra_main
 from matplotlib import cm
 
-from fsetoolsGUI.gui.layout.i0406_tra_2d_xy_contour import Ui_MainWindow
-from fsetoolsGUI.gui.c0000_app_template_old import AppBaseClass
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass
 from fsetoolsGUI.gui.custom_table import TableModel
+from fsetoolsGUI.gui.layout.i0406_tra_2d_xy_contour import Ui_MainWindow
 
 try:
     from matplotlib.backends.backend_qt5agg import (
@@ -151,7 +151,7 @@ class App(AppBaseClass):
         self.ui.pushButton_receiver_list_append.clicked.connect(lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_insert(x, y))
         self.ui.pushButton_receiver_list_remove.clicked.connect(lambda x=self.TableModel_receivers, y=self.ui.tableView_receivers: self.table_remove(x, y))
         self.ui.horizontalSlider_graphic_line_thickness.valueChanged.connect(
-            lambda: self.update_label(self.ui.label_graphic_line_thickness,f'{self.ui.horizontalSlider_graphic_line_thickness.value():d} pt'))
+            lambda: self.update_label(self.ui.label_graphic_line_thickness, f'{self.ui.horizontalSlider_graphic_line_thickness.value():d} pt'))
         self.ui.horizontalSlider_graphic_contour_font_size.valueChanged.connect(
             lambda: self.update_label(self.ui.label_graphic_contour_label_font_size, f'{self.ui.horizontalSlider_graphic_contour_font_size.value():d} pt'))
         self.ui.doubleSpinBox_graphic_z.valueChanged.connect(self.update_graphic_z_plane)

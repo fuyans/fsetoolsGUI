@@ -10,8 +10,9 @@ from PySide2.QtWidgets import QGridLayout, QLabel
 
 from fsetoolsGUI import logger
 from fsetoolsGUI.etc.sfeprapy_post_processor import lineplot, lineplot_matrix
-from fsetoolsGUI.gui.c0000_app_template import AppBaseClass, AppBaseClassUISimplified01
-from fsetoolsGUI.gui.c0000_utilities import Counter, ProgressBar
+from fsetoolsGUI.gui.c9901_app_template import AppBaseClass, AppBaseClassUISimplified01
+from fsetoolsGUI.gui.custom_progressbar import ProgressBar
+from fsetoolsGUI.gui.custom_utilities import Counter
 
 
 class App(AppBaseClass):
@@ -292,9 +293,9 @@ class App(AppBaseClass):
                 ylabel='$P_{r,fi}$ [-]',
                 figsize=(figure_width, figure_height),
                 xlim=(figure_xmin, figure_xmax),
-                xticks=np.arange(0, figure_xmax + figure_xstep/2., figure_xstep),
+                xticks=np.arange(0, figure_xmax + figure_xstep / 2., figure_xstep),
                 ylim=(-0.01, 1.01),
-                yticks=np.arange(0, 1.+0.05, 0.1),
+                yticks=np.arange(0, 1. + 0.05, 0.1),
                 qt_progress_signal=qt_progress_signal_0,
                 fp_figure=realpath('2-P_r_fi_i.png')
             )
@@ -321,7 +322,7 @@ class App(AppBaseClass):
                     xlim=(figure_xmin, figure_xmax),
                     xticks=np.arange(0, figure_xmax + figure_xstep / 2., figure_xstep),
                     ylim=(-0.01, 1.01),
-                    yticks=np.arange(0, 1.+0.05, 0.1),
+                    yticks=np.arange(0, 1. + 0.05, 0.1),
                     qt_progress_signal=qt_progress_signal_0,
                     fp_figure=realpath('3-P_r_fi_i_combined.png'),
                 )
@@ -343,7 +344,7 @@ class App(AppBaseClass):
                     xlim=(figure_xmin, figure_xmax),
                     xticks=np.arange(0, figure_xmax + figure_xstep / 2., figure_xstep),
                     ylim=(-0.01, 1.01),
-                    yticks=np.arange(0, 1.+0.05, 0.1),
+                    yticks=np.arange(0, 1. + 0.05, 0.1),
                     qt_progress_signal=qt_progress_signal_0,
                     fp_figure=realpath('4-P_f_fi_i.png')
                 )
