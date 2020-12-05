@@ -4,8 +4,7 @@ from PySide2.QtWidgets import QGridLayout, QLabel
 
 from fsetoolsGUI import logger
 from fsetoolsGUI.gui.c9901_app_template import AppBaseClass, AppBaseClassUISimplified01
-from fsetoolsGUI.gui.custom_plot import App as PlotApp
-from fsetoolsGUI.gui.custom_table import TableWindow
+from fsetoolsGUI.gui.custom_plot_pyqtgraph import App as FigureApp
 from fsetoolsGUI.gui.custom_utilities import Counter
 
 
@@ -57,9 +56,11 @@ class App(AppBaseClass):
         # ================================
         super().__init__(parent, post_stats, ui=AppBaseClassUISimplified01)
 
-        self.FigureApp = PlotApp(parent=self, title='ISO 834 fire plot')
-        self.TableApp = TableWindow(parent=self, window_title='ISO 834 fire results')
-        self.__figure_ax = self.FigureApp.add_subplot()
+        # self.FigureApp = PlotApp(parent=self, title='ISO 834 fire plot')
+        # self.TableApp = TableWindow(parent=self, window_title='ISO 834 fire results')
+        # self.__figure_ax = self.FigureApp.add_subplot()
+        self.FigureApp = FigureApp(parent=self, title=self.app_name_long)
+        self.__figure_ax = self.FigureApp.add_subplot(0, 0, x_label='Time [min]', y_label='Temperature [°C]')
         self.__output_parameters = dict(time=None, temperature=None)
         self.__input_parameters: dict = dict()
         self.__output_parameters: dict = dict()
@@ -146,7 +147,6 @@ class App(AppBaseClass):
             self.statusBar().showMessage('Preparing results')
             self.repaint()
             self.output_parameters = output_parameters
-            self.show_results_in_table()
             self.show_results_in_figure()
         except Exception as e:
             self.statusBar().showMessage(f'Unable to show results, {str(e)}')
@@ -154,51 +154,11 @@ class App(AppBaseClass):
 
         self.statusBar().showMessage('Calculation complete')
 
-    def show_results_in_table(self):
-
-        output_parameters = self.output_parameters
-
-        # print results (for console enabled version only)
-        list_content = [
-            [float(i), float(j)] for i, j in zip(output_parameters['time'], output_parameters['temperature'] - 273.15)
-        ]
-
-        self.TableApp.update_table_content(
-            content_data=list_content,
-            col_headers=['Time [s]', 'Temperature [°C]'],
-        )
-        self.TableApp.show()
-
-        return True
-
     def show_results_in_figure(self):
-
         output_parameters = self.output_parameters
-
-        self.__figure_ax.clear()
-        self.__figure_ax.plot(output_parameters['time'] / 60., output_parameters['temperature'] - 273.15, c='k')
-        self.__figure_ax.set_xlabel('Time [minute]', fontsize='small')
-        self.__figure_ax.set_ylabel('Temperature [°C]', fontsize='small')
-        self.__figure_ax.tick_params(axis='both', labelsize='small')
-        self.__figure_ax.grid(which='major', linestyle=':', linewidth='0.5', color='black')
-
+        self.__figure_ax.getPlotItem().clear()
+        self.FigureApp.plot(output_parameters['time'] / 60., output_parameters['temperature'] - 273.15)
         self.FigureApp.show()
-        self.FigureApp.refresh_figure()
-
-        return True
-
-    @staticmethod
-    def num2str(num):
-        if isinstance(num, int):
-            return f'{num:g}'
-        elif isinstance(num, float):
-            return f'{num:.3f}'.rstrip('0').rstrip('.')
-        elif isinstance(num, str):
-            return num
-        elif num is None:
-            return ''
-        else:
-            return str(num)
 
 
 if __name__ == "__main__":
