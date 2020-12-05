@@ -1,0 +1,449 @@
+
+/* ================================================ QMainWindow ===================================================== */
+
+QMainWindow {
+    background-color: #f6f6f6;
+    border: 1px solid #000000;
+}
+
+/* ================================================== QWidget ======================================================= */
+
+QWidget {
+    background-color: #f6f6f6;
+    color: #000000;
+    border: 0px;
+    /*font: 10pt;*/
+    font-family: "Arial";
+    outline: 0;
+}
+
+QWidget#widget_userio, QWidget#widget_userio1, QWidget#widget_userio2, QWidget#widget_userio3, QWidget#widget_userio4 {
+    background-color: #dcdcdc;
+    border: 1px solid #d2d1d2;
+    border-radius: 0px;
+}
+
+/* ================================================= QStatusBar ===================================================== */
+
+QStatusBar {
+    background: white;
+}
+
+/* ================================================== QGroupBox ===================================================== */
+
+QGroupBox {
+    background-color: #dcdcdc;
+    border: 1px solid #d2d1d2;
+    border-radius: 0px;
+}
+
+/* =================================================== QFrame ======================================================= */
+
+QFrame#frame_userio, QFrame#frame_userio1, QFrame#frame_userio2, QFrame#frame_userio3, QFrame#frame_userio4 {
+    background-color: #dcdcdc;
+    border: 1px solid #d2d1d2;
+    border-radius: 0px;
+}
+
+/* =================================================== QLabel ======================================================= */
+
+QLabel {
+    background-color: rgba(255, 255, 255, 0);
+    border: 0px solid rgba(255, 255, 255, 0);
+}
+
+QLabel:disabled {
+    color: #bdc3c7;
+}
+
+/* ================================================ QTextBroswer ==================================================== */
+
+QTextBrowser {
+    background-color: rgba(255, 255, 255, 0);
+    border: 0px solid rgba(255, 255, 255, 0);
+    border-radius: 0px;
+}
+
+/* ================================================= QPushButton ==================================================== */
+
+QPushButton {
+    background-color: #ffffff;
+    Text-align: center;
+    /*color: #000000;*/
+    padding: 0px;
+    /*padding-left: 10px;*/
+    /*padding-right: 10px;*/
+    /*padding-top: 2px;*/
+    /*padding-bottom: 2px;*/
+    border: 1px solid #d2d1d2;
+    border-radius: 0px;
+}
+QPushButton:hover {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
+    color: #ffffff;
+    border: 1.5px solid #56aafb;
+}
+QPushButton:focus {
+    border: 1.5px solid #3295fd;
+}
+QPushButton:pressed {
+    background-color: #106bfd;
+}
+QPushButton:disabled {
+    background-color: #ecf0f1;
+    /*font: 11px;*/
+    padding: 3px;
+    color: #98989d;
+    border: 1px solid #d2d1d2;
+}
+
+/* ================================================== QLineEdit ===================================================== */
+
+QLineEdit {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    margin: 0.5px;
+    border-radius: 0px;
+    /* color: rgb(235, 242, 250); */
+}
+QLineEdit:hover {
+    background-color: #ffffff;
+    border: 1.5px solid #56aafb;
+    margin: 0px;
+    /* color: rgb(235, 242, 250); */
+}
+QLineEdit:focus {
+    background-color: #ffffff;
+    border: 1.5px solid #106bfd;
+    margin: 0px;
+    /* color: rgb(235, 242, 250); */
+}
+QLineEdit:disabled {
+    background-color: #bdc3c7;
+    border: 1px solid #bdc3c7;
+    color: rgb(187, 187, 187);
+    margin: 0.5px;
+}
+
+/* ================================================== QCheckBox ===================================================== */
+
+QCheckBox {
+    background-color: rgba(255, 255, 241, 0);
+}
+QCheckBox:disabled {
+    color: rgb(187, 187, 187);
+}
+
+/* ================================================== QComboBox ===================================================== */
+
+QComboBox
+{
+    background-color: white;
+    color: black;
+    selection-background-color: #56aafb;
+    border: 1px solid #cccccc;
+    margin: 0.5px;
+    border-radius: 0px;
+}
+QComboBox:hover
+{
+    background-color: #ffffff;
+    border: 1.5px solid #56aafb;
+    margin: 0;
+}
+QComboBox:focus, QComboBox:on
+{
+    background-color: #ffffff;
+    border: 1.5px solid #106bfd;
+    margin: 0;
+}
+QComboBox::drop-down
+{
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    border-radius: 0px;
+    border-left-width: 0px;
+    border-left-color: #cccccc;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow
+{
+    image: url(gui/icons/down.png);
+    margin-right: 10px;
+}
+QComboBox::down-arrow:hover
+{
+    image: url(gui/icons/down-sky.png);
+    margin-right: 10px;
+}
+QComboBox::down-arrow:on
+{
+    image: url(gui/icons/down-ocean.png);
+    margin-right: 10px;
+}
+/*QComboBox::down-arrow:on, QComboBox::down-arrow:hover,*/
+/*QComboBox::down-arrow:focus*/
+/*{*/
+/*    image: url(:/qss_icons/rc/down_arrow.png);*/
+/*}*/
+
+/* ================================================ QDoubleSpinBox ================================================== */
+
+/*https://stackoverflow.com/questions/9389770/qspinbox-arrows-place-outside-line-edit-css*/
+
+QDoubleSpinBox {
+    background-color: white;
+    color: black;
+    selection-background-color: #56aafb;
+    border: 1px solid #d2d1d2;
+    border-radius: 0px;
+    padding-right: 15px; /* make room for the arrows */
+}
+QDoubleSpinBox:hover {
+    background-color: #ffffff;
+    border: 1.5px solid #56aafb;
+}
+QDoubleSpinBox:focus {
+    background-color: #ffffff;
+    border: 1.5px solid #106bfd;
+}
+
+QDoubleSpinBox::up-button {
+    background-color: rgba(255, 255, 241, 0);
+}
+QDoubleSpinBox::down-button {
+    background-color: rgba(255, 255, 241, 0);
+}
+
+QDoubleSpinBox::down-arrow
+{
+    image: url(gui/icons/down.png);
+    margin-right: 5px;
+}
+QDoubleSpinBox::down-arrow:hover
+{
+    image: url(gui/icons/down-sky.png);
+    margin-right: 5px;
+}
+QDoubleSpinBox::down-arrow:pressed
+{
+    image: url(gui/icons/down-ocean.png);
+    margin-right: 5px;
+}
+
+QDoubleSpinBox::up-arrow
+{
+    image: url(gui/icons/up.png);
+    margin-right: 5px;
+}
+QDoubleSpinBox::up-arrow:hover
+{
+    image: url(gui/icons/up-sky.png);
+    margin-right: 5px;
+}
+QDoubleSpinBox::up-arrow:pressed
+{
+    image: url(gui/icons/up-ocean.png);
+    margin-right: 5px;
+}
+
+/* ================================================= QRadioButton =================================================== */
+
+QRadioButton{
+    background-color: rgba(255, 255, 255, 0);
+    margin: 1.5px;
+    /*font: 11px;*/
+}
+QRadioButton:hover{
+    background-color: rgba(255, 255, 255, 0);
+    border: 1.5px solid #56aafb;
+    border-radius: 0px;
+    margin: 0;
+}
+QRadioButton:focus{
+    background-color: rgba(255, 255, 255, 0);
+    border: 1.5px solid #106bfd;
+    border-radius: 0px;
+    margin: 0;
+}
+
+/* ================================================== QTableView ==================================================== */
+
+/* Header */
+
+/* https://stackoverflow.com/questions/37232302/centering-the-text-of-a-vertical-header-in-a-qtableview */
+/* https://doc.qt.io/qt-5/stylesheet-syntax.html#setting-qobject-properties */
+QHeaderView {
+    /*font: 10px;*/
+    qproperty-defaultAlignment: AlignLeft;
+}
+
+QHeaderView::section {
+    background-color: white;
+    color: black;
+}
+
+QHeaderView::section:checked
+{
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
+}
+
+QTableView {
+    selection-background-color: grey;
+    border-radius: 0px;
+}
+/*
+QTableView QTableCornerButton::section {
+    background: red;
+    border: 2px outset red;
+    border-radius: 0px;
+}
+*/
+QTableView::indicator:unchecked {
+    background-color: black;
+    border-radius: 0px;
+}
+
+/* ================================================== QScrollBar ==================================================== */
+
+QScrollBar:vertical {
+    border: 0px solid #999999;
+    background: rgba(0, 0, 0, 0);
+    width:12px;
+    margin: 1px 1px 1px 1px;
+}
+QScrollBar::handle:vertical {
+    min-height: 50px;
+    border-radius: 0px;
+    background-color: #d2d1d2;
+}
+QScrollBar::handle:vertical:hover {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
+}
+QScrollBar::handle:vertical:pressed {
+    background-color: #106bfd;
+}
+QScrollBar::add-line:vertical {
+    height: 0px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical {
+    height: 0px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+/* horizontal */
+
+QScrollBar:horizontal {
+    border: 0px solid #999999;
+    background: rgba(0, 0, 0, 0);
+    height:12px;
+    margin: 1px 1px 1px 1px;
+    padding-right:12px;
+}
+
+QScrollBar::handle:horizontal {
+    min-width: 50px;
+    border-radius: 0px;
+    background-color: #d2d1d2;
+}
+QScrollBar::handle:horizontal:hover {
+    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
+}
+QScrollBar::handle:horizontal:pressed {
+    background-color: #106bfd;
+}
+QScrollBar::add-line:horizontal {
+    height: 0px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+QScrollBar::sub-line:horizontal {
+    height: 0px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+
+/* ================================================= QProgressBar =================================================== */
+
+QProgressBar {
+    border: 1px solid #d2d1d2;
+    border-radius: 0px;
+    text-align: center;
+}
+QProgressBar::chunk {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
+    border-radius: 0px;
+    /*width: 20px;*/
+    /*margin: 0.5px;*/
+}
+
+/* =================================================== QSlider ====================================================== */
+
+/* horizontal */
+
+QSlider:horizontal {
+    border: 0px solid #d2d1d2;
+    background: rgba(0, 0, 0, 0);
+    margin:1.5px;
+    height: 2px;
+}
+QSlider:horizontal:focus {
+    /*background: #56aafb;*/
+    border: 1.5px solid #56aafb;
+    margin:0px;
+    border-radius: 0px;
+}
+QSlider::groove:horizontal {
+    border: 0px solid #d2d1d2;
+    background: #d2d1d2;
+    height: 2px;
+    border-radius: 0px;
+}
+QSlider::sub-page:horizontal {
+    background: white;
+    border-radius: 0px;
+}
+QSlider::add-page:horizontal {
+    background: #d2d1d2;
+    border: 0px solid #d2d1d2;
+    height: 10px;
+    border-radius: 0px;
+}
+
+QSlider::handle:horizontal {
+    border: 1px solid darkgray;
+    background-color: white;
+    width: 10px;
+    margin-top: -5px;
+    margin-bottom: -5px;
+    border-radius: 0px;
+}
+QSlider::handle:horizontal:hover {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #56aafb, stop: 0.4 #3295fd, stop:1 #106bfd);
+}
+QSlider::sub-page:horizontal:disabled {
+    background: #bbb;
+    border-color: #999;
+}
+QSlider::add-page:horizontal:disabled {
+    background: #eee;
+    border-color: #999;
+}
+QSlider::handle:horizontal:disabled {
+    background: #eee;
+    border: 1px solid #aaa;
+    border-radius: 0px;
+}
+
+/* ================================================== QSizeGrip ===================================================== */
+
+QSizeGrip{
+    background: white;
+    image: url(gui/icons/cil-size-grip.png);
+}
