@@ -3,7 +3,7 @@ from PySide2 import QtWidgets, QtGui, QtCore
 
 import fsetoolsGUI
 from fsetoolsGUI.etc.util import get_machine_uid
-from fsetoolsGUI.gui.images_base64 import OFR_LOGO_1_PNG
+from fsetoolsGUI.gui.images.base64 import OFR_LOGO_1_PNG
 
 
 class App(QtWidgets.QDialog):

@@ -170,10 +170,11 @@ def lineplot_matrix(
 
     ax1.set_xticks(np.arange(xlim[0], xlim[1] + 1, 30))
     ax1.set_xlim(*xlim)
-    fig.text(-0.01, 0.5, 'CDF [-]', ha='center', va='top', rotation=90)
-    fig.text(0.5, 0, 'Equivalent of time exposure [$min$]', ha='center', va='top')
 
-    # fig.tight_layout(pad=0.1)
+    fig.text(-0.01, 0.52, 'CDF [-]', ha='center', va='top', rotation=90)
+    fig.text(0.51, 0, 'Equivalent of time exposure [$min$]', ha='center', va='top')
+
+    fig.tight_layout()
 
     if fp_figure:
         fig.savefig(fp_figure, dpi=300, bbox_inches='tight')

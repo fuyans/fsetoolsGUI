@@ -47,7 +47,7 @@ QPushButton:disabled {
 try:
     from fsetoolsGUI import __root_dir__
     from os import path
-    with open(path.join(__root_dir__,'gui', 'style.css'), 'r') as f:
+    with open(path.join(__root_dir__,'gui', 'styles/flat.css'), 'r') as f:
         qt_css = f.read()
     # qt_css = None  # disable fancy style
 except FileNotFoundError:

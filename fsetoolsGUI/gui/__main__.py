@@ -9,7 +9,7 @@ import PySide2
 from PySide2 import QtCore, QtWidgets
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.c0000_main import App
+from fsetoolsGUI.gui.main import App
 
 # load key which is used when the expiry date is passed
 try:
