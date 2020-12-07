@@ -54,6 +54,9 @@ class QPlainTextEditLogger(logging.Handler):
 
 
 class QDialogLogger(QtWidgets.QDialog, QPlainTextEditLogger):
+    app_name_short = 'FSETools\nlogbook'
+    app_name_long = 'FSETools logbook'
+
     def __init__(self, parent=None):
         super().__init__(parent)
 
@@ -201,6 +204,7 @@ class App(QMainWindow):
             ],
             'Miscellaneous': [
                 OFR_NamingConvention,
+                self.LoggerApp
             ],
         }
 
@@ -217,7 +221,10 @@ class App(QMainWindow):
 
         def activate_app(app_):
             def activate_app_worker():
-                _ = app_(parent=self)
+                if isinstance(app_, QDialogLogger):
+                    _ = app_
+                else:
+                    _ = app_(parent=self)
                 _.show()
                 return _
 
@@ -367,28 +374,14 @@ class App(QMainWindow):
             self.ui.label_version.setStatusTip(version_label_text)
             self.ui.label_version.setToolTip(version_label_text)
 
-    def showEvent(self, event):
-        event.accept()
-
     def closeEvent(self, event):
-
         logger.debug('Terminating activated dialogs ...')
         for i in self.activated_dialogs:
             try:
                 i.close()
             except Exception as e:
                 logger.warning(f'Unable to close {type(i).__name__}, {str(e)}')
-
         logger.debug('All activated dialogs are terminated')
-
-        event.accept()
-
-    def keyPressEvent(self, event):
-        # logger.info(f'{event.key()} key pressed.')
-        if event.modifiers() & QtCore.Qt.ShiftModifier and event.key() == QtCore.Qt.Key_D:
-            self.activate_app_module_id()
-        elif event.modifiers() & QtCore.Qt.ShiftModifier and event.key() == QtCore.Qt.Key_L:
-            self.LoggerApp.show()
         event.accept()
 
     @property
