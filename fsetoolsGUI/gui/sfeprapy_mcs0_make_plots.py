@@ -3,6 +3,7 @@ import threading
 from os.path import join, realpath
 
 import matplotlib
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from PySide2 import QtWidgets
@@ -395,6 +396,7 @@ class App(AppBaseClass):
             except Exception as e:
                 logger.error(f'Failed to plot combined design failure probability, {e}')
 
+        plt.close('all')
         update_progress(100, '7/7 Complete')
 
 
