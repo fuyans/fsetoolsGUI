@@ -34,7 +34,7 @@ from fsetoolsGUI.gui.en_protected_steel_heat_transfer import App as App0612
 from fsetoolsGUI.gui.din_en_parametric_fire import App as App0613
 from fsetoolsGUI.gui.travelling_fire_flux import App as App0614
 from fsetoolsGUI.gui.iso_834_fire import App as App0615
-from fsetoolsGUI.gui.stats_probability_distribution import App as App0620
+from fsetoolsGUI.gui.sfeprapy_probability_distribution import App as App0620
 from fsetoolsGUI.gui.safir_batch_run import App as App0630
 from fsetoolsGUI.gui.safir_tor2temfix import App as App0631
 from fsetoolsGUI.gui.safir_post_processor_old import App as App0639

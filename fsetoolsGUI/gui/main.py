@@ -30,7 +30,7 @@ from fsetoolsGUI.gui.en_protected_steel_heat_transfer import App as EC3_SteelHea
 from fsetoolsGUI.gui.din_en_parametric_fire import App as EC3_DinParametricFire
 from fsetoolsGUI.gui.travelling_fire_flux import App as SFE_TravellingFireFlux
 from fsetoolsGUI.gui.iso_834_fire import App as ISO834_StandardFire
-from fsetoolsGUI.gui.stats_probability_distribution import App as PRA_ProbabilityDistribution
+from fsetoolsGUI.gui.sfeprapy_probability_distribution import App as PRA_ProbabilityDistribution
 from fsetoolsGUI.gui.safir_batch_run import App as SAFIR_BatchRun
 from fsetoolsGUI.gui.safir_tor2temfix import App as SAFIR_Tor2Fix
 from fsetoolsGUI.gui.safir_post_processor_old import App as SAFIR_PostProcessorOld
@@ -222,6 +222,7 @@ class App(QMainWindow):
         def activate_app(app_):
             def activate_app_worker():
                 if isinstance(app_, QDialogLogger):
+                    # This is for `self.LoggerApp` (`QdialogLogger` type) which has been instantiated.
                     _ = app_
                 else:
                     _ = app_(parent=self)
