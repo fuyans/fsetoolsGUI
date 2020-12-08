@@ -173,11 +173,12 @@ class AppBaseClass(QtWidgets.QMainWindow):
 
         # set window title, icon and stylesheet
         self.setWindowTitle(self.app_name_long)
-        try:
-            self.setWindowIcon(QtGui.QPixmap(path.join(__root_dir__, 'gui', '../icons', 'LOGO_1_80_80.png')))
-        except Exception as e:
-            logger.error(f'Icon file not found {e}')
-        self.setStyleSheet(qt_css)
+        if parent is None:
+            try:
+                self.setWindowIcon(QtGui.QPixmap(path.join(__root_dir__, 'gui', '../icons', 'LOGO_1_80_80.png')))
+            except Exception as e:
+                logger.error(f'Icon file not found {e}')
+            self.setStyleSheet(qt_css)
 
         # instantiate and configure signals
         try:
