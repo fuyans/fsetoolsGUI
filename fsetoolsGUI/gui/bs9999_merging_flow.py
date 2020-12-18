@@ -239,7 +239,7 @@ class App(AppBaseClass):
         self.ui.p2_out_check.setChecked(condition_check)
         self.ui.p2_out_W_FE.setText(f'{W_FE * 1e3:.1f}')
 
-    def ok(self):
+    def submit(self):
 
         # clear ui output fields
         self.ui.p2_out_check.setChecked(False)

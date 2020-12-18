@@ -37,8 +37,8 @@ class BR187SimpleBaseClass(AppBaseClass):
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), 0, 0, 1, 1)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 1, 'p2_in_W', 'W, emitter width', 'm')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 2, 'p2_in_H', 'H, emitter height', 'm')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 3, 'p2_in_Q', 'Emitter heat flux', 'kW/m<sup>2</sup>')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, 4, 'p2_in_Q_crit', 'Receiver critical heat flux', 'kW/m<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 3, 'p2_in_Q', 'Q, Emitter heat flux', 'kW/m<sup>2</sup>')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, 4, 'p2_in_Q_crit', 'Q_crit, Receiver critical heat flux', 'kW/m<sup>2</sup>')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 5, 'p2_in_half_S', '½S, emitter to boundary', 'm', label_obj='QRadioButton')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, 6, 'p2_in_unprotected_area', 'Unprotected area', '%', label_obj='QRadioButton')
         self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), 7, 0, 1, 1)
@@ -190,7 +190,7 @@ class BR187SimpleBaseClass(AppBaseClass):
         elif UA:
             self.ui.p2_out_S_or_UA.setText(f'{UA * 100:.2f}')
 
-    def ok(self):
+    def submit(self):
         pass
 
     def calculate(self):
@@ -487,7 +487,7 @@ class BR187ComplexBaseClass(AppBaseClass):
         except Exception as e:
             logger.debug(e)
 
-    def ok(self):
+    def submit(self):
         try:
             self.calculate()
             self.repaint()

@@ -71,7 +71,7 @@ class App(AppBaseClass):
 
         self.show_results_in_table()
 
-    def ok(self):
+    def submit(self):
         self.select_image_and_upload()
 
     def select_file_paths(self) -> list:

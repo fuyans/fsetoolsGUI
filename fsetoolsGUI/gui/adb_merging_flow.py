@@ -150,7 +150,7 @@ class App(AppBaseClass):
 
         return dict(W_FE=W_FE, condition_check=condition_check)
 
-    def ok(self):
+    def submit(self):
 
         # clear ui output fields
         self.ui.p2_out_check.setChecked(False)
