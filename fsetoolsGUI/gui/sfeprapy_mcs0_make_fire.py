@@ -88,7 +88,7 @@ class App(AppBaseClass):
         # signals and slots
         # =================
         def _fp_mcs_input():
-            fp_input = self.get_open_file_name('Select an mcs0 input file', 'Spreadsheet (*.csv *.xlsx)', func_to_assign_fp=self.ui.p2_in_fp_mcs_input.setText)
+            fp_input = self.dialog_open_file('Select an mcs0 input file', 'Spreadsheet (*.csv *.xlsx)', func_to_assign_fp=self.ui.p2_in_fp_mcs_input.setText)
             if not fp_input:
                 return
             dir_mcs_output = os.path.join(os.path.dirname(fp_input), 'mcs.out')
@@ -98,7 +98,7 @@ class App(AppBaseClass):
         self.ui.p2_in_fp_mcs_input_unit.clicked.connect(_fp_mcs_input)
 
         self.ui.p2_in_fp_mcs_output_unit.clicked.connect(
-            lambda: self.get_existing_dir('Select a folder containing MCS0 output files', func_to_assign_fp=self.ui.p2_in_fp_mcs_output.setText)
+            lambda: self.dialog_open_dir('Select a folder containing MCS0 output files', func_to_assign_fp=self.ui.p2_in_fp_mcs_output.setText)
         )
 
         def workout_index_and_case_name():
@@ -146,7 +146,7 @@ class App(AppBaseClass):
     def output_parameters(self, v):
         self.__output_parameters = v
 
-    def ok(self):
+    def submit(self):
         try:
             self.output_parameters = mcs0_make_fires_worker(**self.input_parameters)
         except Exception as e:

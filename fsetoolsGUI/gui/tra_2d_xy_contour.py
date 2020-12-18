@@ -199,7 +199,7 @@ class App(AppBaseClass):
         self.solver_parameters = param_dict
         self.repaint()
 
-    def ok(self):
+    def submit(self):
         self.calculate()
 
     def calculate(self):

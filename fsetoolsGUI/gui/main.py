@@ -12,34 +12,31 @@ from packaging import version
 from fsetoolsGUI import __version__, __build__, __date_released__, __expiry_period_days__, __remote_version_url__, __root_dir__, logger
 from fsetoolsGUI.gui import qt_css
 from fsetoolsGUI.gui.adb_data_sheet_1 import App as ADB_DataSheet1
-from fsetoolsGUI.gui.bs9999_data_sheet_1 import App as BS9999_DataSheet1
-from fsetoolsGUI.gui.bs9999_merging_flow import App as BS9999_MergingFlow
 from fsetoolsGUI.gui.adb_merging_flow import App as ADB_MergingFlow
-from fsetoolsGUI.gui.pd7974_detector_activation import App as PD7974_DetectorActivation
-from fsetoolsGUI.gui.en_external_column import App as EC3_ExternalColumn
+from fsetoolsGUI.gui.bases.custom_utilities import *
 from fsetoolsGUI.gui.br187_parallel_complex import App as BR187_ParallelComplex
 from fsetoolsGUI.gui.br187_perpendicular_complex import App as BR187_PerpendicularComplex
-from fsetoolsGUI.gui.tra_2d_xy_contour import App as TRA_2DXYContour
-from fsetoolsGUI.gui.tra_enclosure import App as TRA_EnclosureModel
-from fsetoolsGUI.gui.en_external_flame import App as EC1_ExternalFlame
-from fsetoolsGUI.gui.ofr_file_naming_convention import App as OFR_NamingConvention
-from fsetoolsGUI.gui.pd7974_flame_height import App as PD7974_FlameHeight
-from fsetoolsGUI.gui.en_parametric_fire import App as EC1_ParametricFire
-from fsetoolsGUI.gui.travelling_fire import App as SFE_TravellingFire
-from fsetoolsGUI.gui.en_protected_steel_heat_transfer import App as EC3_SteelHeatTransferProtected
+from fsetoolsGUI.gui.bs9999_data_sheet_1 import App as BS9999_DataSheet1
+from fsetoolsGUI.gui.bs9999_merging_flow import App as BS9999_MergingFlow
 from fsetoolsGUI.gui.din_en_parametric_fire import App as EC3_DinParametricFire
-from fsetoolsGUI.gui.travelling_fire_flux import App as SFE_TravellingFireFlux
+from fsetoolsGUI.gui.en_external_column import App as EC3_ExternalColumn
+from fsetoolsGUI.gui.en_external_flame import App as EC1_ExternalFlame
+from fsetoolsGUI.gui.en_parametric_fire import App as EC1_ParametricFire
+from fsetoolsGUI.gui.en_protected_steel_heat_transfer import App as EC3_SteelHeatTransferProtected
 from fsetoolsGUI.gui.iso_834_fire import App as ISO834_StandardFire
-from fsetoolsGUI.gui.sfeprapy_probability_distribution import App as PRA_ProbabilityDistribution
+from fsetoolsGUI.gui.ofr_file_naming_convention import App as OFR_NamingConvention
+from fsetoolsGUI.gui.pd7974_detector_activation import App as PD7974_DetectorActivation
+from fsetoolsGUI.gui.pd7974_flame_height import App as PD7974_FlameHeight
 from fsetoolsGUI.gui.safir_batch_run import App as SAFIR_BatchRun
-from fsetoolsGUI.gui.safir_tor2temfix import App as SAFIR_Tor2Fix
 from fsetoolsGUI.gui.safir_post_processor_old import App as SAFIR_PostProcessorOld
-from fsetoolsGUI.gui.ht1d_inexplicit import App as SFE_ConductiveHeatTransfer1DInexplicit
-from fsetoolsGUI.gui.bases.custom_utilities import *
+from fsetoolsGUI.gui.safir_tor2temfix import App as SAFIR_Tor2Fix
 from fsetoolsGUI.gui.sfeprapy_mcs0 import App as SFEPRAPY_MCS0Simulation
-from fsetoolsGUI.gui.sfeprapy_mcs0_make_fire import App as SFEPRAPY_PostProcessor
+from fsetoolsGUI.gui.sfeprapy_mcs0_make_fire import App as SFEPRAPY_PostProcessorMakeFires
 from fsetoolsGUI.gui.sfeprapy_mcs0_make_plots import App as SFEPRAPY_PostProcessorPlots
-from fsetoolsGUI.gui.sfeprapy_pre_bluebeam import App as SFEPRAPY_PreprocessorBluebeam
+from fsetoolsGUI.gui.sfeprapy_probability_distribution import App as PRA_ProbabilityDistribution
+from fsetoolsGUI.gui.tra_enclosure import App as TRA_EnclosureModel
+from fsetoolsGUI.gui.travelling_fire import App as SFE_TravellingFire
+from fsetoolsGUI.gui.travelling_fire_flux import App as SFE_TravellingFireFlux
 
 
 class QPlainTextEditLogger(logging.Handler):
@@ -102,9 +99,17 @@ class AppUI(object):
         # self.page_2.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
 
 
-class MyLabel(QLabel):
+class GroupHeaderLabel(QLabel):
+    """
+    A reimplementation of PySide QLabel widget.
+
+    """
+
     def __init__(self, parent, clicked=None):
-        QLabel.__init__(self, parent)
+
+        super().__init__(parent)
+        self.setStyleSheet(r"QLabel:hover {background:#d2d2d2;}")
+
         self.applets: list = list()
         self.__clicked = clicked
 
@@ -114,6 +119,8 @@ class MyLabel(QLabel):
     def mousePressEvent(self, event):
         for app in self.applets:
             app.setVisible(not app.isVisible())
+
+    def mouseReleaseEvent(self, event) -> None:
         if self.__clicked is not None:
             self.__clicked()
 
@@ -179,7 +186,7 @@ class App(QMainWindow):
                 ISO834_StandardFire,
                 SFE_TravellingFire,
                 SFE_TravellingFireFlux,
-                SFE_ConductiveHeatTransfer1DInexplicit,
+                # SFE_ConductiveHeatTransfer1DInexplicit,
             ],
             'B4 External fire spread': [
                 # BR187_ParallelSimple,
@@ -187,15 +194,15 @@ class App(QMainWindow):
                 BR187_ParallelComplex,
                 BR187_PerpendicularComplex,
                 # TRA_3DPoint,
-                TRA_2DXYContour,
+                # TRA_2DXYContour,
                 TRA_EnclosureModel,
             ],
             'PRA': [
                 PRA_ProbabilityDistribution,
                 SFEPRAPY_MCS0Simulation,
-                SFEPRAPY_PreprocessorBluebeam,
+                # SFEPRAPY_PreprocessorBluebeam,
                 SFEPRAPY_PostProcessorPlots,
-                SFEPRAPY_PostProcessor,
+                SFEPRAPY_PostProcessorMakeFires,
             ],
             'SAFIR': [
                 SAFIR_BatchRun,
@@ -217,8 +224,6 @@ class App(QMainWindow):
             self.repaint()
             self.adjustSize()
 
-        c = Counter()
-
         def activate_app(app_):
             def activate_app_worker():
                 if isinstance(app_, QDialogLogger):
@@ -231,8 +236,9 @@ class App(QMainWindow):
 
             return activate_app_worker
 
+        c = Counter()
         for k, v in apps.items():
-            label = MyLabel(f"<b>{k}</b>", clicked=adjust_size)
+            label = GroupHeaderLabel(f"<b>{k}</b>", clicked=adjust_size)
             label.setMinimumSize(280, 0)
             self.ui.p2_layout.addWidget(label, c.count, 0, 1, 1)
             for i in v:

@@ -70,7 +70,7 @@ class App(AppBaseClass):
     def example(self):
         pass  # placeholder method to stop warning, not used.
 
-    def ok(self):
+    def submit(self):
         self.__progress_bar.show()
         self.calculate(**self.input_parameters)
 

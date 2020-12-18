@@ -166,7 +166,7 @@ class App(AppBaseClass):
 
         return dict(T=T)
 
-    def ok(self):
+    def submit(self):
         # parse inputs from ui
         try:
             self.statusBar().showMessage('Parsing inputs from UI')

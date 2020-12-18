@@ -153,7 +153,7 @@ class App(AppBaseClass):
         self.input_parameters = input_parameters
         self.repaint()
 
-    def ok(self):
+    def submit(self):
         self.calculate()
 
     def calculate(self):

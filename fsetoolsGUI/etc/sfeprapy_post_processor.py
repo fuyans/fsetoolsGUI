@@ -47,7 +47,7 @@ def lineplot(
         if qt_progress_signal is not None:
             qt_progress_signal.emit(int((i + 1) / len(y) * 100))
         # sns.lineplot(x=x[i], y=y[i], label=legend_labels[i], ax=ax, palette=sns.color_palette("husl", n_colors=20))
-        ax.plot(x[i], y[i], label=legend_labels[i])
+        ax.plot(x[i], y[i], label=legend_labels[i], lw=1)
 
     if isinstance(acceptable_reliability, (float, int)):
         ax.axhline(acceptable_reliability, ls='--', c='k')

@@ -36,7 +36,7 @@ class App(AppBaseClass):
         # signals and slots
         self.ui.p2_in_fp_input_root_dir_unit.clicked.connect(lambda: self.ui.p2_in_fp_input_root_dir.setText(QtWidgets.QFileDialog.getExistingDirectory(self, 'Select folder')))
         self.ui.p2_in_fp_tor2temfix_unit.clicked.connect(
-            lambda: self.get_open_file_name(
+            lambda: self.dialog_open_file(
                 'Select TorToTemFix executable',
                 '(*.exe)',
                 dir_default=self.ui.p2_in_fp_tor2temfix.text(),
@@ -44,7 +44,7 @@ class App(AppBaseClass):
             )
         )
 
-    def ok(self):
+    def submit(self):
         self.calculate(**self.input_parameters)
 
     @staticmethod

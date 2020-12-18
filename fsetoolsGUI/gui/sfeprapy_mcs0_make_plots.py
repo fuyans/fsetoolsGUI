@@ -1,6 +1,7 @@
 import os
 import threading
 from os.path import join, realpath
+from scipy.interpolate import interp1d
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -51,7 +52,6 @@ class App(AppBaseClass):
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_matrix_height', 'Plot mat. height', 'in')
 
         self.ui.p3_example.setVisible(False)
-        self.ui.p3_about.setVisible(False)
 
         # ============
         # set defaults
@@ -70,7 +70,7 @@ class App(AppBaseClass):
         # signals and slots
         # =================
         def _fp_mcs_input():
-            fp_input = self.get_open_file_name('Select a mcs0 input file', 'Spreadsheet (*.csv *.xlsx)', func_to_assign_fp=self.ui.p2_in_fp_mcs_input.setText)
+            fp_input = self.dialog_open_file('Select a mcs0 input file', 'Spreadsheet (*.csv *.xlsx)', func_to_assign_fp=self.ui.p2_in_fp_mcs_input.setText)
             if not fp_input:
                 return
             dir_mcs_output = os.path.join(os.path.dirname(fp_input), 'mcs.out')
@@ -80,7 +80,7 @@ class App(AppBaseClass):
         self.ui.p2_in_fp_mcs_input_unit.clicked.connect(_fp_mcs_input)
 
         self.ui.p2_in_fp_mcs_output_unit.clicked.connect(
-            lambda: self.get_existing_dir('Select a folder containing MCS0 output files', func_to_assign_fp=self.ui.p2_in_fp_mcs_output.setText)
+            lambda: self.dialog_open_dir('Select a folder containing MCS0 output files', func_to_assign_fp=self.ui.p2_in_fp_mcs_output.setText)
         )
 
     def example(self):
@@ -128,7 +128,7 @@ class App(AppBaseClass):
     def output_parameters(self, v):
         pass
 
-    def ok(self):
+    def submit(self):
         self.ProgressBar.show()
         try:
             threading.Thread(target=self.calculate, kwargs=self.input_parameters).start()
@@ -290,8 +290,8 @@ class App(AppBaseClass):
                 y=[dict_teq_cdf[i] for i in case_names],
                 legend_labels=case_names,
                 n_legend_col=figure_legend_cols,
-                xlabel='Equivalent of Time Exposure [$min$]',
-                ylabel='$P_{r,fi}$ [-]',
+                xlabel='Equivalent of time exposure [$min$]',
+                ylabel='CDF [-]',
                 figsize=(figure_width, figure_height),
                 xlim=(figure_xmin, figure_xmax),
                 xticks=np.arange(0, figure_xmax + figure_xstep / 2., figure_xstep),
@@ -317,7 +317,7 @@ class App(AppBaseClass):
                     y=[np.sum([v for k, v in dict_P_r_fi_i_weighted.items()], axis=0)],
                     legend_labels=[None],
                     n_legend_col=figure_legend_cols,
-                    xlabel='Equivalent of Time Exposure [$min$]',
+                    xlabel='Equivalent of time exposure [$min$]',
                     ylabel='Combined $P_{r,fi}$ [-]',
                     figsize=(figure_width, figure_height),
                     xlim=(figure_xmin, figure_xmax),
@@ -339,8 +339,8 @@ class App(AppBaseClass):
                     y=[1 - dict_teq_cdf[i] for i in case_names],
                     legend_labels=case_names,
                     n_legend_col=figure_legend_cols,
-                    xlabel='Equivalent of Time Exposure [$min$]',
-                    ylabel='Failure Probability $P_{f,fi}$ [-]',
+                    xlabel='Equivalent of time exposure [$min$]',
+                    ylabel='Failure probability $P_{f,fi}$ [-]',
                     figsize=(figure_width, figure_height),
                     xlim=(figure_xmin, figure_xmax),
                     xticks=np.arange(0, figure_xmax + figure_xstep / 2., figure_xstep),
@@ -364,7 +364,7 @@ class App(AppBaseClass):
                     y=[dict_P_f_d_i[i] for i in case_names],
                     legend_labels=case_names,
                     n_legend_col=figure_legend_cols,
-                    xlabel='Equivalent of Time Exposure [$min$]',
+                    xlabel='Equivalent of time exposure [$min$]',
                     ylabel='Failure probability $P_{f,d}$ [$year^{-1}$]',
                     figsize=(figure_width, figure_height),
                     xlim=(figure_xmin, figure_xmax),
@@ -380,13 +380,15 @@ class App(AppBaseClass):
             logger.info('Started to plot combined design failure probability ...')
             update_progress(0, '6/7 P_fd')
             try:
+                func_ = interp1d(np.sum([v for k, v in dict_P_f_d_i.items()], axis=0), x)
+                print(func_(5e-6))
                 lineplot(
                     x=[x],
                     y=[np.sum([v for k, v in dict_P_f_d_i.items()], axis=0)],
                     legend_labels=[None],
                     n_legend_col=figure_legend_cols,
-                    xlabel='Equivalent of Time Exposure [$min$]',
-                    ylabel='Failure Probability $P_{f,d}$ [$year^{-1}$]',
+                    xlabel='Equivalent of time exposure [$min$]',
+                    ylabel='Failure probability $P_{f,d}$ [$year^{-1}$]',
                     figsize=(figure_width, figure_height),
                     xlim=(figure_xmin, figure_xmax),
                     xticks=np.arange(0, figure_xmax + figure_xstep / 2., figure_xstep),

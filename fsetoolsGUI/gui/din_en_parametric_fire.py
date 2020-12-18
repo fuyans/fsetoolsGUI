@@ -167,7 +167,7 @@ class App(AppBaseClass):
         for k, v_ in self.symbols_outputs.items():
             getattr(self.ui, 'p2_out_' + k).setText(self.num2str(v[k]))
 
-    def ok(self):
+    def submit(self):
         # parse inputs from ui
         try:
             self.statusBar().showMessage('Parsing inputs from UI')

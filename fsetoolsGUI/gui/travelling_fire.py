@@ -56,7 +56,7 @@ class App(AppBaseClass):
             fire_nft_limit_c=1200)
         self.input_parameters = input_kwargs
 
-    def ok(self):
+    def submit(self):
         self.output_parameters = self.calculate(self.input_parameters)
         self.show_results_in_figure()
 

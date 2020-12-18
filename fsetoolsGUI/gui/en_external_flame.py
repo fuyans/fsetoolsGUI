@@ -200,7 +200,7 @@ class App(AppBaseClass):
             cls = ExternalFlame(alpha_c_beam=None, alpha_c_column=None, **input_kwargs)
         return cls
 
-    def ok(self):
+    def submit(self):
 
         self.ui.p2_out_Q.setText('')
         self.ui.p2_out_T_f.setText('')

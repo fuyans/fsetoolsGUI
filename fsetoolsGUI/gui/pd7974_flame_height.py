@@ -153,7 +153,7 @@ class App(AppBaseClass):
             self.statusBar().showMessage(f'{str(e)}')
             return
 
-    def ok(self):
+    def submit(self):
         self.calculate()
 
     @property
@@ -191,7 +191,7 @@ class App(AppBaseClass):
 
         # warning if input parameters maybe incorrect
         if 10 > Q_dot_or_Q_dot_l or Q_dot_or_Q_dot_l > 10000:
-            self.message_box(
+            self.dialog_show_message(
                 title='Warning',
                 msg='Heat release rate seems too low or too high.\nMake sure the input is in correct unit.'
             )

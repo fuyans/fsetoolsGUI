@@ -138,8 +138,6 @@ class App(AppBaseClass):
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_cdf', 'CDF', '')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_sample_value', 'Sample value', '')
 
-        self.ui.p3_about.setVisible(False)
-
         # signals and slots
         self.ui.p2_in_cdf.textChanged.connect(self.__cdf_value_change)
         self.ui.p2_in_sample_value.textChanged.connect(self.__sample_value_change)
@@ -162,7 +160,7 @@ class App(AppBaseClass):
         self.ui.p2_in_fp_inputs.clicked.connect(lambda: self.distribution_selection_dialog.show())
         self.adjustSize()
 
-    def ok(self):
+    def submit(self):
         """Placeholder method to be overridden by child classes.
         This method is expected to be triggered upon clicking the 'OK' or 'Calculate' button. The following comments
         are suggested procedure to be followed. This method is also connected by keyboard shortcut 'Enter'"""

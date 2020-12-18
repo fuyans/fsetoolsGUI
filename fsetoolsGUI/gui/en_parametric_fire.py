@@ -141,7 +141,7 @@ class App(AppBaseClass):
     def output_parameters(self, v: dict):
         self.__output_parameters = v
 
-    def ok(self):
+    def submit(self):
         # parse inputs
         try:
             self.statusBar().showMessage('Parsing inputs from UI')

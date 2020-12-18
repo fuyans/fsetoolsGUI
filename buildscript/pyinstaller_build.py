@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
 import os
-import subprocess
 import sys
+import zlib
+from base64 import urlsafe_b64encode
 from datetime import datetime
 from os.path import join, realpath, dirname, relpath
 
-from fsetoolsGUI import __root_dir__, logger
-from fsetoolsGUI.etc.util import build_write
+__root_dir__ = join(dirname(dirname(realpath(__file__))), 'fsetoolsGUI')
 
-try:
-    from buildscript.__key__ import key as key_
 
-    key = key_()
-except ModuleNotFoundError:
-    key = None
+def build_write(fp, date_cls: datetime = datetime.now(), date_format: str = '%Y%m%d%H%M') -> str:
+    datetime_str = date_cls.strftime(date_format)
+    datetime_str = zlib.compress(datetime_str.encode(), 0)
+    datetime_str = urlsafe_b64encode(datetime_str)
+    datetime_str = datetime_str.decode()
+    with open(fp, 'w+') as f:
+        f.write(datetime_str)
+    return datetime_str
 
 
 def make_build_info():
@@ -40,15 +43,8 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
     if options:
         cmd_option_list.extend(options)
 
-    # add encryption to pyz
-    if key:
-        cmd_option_list.append(f'--key={key}')
-        logger.info('Encryption is enabled.')
-    else:
-        logger.info('Encryption is not enabled.')
-
     cmd = ['pyinstaller'] + cmd_option_list + [fp_target_py]
-    logger.debug(f'COMMAND: {" ".join(cmd)}')
+    print(f'COMMAND: {" ".join(cmd)}')
 
     with open('pyinstaller_build.log', 'wb') as f:
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -76,7 +72,7 @@ def main():
     options = [
         "--onedir",  # output unpacked dist to one directory, including an .exe file
         "--noconfirm",  # replace output directory without asking for confirmation
-        "--windowed",
+        # "--windowed",
         "--noconsole",
         "--clean",  # clean pyinstaller cache and remove temporary files
         f'--add-data={realpath(join("etc", "ofr_logo_1_80_80.ico"))}{os.pathsep}etc',  # include icon file
@@ -94,5 +90,11 @@ def main():
 
 
 if __name__ == "__main__":
-    # make_build_info()
+    make_build_info()
     main()
+
+    import subprocess
+
+    fp_exe = f'{os.path.join(os.path.realpath(os.path.dirname(__file__)), "dist", "FSETOOLS", "FSETOOLS.exe")}'
+    print(fp_exe)
+    subprocess.Popen([fp_exe])

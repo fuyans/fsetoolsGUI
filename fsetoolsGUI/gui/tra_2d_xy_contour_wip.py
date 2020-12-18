@@ -97,7 +97,7 @@ class App(AppBaseClass):
         )
         self.input_parameters = example_inputs
 
-    def ok(self):
+    def submit(self):
         solver_heat_map_solved = self.calculate(**self.input_parameters)
         self.show_results_in_figure(**solver_heat_map_solved)
 

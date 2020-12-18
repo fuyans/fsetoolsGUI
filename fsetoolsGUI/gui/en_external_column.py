@@ -126,7 +126,7 @@ class App(AppBaseClass):
             raise NotImplementedError('Column not or partially engulfed within flames is currently not implemented')
         return cls
 
-    def ok(self):
+    def submit(self):
         try:
             cls = self.calculate(self.input_parameters)
             self.output_parameters = cls.output_kwargs

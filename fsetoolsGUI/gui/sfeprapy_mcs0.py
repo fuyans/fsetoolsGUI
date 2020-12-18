@@ -36,7 +36,7 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_mcs_input', 'MCS input file', '...', unit_obj='QPushButton', min_width=200)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_n_mp', 'No. of processes', '')
-        self.ui.p3_example.setText('Input template')
+        self.ui.p3_example.setText('Save example inputs')
 
         # ============
         # set defaults
@@ -47,7 +47,7 @@ class App(AppBaseClass):
         # signals and slots
         # =================
         self.ui.p2_in_fp_mcs_input_unit.clicked.connect(
-            lambda: self.get_open_file_name('Select a mcs0 input file', 'Spreadsheet (*.csv *.xlsx)', func_to_assign_fp=self.ui.p2_in_fp_mcs_input.setText)
+            lambda: self.dialog_open_file('Select a mcs0 input file', 'Spreadsheet (*.csv *.xlsx)', func_to_assign_fp=self.ui.p2_in_fp_mcs_input.setText)
         )
 
     def example(self):
@@ -93,7 +93,7 @@ class App(AppBaseClass):
     def output_parameters(self, v):
         pass
 
-    def ok(self):
+    def submit(self):
         try:
             self.__progress_bar.show()
             self.calculate(**self.input_parameters)

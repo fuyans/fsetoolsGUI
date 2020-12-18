@@ -2,7 +2,7 @@ from collections import OrderedDict
 
 import numpy as np
 from PySide2.QtWidgets import QGridLayout, QLabel
-from fsetools.lib.fse_bs_en_1993_1_2_heat_transfer_c import temperature as protected_steel_eurocode
+from fsetools.lib.fse_bs_en_1993_1_2_unprotected_heat_transfer import temperature as unprotected_steel_eurocode
 from sfeprapy.mcs0.mcs0_calc import solve_time_equivalence_iso834, solve_protection_thickness
 
 from fsetoolsGUI.gui.en_parametric_fire import App as AppParametricFire
@@ -13,11 +13,34 @@ from fsetoolsGUI.gui.bases.c9901_app_template import AppBaseClass, AppBaseClassU
 from fsetoolsGUI.gui.bases.custom_plot_pyqtgraph import App as FigureApp
 from fsetoolsGUI.gui.bases.custom_utilities import Counter
 
+# fire_time=[],: np.ndarray,
+# fire_temperature=[],: np.ndarray,
+# member_section_perimeter=[],: float,
+# member_section_area=[],: float,
+# member_perimeter_box=[],: float,
+# member_density=[],: float = 7850.,
+# h_conv=[],: float = 25.,
+# emissivity_resultant=[],: float = 1.,
 
 class App(AppBaseClass):
     app_id = '0612'
-    app_name_short = 'BS EN 1993\nprot. steel\nheat transfer'
-    app_name_long = 'BS EN 1993-1-2:2005 Protected steel heat transfer'
+    app_name_short = 'BS EN 1993\nunprot. steel\nheat transfer'
+    app_name_long = 'BS EN 1993-1-2:2005 Unprotected steel heat transfer'
+
+    input_symbols: OrderedDict = OrderedDict(
+        member_section_perimeter=dict(description='F, Steel section perimeter', unit='m', default=0),
+        member_section_area=dict(description='V, Steel section area', unit='m2', default=0),
+        member_perimeter_box=dict(description='Steel perimeter box', unit='m', default=0),
+        member_density=dict(description='Steel density', unit='kg/m3', default=0),
+        h_conv=dict(description='Convective coefficient', unit='W/m2/K', default=0),
+        emissivity_resultant=dict(description='Resultant emissivity', unit='', default=0),
+    )
+    output_symbols: OrderedDict = OrderedDict(
+        steel_max_temperature=['Max. steel temperature', '<sup>o</sup>C'],
+        steel_max_temperature_time=['Max. steel time', 'min'],
+        solved_protection_thickness=['Solved protection thickness', 'mm'],
+        solved_time_equivalence=['Solved time equivalence', 'min'],
+    )
 
     def __init__(self, parent=None, post_stats: bool = True):
 
@@ -36,21 +59,6 @@ class App(AppBaseClass):
         ]
         self.activated_dialogs.extend(self.__fire)
 
-        self.input_symbols: OrderedDict = OrderedDict(
-            beam_rho=['Steel density', 'kg/m<sup>3</sup>'],
-            beam_cross_section_area=['Steel section area', 'm<sup>2</sup>'],
-            protection_protected_perimeter=['Steel section protected perimeter', 'm'],
-            protection_k=['Protection conductivity', 'W/m/K'],
-            protection_rho=['Protection density', 'kg/m<sup>3</sup>'],
-            protection_c=['Protection conductivity', 'J/K/kg'],
-            protection_thickness=['Protection thickness', 'mm'],
-        )
-        self.output_symbols: OrderedDict = OrderedDict(
-            steel_max_temperature=['Max. steel temperature', '<sup>o</sup>C'],
-            steel_max_temperature_time=['Max. steel time', 'min'],
-            solved_protection_thickness=['Solved protection thickness', 'mm'],
-            solved_time_equivalence=['Solved time equivalence', 'min'],
-        )
 
         # ==============
         # instantiate ui

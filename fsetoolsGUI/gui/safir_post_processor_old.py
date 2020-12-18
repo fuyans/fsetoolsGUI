@@ -463,7 +463,7 @@ class App(AppBaseClass):
 
         return True
 
-    def ok(self):
+    def submit(self):
         pass
 
     @property

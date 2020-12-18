@@ -146,7 +146,7 @@ class App(AppBaseClass):
         return dict(date=date, revision=revision, project_no=project_no, project_stage=project_stage, title=title,
                     type=type, security_status=security_status)
 
-    def ok(self):
+    def submit(self):
         self.calculate()
         self.copy_file_name()
 
