@@ -83,7 +83,10 @@ Public version identifiers are separated into up to five segments:
 """
 
 __version__ = "0.0.8"
-__build__ = build_read(os.path.join(__root_dir__, 'build'))
+try:
+    __build__ = build_read(os.path.join(__root_dir__, 'build'))
+except:
+    __build__ = '0000000000'
 __date_released__ = datetime.datetime.strptime(__build__, '%Y%m%d%H%M')
 __expiry_period_days__ = 365
 __remote_version_url__ = r'hsrmo5)(jXw-efpco[mjeqaljo_gl%cnk,bpsZfj/ucoodigk&m`qqam)_k\tnmioBOBWFFQ,gojh'
