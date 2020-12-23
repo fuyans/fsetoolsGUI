@@ -17,8 +17,8 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'fsetoolsgui'
-copyright = '2020, Yan Fu'
+project = 'FSETools GUI'
+copyright = '2017-2021, OFR Consultants Ltd'
 author = 'Yan Fu'
 
 
@@ -28,6 +28,8 @@ author = 'Yan Fu'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'recommonmark',
+    'sphinx_markdown_tables',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -54,3 +56,14 @@ html_static_path = ['_static']
 html_show_sphinx = False
 html_copy_source = False
 html_show_sourcelink = False
+html_theme_options = dict(
+    show_powered_by=False,
+    fixed_sidebar=True,
+    # github_user='requests',
+    # github_repo='requests',
+    # github_banner=True,
+    # show_related=False,
+    # note_bg='#FFF59C',
+    # sidebar_width=1000,
+)
+# fixed_sidebar = False

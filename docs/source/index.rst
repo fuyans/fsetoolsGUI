@@ -3,18 +3,25 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to fsetoolsgui's documentation!
-=======================================
+FSETools GUI documentation
+==========================
+
+todo fsetools intended for: quick and validated calcs
+
+todo fsetools NOT intended for: black box toolsets
+
+todo explain the GUI suffix
+
+Since Pythagoras, we know that :math:`a^2 + b^2 = c^2`.
+
+.. math::
+   (a + b)^2  &=  (a + b)(a + b) \\
+              &=  a^2 + 2ab + b^2
+
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   content.rst
