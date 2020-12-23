@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import subprocess
 import sys
 import zlib
 from base64 import urlsafe_b64encode
@@ -7,6 +8,8 @@ from datetime import datetime
 from os.path import join, realpath, dirname, relpath
 
 __root_dir__ = join(dirname(dirname(realpath(__file__))), 'fsetoolsGUI')
+
+placeholder_models = [subprocess]
 
 
 def build_write(fp, date_cls: datetime = datetime.now(), date_format: str = '%Y%m%d%H%M') -> str:
@@ -53,14 +56,16 @@ def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build
             f.write(c)
 
 
-def find_fp(dir_work: str, endswith: list) -> list:
+def find_fp(dir_work: str, endswith: list = None) -> list:
     list_fp = list()
     list_fp_append = list_fp.append
 
     for dirpath, dirnames, filenames in os.walk(dir_work):
 
         for fn in filenames:
-            if any([fn.endswith(suffix) for suffix in endswith]):
+            if endswith is None:
+                list_fp_append(join(dirpath, fn))
+            elif any([fn.endswith(suffix) for suffix in endswith]):
                 list_fp_append(join(dirpath, fn))
 
     return list_fp
@@ -80,11 +85,20 @@ def main():
 
     # include fsetoolsGUI/gui/*, i.e. image, icon, stylesheet and documentation (in html format) files
     options.extend([
-        f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=__root_dir__)}' for fp in find_fp(dir_work=join(__root_dir__, 'gui'), endswith=['.png', '.ico', '.css', '.html'])
+        f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=__root_dir__)}' for fp in
+        find_fp(dir_work=join(__root_dir__, 'gui'), endswith=['.png', '.ico', '.css', '.html'])
     ])
+
+    # include build file
     options.extend(
         [f'--add-data={join(__root_dir__, "build")}{os.pathsep}{relpath(__root_dir__, start=__root_dir__)}']
     )
+
+    # include docs
+    options.extend([
+        f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=__root_dir__)}' for fp in
+        find_fp(dir_work=join(__root_dir__, 'docs'))
+    ])
 
     build_gui(options=options)
 
