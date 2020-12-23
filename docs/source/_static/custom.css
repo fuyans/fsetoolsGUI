@@ -2,3 +2,7 @@
 /*    max-height: 100%;*/
 /*    overflow-y: auto;*/
 /*}*/
+
+.wy-nav-content {
+    max-width: 1800px !important;
+}

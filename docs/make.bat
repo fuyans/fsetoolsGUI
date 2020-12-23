@@ -8,7 +8,7 @@ if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build
 )
 set SOURCEDIR=source
-set BUILDDIR=build
+set BUILDDIR=../fsetoolsGUI/docs
 
 if "%1" == "" goto help
 
@@ -32,4 +32,7 @@ goto end
 %SPHINXBUILD% -M help %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
 
 :end
+
+rmdir /s /q ..\fsetoolsGUI\docs\doctrees
+
 popd

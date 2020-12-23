@@ -22,6 +22,16 @@ Contents
 --------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
-   content.rst
+   content/Installation.rst
+   content/ADB-Merging-flow.rst
+   content/BRE-187-Parallel.rst
+   content/BRE-187-Perpendicular.rst
+   content/BS-9999-Merging-flow.rst
+   content/BS-EN-1991-1-2-Parametric-fire.rst
+   content/BS-EN-1991-1-2-Thermal-actions-for-external-members.rst
+   content/OFR-Naming-convention.rst
+   content/PD-7974-1-Flame-height.rst
+   content/PD-7974-1-Heat-detection-element-activation.rst
+   content/TRA-Cuboid-model.rst
