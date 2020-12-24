@@ -33,6 +33,5 @@ goto end
 
 :end
 
-rmdir /s /q ..\fsetoolsGUI\docs\doctrees
 
 popd

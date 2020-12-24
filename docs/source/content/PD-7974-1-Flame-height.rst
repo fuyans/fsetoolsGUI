@@ -1,10 +1,7 @@
-PD 7974-1 Heat detection element activation
--------------------------------------------
+PD 7974-1 Flame height
+----------------------
 
-Quality management
-~~~~~~~~~~~~~~~~~~
-
-.. list-table:: Heat detection element activation
+.. list-table::
     :header-rows: 1
 
     * - Date
@@ -15,8 +12,3 @@ Quality management
       - Ian F.
       - Ian F.
       - Initial
-
-Background
-~~~~~~~~~~
-
-todo

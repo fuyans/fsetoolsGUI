@@ -1,7 +1,7 @@
 OFR Naming convention
 ---------------------
 
-.. list-table:: OFR Naming convention
+.. list-table::
     :header-rows: 1
 
     * - Date

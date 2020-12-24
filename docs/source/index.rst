@@ -12,12 +12,6 @@ todo fsetools NOT intended for: black box toolsets
 
 todo explain the GUI suffix
 
-Since Pythagoras, we know that :math:`a^2 + b^2 = c^2`.
-
-.. math::
-   (a + b)^2  &=  (a + b)(a + b) \\
-              &=  a^2 + 2ab + b^2
-
 Contents
 --------
 
@@ -26,12 +20,12 @@ Contents
 
    content/Installation.rst
    content/ADB-Merging-flow.rst
-   content/BRE-187-Parallel.rst
-   content/BRE-187-Perpendicular.rst
+   content/BRE-187-Parallel-oriented-receiver.rst
+   content/BRE-187-Perpendicular-oriented-receiver.rst
    content/BS-9999-Merging-flow.rst
    content/BS-EN-1991-1-2-Parametric-fire.rst
    content/BS-EN-1991-1-2-Thermal-actions-for-external-members.rst
    content/OFR-Naming-convention.rst
    content/PD-7974-1-Flame-height.rst
-   content/PD-7974-1-Heat-detection-element-activation.rst
+   content/PD-7974-1-Heat-detector-activation.rst
    content/TRA-Cuboid-model.rst

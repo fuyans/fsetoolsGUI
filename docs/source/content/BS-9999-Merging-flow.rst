@@ -1,10 +1,7 @@
-BS 9999
--------
+BS 9999 Merging flow
+--------------------
 
-Quality management
-~~~~~~~~~~~~~~~~~~
-
-.. list-table:: Merging flow
+.. list-table::
     :header-rows: 1
 
     * - Date
@@ -15,8 +12,3 @@ Quality management
       - Ian F.
       - Alex T.
       - Initial
-
-Background
-~~~~~~~~~~
-
-todo

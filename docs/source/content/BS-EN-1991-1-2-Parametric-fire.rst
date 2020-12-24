@@ -1,10 +1,7 @@
-Parametric fire
----------------
+BS EN 1991-1-2 Parametric fire
+------------------------------
 
-Quality management
-~~~~~~~~~~~~~~~~~~
-
-.. list-table:: Parametric fire
+.. list-table::
     :header-rows: 1
 
     * - Date
@@ -15,8 +12,3 @@ Quality management
       - Ian F.
       - Ian F.
       - Initial
-
-Background
-~~~~~~~~~~
-
-todo

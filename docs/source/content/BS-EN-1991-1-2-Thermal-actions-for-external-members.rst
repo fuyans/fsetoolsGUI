@@ -1,10 +1,7 @@
-TRA Cuboid model
-----------------
+BS EN 1991-1-2 Thermal actions for external members
+---------------------------------------------------
 
-Quality management
-~~~~~~~~~~~~~~~~~~
-
-.. list-table:: BS EN 1991-1-2 Thermal actions for external members
+.. list-table::
     :header-rows: 1
 
     * - Date
@@ -15,8 +12,3 @@ Quality management
       - Ian F.
       - Ian F.
       - Initial
-
-Background
-~~~~~~~~~~
-
-todo

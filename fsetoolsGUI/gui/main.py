@@ -37,6 +37,7 @@ from fsetoolsGUI.gui.sfeprapy_probability_distribution import App as PRA_Probabi
 from fsetoolsGUI.gui.tra_enclosure import App as TRA_EnclosureModel
 from fsetoolsGUI.gui.travelling_fire import App as SFE_TravellingFire
 from fsetoolsGUI.gui.travelling_fire_flux import App as SFE_TravellingFireFlux
+from fsetoolsGUI.gui.fsetoolsgui_docs import App as FSETools_Docs
 
 
 class QPlainTextEditLogger(logging.Handler):
@@ -211,7 +212,8 @@ class App(QMainWindow):
             ],
             'Miscellaneous': [
                 OFR_NamingConvention,
-                self.LoggerApp
+                self.LoggerApp,
+                FSETools_Docs,
             ],
         }
 

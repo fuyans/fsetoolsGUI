@@ -1,10 +1,7 @@
-Approved Document B
--------------------
+ADB Merging flow
+----------------
 
-Quality management
-~~~~~~~~~~~~~~~~~~
-
-.. list-table:: Merging flow
+.. list-table::
     :header-rows: 1
 
     * - Date
@@ -15,8 +12,3 @@ Quality management
       - Ian F.
       - Ian F.
       - Initial
-
-Background
-~~~~~~~~~~
-
-todo

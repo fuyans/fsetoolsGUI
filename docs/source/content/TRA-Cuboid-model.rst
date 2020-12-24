@@ -1,10 +1,7 @@
 TRA Cuboid model
 ----------------
 
-Quality management
-~~~~~~~~~~~~~~~~~~
-
-.. list-table:: TRA Cuboid model
+.. list-table::
     :header-rows: 1
 
     * - Date
@@ -15,8 +12,3 @@ Quality management
       - Ian F.
       - Ian F.
       - Initial, compared against results from TRA software
-
-Background
-~~~~~~~~~~
-
-todo

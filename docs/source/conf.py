@@ -45,7 +45,6 @@ exclude_patterns = []
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
 # html_theme = 'alabaster'
 html_theme = 'sphinx_rtd_theme'
 
@@ -55,16 +54,5 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 html_show_sphinx = False
-html_copy_source = False
-html_show_sourcelink = False
-html_theme_options = dict(
-    # show_powered_by=False,
-    # fixed_sidebar=True,
-    # github_user='requests',
-    # github_repo='requests',
-    # github_banner=True,
-    # show_related=False,
-    # note_bg='#FFF59C',
-    # sidebar_width=1000,
-)
-# fixed_sidebar = False
+# html_copy_source = False
+# html_show_sourcelink = False

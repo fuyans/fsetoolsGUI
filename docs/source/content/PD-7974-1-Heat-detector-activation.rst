@@ -1,10 +1,7 @@
-PD 7974-1 Heat detection element activation
--------------------------------------------
+PD 7974-1 Heat detector activation
+----------------------------------
 
-Quality management
-~~~~~~~~~~~~~~~~~~
-
-.. list-table:: Heat detection element activation
+.. list-table::
     :header-rows: 1
 
     * - Date
@@ -27,8 +24,3 @@ Quality management
       - \-
       - Gerard R.
       - Compared against with an independently developed spreadsheet
-
-Background
-~~~~~~~~~~
-
-todo
