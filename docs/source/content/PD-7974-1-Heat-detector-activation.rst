@@ -24,3 +24,7 @@ PD 7974-1 Heat detector activation
       - \-
       - Gerard R.
       - Compared against with an independently developed spreadsheet
+
+.. figure:: PD-7974-1/p16.jpg
+    :width: 100%
+    :alt: PD 7974-1, Page 16

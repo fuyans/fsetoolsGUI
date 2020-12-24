@@ -17,47 +17,12 @@ BR 187 Perpendicular oriented receiver
       - Danny H.
       - Compared against an independently derived results
 
-Limitations:
-
-- All assumptions in BR 187;
-- Only one emitter panel;
-- The emitter panel should be a rectangle shape; and
-- Orientation between the emitter and receiver can be either in parallel or perpendicular.
-
-View factor
-~~~~~~~~~~~
-
-Parallel oriented emitter and receiver
-::::::::::::::::::::::::::::::::::::::
-
-.. math::
-   \phi = \frac{1}{2\pi}\left(\frac{X}{\sqrt{1+X^2}}\tan^{-1}{\left(\frac{Y}{\sqrt{1+X^2}} \right )}+\frac{Y}{\sqrt{1+Y^2}}\tan^{-1}{\left(\frac{X}{\sqrt{1+Y^2}} \right )}\right)
-
-Where :math:`X=\frac{W}{S}` and :math:`Y=\frac{H}{S}`.
-
-Perpendicular oriented emitter and receiver
-::::::::::::::::::::::::::::::::::::::
+Key equations:
 
 .. math::
    \phi=\frac{1}{2\pi}\left(\tan^{-1}\left({X} \right )-\frac{1}{\sqrt{Y^2+1}}\tan^{-1}\left(\frac{X}{\sqrt{Y^2+1}} \right ) \right )
 
 Where :math:`X=\frac{W}{S}` and :math:`Y=\frac{H}{S}`.
-
-View factors at any given point on an emitter
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Within the emitter rectangle
-::::::::::::::::::::::::::::
-
-todo
-
-Outside of the emitter rectangle
-::::::::::::::::::::::::::::::::
-
-todo
-
-Referenced original texts in BR 187
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. figure:: BRE-187/p33.svg
     :width: 100%

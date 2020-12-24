@@ -12,3 +12,11 @@ PD 7974-1 Flame height
       - Ian F.
       - Ian F.
       - Initial
+
+.. figure:: PD-7974-1/p15.jpg
+    :width: 100%
+    :alt: PD 7974-1, Page 15
+
+.. figure:: PD-7974-1/p16.jpg
+    :width: 100%
+    :alt: PD 7974-1, Page 16
