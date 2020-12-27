@@ -148,6 +148,7 @@ class App(AppBaseClass):
 
     def submit(self):
         self.calculate()
+        self.repaint()
         self.copy_file_name()
 
     def calculate(self):

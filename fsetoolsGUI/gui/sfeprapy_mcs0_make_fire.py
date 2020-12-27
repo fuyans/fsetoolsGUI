@@ -41,9 +41,9 @@ def mcs0_make_fires_worker(
                 case_name=case_name,
             )
             outputs[f'temperature {index}'] = _['temperature']
+            outputs['time'] = _['time']
         except Exception as e:
             logger.error(f'Failed to generate fire curve for index {index}, {e}')
-    outputs['time'] = _['time']
     return outputs
 
 
@@ -79,7 +79,6 @@ class App(AppBaseClass):
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_index', 'Simulation iteration index')
 
         self.ui.p3_example.setVisible(False)
-        self.ui.p3_about.setVisible(False)
 
         # defaults
         self.ui.p2_in_case_name.setEnabled(False)

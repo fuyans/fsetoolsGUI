@@ -6,8 +6,8 @@ from fsetools.lib.fse_travelling_fire_flux import heat_flux as travelling_fire_f
 
 from fsetoolsGUI import logger
 from fsetoolsGUI.gui.bases.c9901_app_template import AppBaseClass, AppBaseClassUISimplified01
-from fsetoolsGUI.gui.bases.custom_utilities import Counter
 from fsetoolsGUI.gui.bases.custom_plot_pyqtgraph import App as PlotApp2
+from fsetoolsGUI.gui.bases.custom_utilities import Counter
 
 
 def calculate_worker(
@@ -136,6 +136,7 @@ class App(AppBaseClass):
 
     def example(self):
         self.input_parameters = {k: v['default'] for k, v in self.input_items.items()}
+        self.repaint()
 
     @property
     def input_parameters(self):
@@ -206,6 +207,7 @@ class App(AppBaseClass):
             logger.error(f'Unable to show results, {str(e)}')
 
         self.statusBar().showMessage('Calculation complete')
+        self.repaint()
 
     def show_results_in_figure(self):
         output_parameters = self.output_parameters

@@ -55,9 +55,11 @@ class App(AppBaseClass):
             beam_location_length_m=80,
             fire_nft_limit_c=1200)
         self.input_parameters = input_kwargs
+        self.repaint()
 
     def submit(self):
         self.output_parameters = self.calculate(self.input_parameters)
+        self.repaint()
         self.show_results_in_figure()
 
     @staticmethod

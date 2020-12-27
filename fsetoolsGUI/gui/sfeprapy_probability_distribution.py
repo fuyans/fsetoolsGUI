@@ -2,7 +2,7 @@ import numpy as np
 import pyqtgraph as pg
 import scipy.stats as stats
 from PySide2.QtCore import Signal, Slot, QObject, Qt
-from PySide2.QtWidgets import QGridLayout, QLineEdit, QLabel, QPushButton, QDialog, QRadioButton
+from PySide2.QtWidgets import QGridLayout, QLabel, QDialog, QRadioButton
 
 from fsetoolsGUI import logger
 from fsetoolsGUI.etc.probability_distribution import solve_dist_for_mean_std
@@ -124,12 +124,14 @@ class App(AppBaseClass):
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
-        self.ui.p2_layout.addWidget(QLabel('Distribution'), c.value, 0, 1, 1)
-        self.ui.p2_in_distribution = QLineEdit()
-        self.ui.p2_layout.addWidget(self.ui.p2_in_distribution, c.value, 1, 1, 1)
-        self.ui.p2_in_fp_inputs = QPushButton('...')
-        self.ui.p2_in_fp_inputs.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
-        self.ui.p2_layout.addWidget(self.ui.p2_in_fp_inputs, c.count, 2, 1, 1)
+        # self.ui.p2_layout.addWidget(QLabel('Distribution'), c.value, 0, 1, 1)
+        # self.ui.p2_in_distribution = QLineEdit()
+        # self.ui.p2_layout.addWidget(self.ui.p2_in_distribution, c.value, 1, 1, 1)
+        # self.ui.p2_in_fp_inputs = QPushButton('...')
+        # self.ui.p2_in_fp_inputs.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        # self.ui.p2_layout.addWidget(self.ui.p2_in_fp_inputs, c.count, 2, 1, 1)
+
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_distribution', 'Distribution', '...', unit_obj='QPushButton', min_width=200)
 
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_mean', 'Mean', '')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_sd', 'SD', '')
@@ -157,7 +159,7 @@ class App(AppBaseClass):
             parent=self
         )
         self.activated_dialogs.append(self.distribution_selection_dialog)
-        self.ui.p2_in_fp_inputs.clicked.connect(lambda: self.distribution_selection_dialog.show())
+        self.ui.p2_in_distribution_unit.clicked.connect(lambda: self.distribution_selection_dialog.show())
         self.adjustSize()
 
     def submit(self):

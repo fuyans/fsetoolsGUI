@@ -41,7 +41,6 @@ class App(AppBaseClass):
         # instantiation super and setup ui
         # ================================
         self.ui.p3_example.setHidden(True)
-        self.ui.p3_about.setHidden(True)
         c = Counter()
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
@@ -73,6 +72,7 @@ class App(AppBaseClass):
     def submit(self):
         self.__progress_bar.show()
         self.calculate(**self.input_parameters)
+        self.repaint()
 
     @staticmethod
     def calculate(

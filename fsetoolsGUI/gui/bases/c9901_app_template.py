@@ -8,8 +8,8 @@ from PySide2.QtWidgets import QLabel, QGridLayout, QPushButton, QHBoxLayout, QSi
 
 from fsetoolsGUI import __root_dir__, __version__, logger
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
-from fsetoolsGUI.gui import qt_css
 from fsetoolsGUI.gui.bases.custom_utilities import *
+from fsetoolsGUI.gui.stylesheets import css_template_flat, css_app_btn
 
 
 class AboutDialogUI(object):
@@ -62,7 +62,7 @@ class AboutDialog(QtWidgets.QMainWindow):
         self.setWindowTitle('About this app')
         self.setWindowIcon(QtGui.QPixmap(path.join(__root_dir__, 'gui', '../icons', 'LOGO_1_80_80.png')))
 
-        self.setStyleSheet(qt_css)
+        self.setStyleSheet(css_template_flat)
 
         try:
             with open(fp_or_html, 'r') as f:
@@ -106,12 +106,12 @@ class AppBaseClassUI(object):
         # self.p3_layout.addWidget(self.p3_about)
         # self.p3_layout.addSpacing(5)
         self.p3_example = QPushButton('Example')
-        self.p3_example.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.p3_example.setStyleSheet(css_app_btn)
         self.p3_layout.addWidget(self.p3_example)
         self.p3_layout.addStretch(1)
         self.p3_submit = QPushButton('Submit')
         self.p3_submit.setAutoDefault(True)
-        self.p3_submit.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.p3_submit.setStyleSheet(css_app_btn)
         self.p3_layout.addWidget(self.p3_submit)
 
         self.page_1.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
@@ -146,11 +146,11 @@ class AppBaseClassUISimplified01(object):
         # self.p3_layout.addWidget(self.p3_about)
         # self.p3_layout.addSpacing(5)
         self.p3_example = QPushButton('Example')
-        self.p3_example.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.p3_example.setStyleSheet(css_app_btn)
         self.p3_layout.addWidget(self.p3_example)
         self.p3_layout.addStretch(1)
         self.p3_submit = QPushButton('Submit')
-        self.p3_submit.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+        self.p3_submit.setStyleSheet(css_app_btn)
         self.p3_layout.addWidget(self.p3_submit)
 
         self.page_2.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
@@ -174,7 +174,7 @@ class AppBaseClass(QtWidgets.QMainWindow):
                 self.setWindowIcon(QtGui.QPixmap(path.join(__root_dir__, 'gui', '../icons', 'LOGO_1_80_80.png')))
             except Exception as e:
                 logger.error(f'Icon file not found {e}')
-            self.setStyleSheet(qt_css)
+            self.setStyleSheet(css_template_flat)
 
         # instantiate and configure signals
         try:
@@ -294,9 +294,9 @@ class AppBaseClass(QtWidgets.QMainWindow):
         # formatting
         getattr(self.ui, f'{name}').setMinimumWidth(min_width)
         if label_obj == 'QPushButton':
-            getattr(self.ui, f'{name}_label').setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+            getattr(self.ui, f'{name}_label').setStyleSheet(css_app_btn)
         if unit_obj == 'QPushButton' and unit:
-            getattr(self.ui, f'{name}_unit').setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
+            getattr(self.ui, f'{name}_unit').setStyleSheet(css_app_btn)
 
         # add the created objects to the grid
         grid.addWidget(getattr(self.ui, f'{name}_label'), row, col, 1, 1)
@@ -357,7 +357,7 @@ class AppBaseClass(QtWidgets.QMainWindow):
 
     def dialog_show_message(self, msg: str, info: str = None):
         msgbox = QtWidgets.QMessageBox(parent=self)
-        msgbox.setStyleSheet('QPushButton {padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;}')
+        msgbox.setStyleSheet(css_app_btn)
         msgbox.setIconPixmap(path.join(__root_dir__, 'gui', '../images', 'LOGO_1_80_80.PNG'))
         msgbox.setText(msg)
         msgbox.setInformativeText(info)

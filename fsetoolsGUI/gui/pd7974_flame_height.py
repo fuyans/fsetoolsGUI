@@ -155,6 +155,7 @@ class App(AppBaseClass):
 
     def submit(self):
         self.calculate()
+        self.repaint()
 
     @property
     def input_parameters(self):

@@ -2,16 +2,16 @@ from collections import OrderedDict
 
 import numpy as np
 from PySide2.QtWidgets import QGridLayout, QLabel
-from fsetools.lib.fse_bs_en_1993_1_2_unprotected_heat_transfer import temperature as unprotected_steel_eurocode
 from sfeprapy.mcs0.mcs0_calc import solve_time_equivalence_iso834, solve_protection_thickness
 
-from fsetoolsGUI.gui.en_parametric_fire import App as AppParametricFire
-from fsetoolsGUI.gui.travelling_fire import App as AppTravellingFire
-from fsetoolsGUI.gui.din_en_parametric_fire import App as AppDinParametricFire
-from fsetoolsGUI.gui.iso_834_fire import App as AppISO834Fire
 from fsetoolsGUI.gui.bases.c9901_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.bases.custom_plot_pyqtgraph import App as FigureApp
 from fsetoolsGUI.gui.bases.custom_utilities import Counter
+from fsetoolsGUI.gui.din_en_parametric_fire import App as AppDinParametricFire
+from fsetoolsGUI.gui.en_parametric_fire import App as AppParametricFire
+from fsetoolsGUI.gui.iso_834_fire import App as AppISO834Fire
+from fsetoolsGUI.gui.travelling_fire import App as AppTravellingFire
+
 
 # fire_time=[],: np.ndarray,
 # fire_temperature=[],: np.ndarray,
@@ -115,9 +115,11 @@ class App(AppBaseClass):
             protection_protected_perimeter=2.14,
         )
         self.input_parameters = input_kwargs
+        self.repaint()
 
     def submit(self):
         self.output_parameters = self.calculate(**self.input_parameters)
+        self.repaint()
         self.show_results_in_figure()
 
     @staticmethod

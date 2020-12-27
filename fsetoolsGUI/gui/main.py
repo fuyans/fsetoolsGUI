@@ -10,7 +10,6 @@ from PySide2.QtWidgets import QMainWindow, QWidget, QGridLayout, QGroupBox, QLab
 from packaging import version
 
 from fsetoolsGUI import __version__, __build__, __date_released__, __expiry_period_days__, __remote_version_url__, __root_dir__, logger
-from fsetoolsGUI.gui import qt_css
 from fsetoolsGUI.gui.adb_data_sheet_1 import App as ADB_DataSheet1
 from fsetoolsGUI.gui.adb_merging_flow import App as ADB_MergingFlow
 from fsetoolsGUI.gui.bases.custom_utilities import *
@@ -23,6 +22,7 @@ from fsetoolsGUI.gui.en_external_column import App as EC3_ExternalColumn
 from fsetoolsGUI.gui.en_external_flame import App as EC1_ExternalFlame
 from fsetoolsGUI.gui.en_parametric_fire import App as EC1_ParametricFire
 from fsetoolsGUI.gui.en_protected_steel_heat_transfer import App as EC3_SteelHeatTransferProtected
+from fsetoolsGUI.gui.fsetoolsgui_docs import App as FSETools_Docs
 from fsetoolsGUI.gui.iso_834_fire import App as ISO834_StandardFire
 from fsetoolsGUI.gui.ofr_file_naming_convention import App as OFR_NamingConvention
 from fsetoolsGUI.gui.pd7974_detector_activation import App as PD7974_DetectorActivation
@@ -34,10 +34,10 @@ from fsetoolsGUI.gui.sfeprapy_mcs0 import App as SFEPRAPY_MCS0Simulation
 from fsetoolsGUI.gui.sfeprapy_mcs0_make_fire import App as SFEPRAPY_PostProcessorMakeFires
 from fsetoolsGUI.gui.sfeprapy_mcs0_make_plots import App as SFEPRAPY_PostProcessorPlots
 from fsetoolsGUI.gui.sfeprapy_probability_distribution import App as PRA_ProbabilityDistribution
+from fsetoolsGUI.gui.stylesheets import css_template_flat, css_main_btn
 from fsetoolsGUI.gui.tra_enclosure import App as TRA_EnclosureModel
 from fsetoolsGUI.gui.travelling_fire import App as SFE_TravellingFire
 from fsetoolsGUI.gui.travelling_fire_flux import App as SFE_TravellingFireFlux
-from fsetoolsGUI.gui.fsetoolsgui_docs import App as FSETools_Docs
 
 
 class QPlainTextEditLogger(logging.Handler):
@@ -137,7 +137,7 @@ class App(QMainWindow):
         super().__init__()
         self.ui = AppUI()
         self.ui.setupUi(self)
-        self.setStyleSheet(qt_css)
+        self.setStyleSheet(css_template_flat)
 
         self.setWindowTitle('Fire Safety Engineering Tools')
         self.setWindowIcon(QtGui.QPixmap(path.join(__root_dir__, 'gui', 'icons', 'LOGO_1_80_80.png')))
@@ -245,7 +245,7 @@ class App(QMainWindow):
             self.ui.p2_layout.addWidget(label, c.count, 0, 1, 1)
             for i in v:
                 btn = QPushButton(text=i.app_name_short.replace('\n', ' '))
-                btn.setStyleSheet('QPushButton{Text-align: left; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px;}')
+                btn.setStyleSheet(css_main_btn)
                 btn.setHidden(True)
                 btn.clicked.connect(activate_app(i))
                 label.append_app(btn)

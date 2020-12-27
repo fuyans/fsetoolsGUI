@@ -106,6 +106,7 @@ class App(AppBaseClass):
 
     def example(self):
         self.input_parameters = {k: v['default'] for k, v in self.input_items.items()}
+        self.repaint()
 
     @property
     def input_parameters(self):
@@ -169,6 +170,7 @@ class App(AppBaseClass):
             self.statusBar().showMessage(f'Unable to show results. Error {str(e)}')
 
         self.statusBar().showMessage('Calculation complete')
+        self.repaint()
 
     def show_results_in_figure(self):
         output_parameters = self.output_parameters

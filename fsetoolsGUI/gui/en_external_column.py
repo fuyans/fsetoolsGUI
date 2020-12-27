@@ -115,6 +115,7 @@ class App(AppBaseClass):
             # w_f=20.9,
         )
         self.input_parameters = input_kwargs
+        self.repaint()
 
     @staticmethod
     def calculate(input_kwargs):
@@ -153,6 +154,7 @@ class App(AppBaseClass):
                     threading.Thread(target=lambda: cls.make_pdf_web(fp_tex=fp_tex)).start()
             except Exception as e:
                 logger.error(f'Failed to make PDF, {e}')
+        self.repaint()
 
     @property
     def input_parameters(self):

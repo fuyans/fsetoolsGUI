@@ -174,9 +174,11 @@ class App(AppBaseClass):
         input_parameters = {k: v['default'] for k, v in self.input_items.items()}
         input_parameters.update(dict(plume_type='ceiling jet'))
         self.input_parameters = input_parameters
+        self.repaint()
 
     def submit(self):
         self.output_parameters = pd_7974_1_heat_detector_activation(**self.input_parameters)
+        self.repaint()
         self.show_results_in_figure()
 
     @property
