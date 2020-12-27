@@ -1,8 +1,4 @@
-/*div.sphinxsidebar {*/
-/*    max-height: 100%;*/
-/*    overflow-y: auto;*/
-/*}*/
-
-.wy-nav-content {
-    max-width: 1800px !important;
+/* Sidebar header (and topbar for mobile) */
+.wy-side-nav-search, .wy-nav-top {
+    background: rgb(0, 164, 153);
 }

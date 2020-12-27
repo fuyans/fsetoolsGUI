@@ -10,7 +10,8 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
+import os
+import datetime
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
@@ -18,9 +19,11 @@
 # -- Project information -----------------------------------------------------
 
 project = 'FSETools'
-copyright = '2017-2021, OFR Consultants Ltd'
-author = 'Yan Fu'
-
+author = 'Ian Fu, OFR Consultants Ltd'
+copyright = f'2017-{datetime.datetime.now().strftime("%Y")}, {author}'
+version = '0.0.8'
+release = '0.0.8'
+language = 'en'
 
 # -- General configuration ---------------------------------------------------
 
@@ -30,6 +33,8 @@ author = 'Yan Fu'
 extensions = [
     'recommonmark',
     'sphinx_markdown_tables',
+    'sphinx.ext.mathjax',
+    'sphinx_rtd_theme',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -53,6 +58,31 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
+html_css_files = [
+    'custom.css',
+]
+
+html_favicon = os.path.join('_static', 'LOGO_1_80x80.png')
+
+html_logo = os.path.join('_static', 'navi-home-icon.svg')
+
 html_show_sphinx = False
-# html_copy_source = False
-# html_show_sourcelink = False
+html_copy_source = True
+html_show_sourcelink = False
+
+html_theme_options = {
+    # 'canonical_url': '',
+    # 'analytics_id': 'UA-XXXXXXX-1',  #  Provided by Google in your dashboard
+    'logo_only': True,
+    'display_version': True,
+    'prev_next_buttons_location': 'bottom',
+    'style_external_links': False,
+    # 'vcs_pageview_mode': '',
+    # 'style_nav_header_background': 'white',
+    # Toc options
+    'collapse_navigation': True,
+    'sticky_navigation': True,
+    'navigation_depth': 4,
+    # 'includehidden': True,
+    # 'titles_only': True
+}
