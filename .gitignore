@@ -151,6 +151,7 @@ fsetoolsGUI/gui/layout/*.py
 
 # Docs
 fsetoolsGUI/docs/*
+docs/source/_build/*
 docs/build/*
 
 # Include project files
