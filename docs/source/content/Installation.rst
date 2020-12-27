@@ -1,11 +1,8 @@
 Installation
 ------------
 
-Installer
-:::::::::
-
 Windows
-'''''''
+:::::::
 
 Download FSETools installer and double click the installer.
 
@@ -27,7 +24,7 @@ Wait till all files are unpacked.
 .. figure:: Setup/Setup-3.png
     :alt: Setup: Installing
 
-Installation finished, click Finish to close the installer.
+Installation complete, click Finish to close the installer.
 
 .. figure:: Setup/Setup-4.png
     :alt: Setup: Complete
@@ -37,8 +34,12 @@ After successful installation, you should able to run the application.
 .. figure:: Setup/Setup-5.png
     :alt: Setup: FSETools
 
-
 MAC OS
-''''''
+::::::
+
+todo
+
+Python
+::::::
 
 todo

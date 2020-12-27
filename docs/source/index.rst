@@ -19,13 +19,9 @@ Contents
    :maxdepth: 3
 
    content/Installation.rst
-   content/ADB-Merging-flow.rst
-   content/BRE-187-Parallel-oriented-receiver.rst
-   content/BRE-187-Perpendicular-oriented-receiver.rst
-   content/BS-9999-Merging-flow.rst
-   content/BS-EN-1991-1-2-Parametric-fire.rst
-   content/BS-EN-1991-1-2-Thermal-actions-for-external-members.rst
-   content/OFR-Naming-convention.rst
-   content/PD-7974-1-Flame-height.rst
-   content/PD-7974-1-Heat-detector-activation.rst
-   content/TRA-Cuboid-model.rst
+   B1-Means-of-escape.rst
+   B3-Elements-of-structure.rst
+   B4-External-fire-spread.rst
+   B0-PRA.rst
+   B0-SAFIR.rst
+   B0-Miscenllaneous.rst
