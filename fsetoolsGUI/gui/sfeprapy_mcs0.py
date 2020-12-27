@@ -104,27 +104,21 @@ class App(AppBaseClass):
 
     @staticmethod
     def calculate(fp_mcs_input, n_mp, qt_prog_signal_0, qt_prog_signal_1):
+        # ======================
+        # instantiate MCS object
+        # ======================
+        mcs0 = MCS0()
 
         # ===========
         # parse input
         # ===========
         logger.info(f'Started to parse input file ...')
         try:
-            mcs_input = pd.read_csv(fp_mcs_input, index_col=0).to_dict()
+            mcs0.mcs_inputs = fp_mcs_input
         except Exception as e:
-            logger.warning(f'Failed to parse input file as csv format, retry to parse in xlsx format ...')
-            try:
-                mcs_input = pd.read_excel(fp_mcs_input, index_col=0).to_dict()
-            except Exception as e:
-                logger.error(f'Failed to parse input file as xlsx format, {e}')
-                raise e
+            logger.error(f'Failed to parse input file as xlsx format, {e}')
         logger.info(f'Successfully parsed input file')
 
-        # ======================
-        # instantiate MCS object
-        # ======================
-        mcs0 = MCS0()
-        mcs0.mcs_inputs = mcs_input
         mcs0.mcs_config = dict(n_threads=n_mp, cwd=dirname(fp_mcs_input))
 
         # ==================
