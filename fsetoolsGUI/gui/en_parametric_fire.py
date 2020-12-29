@@ -91,7 +91,7 @@ class App(AppBaseClass):
         # instantiation super and setup ui
         # ================================
         super().__init__(parent, post_stats, ui=AppBaseClassUISimplified01)
-        self.FigureApp = PlotApp(parent=self, title='Parametric fire')
+        self.FigureApp = PlotApp(parent=self, title='Parametric fire', antialias=True)
         self.__figure_ax = self.FigureApp.add_subplot(0, 0, x_label='Time [minute]', y_label='Temperature [°C]')
 
         # ================
