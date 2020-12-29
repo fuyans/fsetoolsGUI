@@ -6,12 +6,13 @@
 
 # -- Path setup --------------------------------------------------------------
 
+import datetime
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os
-import datetime
+
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
@@ -19,7 +20,7 @@ import datetime
 # -- Project information -----------------------------------------------------
 
 project = 'FSETools'
-author = 'Ian Fu, OFR Consultants Ltd'
+author = 'see Authors, OFR Consultants Ltd'
 copyright = f'2017-{datetime.datetime.now().strftime("%Y")}, {author}'
 version = '0.0.8'
 release = '0.0.8'
@@ -62,9 +63,9 @@ html_css_files = [
     'custom.css',
 ]
 
-html_favicon = os.path.join('_static', 'LOGO_1_80x80.png')
+html_favicon = os.path.join('_static', 'logo.png')
 
-html_logo = os.path.join('_static', 'navi-home-icon.svg')
+html_logo = os.path.join('_static', 'navi-logo.png')
 
 html_show_sphinx = False
 html_copy_source = True
