@@ -77,8 +77,7 @@ def main():
     options = [
         "--onedir",  # output unpacked dist to one directory, including an .exe file
         "--noconfirm",  # replace output directory without asking for confirmation
-        # "--windowed",
-        "--noconsole",
+        "--windowed",
         "--clean",  # clean pyinstaller cache and remove temporary files
         f'--add-data={realpath(join("etc", "ofr_logo_1_80_80.ico"))}{os.pathsep}etc',  # include icon file
     ]
@@ -107,8 +106,9 @@ if __name__ == "__main__":
     make_build_info()
     main()
 
-    import subprocess
+    if sys.platform == 'win32':
+        import subprocess
 
-    fp_exe = f'{os.path.join(os.path.realpath(os.path.dirname(__file__)), "dist", "FSETOOLS", "FSETOOLS.exe")}'
-    print(fp_exe)
-    subprocess.Popen([fp_exe])
+        fp_exe = f'{os.path.join(os.path.realpath(os.path.dirname(__file__)), "dist", "FSETOOLS", "FSETOOLS.exe")}'
+        print(fp_exe)
+        subprocess.Popen([fp_exe])
