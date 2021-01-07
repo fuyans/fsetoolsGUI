@@ -62,7 +62,7 @@ def main():
 
     with open('nsis_build.log', 'wb') as f:
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        for c in iter(lambda: process.stdout.read(1), b''):  # replace '' with b'' for Python 3
+        for c in iter(lambda: process.stdout.read(1), b''):
             sys.stdout.write(c.decode('utf-8'))
             f.write(c)
 
