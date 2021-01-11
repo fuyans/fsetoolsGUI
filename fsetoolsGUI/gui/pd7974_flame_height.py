@@ -1,7 +1,6 @@
 from os.path import join
 
-from PySide2 import QtWidgets, QtGui
-from PySide2.QtCore import QByteArray
+from PySide2 import QtWidgets
 from PySide2.QtWidgets import QVBoxLayout, QGridLayout, QLabel, QComboBox
 from fsetools.lib.fse_flame_height import mean_flame_height_pd_7974
 from fsetools.libstd.pd_7974_1_2019 import eq_11_dimensionless_hrr_rectangular
@@ -10,8 +9,6 @@ from fsetools.libstd.pd_7974_1_2019 import eq_5_dimensionless_hrr
 
 import fsetoolsGUI
 from fsetoolsGUI.gui.bases.c9901_app_template import AppBaseClass
-from fsetoolsGUI.gui.images.base64 import dialog_0602_context as image_context
-from fsetoolsGUI.gui.images.base64 import dialog_0602_figure as image_figure
 
 
 class App(AppBaseClass):
@@ -69,14 +66,6 @@ class App(AppBaseClass):
         self.ui.p2_in_L_B.setToolTip('Fire shorter dimension (only for rectangular fire shape)')
         self.ui.p2_out_Q_dot_star.setToolTip('Solved dimensionless heat release rate, double click to select')
         self.ui.p2_out_Z_f.setToolTip('Solved mean flame height, double click to select')
-
-        # construct pixmaps that are used in this app
-        self.dict_images_pixmap = dict(image_context=image_context,
-                                       image_figure=image_figure, )
-        for k, v in self.dict_images_pixmap.items():
-            ba = QByteArray.fromBase64(v)
-            self.dict_images_pixmap[k] = QtGui.QPixmap()
-            self.dict_images_pixmap[k].loadFromData(ba)
 
         # set default values
         # todo

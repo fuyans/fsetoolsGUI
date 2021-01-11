@@ -1,9 +1,10 @@
+import os
+
 import requests
 from PySide2 import QtWidgets, QtGui, QtCore
 
 import fsetoolsGUI
 from fsetoolsGUI.etc.util import get_machine_uid
-from fsetoolsGUI.gui.images.base64 import OFR_LOGO_1_PNG
 
 
 class App(QtWidgets.QDialog):
@@ -45,7 +46,9 @@ class App(QtWidgets.QDialog):
         self.setLayout(layout)
 
         # window properties
-        ba = QtCore.QByteArray.fromBase64(OFR_LOGO_1_PNG)
+        with open(os.path.join(fsetoolsGUI.__root_dir__, 'gui', 'images', 'logo.png')) as f:
+            logo_png = f.read()
+        ba = QtCore.QByteArray.fromBase64(logo_png)
         pix_map = QtGui.QPixmap()
         pix_map.loadFromData(ba)
         self.setWindowIcon(pix_map)

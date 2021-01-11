@@ -10,8 +10,6 @@ from fsetoolsGUI import logger
 from fsetoolsGUI.gui.bases.c9901_app_template import AppBaseClass
 from fsetoolsGUI.gui.bases.custom_plot_pyqtgraph import App as PlotApp
 from fsetoolsGUI.gui.bases.custom_utilities import Counter
-from fsetoolsGUI.gui.images.base64 import dialog_0111_figure_1 as image_figure_1
-from fsetoolsGUI.gui.images.base64 import dialog_0111_figure_2 as image_figure_2
 
 
 def pd_7974_1_heat_detector_activation(
@@ -137,13 +135,9 @@ class App(AppBaseClass):
 
         # construct pixmaps that are used in this app
         self.dict_images_pixmap = dict(
-            image_figure_1=image_figure_1,
-            image_figure_2=image_figure_2,
+            image_figure_1=QtGui.QPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0111-1-1.png')),
+            image_figure_2=QtGui.QPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0111-1-2.png')),
         )
-        for k, v in self.dict_images_pixmap.items():
-            ba = QtCore.QByteArray.fromBase64(v)
-            self.dict_images_pixmap[k] = QtGui.QPixmap()
-            self.dict_images_pixmap[k].loadFromData(ba)
 
         # =====================
         # Assign default values
