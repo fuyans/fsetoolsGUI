@@ -1,7 +1,7 @@
 from os.path import join
 
 import numpy as np
-from PySide2 import QtCore, QtGui
+from PySide2 import QtGui
 from PySide2.QtWidgets import QVBoxLayout, QGridLayout, QLabel, QRadioButton
 from fsetools.lib.fse_activation_hd import heat_detector_temperature_pd7974
 

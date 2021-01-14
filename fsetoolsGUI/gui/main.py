@@ -63,7 +63,7 @@ class QDialogLogger(QtWidgets.QDialog, QPlainTextEditLogger):
 
         qt_logger = QPlainTextEditLogger(self)
         qt_logger.setLevel(logging.INFO)
-        qt_logger.setFormatter(logging.Formatter('%(levelname)-8s [%(filename).5s:%(lineno)d] %(message)s'))
+        qt_logger.setFormatter(logging.Formatter('%(levelname)-8s [%(filename).10s:%(lineno)d] %(message)s'))
         logger.addHandler(qt_logger)
 
         layout = QtWidgets.QVBoxLayout()
@@ -91,6 +91,7 @@ class AppUI(object):
         self.page_2 = QGroupBox(self.central_widget)
         self.label_version = QLabel(__version__)
         self.label_version.setWordWrap(True)
+        self.page_2.setSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Fixed)
 
         self.p0_layout.addWidget(self.page_2, 0, 0, 1, 1)
         self.p0_layout.addWidget(self.label_version, 1, 0, 1, 1)
@@ -221,8 +222,6 @@ class App(QMainWindow):
         self.ui.p2_layout.setHorizontalSpacing(1), self.ui.p2_layout.setVerticalSpacing(1)
 
         def adjust_size():
-            self.ui.p2_layout.setSizeConstraint(self.ui.p2_layout.SetFixedSize)
-            self.ui.p0_layout.setSizeConstraint(self.ui.p0_layout.SetFixedSize)
             self.repaint()
             self.adjustSize()
 
@@ -254,7 +253,6 @@ class App(QMainWindow):
         # ------------
         # Check update
         # ------------
-        # DEPRECIATED 20th Oct 2020. Checked updated moved to fsetoolsgui.gui.__main__
         self.Signals.check_update_complete.connect(self.ui.page_2.setEnabled)
         threading.Timer(0, self.check_update).start()
 

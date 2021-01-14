@@ -2,6 +2,7 @@ import threading
 from datetime import datetime
 from os import getlogin, path
 from typing import Union
+import sys
 
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QLabel, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy, QGroupBox, QWidget, QStatusBar, QVBoxLayout, QTextBrowser, QScrollArea
@@ -10,6 +11,8 @@ from fsetoolsGUI import __root_dir__, __version__, logger
 from fsetoolsGUI.etc.util import post_to_knack_user_usage_stats
 from fsetoolsGUI.gui.bases.custom_utilities import *
 from fsetoolsGUI.gui.stylesheets import css_template_flat, css_app_btn
+
+fake_modules = [sys]
 
 
 class AboutDialogUI(object):
@@ -244,14 +247,14 @@ class AppBaseClass(QtWidgets.QMainWindow):
                 getattr(self, 'submit')()
             except Exception as e:
                 module_name = sys.modules[self.__module__].__name__
-                logger.warning(f'Failed to call `submit` attribute from {module_name}, {e}')
+                logger.info(f'Failed to call `submit` attribute from {module_name}, {e}')
         elif event.modifiers() & QtCore.Qt.ControlModifier and event.modifiers() & QtCore.Qt.ShiftModifier and event.key() == QtCore.Qt.Key_C:
             # CTRL+SHIFT+C: Copy the current GUI as an image and store to clipboard
             try:
                 self.__clipboard.setPixmap(self.ui.central_widget.grab())
                 logger.info('Successfully copied image to clipboard.')
             except Exception as e:
-                logger.warning(f'Failed to copied image to clipboard, {e}.')
+                logger.info(f'Failed to copied image to clipboard, {e}.')
         event.accept()
 
     def closeEvent(self, event):

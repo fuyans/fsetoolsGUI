@@ -1,38 +1,28 @@
 from os.path import join
 
 import numpy as np
-from PySide2 import QtWidgets, QtGui, QtCore
+from PySide2 import QtWidgets, QtGui
 from fsetools.lib.fse_thermal_radiation_3d import single_receiver, heat_flux_to_temperature
 
 import fsetoolsGUI
-from fsetoolsGUI.gui.images.base64 import dialog_0404_page as image_figure
-from fsetoolsGUI.gui.layouts.i0405_tra_3d_point import Ui_MainWindow
 from fsetoolsGUI.gui.bases.c9901_app_template import AppBaseClass
+from fsetoolsGUI.gui.layouts.i0405_tra_3d_point import Ui_MainWindow
 
 
 class App(AppBaseClass):
     maximum_acceptable_thermal_radiation_heat_flux = 12.6
     fp_doc = join(fsetoolsGUI.__root_dir__, 'gui', 'docs', '0405.md')  # doc file path
-    app_id = '0405'
+    app_id = 'b4TRA3D'
     app_name_short = 'TRA\n3D single point'
-    app_name_long = 'TRA 3D polygon emitter and a single point'
+    app_name_long = 'TRA 3D polygon emitter and a single point receiver'
 
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.init()
 
-        # for i in filter_objects_by_name(self.ui.groupBox_out, object_types=[QtWidgets.QLineEdit]):
-        #     try:
-        #         i.setReadOnly(True)
-        #     except AttributeError:
-        #         i.setEnabled(False)
-
-        # set up radiation figure
-        ba = QtCore.QByteArray.fromBase64(image_figure)
-        pix_map = QtGui.QPixmap()
-        pix_map.loadFromData(ba)
+        self.setWindowTitle(self.app_name_short)
+        pix_map = QtGui.QPixmap(join(fsetoolsGUI.__root_dir__, 'gui', 'images', '0405-0.png'))
         self.ui.label.setPixmap(pix_map)
 
         # set default values
