@@ -111,28 +111,32 @@ class App(AppBaseClass):
 
         super().__init__(parent=parent, post_stats=post_stats, ui=AppBaseClassUISimplified01)
 
+        # instantiate signals
+        self.signals = Signals()
+
+        # instantiate figure window
         self.FigureApp = FigureApp(parent=self, title='Distribution', antialias=True)
         self.__figure_ax_pdf = self.FigureApp.add_subplot(row=0, col=0, x_label='Sample value', y_label='PDF')
         self.__figure_ax_cdf = self.FigureApp.add_subplot(row=1, col=0, x_label='Sample value', y_label='CDF')
         self.__figure_ax_cdf.setXLink(self.__figure_ax_pdf)
 
+        # instantiate distribution selection window
+        self.distribution_selection_dialog = GridDialog(
+            labels=[i[0] for i in self.__dist_available], grid_shape=(10, 3),
+            signal_upon_selection=self.signals.upon_distribution_selection,
+            window_title='Select a distribution',
+            parent=self
+        )
+
         self.__input_parameters = None
         self.__output_parameters = None
-        self.signals = Signals()
 
+        # add UI items
         c = Counter()
         self.ui.p2_layout = QGridLayout(self.ui.page_2)
         self.ui.p2_layout.setVerticalSpacing(5), self.ui.p2_layout.setHorizontalSpacing(5)
         self.ui.p2_layout.addWidget(QLabel('<b>Inputs</b>'), c.count, 0, 1, 3)
-        # self.ui.p2_layout.addWidget(QLabel('Distribution'), c.value, 0, 1, 1)
-        # self.ui.p2_in_distribution = QLineEdit()
-        # self.ui.p2_layout.addWidget(self.ui.p2_in_distribution, c.value, 1, 1, 1)
-        # self.ui.p2_in_fp_inputs = QPushButton('...')
-        # self.ui.p2_in_fp_inputs.setStyleSheet('padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px;')
-        # self.ui.p2_layout.addWidget(self.ui.p2_in_fp_inputs, c.count, 2, 1, 1)
-
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_distribution', 'Distribution', '...', unit_obj='QPushButton', min_width=200)
-
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_mean', 'Mean', '')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_sd', 'SD', '')
 
@@ -140,7 +144,7 @@ class App(AppBaseClass):
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_cdf', 'CDF', '')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_sample_value', 'Sample value', '')
 
-        # signals and slots
+        # set signals and slots
         self.ui.p2_in_cdf.textChanged.connect(self.__cdf_value_change)
         self.ui.p2_in_sample_value.textChanged.connect(self.__sample_value_change)
 
@@ -152,15 +156,21 @@ class App(AppBaseClass):
         self.ui.p2_in_cdf.setEnabled(False)
 
         self.signals.upon_distribution_selection.connect(self.upon_distribution_selection)
-        self.distribution_selection_dialog = GridDialog(
-            labels=[i[0] for i in self.__dist_available], grid_shape=(10, 3),
-            signal_upon_selection=self.signals.upon_distribution_selection,
-            window_title='Select a distribution',
-            parent=self
-        )
+
         self.activated_dialogs.append(self.distribution_selection_dialog)
-        self.ui.p2_in_distribution_unit.clicked.connect(lambda: self.distribution_selection_dialog.show())
+        self.ui.p2_in_distribution_unit.clicked.connect(lambda: self.show_distribution_dialog())
         self.adjustSize()
+
+    def show_distribution_dialog(self, sticky_window: bool = True, toggle_visible: bool = True):
+        if sticky_window:
+            geo = self.distribution_selection_dialog.frameGeometry()
+            margin_top = abs(self.pos().y() - self.geometry().y())
+            geo.setX(self.pos().x() + self.frameGeometry().width() + 5)
+            geo.setY(self.pos().y() + margin_top)
+            self.distribution_selection_dialog.setGeometry(geo)
+
+        if toggle_visible:
+            self.distribution_selection_dialog.show()
 
     def submit(self):
         """Placeholder method to be overridden by child classes.
@@ -290,10 +300,7 @@ class App(AppBaseClass):
         self.__output_parameters = v
 
     def moveEvent(self, event):
-        geo = self.distribution_selection_dialog.geometry()
-        geo.setX(self.normalGeometry().x() + self.width())
-        geo.setY(self.normalGeometry().y())
-        self.distribution_selection_dialog.setGeometry(geo)
+        self.show_distribution_dialog(toggle_visible=False)
 
     def show_results_in_figure_2(self):
         dist = self.output_parameters['dist']
