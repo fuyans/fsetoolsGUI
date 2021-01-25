@@ -7,8 +7,8 @@ from sfeprapy.mcs0.mcs0_calc import solve_time_equivalence_iso834, solve_protect
 from fsetoolsGUI.gui.bases.c9901_app_template import AppBaseClass, AppBaseClassUISimplified01
 from fsetoolsGUI.gui.bases.custom_plot_pyqtgraph import App as FigureApp
 from fsetoolsGUI.gui.bases.custom_utilities import Counter
-from fsetoolsGUI.gui.din_en_parametric_fire import App as AppDinParametricFire
-from fsetoolsGUI.gui.en_parametric_fire import App as AppParametricFire
+from fsetoolsGUI.gui.din_en_1991_parametric_fire import App as AppDinParametricFire
+from fsetoolsGUI.gui.en_1991_parametric_fire import App as AppParametricFire
 from fsetoolsGUI.gui.iso_834_fire import App as AppISO834Fire
 from fsetoolsGUI.gui.travelling_fire import App as AppTravellingFire
 
@@ -58,7 +58,6 @@ class App(AppBaseClass):
             AppDinParametricFire(self, post_stats=False)
         ]
         self.activated_dialogs.extend(self.__fire)
-
 
         # ==============
         # instantiate ui

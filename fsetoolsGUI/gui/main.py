@@ -17,11 +17,11 @@ from fsetoolsGUI.gui.br187_parallel_complex import App as BR187_ParallelComplex
 from fsetoolsGUI.gui.br187_perpendicular_complex import App as BR187_PerpendicularComplex
 from fsetoolsGUI.gui.bs9999_data_sheet_1 import App as BS9999_DataSheet1
 from fsetoolsGUI.gui.bs9999_merging_flow import App as BS9999_MergingFlow
-from fsetoolsGUI.gui.din_en_parametric_fire import App as EC3_DinParametricFire
-from fsetoolsGUI.gui.en_external_column import App as EC3_ExternalColumn
-from fsetoolsGUI.gui.en_external_flame import App as EC1_ExternalFlame
-from fsetoolsGUI.gui.en_parametric_fire import App as EC1_ParametricFire
-from fsetoolsGUI.gui.en_protected_steel_heat_transfer import App as EC3_SteelHeatTransferProtected
+from fsetoolsGUI.gui.din_en_1991_parametric_fire import App as EC3_DinParametricFire
+from fsetoolsGUI.gui.en_1991_external_flame_no_forced_draught import App as EC1_ExternalFlame
+from fsetoolsGUI.gui.en_1991_parametric_fire import App as EC1_ParametricFire
+from fsetoolsGUI.gui.en_1993_external_steel_column import App as EC3_ExternalColumn
+from fsetoolsGUI.gui.en_1993_protected_steel_heat_transfer import App as EC3_SteelHeatTransferProtected
 from fsetoolsGUI.gui.fsetoolsgui_docs import App as FSETools_Docs
 from fsetoolsGUI.gui.iso_834_fire import App as ISO834_StandardFire
 from fsetoolsGUI.gui.ofr_file_naming_convention import App as OFR_NamingConvention
@@ -368,9 +368,9 @@ class App(QMainWindow):
             return
 
         if not is_local_version_executable:
-            version_label_text = f'Running version {__version__}. A new version {latest_version} is available. Click here to download.'
-        elif is_local_version_upgradable:
             version_label_text = f'This version {__version__} is disabled. A new version {latest_version} is available. Click here to download.'
+        elif is_local_version_upgradable:
+            version_label_text = f'Running version {__version__}. A new version {latest_version} is available. Click here to download.'
         else:
             version_label_text = None
             self.ui.label_version.setStyleSheet('color: grey;')
