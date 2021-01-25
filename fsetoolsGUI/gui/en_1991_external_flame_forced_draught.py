@@ -4,7 +4,6 @@ import threading
 from os.path import join
 
 from PySide2.QtWidgets import QVBoxLayout, QGridLayout, QLabel, QCheckBox, QSpacerItem, QSizePolicy
-from fsetools.lib.fse_bs_en_1991_1_2_external_flame import ExternalFlame
 from fsetools.lib.fse_bs_en_1991_1_2_external_flame_forced_draught import ExternalFlameForcedDraught
 
 from fsetoolsGUI import __root_dir__, logger
@@ -198,7 +197,7 @@ class App(AppBaseClass):
         if input_kwargs['is_forced_draught']:
             cls = ExternalFlameForcedDraught(alpha_c_beam=None, alpha_c_column=None, T_z_1=None, T_z_2=None, **input_kwargs)
         else:
-            cls = ExternalFlame(alpha_c_beam=None, alpha_c_column=None, **input_kwargs)
+            cls = ExternalFlameForcedDraught(alpha_c_beam=None, alpha_c_column=None, **input_kwargs)
         return cls
 
     def submit(self):

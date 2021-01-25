@@ -5,7 +5,7 @@ from collections import OrderedDict
 from os.path import join
 
 from PySide2.QtWidgets import QVBoxLayout, QGridLayout, QLabel, QSpacerItem, QSizePolicy, QCheckBox
-from fsetools.lib.fse_bs_en_1993_1_2_external_column import ExternalSteelTemperatureFullyEngulfedColumn
+from fsetools.lib.fse_bs_en_1993_1_2_external_column_engulfed import ExternalSteelTemperatureFullyEngulfedColumn
 
 from fsetoolsGUI import __root_dir__, logger
 from fsetoolsGUI.gui.bases.c9901_app_template import AppBaseClass
@@ -39,6 +39,7 @@ class App(AppBaseClass):
             T_f=['<i>T<sub>f</sub></i>, temp. in the enclosure', 'K'],
             T_z=['<i>T<sub>z</sub></i>, temp. at L<sub>x</sub>', 'K'],
             T_o=['<i>T<sub>o</sub></i>, temp. at opening', 'K'],
+            u=['<i>u</i>, wind speed', 'm/s']
         )
         self.output_symbols: OrderedDict = OrderedDict(
             # I_z=['Radiative h. t. from flames', 'kW/m<sup>2</sup>'],
@@ -83,7 +84,7 @@ class App(AppBaseClass):
         self.ui.p2_layout.addWidget(self.ui.p2_in_is_forced_draught, c.count, 4, 1, 4)
         self.ui.p2_layout.addWidget(self.ui.p2_in_make_pdf, c.count, 4, 1, 4)
 
-        c.reset(c.count + 8)
+        c.reset(c.count + 9)
         self.ui.p2_layout.addWidget(QLabel('<b>Outputs</b>'), c.count, 4, 1, 3)
         for k, v in self.output_symbols.items():
             self.add_lineedit_set_to_grid(self.ui.p2_layout, c, f'p2_out_{k}', v[0], v[1], col=4)
@@ -113,6 +114,7 @@ class App(AppBaseClass):
             h_eq=3.3,
             # alpha=0.0065,
             # w_f=20.9,
+            u=6,
         )
         self.input_parameters = input_kwargs
         self.repaint()
