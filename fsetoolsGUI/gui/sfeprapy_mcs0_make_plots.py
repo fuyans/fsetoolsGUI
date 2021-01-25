@@ -1,7 +1,7 @@
 import os
 import threading
 from os.path import join, realpath
-from scipy.interpolate import interp1d
+from typing import List
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QGridLayout, QLabel
+from scipy.interpolate import interp1d
 
 from fsetoolsGUI import logger
 from fsetoolsGUI.etc.sfeprapy_post_processor import lineplot, lineplot_matrix
@@ -43,30 +44,26 @@ class App(AppBaseClass):
 
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_mcs_input', 'MCS input file', '...', unit_obj='QPushButton', min_width=200)
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_fp_mcs_output', 'MCS output dir.', '...', unit_obj='QPushButton')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_width', 'Plot width', 'in')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_height', 'Plot height', 'in')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_matrix_cols', 'Plot mat. cols')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_xmin', 'Plot x min.', 'min')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_xmax', 'Plot x max.', 'min')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_size', 'Plot size', 'in')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_xlim', 'Plot x-axis lim.', 'min')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_xstep', 'Plot x step', 'min')
         self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_legend_cols', 'Plot legend cols', '')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_matrix_width', 'Plot mat. width', 'in')
-        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_matrix_height', 'Plot mat. height', 'in')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_matrix_cols', 'Plot mat. cols')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_figure_matrix_size', 'Plot mat. size', 'in')
+        self.add_lineedit_set_to_grid(self.ui.p2_layout, c.count, 'p2_in_data_time_locations', 'Data sampling loc.', 'min')
 
         self.ui.p3_example.setVisible(False)
 
         # ============
         # set defaults
         # ============
-        self.ui.p2_in_figure_height.setText('3.5')
-        self.ui.p2_in_figure_width.setText('3.5')
-        self.ui.p2_in_figure_matrix_height.setText('1.2')
-        self.ui.p2_in_figure_matrix_width.setText('1.2')
+        self.ui.p2_in_figure_size.setText('3.5,3.5')
+        self.ui.p2_in_figure_matrix_size.setText('1.2,1.2')
         self.ui.p2_in_figure_matrix_cols.setText('9')
-        self.ui.p2_in_figure_xmin.setText('15')
-        self.ui.p2_in_figure_xmax.setText('180')
+        self.ui.p2_in_figure_xlim.setText('15,180')
         self.ui.p2_in_figure_xstep.setText('15')
         self.ui.p2_in_figure_legend_cols.setText('1')
+        self.ui.p2_in_data_time_locations.setText('15,30,45,60,75,90,105,120,135,150,165,180')
 
         # =================
         # signals and slots
@@ -102,18 +99,29 @@ class App(AppBaseClass):
             except ValueError:
                 return 0.
 
+        def str2listfloat(v: str) -> List[float]:
+            # remove head and trailing spaces and commas which could be the case of human error
+            v = v.strip(' ,')
+
+            v_ = v.split(',')
+            v_list = list()
+            for i in v_:
+                try:
+                    v_list.append(float(i))
+                except Exception as e:
+                    logger.warning(f'Unable to convert `{i}` to float, {e}')
+            return v_list
+
         return dict(
             fp_mcs_input=self.ui.p2_in_fp_mcs_input.text(),
             fp_mcs_output_dir=self.ui.p2_in_fp_mcs_output.text(),
-            figure_height=str2float(self.ui.p2_in_figure_height.text()),
-            figure_width=str2float(self.ui.p2_in_figure_width.text()),
-            figure_matrix_height=str2float(self.ui.p2_in_figure_matrix_height.text()),
-            figure_matrix_width=str2float(self.ui.p2_in_figure_matrix_width.text()),
+            figure_size=str2listfloat(self.ui.p2_in_figure_size.text()),
+            figure_matrix_size=str2listfloat(self.ui.p2_in_figure_matrix_size.text()),
             figure_matrix_cols=str2int(self.ui.p2_in_figure_matrix_cols.text()),
-            figure_xmin=str2float(self.ui.p2_in_figure_xmin.text()),
-            figure_xmax=str2float(self.ui.p2_in_figure_xmax.text()),
+            figure_xlim=str2listfloat(self.ui.p2_in_figure_xlim.text()),
             figure_xstep=str2float(self.ui.p2_in_figure_xstep.text()),
             figure_legend_cols=str2int(self.ui.p2_in_figure_legend_cols.text()),
+            data_time_locations=str2listfloat(self.ui.p2_in_data_time_locations.text()),
             qt_progress_signal_0=self.ProgressBar.Signals.progress,
             qt_progress_signal_1=self.ProgressBar.Signals.progress_label,
         )
@@ -142,21 +150,21 @@ class App(AppBaseClass):
     def calculate(
             fp_mcs_input: str,
             fp_mcs_output_dir: str,
-            figure_height: float,
-            figure_width: float,
-            figure_matrix_height: float,
-            figure_matrix_width: float,
+            figure_size: List[float],
+            figure_matrix_size: List[float],
             figure_matrix_cols: int,
-            figure_xmin: float,
-            figure_xmax: float,
+            figure_xlim: List[float],
             figure_xstep: float,
             figure_legend_cols: int,
+            data_time_locations: List[float],
             qt_progress_signal_0=None, qt_progress_signal_1=None
     ):
-        figure_ystep = 0.1
-
         matplotlib.use('agg')  # this method will be called in a thread, no GUI allowed for matplotlib
         os.chdir(os.path.dirname(fp_mcs_output_dir))
+
+        figure_xmin, figure_xmax = figure_xlim
+        figure_width, figure_height = figure_size
+        figure_matrix_width, figure_matrix_height = figure_matrix_size
 
         def update_progress(progress: int = None, label: str = None):
             if qt_progress_signal_0 and progress is not None:
@@ -284,8 +292,9 @@ class App(AppBaseClass):
         logger.info('Start to plot time equivalence ...')
         update_progress(0, '3/7 P_r_fi_i')
         try:
-            _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
-            P_r_fi_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in _]].to_csv('2-P_r_fi_i.csv')
+            # _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
+            # P_r_fi_i.iloc[[P_r_fi_i.index.get_loc(i, method='nearest') for i in _]].to_csv('2-P_r_fi_i.csv')
+            P_r_fi_i.iloc[[P_r_fi_i.index.get_loc(i, method='pad') for i in data_time_locations]].to_csv('2-P_r_fi_i.csv')
 
             lineplot(
                 x=[x] * len(case_names),
@@ -310,9 +319,11 @@ class App(AppBaseClass):
             logger.info('Start to plot combined time equivalence ...')
             update_progress(0, '3/7 P_r_fi_i_combined')
             try:
-                _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
-                P_r_fi_i_weighted.iloc[[P_r_fi_i_weighted.index.get_loc(i, method='nearest') for i in _]].to_csv('3-P_r_fi_i_weighted.csv')
-                P_r_fi_combined.iloc[[P_r_fi_combined.index.get_loc(i, method='nearest') for i in _]].to_csv('3-P_r_fi_i_combined.csv')
+                # _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
+                # P_r_fi_i_weighted.iloc[[P_r_fi_i_weighted.index.get_loc(i, method='nearest') for i in _]].to_csv('3-P_r_fi_i_weighted.csv')
+                # P_r_fi_combined.iloc[[P_r_fi_combined.index.get_loc(i, method='nearest') for i in _]].to_csv('3-P_r_fi_i_combined.csv')
+                P_r_fi_i_weighted.iloc[[P_r_fi_i_weighted.index.get_loc(i, method='pad') for i in data_time_locations]].to_csv('3-P_r_fi_i_weighted.csv')
+                P_r_fi_combined.iloc[[P_r_fi_combined.index.get_loc(i, method='pad') for i in data_time_locations]].to_csv('3-P_r_fi_i_combined.csv')
 
                 lineplot(
                     x=[x],
@@ -358,8 +369,9 @@ class App(AppBaseClass):
             logger.info('Started to plot design failure probability ...')
             update_progress(0, '5/7 P_fd_i')
             try:
-                _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
-                P_f_d_i.iloc[[P_f_d_i.index.get_loc(i, method='nearest') for i in _]].to_csv('5-P_f_d_i.csv')
+                # _ = [30.1, 45.1, 60.1, 75.1, 90.1, 115.1, 120.1, 135.1, 150.1, 165.1, 180.1, 195.1, 210.1, 225.1, 240.1]
+                # P_f_d_i.iloc[[P_f_d_i.index.get_loc(i, method='nearest') for i in _]].to_csv('5-P_f_d_i.csv')
+                P_f_d_i.iloc[[P_f_d_i.index.get_loc(i, method='pad') for i in data_time_locations]].to_csv('5-P_f_d_i.csv')
 
                 lineplot(
                     x=[x] * len(case_names),
@@ -383,7 +395,6 @@ class App(AppBaseClass):
             update_progress(0, '6/7 P_fd')
             try:
                 func_ = interp1d(np.sum([v for k, v in dict_P_f_d_i.items()], axis=0), x)
-                print(func_(5e-6))
                 lineplot(
                     x=[x],
                     y=[np.sum([v for k, v in dict_P_f_d_i.items()], axis=0)],
