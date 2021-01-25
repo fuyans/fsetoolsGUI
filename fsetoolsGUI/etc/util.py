@@ -54,7 +54,7 @@ def build_write(fp, date_cls: datetime = datetime.now(), date_format: str = '%Y%
     datetime_str = datetime_str.decode()
     with open(fp, 'w+') as f:
         f.write(datetime_str)
-    return datetime_str
+    return zlib.decompress(urlsafe_b64decode(datetime_str)).decode()
 
 
 def build_read(fp: str):

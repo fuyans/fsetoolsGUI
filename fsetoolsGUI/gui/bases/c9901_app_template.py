@@ -1,8 +1,8 @@
+import sys
 import threading
 from datetime import datetime
 from os import getlogin, path
 from typing import Union
-import sys
 
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QLabel, QGridLayout, QPushButton, QHBoxLayout, QSizePolicy, QGroupBox, QWidget, QStatusBar, QVBoxLayout, QTextBrowser, QScrollArea
@@ -407,14 +407,14 @@ class AppBaseClassExample(AppBaseClass):
     app_name_long = 'example name long'
 
     __input_items = dict(
-        entry_1=dict(i1='test', i2='test', i3='test'),
-        entry_2=dict(),
-        entry_3=dict(),
-        entry_4=dict(),
-        entry_5=dict(),
-        entry_6=dict(),
-        entry_7=dict(),
-        entry_8=dict(),
+        entry_1=dict(i1='input 1', i2='test', i3='unit 1'),
+        entry_2=dict(i1='input 2', i2='test', i3='unit 2'),
+        entry_3=dict(i1='input 3', i2='test', i3='unit 3'),
+        entry_4=dict(i1='input 4', i2='test', i3='unit 4'),
+        entry_5=dict(i1='input 5', i2='test', i3='unit 5'),
+        entry_6=dict(i1='input 6', i2='test', i3='unit 6'),
+        entry_7=dict(i1='input 7', i2='test', i3='unit 7'),
+        entry_8=dict(i1='input 8', i2='test', i3='unit 8'),
     )
     __output_items = dict()
 

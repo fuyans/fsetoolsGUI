@@ -205,7 +205,7 @@ class App(AppBaseClass):
 
         # Step 4. Make plots
         try:
-            self.show_results_in_figure_2()
+            self.show_results_in_figure()
         except Exception as e:
             logger.error(f'Failed to make plots, {e}')
             self.statusBar().showMessage(f'Failed to make plots, {e}')
@@ -231,21 +231,44 @@ class App(AppBaseClass):
 
     def __cdf_value_change(self):
         """Called upon change of CDF value in the output parameters"""
+
+        # Get parameters to calculate sample value at the given CDF
         cdf_value = self.input_parameters['cdf_value']
         dist = self.output_parameters['dist']
-        sample_value = dist.ppf(cdf_value)
+
+        # Calculate sample value
+        try:
+            sample_value = dist.ppf(cdf_value)
+        except Exception as e:
+            return
+
+        # Show the calculated sample value on the UI
         self.ui.p2_in_sample_value.textChanged.disconnect()
         self.ui.p2_in_sample_value.setText(f'{sample_value:.5g}')
         self.ui.p2_in_sample_value.textChanged.connect(self.__sample_value_change)
 
+        # Update the plot
+        if -np.inf < sample_value < np.inf:
+            self.show_results_in_figure()
+
     def __sample_value_change(self):
         """Called upon change of sample value in the output parameters"""
+
+        # Get parameters to calculate CDF for the given sample value
         sample_value = self.input_parameters['sample_value']
         dist = self.output_parameters['dist']
+
+        # Calculate CDF value
         cdf_value = dist.cdf(sample_value)
+
+        # Show the calculated CDF value on the UI
         self.ui.p2_in_cdf.textChanged.disconnect()
         self.ui.p2_in_cdf.setText(f'{cdf_value:.5g}')
         self.ui.p2_in_cdf.textChanged.connect(self.__cdf_value_change)
+
+        # Update the plot
+        if -np.inf < cdf_value < np.inf:
+            self.show_results_in_figure()
 
     def __distribution_update(self):
         """Called upon change of distribution type"""
@@ -302,7 +325,7 @@ class App(AppBaseClass):
     def moveEvent(self, event):
         self.show_distribution_dialog(toggle_visible=False)
 
-    def show_results_in_figure_2(self):
+    def show_results_in_figure(self):
         dist = self.output_parameters['dist']
 
         self.__figure_ax_pdf.getPlotItem().clear()

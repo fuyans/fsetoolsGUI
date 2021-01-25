@@ -4,6 +4,7 @@ import sys
 from os.path import join, realpath, dirname
 
 import fsetoolsGUI
+from fsetoolsGUI.etc.util import build_read
 from buildscript import nsis_build_nsi_2 as nsis_build_nsi
 
 
@@ -31,7 +32,6 @@ def make_nsh_files():
 
 
 def make_nsi_file():
-
     dict_var = dict()
     v_list = fsetoolsGUI.__version__.split('.')
 
@@ -50,14 +50,13 @@ def make_nsi_file():
     except IndexError:
         dict_var['version_build'] = 0
 
-    dict_var['fn_installer'] = f'FSETOOLS {".".join(fsetoolsGUI.__version__.split("."))} {fsetoolsGUI.__build__}.exe'
+    dict_var['fn_installer'] = f'FSETOOLS {".".join(fsetoolsGUI.__version__.split("."))} {build_read(os.path.join(fsetoolsGUI.__root_dir__, "build"))}.exe'
 
     with open(join(dirname(realpath(__file__)), 'nsis_build.nsi'), 'w+') as f:
         f.write(nsis_build_nsi.nsi_script.format(**dict_var))
 
 
 def main():
-
     cmd = ['makensis', 'nsis_build.nsi']
 
     with open('nsis_build.log', 'wb') as f:
@@ -69,6 +68,7 @@ def main():
 
 if __name__ == '__main__':
     from buildscript.pyinstaller_build import main as pyinstaller_build_main
+
     pyinstaller_build_main()
     make_nsi_file()
     make_nsh_files()

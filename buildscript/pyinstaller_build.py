@@ -2,31 +2,13 @@
 import os
 import subprocess
 import sys
-import zlib
-from base64 import urlsafe_b64encode
-from datetime import datetime
 from os.path import join, realpath, dirname, relpath
+
+from fsetoolsGUI.etc.util import build_write
 
 __root_dir__ = join(dirname(dirname(realpath(__file__))), 'fsetoolsGUI')
 
 placeholder_models = [subprocess]
-
-
-def build_write(fp, date_cls: datetime = datetime.now(), date_format: str = '%Y%m%d%H%M') -> str:
-    datetime_str = date_cls.strftime(date_format)
-    datetime_str = zlib.compress(datetime_str.encode(), 0)
-    datetime_str = urlsafe_b64encode(datetime_str)
-    datetime_str = datetime_str.decode()
-    with open(fp, 'w+') as f:
-        f.write(datetime_str)
-    return datetime_str
-
-
-def make_build_info():
-    build_info = datetime.now().strftime('%y%m%d%H%M')
-    with open(os.path.join(__root_dir__, 'build.txt'), 'w+') as f:
-        f.write(build_info)
-    return build_info
 
 
 def build_gui(app_name: str = 'FSETOOLS', fp_target_py: str = 'pyinstaller_build_entry.py', options: list = None):
@@ -95,15 +77,13 @@ def main():
 
     # include docs
     options.extend([
-        f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=__root_dir__)}' for fp in
-        find_fp(dir_work=join(__root_dir__, 'docs'))
+        f'--add-data={fp}{os.pathsep}{relpath(dirname(fp), start=__root_dir__)}' for fp in find_fp(dir_work=join(__root_dir__, 'docs'))
     ])
 
     build_gui(options=options)
 
 
 if __name__ == "__main__":
-    make_build_info()
     main()
 
     if sys.platform == 'win32':
